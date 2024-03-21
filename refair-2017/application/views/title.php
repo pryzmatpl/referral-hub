@@ -1,0 +1,2 @@
+<title>Slavingway - Humanise Technology</title>
+<meta name="description" content="The mission of Slavingway is to humanise technology. We've also built a research tool for developers, researchers and writers.">

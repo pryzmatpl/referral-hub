@@ -1,0 +1,15 @@
+{
+  "name": "refairme",
+  "version": "1.0.0",
+  "description": "by [Ben Edmunds](http://benedmunds.com)",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap-slider": "^9.7.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

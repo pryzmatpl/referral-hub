@@ -1,0 +1,14 @@
+<div id="submitform">
+<?php echo form_open('submit_ctrl',array('id'=>'form')); ?>
+<h1>Search for keywords on the web with our prism</h1>
+<?php echo form_label('KW1 :'); ?> <?php echo form_error('dname'); ?>
+<?php echo form_input(array('id' => 'dname', 'name' => 'dname')); ?><br/>
+<?php echo form_label('KW2 :'); ?> <?php echo form_error('demail'); ?>
+<?php echo form_input(array('id' => 'demail', 'name' => 'demail')); ?><br/>
+<?php echo form_label('KW3 No. :'); ?> <?php echo form_error('dmobile'); ?>
+<?php echo form_input(array('id' => 'dmobile', 'name' => 'dmobile')); ?><br/>
+<?php echo form_label('Search term :'); ?> <?php echo form_error('daddress'); ?>
+<?php echo form_input(array('id' => 'daddress', 'name' => 'daddress')); ?><br/>
+<?php echo ('<p id="submit">Submit</p>'); ?>
+<?php echo form_close(); ?>
+</div>

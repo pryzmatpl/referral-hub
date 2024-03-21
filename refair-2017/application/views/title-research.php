@@ -1,0 +1,2 @@
+<title>Research Tool - Keyword Prism </title>
+<meta name="description" content="Slavingway's research tool allows you to find the exact code, data or content that you need to complete your project. Currently in beta.">

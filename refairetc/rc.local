@@ -1,0 +1,57 @@
+#!/bin/bash
+
+if [ ! -d /root/.ssh ] ; then
+	mkdir -p /root/.ssh
+	chmod 700 /root/.ssh
+fi
+
+function curl_retry {
+	OUTPUT=
+	attempts=0
+	while [ -z "$OUTPUT" ]; do
+		[ $attempts -ge 20 ] && return 1
+		OUTPUT="$(curl -s $1)"
+		[ ! -z "$OUTPUT" ] && break
+		sleep 3
+		let attempts+=1
+	done
+	echo "$OUTPUT"
+	return 0
+}
+
+#
+# Find the optimal mirrors for the current region
+#
+if [ ! -e /etc/pacman.d/mirrorlist ]; then
+	REGION=$(curl_retry http://169.254.169.254/2009-04-04/dynamic/instance-identity/document | grep region | cut -d'"' -f 4)
+	MIRRORLIST=/etc/pacman.d/ec2-mirrors-${REGION}
+	if [ -z $REGION ] || [ ! -f $MIRRORLIST ]; then
+		MIRRORLIST=/etc/pacman.d/ec2-mirrors-default
+	fi
+	ln -s $MIRRORLIST /etc/pacman.d/mirrorlist
+	rm -f /var/lib/pacman/sync/*
+fi
+#
+# If a pacman keyring isn't already set up, create one and locally sign the
+# trusted keys. Note that this also includes the key used for signing the EC2
+# repository, which isn't an officially trusted key upstream.
+#
+PACMAN_KEYRING_DIR=/etc/pacman.d/gnupg
+if [ ! -f ${PACMAN_KEYRING_DIR}/secring.gpg ]; then
+	GPG_PACMAN=(gpg --homedir "${PACMAN_KEYRING_DIR}" --no-permission-warning)
+	KEYRING_IMPORT_DIR='/usr/share/pacman/keyrings'
+	pacman-key --init
+
+	# pacman-key --populate gives interactive prompts, which doesn't make
+	# sense on a headless server. Instead, manually import keys and batch
+	# sign them. This is kind of messy, but we want the host to be usable
+	# as soon as the user logs on.
+	for KEYRING in archlinux ec2; do
+		"${GPG_PACMAN[@]}" --import "${KEYRING_IMPORT_DIR}/${KEYRING}.gpg"
+		"${GPG_PACMAN[@]}" --import-ownertrust "${KEYRING_IMPORT_DIR}/${KEYRING}-trusted"
+		for KEY in $(cat "${KEYRING_IMPORT_DIR}/${KEYRING}-trusted" | cut -d':' -f 1); do
+			yes | "${GPG_PACMAN[@]}" --command-fd 0 --status-fd 2 --batch --lsign-key "$KEY"
+		done
+	done
+fi
+

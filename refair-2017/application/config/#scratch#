@@ -1,0 +1,73 @@
+
+        //Process data here and send them back
+        //Require the Transport library to be loaded
+
+        $this->_enableRequests();
+        
+        $data = array(
+            'keyone_get' => $this->input->get('keyone'),
+            'keytwo_get' => $this->input->get('keytwo'),
+            'keythree_get' => $this->input->get('keythree'),
+            'searchterm_get' => $this->input->get('searchterm'),
+        );
+        
+        Requests::register_autoloader();
+
+        $headers = array('Accept' => 'application/json');
+        $responsenext = Requests::get("https://duckduckgo-duckduckgo-zero-click-info.p.mashape.com/?callback=process_duckduckgo&format=json&no_html=1&no_redirect=1&q=DuckDuckGo&skip_disambig=1",
+            array(
+                "X-Mashape-Key" => "<required>",
+                "Accept" => "application/json"
+            )
+        );
+
+        $headers = array('Accept' => 'application/json');
+        $response = Requests::get("https://www.googleapis.com/customsearch/v1?key=AIzaSyDKlSJx_LX6m7griS4PO78idtIH2typ9u4&cx=014153420191187252986:u6d2kyoanh0&q=".$data['searchterm_get']."&fields=items");
+        //        $responseDDG = Req
+        
+        $jsonres = json_decode(json_encode($response),true);
+        $items = json_decode($jsonres['body'],true);
+        //$jsonresnext = json_decode($responsenext);
+        //print_r($responsenext);
+        
+        $sites_raw = array();
+        $links = array();
+        $shorts = array();
+        $titles = array();
+
+        if( count($items) > 0){
+            foreach($items['items'] as $item){
+                $sites_raw[$item['formattedUrl']] = Requests::get($item['link']);
+                $links[] = $item['link'];
+                $shorts[] = $item['htmlSnippet'];
+                $titles[] = $item['title'];
+            }
+        }else{
+            echo "<div class=\"error results-list-item\">There were no results to your search</div>";
+        }
+        
+        //print_r($jsonresnext);
+        // foreach($jsonresnext['Results'] as $item){
+        //     $sites_raw[$item['FirstURL']] = Requests::get($item['Result']);
+        //     $links[] = $item['FirstURL'];
+        //     $shorts[] = $item['Text'];
+        // }
+
+        $kwone=$data['keyone_get'];
+        $kwtwo=$data['keytwo_get'];
+        $kwthree=$data['keythree_get'];
+
+        $weighted = array();
+
+        $linkid = 0;
+
+        $max = 23;
+        $idmax=0;
+
+        foreach($sites_raw as $site_link=>$site){
+            if($idmax == $max) break;
+            $cntKWone = substr_count(serialize($site),$kwone);
+            $cntKWtwo = substr_count(serialize($site),$kwtwo);
+            $cntKWthree = substr_count(serialize($site),$kwthree);
+            
+            $dataStruct = array($cntKWone,$cntKWtwo,$cntK

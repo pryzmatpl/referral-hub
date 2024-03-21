@@ -1,0 +1,126 @@
+user http;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+worker_connections  1024;
+}
+
+
+http {
+default_type  application/octet-stream;
+
+#log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+#                  '$status $body_bytes_sent "$http_referer" '
+#                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+#access_log  logs/access.log  main;
+
+sendfile        on;
+#tcp_nopush     on;
+
+#keepalive_timeout  0;
+keepalive_timeout  65;
+
+#gzip  on;
+
+server {
+        listen 80;
+        server_name www.refair.me;
+        # $scheme will get the http protocol
+        # and 301 is best practice for tablet, phone, desktop and seo
+        return 301 $scheme://refair.me$request_uri;
+}
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+    server_name refair.me;
+    rewrite  ^/(.*)$  https://refair.me/$1 permanent;
+
+# Enforce SSL
+if ($scheme = http) {
+    return 301 https://$host$request_uri;
+}
+
+if ($host ~* ^www\.(.*)) {
+    set $host_without_www $1;
+    rewrite ^/(.*)$ $scheme://$host_without_www/$1 permanent;
+}
+
+}
+
+server {
+listen 443 ssl http2 default_server;
+listen [::]:443 ssl http2 default_server;
+include snippets/ssl-refair.conf;
+server_name refair.me;
+#charset koi8-r;
+#access_log  logs/host.access.log  main;
+location / {
+try_files $uri $uri/ /index.php?$args;
+include       mime.types;
+root   /usr/share/nginx/html;
+index  index.html index.htm index.php;
+}
+
+# redirect server error pages to the static page /50x.html
+#
+error_page   500 502 503 504  /50x.html;
+location = /50x.html {
+root   /usr/share/nginx/html;
+}
+
+# canonicalize codeigniter url end points
+# if your default controller is something other than "welcome" you should change the following
+if ($request_uri ~* ^(/refair(/index)?|/index(.php)?)/?$)
+{
+rewrite ^(.*)$ / permanent;
+}
+# removes trailing "index" from all controllers
+if ($request_uri ~* index/?$)
+{
+rewrite ^/(.*)/index/?$ /$1 permanent;
+}
+# removes trailing slashes (prevents SEO duplicate content issues)
+if (!-d $request_filename)
+{
+rewrite ^/(.+)/$ /$1 permanent;
+}
+# removes access to "system" folder, also allows a "System.php" controller
+ if ($request_uri ~* ^/system)
+ {
+ rewrite ^/(.*)$ /index.php?/$1 last;
+ break;
+ }
+# unless the request is for a valid file (image, js, css, etc.), send to bootstrap
+#if (!-e $request_filename)
+#{
+#rewrite ^/(.*)$ /index.php?/$1 last;
+#break;
+#}
+# catch all
+error_page 404 /index.php;
+# use fastcgi for all php files
+
+location ~ \.php$ {
+root           /usr/share/nginx/html;
+fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+fastcgi_read_timeout 180;
+include        fastcgi_params;
+}
+
+location ~ /\.ht
+{
+deny all;
+}
+}
+}

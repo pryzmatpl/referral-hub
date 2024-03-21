@@ -1,0 +1,7 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# /dev/vda1
+UUID=a3543009-fbe6-4282-81d4-e8540a4b3352	/         	ext4      	rw,relatime,data=ordered	0 1
+

@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/usr/bin/certbot", line 11, in <module>
+    load_entry_point('certbot==0.12.0', 'console_scripts', 'certbot')()
+  File "/usr/lib/python2.7/site-packages/certbot/main.py", line 875, in main
+    args = cli.prepare_and_parse_args(plugins, cli_args)
+  File "/usr/lib/python2.7/site-packages/certbot/cli.py", line 1074, in prepare_and_parse_args
+    return helpful.parse_args()
+  File "/usr/lib/python2.7/site-packages/certbot/cli.py", line 526, in parse_args
+    parsed_args = self.parser.parse_args(self.args)
+  File "/usr/lib/python2.7/site-packages/configargparse.py", line 402, in parse_args
+    env_vars = env_vars)
+  File "/usr/lib/python2.7/site-packages/configargparse.py", line 556, in parse_known_args
+    self, args=args, namespace=namespace)
+  File "/usr/lib/python2.7/argparse.py", line 1733, in parse_known_args
+    namespace, args = self._parse_known_args(args, namespace)
+  File "/usr/lib/python2.7/argparse.py", line 1968, in _parse_known_args
+    self._get_value(action, action.default))
+  File "/usr/lib/python2.7/argparse.py", line 2260, in _get_value
+    result = type_func(arg_string)
+  File "/usr/lib/python2.7/site-packages/certbot/plugins/standalone.py", line 123, in supported_challenges_validator
+    if cli.set_by_cli("standalone_supported_challenges"):
+  File "/usr/lib/python2.7/site-packages/certbot/cli.py", line 198, in set_by_cli
+    plugin_selection.cli_plugin_requests(detector))
+  File "/usr/lib/python2.7/site-packages/certbot/plugins/selection.py", line 238, in cli_plugin_requests
+    req_auth = set_configurator(req_auth, "webroot")
+  File "/usr/lib/python2.7/site-packages/certbot/plugins/selection.py", line 215, in set_configurator
+    raise errors.PluginSelectionError(msg.format(repr(previously), repr(now)))
+PluginSelectionError: Too many flags setting configurators/installers/authenticators 'nginx' -> 'webroot'
