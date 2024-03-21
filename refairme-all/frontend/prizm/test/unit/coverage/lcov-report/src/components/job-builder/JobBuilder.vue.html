@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/job-builder/JobBuilder.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/components/job-builder</a> JobBuilder.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/33</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/26</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;<span class="cstat-no" title="statement not covered" >t<span class="fstat-no" title="function not covered" >em</span>plate lang="pug"&gt;</span>
+  .card
+    .card-body
+<span class="cstat-no" title="statement not covered" >      ul.nav.nav-justified</span>
+        li.nav-item(v-for="tab in tabs")
+          a.nav-link(
+            :class="['.nav-link', {active: currentTab.name === tab.name}]"
+            :key="tab.name"<span class="cstat-no" title="statement not covered" ></span>
+            @click="currentTab = tab"
+          ) {{tab.name}}<span class="cstat-no" title="statement not covered" ></span>
+      keep-alive
+        transition(name="fade"<span class="cstat-no" title="statement not covered" >)</span>
+          component.tab.mt-4(
+            v-bind:is="currentT<span class="cstat-no" title="statement not covered" >abComponent"</span>
+            v-on:job="updateJob"
+            v-on:add-job="<span class="cstat-no" title="statement not covered" >addJob"</span>
+          )
+&lt;/template&gt;<span class="cstat-no" title="statement not covered" ></span>
+&lt;script&gt;
+<span class="cstat-no" title="statement not covered" ></span>
+import JobBuilderCompanyProfile from './JobBuilderCompanyProfile'
+import JobBuilderAboutProject f<span class="cstat-no" title="statement not covered" >rom './JobBuilderAboutProject'</span>
+import JobBuilderAboutJob from './JobBuilderAboutJob'
+import Jo<span class="fstat-no" title="function not covered" >bBuilderConfirmation fr</span>om './J<span class="cstat-no" title="statement not covered" >obBuilderConfirmation'</span>
+&nbsp;
+export default{
+  components:{
+    JobBuilderCompanyProfile,
+    JobBuilderAboutProject,
+    JobBuilderAboutJob,
+    JobBuilderConfirmation
+  },
+  data: function(){
+    return {
+      currentTab: {
+        name: 'Create a company profile',
+        comp: 'JobBuilderCompanyProfile'
+      },
+      tabs: [
+        {
+          name: 'Create a company profile',
+          comp: 'JobBuilderCompanyProfile',
+        },
+        {
+          name: 'Describe the project',
+<span class="cstat-no" title="statement not covered" >          comp: 'JobBuilderAboutProject'</span>
+        },
+        {
+          name:'Present the job',
+          comp: 'JobBuilderAboutJob'
+        },
+        {
+          name: '<span class="fstat-no" title="function not covered" >Submi</span>t',
+<span class="cstat-no" title="statement not covered" >          comp: 'JobBuilderConfirmation'</span>
+        }
+      ],
+      jobBuilder: {}
+    }
+  },
+  computed: {
+    currentTabComponent: function () {
+      return this.currentTab.comp
+    }
+  },
+  methods: {
+    updateJob: function(object,source){
+      //console.log(object)
+      //console.log(source)
+      this.jobBuilder[source] = object
+    },
+    selectActive: function(event){
+      var siblings = $(event.target).parent().siblings().children('a')
+      $(event.target).addClass('active')
+      siblings.removeClass('active')
+    },
+    addJob(event) {<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      console.log('adding jobs')</span>
+&nbsp;
+      this.$store.state.backend
+      .post('/api/job/new', this.jobBuilder)
+      .then(ret =&gt; {<span class="fstat-no" title="function not covered" ></span>
+        alert('Sent job and added!');
+        console.log(ret);
+<span class="cstat-no" title="statement not covered" >      });</span>
+    },
+  }<span class="fstat-no" title="function not covered" ></span>
+}<span class="cstat-no" title="statement not covered" ></span>
+&lt;/scri<span class="cstat-no" title="statement not covered" >pt&gt;</span>
+&lt;style<span class="cstat-no" title="statement not covered" > lang="sass"&gt;</span>
+  .card
+    box-shadow: 0 2px<span class="fstat-no" title="function not covered" > 6px 0 </span>hsla(0,0%,0%,0.1)
+    bo<span class="cstat-no" title="statement not covered" >rder: 0</span>
+  a
+    co<span class="cstat-no" title="statement not covered" >lor: inherit<span class="fstat-no" title="function not covered" ></span></span>
+    curs<span class="cstat-no" title="statement not covered" >or: pointer</span>
+  .nav-l<span class="cstat-no" title="statement not covered" >ink.active</span>
+    border-bottom: 4px solid #28a745
+  .nav-justified
+    border-bottom: 0.25px solid lightgray
+  .fade-enter-active, .fade-leave-active
+    transition: opacity .1s
+<span class="cstat-no" title="statement not covered" >  .fade-enter, .fade-leave-to<span class="cstat-no" title="statement not covered" ></span></span>
+    opacity: 0<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;/style&gt;<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ></span></span></span></span></span></span></span></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Apr 22 2018 08:46:55 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

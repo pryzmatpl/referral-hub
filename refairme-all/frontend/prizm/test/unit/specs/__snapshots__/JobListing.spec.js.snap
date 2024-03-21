@@ -1,0 +1,589 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JobListing.vue has the expected html structure 1`] = `
+<div
+  class="card"
+>
+  <div
+    class="card-body"
+  >
+    <svg
+      aria-hidden="true"
+      class="fa-3x center svg-inline--fa fa-cog fa-w-16 fa-spin"
+      data-icon="cog"
+      data-prefix="fas"
+      role="img"
+      viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        class=""
+        d="M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z"
+        fill="currentColor"
+      />
+    </svg>
+    <b-modal
+      hide-footer="hide-footer"
+      id="editModal"
+      size="lg"
+      title="Edit this job"
+    >
+      <div>
+        <form
+          id="aboutJob"
+        >
+          <h1>
+            About the job
+          </h1>
+          <hr />
+          <div
+            class="form-group"
+          >
+            <label
+              for="jobTitle"
+            >
+              Job title
+            </label>
+            <input
+              class="form-control"
+              name="jobTitle"
+              placeholder="ex. Chief Data Analyst, Technical Support Engineer"
+              type="text"
+            />
+            <small
+              class="invalid-feedback help-block"
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              for="jobDescription"
+            >
+              Job description
+            </label>
+            <textarea
+              class="form-control"
+              name="jobDescription"
+              placeholder="Describe the work to be the done"
+              rows="4"
+            />
+            <small
+              class="invalid-feedback help-block"
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              for="jobDescriptionPreview"
+            >
+              Description preview
+            </label>
+            <div />
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              for="jobLocation"
+            >
+              Location
+            </label>
+            <input
+              class="form-control"
+              name="jobLocation"
+              placeholder="Enter work location"
+              type="text"
+            />
+            <small
+              class="invalid-feedback help-block"
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              for="contractType"
+            >
+              Contract type
+            </label>
+            <input
+              class="form-control"
+              name="contractType"
+              placeholder="Specify contract type"
+              type="text"
+            />
+            <small
+              class="invalid-feedback help-block"
+            />
+          </div>
+          <br />
+          <h5>
+            WHAT ARE THE SKILL REQUIREMENTS?
+          </h5>
+          <hr />
+          <div
+            class="form-group"
+          >
+            <label
+              for="mustHave"
+              id="kwErrMsg"
+            >
+              Must have
+            </label>
+            <div
+              name="mustHave"
+            >
+              <div>
+                <div
+                  class="input-group"
+                >
+                  <input
+                    class="bg-light"
+                    placeholder="name a skill"
+                    type="text"
+                  />
+                  <div
+                    class="input-group-append"
+                  >
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <small
+              class="invalid-feedback help-block"
+            >
+              sds
+            </small>
+          </div>
+          <div
+            class="form-row mt-2"
+          >
+            <div
+              class="col-12 col-lg-6"
+            >
+              <label
+                for="travel"
+              >
+                % Travel of role
+              </label>
+              <div
+                class="form-row"
+              >
+                <div
+                  class="form-group col-9"
+                >
+                  <div
+                    class="vue-slider-component vue-slider-horizontal"
+                    name="travel"
+                    style="width: auto; padding: 8px 8px;"
+                  >
+                    <div
+                      aria-hidden="true"
+                      class="vue-slider"
+                      style="height: 6px;"
+                    >
+                      <div
+                        class="vue-slider-hover vue-slider-dot"
+                        style="width: 16px; height: 16px; top: -5px;"
+                      >
+                        <span
+                          class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+                        >
+                          <span
+                            class="vue-slider-tooltip"
+                          >
+                            20
+                          </span>
+                        </span>
+                      </div>
+                       
+                      <ul
+                        class="vue-slider-piecewise"
+                      />
+                       
+                      <div
+                        class="vue-slider-process"
+                        style="width: 0px; left: 0px;"
+                      />
+                    </div>
+                     
+                    <input
+                      class="vue-slider-sr-only"
+                      max="100"
+                      min="0"
+                      type="range"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="input-group col-3"
+                >
+                  <input
+                    class="form-control"
+                    type="text"
+                  />
+                  <div
+                    class="input-group-append"
+                  >
+                    <span
+                      class="input-group-text"
+                    >
+                      %
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="form-row mt-2"
+          >
+            <div
+              class="col-12 col-lg-6"
+            >
+              <label
+                for="remoteWork"
+              >
+                % Remote work possible
+              </label>
+              <div
+                class="form-row"
+              >
+                <div
+                  class="form-group col-9"
+                >
+                  <div
+                    class="vue-slider-component vue-slider-horizontal"
+                    name="remoteWork"
+                    style="width: auto; padding: 8px 8px;"
+                  >
+                    <div
+                      aria-hidden="true"
+                      class="vue-slider"
+                      style="height: 6px;"
+                    >
+                      <div
+                        class="vue-slider-hover vue-slider-dot"
+                        style="width: 16px; height: 16px; top: -5px;"
+                      >
+                        <span
+                          class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+                        >
+                          <span
+                            class="vue-slider-tooltip"
+                          >
+                            20
+                          </span>
+                        </span>
+                      </div>
+                       
+                      <ul
+                        class="vue-slider-piecewise"
+                      />
+                       
+                      <div
+                        class="vue-slider-process"
+                        style="width: 0px; left: 0px;"
+                      />
+                    </div>
+                     
+                    <input
+                      class="vue-slider-sr-only"
+                      max="100"
+                      min="0"
+                      type="range"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="input-group col-3"
+                >
+                  <input
+                    class="form-control"
+                    type="text"
+                  />
+                  <div
+                    class="input-group-append"
+                  >
+                    <span
+                      class="input-group-text"
+                    >
+                      %
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="form-row"
+          >
+            <div
+              class="col-12 col-lg-6"
+            >
+              <div
+                class="form-group col-12 p-0"
+              >
+                <label
+                  class="col-form-label"
+                  for="salary"
+                >
+                  Salary
+                </label>
+                <div
+                  class="vue-slider-component vue-slider-horizontal"
+                  style="width: auto; padding: 8px 8px;"
+                >
+                  <div
+                    aria-hidden="true"
+                    class="vue-slider"
+                    style="height: 6px;"
+                  >
+                    <div
+                      class="vue-slider-hover vue-slider-dot"
+                      style="width: 16px; height: 16px; top: -5px;"
+                    >
+                      <span
+                        class="vue-slider-tooltip-left vue-slider-tooltip-wrap"
+                      >
+                        <span
+                          class="vue-slider-tooltip"
+                        >
+                          3000
+                        </span>
+                      </span>
+                    </div>
+                     
+                    <div
+                      class="vue-slider-hover vue-slider-dot"
+                      style="width: 16px; height: 16px; top: -5px;"
+                    >
+                      <span
+                        class="vue-slider-tooltip-right vue-slider-tooltip-wrap"
+                      >
+                        <span
+                          class="vue-slider-tooltip"
+                        >
+                          15000
+                        </span>
+                      </span>
+                    </div>
+                     
+                    <ul
+                      class="vue-slider-piecewise"
+                    />
+                     
+                    <div
+                      class="vue-slider-process"
+                      style="width: 0px; left: 0px;"
+                    />
+                  </div>
+                   
+                  <!---->
+                </div>
+              </div>
+              <div
+                class="form-row"
+              >
+                <div
+                  class="input-group col-6"
+                >
+                  <div
+                    class="input-group-prepend clickable"
+                  >
+                    <span
+                      class="input-group-text curr"
+                    >
+                      $
+                    </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    type="text"
+                  />
+                </div>
+                <div
+                  class="input-group col-6"
+                >
+                  <div
+                    class="input-group-prepend clickable"
+                  >
+                    <span
+                      class="input-group-text curr"
+                    >
+                      $
+                    </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="form-row mt-2"
+          >
+            <div
+              class="col-12 col-lg-6"
+            >
+              <div
+                class="form-row"
+              >
+                <label
+                  class="col-form-label"
+                  for="experienceRequired"
+                >
+                  Experience required
+                </label>
+                <div
+                  class="form-group col-9"
+                >
+                  <div
+                    class="vue-slider-component vue-slider-horizontal"
+                    name="expslider"
+                    style="width: auto; padding: 8px 8px;"
+                  >
+                    <div
+                      aria-hidden="true"
+                      class="vue-slider"
+                      style="height: 6px;"
+                    >
+                      <div
+                        class="vue-slider-hover vue-slider-dot"
+                        style="width: 16px; height: 16px; top: -5px;"
+                      >
+                        <span
+                          class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+                        >
+                          <span
+                            class="vue-slider-tooltip"
+                          >
+                            3
+                          </span>
+                        </span>
+                      </div>
+                       
+                      <ul
+                        class="vue-slider-piecewise"
+                      />
+                       
+                      <div
+                        class="vue-slider-process"
+                        style="width: 0px; left: 0px;"
+                      />
+                    </div>
+                     
+                    <input
+                      class="vue-slider-sr-only"
+                      max="20"
+                      min="0"
+                      type="range"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="input-group col-3"
+                >
+                  <input
+                    class="form-control"
+                    type="text"
+                  />
+                  <div
+                    class="input-group-append"
+                  >
+                    <span
+                      class="input-group-text"
+                    >
+                      yrs
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="form-group col-12 col-lg-6 mt-2 pl-0"
+          >
+            <label>
+              <input
+                type="checkbox"
+              />
+               This position requires remote
+            </label>
+          </div>
+          <div
+            class="form-group col-12 col-lg-6 pl-0"
+          >
+            <label>
+              <input
+                type="checkbox"
+              />
+               This position requires relocation
+            </label>
+          </div>
+          <div
+            class="form-group col-12 col-lg-6 pl-0"
+          >
+            <label>
+              <input
+                type="checkbox"
+              />
+               Relocation package offered
+            </label>
+          </div>
+          <button
+            class="btn btn-success float-right"
+            type="button"
+          >
+            Update
+          </button>
+        </form>
+      </div>
+    </b-modal>
+    <div
+      class="table-responsive"
+    >
+      <table
+        class="table table-striped"
+      >
+        <thead>
+          <tr>
+            <th>
+              Job Title
+            </th>
+            <th>
+              Keywords
+            </th>
+            <th>
+              Location
+            </th>
+            <th>
+              Salary
+            </th>
+            <th>
+              Remote
+            </th>
+            <th>
+              Relocation pack
+            </th>
+            <th>
+              Operations
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </div>
+</div>
+`;

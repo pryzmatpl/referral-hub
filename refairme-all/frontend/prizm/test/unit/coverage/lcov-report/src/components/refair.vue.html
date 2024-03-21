@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/refair.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/components</a> refair.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/1</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/3</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;<span class="cstat-no" title="statement not covered" >d<span class="fstat-no" title="function not covered" >iv</span> class="col-md-12" id="refair" style="margin-top:20px;"&gt;</span>
+  &lt;form id="refairer" method="post" accept-charset="utf-8" class="centered form-group col-md-12"&gt;
+    &lt;div class="form-group label-floating is-empty col-md-6" &gt;
+<span class="cstat-no" title="statement not covered" >      &lt;label for="title" class=<span class="cstat-no" title="statement not covered" >"control-label"&gt;Your dream job title&lt;/la</span></span>bel&gt;
+      &lt;input class="form<span class="cstat-no" title="statement not covered" >-control green" id="search-jobtitle" type="text" placeholder="Job Title, ie: </span>Scala Developer or Photoshop Wizard" &gt;
+      &lt;p class="help-block"&gt;What position interests you?&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group label-floating is-empty col-md-6"&gt;
+      &lt;label for="role" class="control-label"&gt; Your Skills&lt;/label&gt;
+      &lt;input class="form-control green" id="search-keywords" type="text" placeholder="Skills keywords, such as : c++,qt,linux,assembly,x86"&gt;
+      &lt;p class="help-block"&gt;Comma-separated, for example: 'C++, Java, Developer', or 'Photoshop, CSS, Frontend'&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="label-floating col-md-4"&gt;
+      &lt;label for="selectlocation" class="control-label"&gt;Select your location&lt;/label&gt;&lt;br/&gt;
+      &lt;refairlocationsoptions v-bind:locations="locations"&gt;&lt;/refairlocationsoptions&gt;
+      &lt;span class="help-block"&gt;Pro-tip: add jobs in the &lt;a style="color:#737373 !important;" href="{{test}}"&gt;Dashboard&lt;/a&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div  class="form-group label-floating is-empty col-md-4"&gt;
+      &lt;label for="salarySlider"&gt;Preferred yearly salary&lt;/label&gt;
+      &lt;span class="help-block"&gt;Pro-tip: How valuable is your time?&lt;/span&gt;
+      &lt;div style="height:20px;display:block;width:100%;" /&gt;&lt;/div&gt;
+    &lt;input
+      type="text"
+      id="salarySlider"
+      name="salarySlider"
+      data-provide="slider"
+      data-slider-min="1"
+      data-slider-max="399"
+      data-slider-step="1"
+      data-slider-value="63"
+      data-slider-tooltip="auto"  style="width:100%" &gt;&lt;/input&gt;
+    &lt;input class="hidden" type="hidden" id="userhash" value="&lt;?php echo $this-&gt;hhhash; ?&gt;"&gt;&lt;/input&gt;
+    &lt;div id="refair" class="col-md-4" &gt;
+      &lt;p id="refair-search"  class="btn" style="margin-top:63px;"&gt;
+	&lt;a&gt;Search for positions&lt;div class="ripple-container"&gt;&lt;/div&gt;
+      &lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;button type="button" class="btn btn-info" data-toggle="modal" data-target="#refairmodal" &gt; Show refair modal&lt;/button&gt;
+&lt;button type="button" class="btn btn-info" data-toggle="modal" data-target="#addjobmodal" &gt; Show add job modal&lt;/button&gt;
+&lt;button type="button" class="btn btn-info" data-toggle="modal" data-target="#applymodal" &gt; Show apply for job modal&lt;/button&gt;
+&lt;button type="button" class="btn btn-info" data-toggle="modal" data-target="#deletejobmodal" &gt; Show delete job modal&lt;/button&gt;
+&lt;button type="button" class="btn btn-info" data-toggle="modal" data-target="#addperkmodal" &gt; Show add perk modal&lt;/button&gt;
+&lt;button type="button" class="btn btn-info" data-toggle="modal" data-target="#deleterefermodal" &gt; Show delete referral modal&lt;/button&gt;
+&lt;button type="button" class="btn btn-info" data-toggle="modal" data-target="#deleteperkmodal" &gt; Show delete perk modal&lt;/button&gt;
+&lt;button type="button" class="btn btn-info" data-toggle="modal" data-target="#addlocationmodal" &gt; Show add location modal&lt;/button&gt;
+&lt;div id="resp" name="resp" class="content-main row col-md-12"&gt;
+&lt;/div&gt;
+&lt;refairlocations v-bind:locations="locations"&gt;&lt;/refairlocations&gt;
+&lt;refairjobs v-bind:jobdescs="refjobdescs"&gt;&lt;/refairjobs&gt;
+&lt;refairreferrals v-bind:referrals="referrals"&gt;&lt;/refairreferrals&gt;
+&lt;/center&gt;
+&nbsp;
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Apr 08 2018 13:53:53 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

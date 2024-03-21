@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/vue-timepicker.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/components</a> vue-timepicker.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/220</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/206</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/38</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/194</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;<span class="cstat-no" title="statement not covered" >t<span class="fstat-no" title="function not covered" >em</span>plate&gt;</span>
+&lt;span class="time-picker"&gt;
+  &lt;input class="display-time" :id="id" v-model="displayTime" @click.stop="toggleDropdown" type="text" readonly /&gt;
+<span class="cstat-no" title="statement not covered" >  &lt;span class="clear-btn" v-if="!hideClearButton" v-show="!showDropdown &amp;&amp; showClearBtn" @click.stop="clearTime"&gt;&amp;times;&lt;/span&gt;</span>
+  &lt;div class="time-picker-overlay" v-if="showDropdown" @click.stop="toggleDropdown"&gt;&lt;/div&gt;
+  &lt;div class="dropdown" v-show="showDropdown"&gt;
+    &lt;div class="select-list"&gt;
+      &lt;ul cl<span class="cstat-no" title="statement not covered" >ass="hours"&gt;</span>
+        &lt;li class="hint" v-text="hourType"&gt;&lt;/li&gt;
+        &lt;li v<span class="cstat-no" title="statement not covered" >-for="hr in hours" v-text="hr"</span> :class="{active: hour === hr}" @click.stop="select('hour', hr)"&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;ul class="<span class="cstat-no" title="statement not covered" >minutes"&gt;</span>
+        &lt;li class="hint" v-text="minuteType"&gt;&lt;/li&gt;
+        &lt;li v-for=<span class="cstat-no" title="statement not covered" >"m in minutes" v-text="m" :class="{</span>active: minute === m}" @click.stop="select('minute', m)"&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;ul<span class="fstat-no" title="function not covered" > class="seconds" v-if="</span>secondT<span class="cstat-no" title="statement not covered" >ype"&gt;</span>
+        &lt;li class="hint" v-text="secondType"&gt;&lt;/li&gt;
+        &lt;li v-for="s in seconds" v-text="s" :class="{active: second === s}" @click.stop="select('second', s)"&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;ul class="apms" v-if="apmType"&gt;
+        &lt;li class="hint" v-text="apmType"&gt;&lt;/li&gt;
+        &lt;li v-for="a in apms" v-text="a" :class="{active: apm === a}" @click.stop="select('apm', a)"&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/span&gt;
+&lt;/template&gt;
+&lt;script&gt;
+const CONFIG = {
+  HOUR_TOKENS: ['HH', 'H', 'hh', 'h', 'kk', 'k'],
+  MINUTE_TOKENS: ['mm', 'm'],
+  SECOND_TOKENS: ['ss', 's'],
+  APM_TOKENS: ['A', 'a']
+}
+&nbsp;
+export default {
+  name: 'VueTimepicker',
+&nbsp;
+  props: {
+    value: {type: Object},
+    hideClearButton: {type: Boolean},
+    format: {type: String},
+    minuteInterval: {type: Number},
+    secondInterval: {type: Number},
+    id: {type: String}
+  },<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+  data () {
+    return {
+      hours: [],
+      minutes: [],
+      seconds: [],
+<span class="cstat-no" title="statement not covered" >      apms: [],</span>
+      showDropdown: false,
+      muteWatch: false,
+      hourType: 'HH',
+      minuteType: 'mm',
+      secondType: '',
+      apmType: '',
+      hour: '',
+      minute: '',
+      second: '',
+      apm: '',
+      fullValues: undefined
+    }<span class="fstat-no" title="function not covered" ></span>
+  },<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+  computed: {
+    displayTime () {
+      let formatString = String((this.format || 'HH:mm'))
+      if (this.hour) {
+        formatString = formatString.replace(new RegExp(this.hourType, 'g'), this.hour)
+      }
+      if (this.minute) {
+        formatString = formatString.replace(new RegExp(this.minuteType, 'g'), this.minute)
+      }
+      if (this.second &amp;&amp; this.secondType) {
+        formatString = formatString.replace(new RegExp(this.secondType, 'g'), this.second)
+      }
+      if (this.apm &amp;&amp; this.apmType) {
+        formatString = formatString.replace(new RegExp(this.apmType, 'g'), this.apm)
+      }
+      return formatString
+    },
+    showClearBtn () {
+      if ((this.hour &amp;&amp; this.hour !== '') || (this.minute &amp;&amp; this.minute !== '')) {
+        return true<span class="fstat-no" title="function not covered" ></span>
+      }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      return false</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+  },
+<span class="cstat-no" title="statement not covered" ></span>
+  watch:<span class="cstat-no" title="statement not covered" > {</span>
+    'format': 'renderFormat',
+    mi<span class="cstat-no" title="statement not covered" >nuteInterval (newInteval) {</span>
+      th<span class="cstat-no" title="statement not covered" >is.renderList('minute', newInteval)</span>
+    },
+    se<span class="cstat-no" title="statement not covered" >condInterval (newInteval) {</span>
+      th<span class="cstat-no" title="statement not covered" >is.renderList('second', newInteval)</span>
+    },
+    'v<span class="cstat-no" title="statement not covered" >alue': 'readValues',</span>
+    'displayTime': 'fillValues'
+  },<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  method<span class="cstat-no" title="statement not covered" >s: {</span>
+    formatValue (type, i) {
+<span class="cstat-no" title="statement not covered" >      switch (type) </span>{
+        case 'H':
+        case 'm':
+        case 's':
+          return String(i)
+        case 'HH':
+        case 'mm':<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        case 'ss':</span>
+          return i &lt; 10 ? `0${i}` : String(i)
+        case 'h':<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        case 'k':</span>
+          return String(i + 1)
+        case 'hh':
+        case 'kk':
+          return (i + 1) &lt; 10 ? `0${i + 1}` : String(i + 1)
+        default:
+          return ''
+      }
+    },<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    checkAcceptingType (validValues, formatString, fallbackValue) {
+      if (!validValues || !formatString || !formatString.length) { return '' }
+      for (let i = 0; i &lt; validValues.length; i++) {
+        if<span class="cstat-no" title="statement not covered" > (formatString.ind</span>exOf(validValues[i]) &gt; -1) {
+          return validValues[i]
+        }
+      }
+      retu<span class="cstat-no" title="statement not covered" >rn fallbackValue || ''</span>
+    },
+&nbsp;
+    render<span class="cstat-no" title="statement not covered" >Format (newFormat) {</span>
+      newFormat = newFormat || this.format
+      if (!newFormat || !newFormat.length) {
+        ne<span class="cstat-no" title="statement not covered" >wFormat = 'HH:mm'</span>
+      }
+<span class="cstat-no" title="statement not covered" ></span>
+      this.hourType = this.checkAcceptingType(CONFIG.HOUR_TOKENS, newFormat, 'HH')
+      this.minuteType = this.checkAcceptingType(CONFIG.MINUTE_TOKENS, newFormat, 'mm')
+      this.secondType = this.chec<span class="fstat-no" title="function not covered" >kAcceptingType(CONF</span>IG.SECOND_TOKENS, newFormat)
+<span class="cstat-no" title="statement not covered" >      this.apmType = this.checkAcceptingType(CONFIG.APM_TOKENS, newFormat)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+      this.renderHoursList()
+<span class="cstat-no" title="statement not covered" >      this.renderList('minute')</span>
+<span class="cstat-no" title="statement not covered" ></span>
+      if (<span class="cstat-no" title="statement not covered" >this.secondType) {</span>
+        this.renderList('second')
+      }
+<span class="cstat-no" title="statement not covered" ></span>
+      if (this.apmType) {
+        this.renderApmList(<span class="fstat-no" title="function not covered" >)</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+      co<span class="cstat-no" title="statement not covered" >nst self = this</span>
+      this.$nextTick(() =&gt; {
+        self.readValues()
+<span class="cstat-no" title="statement not covered" >      })</span>
+    },<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    re<span class="cstat-no" title="statement not covered" >nderHoursList () {</span>
+      const hoursCount = (this.hourType === 'h' || this.hourType === 'hh') ? 12 : 24
+<span class="cstat-no" title="statement not covered" >      this.hours = []</span>
+<span class="cstat-no" title="statement not covered" >      for (let i = 0; i &lt; hoursCo</span>unt; i++) {
+        this.hours.push(this.formatValue(this.hourType, i))
+<span class="cstat-no" title="statement not covered" >      }</span>
+    },<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+    renderList (listType, interval) {
+<span class="cstat-no" title="statement not covered" >      if (listType === 'second') {</span>
+<span class="cstat-no" title="statement not covered" >        interval = interval ||</span> this.secondInterval
+      } else if (listType === 'minute') {
+        interval = interval || this.minuteInterval
+      } else {<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        return<span class="fstat-no" title="function not covered" ></span></span>
+      }<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+      if (interval === 0) {
+        interval = 60<span class="fstat-no" title="function not covered" ></span>
+      } else if (interv<span class="cstat-no" title="statement not covered" >al &gt; 60) {</span>
+<span class="cstat-no" title="statement not covered" >        window.console.</span>warn('`' + listType + '-interval` should be less than 60. Current value is', interval)
+<span class="cstat-no" title="statement not covered" >        interval = 1</span>
+      } <span class="cstat-no" title="statement not covered" >else if (interval &lt; 1) {</span>
+        window.console.warn('`' + listType + '-interval` should be NO less than 1. Current value is', interval)
+        interval = 1
+      } else if (!interva<span class="fstat-no" title="function not covered" >l) {</span>
+<span class="cstat-no" title="statement not covered" >        interval = 1</span>
+      }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+      if<span class="cstat-no" title="statement not covered" > (listType === 'minute') {</span>
+        this.minutes = []
+      } <span class="cstat-no" title="statement not covered" >else {</span>
+        this.seconds = []
+      }
+<span class="cstat-no" title="statement not covered" ></span>
+      fo<span class="cstat-no" title="statement not covered" >r (let i = 0; i</span> &lt; 60; i += interval) {
+        if (l<span class="cstat-no" title="statement not covered" >istType === 'minute') {</span>
+<span class="cstat-no" title="statement not covered" >          this.minutes.push(this.formatValue(this.minuteType, i))</span>
+<span class="cstat-no" title="statement not covered" >        } else {</span>
+          thi<span class="cstat-no" title="statement not covered" >s.seconds.push(this.formatValue(this.secondType, i))</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+      }<span class="cstat-no" title="statement not covered" ></span>
+    },<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    renderApmList () {
+      this.apms = []
+<span class="cstat-no" title="statement not covered" >      if (!this.apmType) { return }</span>
+      th<span class="cstat-no" title="statement not covered" >is.apms = this.apmT</span>ype === 'A' ? ['AM', 'PM'] : ['am', 'pm']
+    },
+<span class="cstat-no" title="statement not covered" ></span>
+    readValues () {
+      if (!this.value || this.muteWatch) { return }
+<span class="cstat-no" title="statement not covered" ></span>
+      co<span class="cstat-no" title="statement not covered" >nst timeValue = JSON.parse(JSON.stringify(this.value || {}))</span>
+<span class="cstat-no" title="statement not covered" ></span>
+      const values = Object.keys(timeValue)
+      if (<span class="cstat-no" title="statement not covered" >values.length === 0) { return }</span>
+&nbsp;
+      if (values.indexOf(this.hourType) &gt; -1) {
+        this.hour = timeValue[this.hourType]
+      }<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      if (values.indexOf(this.minuteType) &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered" >        this.min</span>ute = timeValue[this.minuteType]
+      }
+<span class="cstat-no" title="statement not covered" ></span>
+      if (values.indexOf(this.secondType) &gt; -1) {
+        this.second = tim<span class="fstat-no" title="function not covered" >eValue[this</span>.secondType]
+<span class="cstat-no" title="statement not covered" >      } else {</span>
+<span class="cstat-no" title="statement not covered" >        this.sec</span>ond = 0
+      }
+&nbsp;
+      if (values.index<span class="cstat-no" title="statement not covered" >Of(this.apmType) &gt; -1) {</span>
+        this.apm = timeValue[this.apmType]
+      }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+      th<span class="cstat-no" title="statement not covered" >is.fillV</span>alues()
+    },
+&nbsp;
+    fi<span class="cstat-no" title="statement not covered" >llValues () {</span>
+      le<span class="cstat-no" title="statement not covered" >t fullValues = {}</span>
+&nbsp;
+      const baseHour = this.hour
+<span class="cstat-no" title="statement not covered" >      const baseHourType = this.hourType</span>
+<span class="cstat-no" title="statement not covered" ></span>
+      const hourValue = baseHour || baseHour === 0 ? Number(baseHour) : ''
+      const baseOnTwelveHours = this.isTwelveHours(baseHourType)
+<span class="cstat-no" title="statement not covered" >      const apmValue = (baseOnTwelveHours &amp;&amp; this.apm) ? String(this.apm).toLowerCase() : false</span>
+<span class="cstat-no" title="statement not covered" ></span>
+      CONFIG.HOUR_TOKENS.forEach((token) =&gt; {
+<span class="cstat-no" title="statement not covered" >        if (token === bas</span>eHourType) {
+          fullValues[token] = baseHour
+          return
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+        let value
+        let apm
+<span class="cstat-no" title="statement not covered" >        switch (token) {</span>
+          case 'H':
+          case 'HH':<span class="fstat-no" title="function not covered" ></span>
+            if (!String<span class="cstat-no" title="statement not covered" >(ho</span>urValue).length) {
+              fullValues[token] = ''
+              return<span class="cstat-no" title="statement not covered" ></span>
+            } else if (ba<span class="cstat-no" title="statement not covered" >seOnTwelveHour</span>s) {
+              if (apmValue === 'pm') {
+                value <span class="cstat-no" title="statement not covered" >= hourValue &lt; 12 ? hourValue + 12 : hourValue</span>
+              } else {<span class="cstat-no" title="statement not covered" ></span>
+                value<span class="cstat-no" title="statement not covered" > = hourValue % 12</span>
+              }
+<span class="cstat-no" title="statement not covered" >            } else {<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >              value = hourValue % 24</span>
+<span class="cstat-no" title="statement not covered" >            }</span>
+<span class="cstat-no" title="statement not covered" >            fullVa</span>lues[token] = (token === 'HH' &amp;&amp; value &lt; 10) ? `0${value}` : String(value)
+            break
+          case 'k':
+          case 'kk':<span class="cstat-no" title="statement not covered" ></span>
+            if (!S<span class="cstat-no" title="statement not covered" >tring(h</span>ourValue).length) {
+<span class="cstat-no" title="statement not covered" >              fullValues[token] = ''</span>
+              return
+            } else if (baseOnTwelveHours) {
+<span class="cstat-no" title="statement not covered" >              if (apmValue === 'pm') {</span>
+<span class="cstat-no" title="statement not covered" >                value = hourValue &lt; 12</span> ? hourValue + 12 : hourValue
+<span class="cstat-no" title="statement not covered" >              } else {</span>
+                val<span class="cstat-no" title="statement not covered" >ue = hourValue === 12 ? 24 : hourValue</span>
+<span class="cstat-no" title="statement not covered" >              }</span>
+            } el<span class="cstat-no" title="statement not covered" >se {</span>
+              value = hourValue === 0 ? 24 : hourValue
+            }<span class="cstat-no" title="statement not covered" ></span>
+            fullValues[token] = (token === 'kk' &amp;&amp; value &lt; 10) ? `0${value}` : String(value)
+            break
+          case<span class="cstat-no" title="statement not covered" > 'h':</span>
+          case 'hh':
+<span class="cstat-no" title="statement not covered" >            if (apmValue) {</span>
+<span class="cstat-no" title="statement not covered" >              value</span> = hourValue
+              apm = apmValue || 'am'
+            } else {
+<span class="cstat-no" title="statement not covered" >              if (!String(hourValue).length) {</span>
+<span class="cstat-no" title="statement not covered" >                fullValues[token] = ''</span>
+<span class="cstat-no" title="statement not covered" >                fullVa</span>lues.a = ''
+                ful<span class="cstat-no" title="statement not covered" >lValues.A = ''</span>
+<span class="cstat-no" title="statement not covered" >                return</span>
+              } <span class="cstat-no" title="statement not covered" >else if (hourValue &gt; 11) {</span>
+                apm = 'pm'
+<span class="cstat-no" title="statement not covered" >                value = hourValue === 12 ? 12 : hourValue %</span> 12
+              } else {
+                if (baseOnTwelveHours) {
+<span class="cstat-no" title="statement not covered" >                  apm = ''</span>
+                } else {
+<span class="cstat-no" title="statement not covered" >                  apm = 'am'</span>
+<span class="cstat-no" title="statement not covered" >                }</span>
+                value = hourValue % 12 === 0 ? 12 : hourValue
+              }
+<span class="cstat-no" title="statement not covered" >            }</span>
+            fu<span class="cstat-no" title="statement not covered" >llValues[token] = (</span>token === 'hh' &amp;&amp; value &lt; 10) ? `0${value}` : String(value)
+            fu<span class="cstat-no" title="statement not covered" >llValues.a = apm</span>
+            fullValues.A = apm.toUpperCase()
+            br<span class="cstat-no" title="statement not covered" >eak</span>
+        }<span class="cstat-no" title="statement not covered" ></span>
+      })<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+      if (this.m<span class="cstat-no" title="statement not covered" >inute ||</span> this.minute === 0) {
+        const minuteV<span class="cstat-no" title="statement not covered" >alue = Number(this.minute)</span>
+        fullValu<span class="cstat-no" title="statement not covered" >es.m = Strin</span>g(minuteValue)
+        fullValu<span class="cstat-no" title="statement not covered" >es.mm = minuteValue &lt; 10 ? `0${minuteValue}` : S</span>tring(minuteValue)
+      } else {
+        fullValu<span class="cstat-no" title="statement not covered" >es.m = ''</span>
+        fullValues<span class="cstat-no" title="statement not covered" >.mm = ''</span>
+      }
+<span class="cstat-no" title="statement not covered" ></span>
+      if (this.second || this.second === 0) {
+        const se<span class="cstat-no" title="statement not covered" >condValue = Number(this.second)</span>
+        fullValues.s = String(secondValue)
+        fullValues.ss = secondValue &lt; 10 ? `0${secondValue}` : String(secondValue)
+      } else<span class="cstat-no" title="statement not covered" > {</span>
+        full<span class="cstat-no" title="statement not covered" >Values.s = ''</span>
+        full<span class="cstat-no" title="statement not covered" >Values.ss = ''</span>
+      }<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+      this.fullValues = fullValues
+      this.updateTimeValue(fullValues)
+<span class="cstat-no" title="statement not covered" >      this.$emit('changeHours', {data: fullValues})</span>
+    },<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    upda<span class="cstat-no" title="statement not covered" >teTimeValue (fullValues) {</span>
+      this.muteWatch = true
+<span class="cstat-no" title="statement not covered" ></span>
+      co<span class="cstat-no" title="statement not covered" >nst self = this</span>
+&nbsp;
+      const baseTimeValue = JSON.parse(JSON.stringify(this.value || {}))
+<span class="cstat-no" title="statement not covered" >      let timeValue = {}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+      Ob<span class="cstat-no" title="statement not covered" >ject.keys(baseTimeValue).forEach((ke</span>y) =&gt; {
+<span class="cstat-no" title="statement not covered" >        timeValue[key] = fullValues[key]</span>
+      })
+<span class="cstat-no" title="statement not covered" ></span>
+      th<span class="cstat-no" title="statement not covered" >is.$emit('input', ti</span>meValue)
+&nbsp;
+      this.$nextTick(() =&gt; {
+<span class="cstat-no" title="statement not covered" >        self.muteWatch = false</span>
+<span class="cstat-no" title="statement not covered" >      })</span>
+    },<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+    isTwelveHours (token) {<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      return token === 'h' ||</span> token === 'hh'
+    },
+<span class="cstat-no" title="statement not covered" ></span>
+    toggleDropdown () {
+      this.showDropdown = <span class="cstat-no" title="statement not covered" >!this.showDropdown</span>
+    },<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+    se<span class="cstat-no" title="statement not covered" >lect (type, value) {<span class="fstat-no" title="function not covered" ></span></span>
+      if<span class="cstat-no" title="statement not covered" > (type === 'hour') {</span>
+        this.hour = value
+      } else if (type === 'minute') {
+<span class="cstat-no" title="statement not covered" >        this.minute = value</span>
+      } else if (type === 'second') {
+<span class="cstat-no" title="statement not covered" >        this.second =<span class="fstat-no" title="function not covered" > v</span>alue</span>
+      } <span class="cstat-no" title="statement not covered" >else if (type === 'apm')</span> {
+        this.apm = value
+      }
+    },<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    clearTime () {
+      this.hour = ''<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      this.minute = ''</span>
+      this.second = ''
+      this.apm = ''<span class="fstat-no" title="function not covered" ></span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+  },<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  mounte<span class="cstat-no" title="statement not covered" >d () {</span>
+    this.rend<span class="cstat-no" title="statement not covered" >erFormat()</span>
+  }<span class="cstat-no" title="statement not covered" ></span>
+}<span class="cstat-no" title="statement not covered" ></span>
+&lt;/script<span class="cstat-no" title="statement not covered" >&gt;</span>
+&nbsp;
+&lt;style&gt;
+<span class="fstat-no" title="function not covered" ></span>
+&lt;/styl<span class="cstat-no" title="statement not covered" >e&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Apr 08 2018 13:53:53 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

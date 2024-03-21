@@ -1,0 +1,263 @@
+<template lang="pug">
+  div
+      .col-xs-12
+        h1.card-title(style='color: #B0AFAB') User: {{userInput.firstname}} {{userInput.lastname}}
+        .row
+          .col
+            input.form-control(type="text" v-model="userInput.firstname" placeholder="enter your first name")
+          .col
+            input.form-control(type="text" v-model="userInput.lastname" placeholder="enter your last name")
+      hr
+      .row
+        .col-xs-12.col-md-6
+          h4 1. Select your job status
+          Slider.ml-4(name='expslider'
+            :min='0', :max='3', tooltip='none', :interval='1'
+            v-model="userInput.jobStatus"
+            piecewise="true"
+            :piecewiseStyle="piecewiseStyle"
+            :piecewiseActiveStyle="piecewiseActiveStyle"
+            piecewiseLabel="true"
+            :data="['Not looking','Not looking, but open','Casually looking','Actively looking']" 
+          )
+      hr
+      .row
+        .col-xs-12.col-md-8
+          h4 2. Enter your skills
+          RefairKeywords#profilekeywords(
+            :keywords="userInput.keywords" v-on:keywords='updateProfileKeywords'
+            :skills="userInput.skills" @skills='updateSkills'
+          )
+        .col-xs-12.col-md-6
+          //ChartJs(chart-id='kwchart', :height='250', :chart-data='patterndatakw')
+      hr
+      .row
+        .col-12
+          h4 3. What is the notice period in Your current job
+          input.form-control.col-6(v-model='userInput.noticePeriod' type="text" placeholder="eg. one month from the start of the next month")
+      hr
+      .row
+        .col-12
+          h4 4. When is the best time to contact you
+          textarea.form-control.col-6(v-model='userInput.availability' rows=3 placeholder="available monday between 12 and 2,\ntuesday, wednesday, thursday after 4 pm")
+      hr
+      .row
+        .col-12
+          h4 5. Show matching jobs above this salary
+          b-input-group(append='PLN')
+            b-form-input.col-6(v-model='userInput.expectedSalary' type='number' placeholder="eg. 7000 (don't price yourself out of market)")
+          p(v-if="userInput.expectedSalary > 99999 && userInput.expectedSalary < 999999") Are you Elon Musk?
+          p(v-if="userInput.expectedSalary >= 999999") Try the dark web
+      hr
+      .row
+        .col-12
+          a.btn.btn-info(href='#', @click='saveProfile') Save Profile
+        
+</template>
+<script>
+import Vue from 'vue'
+import {
+  mixins,
+  HorizontalBar
+} from 'vue-chartjs'
+import RefairKeywords from '@/components/Keywords.vue'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import {
+  faCog
+} from '@fortawesome/fontawesome-free-solid'
+import JobListItem from '@/components/JobListItem'
+import Slider from 'vue-slider-component'
+/*
+var ChartJs = {
+  extends: HorizontalBar,
+  mixins: [mixins.reactiveProp],
+  props: ['chartData'],
+  data () {
+    return {
+      options:{
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        }
+      }
+    }
+  },
+  mounted () {
+    if (this.chartData) {
+      this.renderChart(this.chartData, this.options)
+    }
+  }
+};*/
+
+export default {
+  props: ['exp'],
+
+  components: {
+    RefairKeywords,
+    FontAwesomeIcon,
+    //ChartJs,
+    JobListItem,
+    Slider
+  },
+
+  computed: {
+    cogIcon: () => faCog,
+    email: vm => decodeURIComponent(vm.$store.state.dehashedData.EMAIL),
+    filteredJobs: vm => vm.jobs.filter(job => job.salaryMin >= vm.userInput.expectedSalary)
+  },
+
+  watch: {
+    filteredJobs: function(jobs) {
+      this.$emit('jobs', jobs)
+    },
+
+    'userInput.keywords': function(keywords) {
+      if(keywords.length != 0){
+        // On keywords updated, send it to backend for ai analysis
+        this.$emit('loading', true)
+
+        let params = {
+          'eval': keywords.join(),
+        }
+
+        this.$store.getters.backend('/eval', {params})
+          .then(ret => {
+            console.log(ret)
+            var dataUpd = {
+                labels: ['Backend', 'Full Stack', 'Mobile/Embedded', 'Testing', 'Frontend', 'Dev Ops', 'Business Intelligence', 'IT Trainee', 'Project Management', 'Support', 'UX Designer', 'Business Analyst', 'Other'],
+                datasets: [{
+                  label: 'Your Personal Profile ',
+                  backgroundColor: '#a84979',
+                  data: ret.data.weightsA.predictions
+                }]
+              };
+            this.patterndatakw = dataUpd
+            this.matchProfile()
+          })
+          .catch(error => console.error(error))
+          .finally(() => this.$emit('loading', false))
+      }
+    }
+  },
+
+  mounted () {
+    const email = this.$store.state.dehashedData.EMAIL
+
+    this.$store.state.backend
+      .post('/api/user/getprofile/' + email)
+      .then(response => {
+        console.log('getprofile')
+        console.log(response)
+        //if(response.data.status !== 'error')
+          this.userInput = response.data
+          this.userInput.exp = this.exp
+      })
+  },
+
+  data () {
+    return {
+      userInput: {
+        firstname: '',
+        lastname: '',
+        keywords: [],
+        skills: [],
+        noticePeriod: '',
+        availability: '',
+        expectedSalary: '',
+        jobStatus: ''
+      },
+      jobs: [],
+      patterndatakw: {
+        labels: ['Backend', 'Full Stack', 'Mobile/Embedded', 'Testing', 'Frontend', 'Dev Ops', 'Business Intelligence', 'IT Trainee', 'Project Management', 'Support', 'UX Designer', 'Business Analyst', 'Other'],
+        datasets: [{
+          label: 'Refair.me Profile ',
+          backgroundColor: '#a84979',
+          data: [0.05, 0.2, 0.1, 0.5, 0.2, 0.05, 0, 0, 0, 0, 0]
+        }]
+      },
+      piecewiseStyle: {
+        "backgroundColor": "#ccc",
+        "visibility": "visible",
+        "width": "12px",
+        "height": "12px"
+      },
+      piecewiseActiveStyle: {
+        "backgroundColor": "#3498db"
+      }
+    }
+  },
+
+  methods: {
+    populateWeights (weights) {
+      return {
+        labels: ['Backend', 'Full Stack', 'Mobile/Embedded', 'Testing', 'Frontend', 'Dev Ops', 'Business Intelligence', 'IT Trainee', 'Project Management', 'Support', 'UX Designer', 'Business Analyst', 'Other'],
+        datasets: [{
+          label: 'Refair.me Profile ',
+          backgroundColor: '#a84979',
+          data: weights
+        }]
+      }
+    },
+
+    updateProfileKeywords (value) {
+      if(value.length == 0){
+        this.jobs = []
+      } else {
+        this.userInput.keywords = value;
+      }
+    },
+
+    updateSkills (value) {
+      this.userInput.skills = value
+    },
+
+    saveProfile () {
+      console.log('Saving profile')
+      let params = {
+        'email': this.$store.state.dehashedData.EMAIL,
+        'weights': this.patterndatakw.datasets[0].data,
+        ...this.userInput
+      }
+
+      this.$store.state.backend
+        .post('/api/user/storeprofile', {params})
+        .then(response => alert('Profile saved'))
+        .catch(error => console.log(error))
+    },
+
+    matchProfile () {
+      let params = {
+        'passedWeights': JSON.stringify(this.patterndatakw.datasets[0].data)
+      }
+
+      this.$store.state.backend
+        .get('/matchprofile', {params})
+        .then(ret => {
+          this.jobs = ret.data
+          console.log(ret)
+        })
+        .catch(error => console.error(error))
+    },
+
+    openJobDetails (jobId) {
+      this.$router.push({
+        path: `api/job/${jobId}`
+      })
+    }
+  }
+}
+</script>
+<style lang="sass" scoped>
+  @import '@/assets/settings.sass'
+
+  .h1
+    margin-bottom: 100px
+  h4
+    color: $primaryColor
+  tbody tr
+    cursor: pointer
+  .card
+    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+    border: 0
+</style>
