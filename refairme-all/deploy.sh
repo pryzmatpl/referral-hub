@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 DEPLOY_SERVER='root@ec2-18-185-73-100.eu-central-1.compute.amazonaws.com'
