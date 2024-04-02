@@ -16,7 +16,7 @@ Vue.use(VueRouter)
 Vue.use(router)
 Vue.router = router
 Vue.use(VueAnalytics, {
-  appName: 'refair.em', // Mandatory
+  appName: 'referralhub.com', // Mandatory
   appVersion: '0.9', // Mandatory
   trackingId: 'UA-122813704-1', // Mandatory
   trackPage: true,

@@ -2,8 +2,8 @@
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const vueLoaderConfig = require('./vue-loader.conf')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -79,10 +79,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.html$/,
@@ -91,7 +88,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin("style.css")
+    new MiniCssExtractPlugin()
   ],
   node: {
     __dirname: false,
