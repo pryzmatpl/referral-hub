@@ -1,9 +1,11 @@
-<template lang="pug">
-  .card.mt-3.text-center
-    .card-body
-      h1 {{status}}
-      p  {{message}}
-      router-link(to='/auth/signin' tag="button").btn.btn-info Click here to sign in!
+<template>
+  <div class="card mt-3 text-center">
+    <div class="card-body">
+      <h1>{{status}}</h1>
+      <p>{{message}}</p>
+      <router-link to="/auth/signin" tag="button" class="btn btn-info">Click here to sign in!</router-link>
+    </div>
+  </div>
 </template>
 <script>
 export default {

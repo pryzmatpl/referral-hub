@@ -1,34 +1,26 @@
-<template lang="pug">
-  div
-    h2.mt-3.mb-4.text-center My profile
-    .card
-      .card-body
-        ul.nav.nav-justified
-          li.nav-item(v-for="(value, index) in tabs")
-            a.nav-link(
-              :class="[{active: tabs[currentTab].name === value.name}]"
-              :key="value.name"
-              @click="currentTab = index"
-            ) {{value.name}}
-        keep-alive
-          component(
-            :is="currentTabComponent"
-            @user="updateUserInput"
-            @exp="updateExp"
-            :exp="experience"
-            @jobs="updateJobs"
-            @loading="updateLoading"
-          )
-    h1.mt-3(style='color: #B0AFAB;')
-      | Profiled Jobs
-      font-awesome-icon(v-if='isLoading', :icon='cogIcon', spin='')
-    template(v-if="!jobs.message")
-      JobListItem.mt-2(
-        v-for="job in jobs"
-        :job="job"
-        :key="job.id"
-      )
-          
+<template>
+  <div>
+    <h2 class="mt-3 mb-4 text-center">My profile</h2>
+    <div class="card">
+      <div class="card-body">
+        <ul class="nav nav-justified">
+          <li v-for="(value, index) in tabs" class="nav-item">
+            <a :class="[{active: tabs[currentTab].name === value.name}]" :key="value.name" @click="currentTab = index" class="nav-link">{{value.name}}</a>
+          </li>
+        </ul>
+        <keep-alive>
+          <component :is="currentTabComponent" @user="updateUserInput" @exp="updateExp" :exp="experience" @jobs="updateJobs" @loading="updateLoading"></component>
+        </keep-alive>
+      </div>
+    </div>
+    <h1 class="mt-3" style="color: #B0AFAB;">
+      Profiled Jobs
+      <font-awesome-icon v-if="isLoading" :icon="cogIcon" spin=""></font-awesome-icon>
+    </h1>
+    <template v-if="!jobs.message">
+      <JobListItem class="mt-2" v-for="job in jobs" :job="job" :key="job.id"></JobListItem>
+    </template>
+  </div>
 </template>
 <script>
 import Vue from 'vue'
@@ -137,18 +129,18 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-  .h1
-    margin-bottom: 100px
-  tbody tr
-    cursor: pointer
-  .card
-    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
-    border: 0
-  a
-    color: inherit
-    cursor: pointer
-  .nav-link.active
-    border-bottom: 4px solid #42bff4
-  .nav-justified
-    border-bottom: 0.25px solid lightgray
+.h1
+  margin-bottom: 100px
+tbody tr
+  cursor: pointer
+.card
+  box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+  border: 0
+a
+  color: inherit
+  cursor: pointer
+.nav-link.active
+  border-bottom: 4px solid #42bff4
+.nav-justified
+  border-bottom: 0.25px solid lightgray
 </style>
