@@ -8,7 +8,6 @@ const webpack = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 const {CleanWebpackPlugin} = require("clean-webpack-plugin")
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
 function resolve(dir) {
   return path.join(__dirname, ".", dir)
 }
@@ -36,7 +35,6 @@ module.exports = {
       template: "index.html",
       inject: true,
     }),
-    new ExtractTextPlugin(),
     new BundleAnalyzerPlugin(),    
   ],
   optimization: {
