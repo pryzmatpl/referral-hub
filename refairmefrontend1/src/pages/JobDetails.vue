@@ -28,7 +28,7 @@
           .row
             .col-4
               p Project type:
-            .col-8
+            .col-8l
               p 
           .row
             .col-4
