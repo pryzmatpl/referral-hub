@@ -38,13 +38,11 @@ module.exports = {
         }
       },
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
+        test: /\.js$/,        
         include: [
           resolve('src'),
           resolve('test'),
-          resolve('node_modules/webpack-dev-server/client'),
-          require.resolve("bootstrap-vue")
+          resolve('node_modules/webpack-dev-server/client')
         ]
       },
       {

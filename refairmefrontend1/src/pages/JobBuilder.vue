@@ -1,25 +1,36 @@
-<template lang="pug">
-div
-  h2.mt-3.mb-4.text-center So you think you can create an competitive offer?
-  .card
-    .card-body
-      ul.nav.nav-justified
-        li.nav-item(v-for="(value, index) in tabs")
-          a.nav-link(
-            :class="[{active: tabs[currentTab].name === value.name}]"
-            :key="value.name"
-            @click="currentTab = index"
-          ) {{value.name}}
-      transition(name="fade")
-        keep-alive
-          component.tab.mt-4(
-            :is="currentTabComponent"
-            @job="updateJob"
-            @add-job="addJob"
-            :companyId="jobBuilder.company.id"
-            :projectId="jobBuilder.project.id"
-          )
+<template>
+  <div>
+    <h2 class="mt-3 mb-4 text-center">So you think you can create an competitive offer?</h2>
+    <div class="card">
+      <div class="card-body">
+        <ul class="nav nav-justified">
+          <li v-for="(value, index) in tabs" :key="value.name" class="nav-item">
+            <a
+              :class="{ active: tabs[currentTab].name === value.name }"
+              @click="currentTab = index"
+              class="nav-link"
+            >
+              {{ value.name }}
+            </a>
+          </li>
+        </ul>
+        <transition name="fade">
+          <keep-alive>
+            <component
+              :is="currentTabComponent"
+              @job="updateJob"
+              @add-job="addJob"
+              :companyId="jobBuilder.company.id"
+              :projectId="jobBuilder.project.id"
+              class="tab mt-4"
+            ></component>
+          </keep-alive>
+        </transition>
+      </div>
+    </div>
+  </div>
 </template>
+
 <script>
 
 import JobBuilderCompanyProfile from '@/components/JobBuilderCompanyProfile'

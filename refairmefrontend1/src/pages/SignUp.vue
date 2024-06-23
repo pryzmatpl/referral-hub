@@ -82,7 +82,6 @@ import {
   faEye,
   faEyeSlash
 } from '@fortawesome/fontawesome-free-solid'
-import { switchCase } from 'babel-types';
 
 export default {
   components: {

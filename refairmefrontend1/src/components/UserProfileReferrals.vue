@@ -1,19 +1,14 @@
-<template lang="pug">
-  div
-    b-table(
-      :items="referrals"
-      @row-clicked="onRowClicked"
-      :fields="['jobsId','email','status','createdAt']"
-    )
-    b-modal(
-      v-model="modalShow"
-      size="lg"
-      hide-footer
-    )
-      JobDetails(
-        v-if="modalShow"
-        :jobId="jobId"
-      )
+<template>
+  <div>
+    <b-table
+        :items="referrals"
+        @row-clicked="onRowClicked"
+        :fields="['jobsId', 'email', 'status', 'createdAt']"
+    ></b-table>
+    <b-modal v-model="modalShow" size="lg" hide-footer>
+      <JobDetails v-if="modalShow" :jobId="jobId" />
+    </b-modal>
+  </div>
 </template>
 <script>
 import JobDetails from '@/pages/JobDetails'

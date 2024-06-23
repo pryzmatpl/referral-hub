@@ -1,143 +1,258 @@
-s<template lang="pug">
-div
-  form#aboutJob(@submit.stop.prevent="emitJobToParent")
-    h1 About the job
-    hr
-    .form-row
-      .col-6
-        .form-group
-          label(for='jobTitle') Job title
-          input.form-control(name='jobTitle', type='text', v-model='title', placeholder='ex. Chief Data Analyst, Technical Support Engineer')
-          small.invalid-feedback.help-block
-        .form-group
-          label(for='jobDescription') Job description
-          textarea.form-control(name='jobDescription', rows='4', v-model='description', placeholder='What is this person being hired to do')
-          small.invalid-feedback.help-block
-        .form-group
-          label(for='jobDescriptionPreview') Description preview
-          vue-markdown(:source="description")
-      .col-6
-        .form-group
-          label(for='contractType') Contract type
-          //input.form-control(name="contractType" type='text' v-model='contractType' placeholder="Specify contract type")
-          multiselect(
-            v-model="contractType"
-            :options="['B2B', 'UoP','Contract','Other']"
-            :searchable="false",
-            :multiple="true"
-            :close-on-select="false",
-            :show-labels="false"
-            placeholder="Pick a type"
-          )
-          small.invalid-feedback.help-block
-        .form-group
-          label(for='jobLocation') Location
-          input.form-control(name='jobLocation' type='text' v-model='location' placeholder='Enter work location')
-          small.invalid-feedback.help-block
-        .form-group
-          label(for='recruitmentTime') Recruitment time
-          input.form-control(name='recruitmentTime' type='number' v-model='duration' placeholder='Enter how many days from apply to offer')
-          small.invalid-feedback.help-block
-    br
-    h5 SKILLS
-    hr
-    .form-row
-      .col
-        .form-group
-          label#kwErrMsg(for='skillsMust') Must have
-          Keywords(
-            :keywords='this.keywords', @keywords='keywordsChange' 
-            :skills='skills', @skills='skillsChange'
-            placeholder="eg. PHP"
-            name="skillsMust")
-          small.invalid-feedback.help-block sample error
-      //.col
-        .form-group
-          label#kwErrMsg(for='skillsNice') Nice to have
-          Keywords(
-            :skills='skillsNice', @skills='skillsNiceChange'
-            placeholder="eg. Javascript"
-            name="skillsNice")
-          small.invalid-feedback.help-block sample error
-    //.form-row
-      .col
-        h5 FRAMEWORKS
-        hr
-    //.form-row
-      .col
-        .form-group
-          label#kwErrMsg(for='mustHave') Must have
-          Keywords(
-            :keywords='this.keywords', @keywords='keywordsChange' 
-            :skills='skills', @skills='skillsChange'
-            placeholder="eg. Angular"
-            name="mustHave")
-          small.invalid-feedback.help-block sample error
-      .col
-        .form-group
-          label#kwErrMsg(for='mustHave') Nice to have
-          Keywords(
-            :keywords='this.keywords', @keywords='keywordsChange' 
-            :skills='skills', @skills='skillsChange'
-            placeholder="eg. Vue.js"
-            name="mustHave")
-          small.invalid-feedback.help-block sample error
-    //.form-row
-      .col
-        h5 METHODOLOGIES
-        hr
-    //.form-row
-      .col
-        .form-group
-          label#kwErrMsg(for='skillsMust') Must have
-          Keywords(
-            :keywords='this.keywords', @keywords='keywordsChange' 
-            :skills='skills', @skills='skillsChange'
-            placeholder="eg. Agile"
-            name="skillsMust")
-          small.invalid-feedback.help-block sample error
-      .col
-        .form-group
-          label#kwErrMsg(for='skillsNice') Nice to have
-          Keywords(
-            :keywords='this.keywords', @keywords='keywordsChange' 
-            :skills='skills', @skills='skillsChange'
-            placeholder="eg. Lean"
-            name="skillsNice")
-          small.invalid-feedback.help-block sample error
-    .form-row.mt-2
-      .col-3
-        label.col-form-label(for='travel') % Travel of role
-        Slider(name='travel', ref="slider", :min='0', :max='100', tooltip='false', :interval='5', v-model='travelPercentage')
-        span.small {{travelPercentage}}%
-      .col-3
-        label.col-form-label(for='remoteWork') % Remote work possible
-        Slider(name='remoteWork', :min='0', :max='100', tooltip='false', :interval='5', v-model='remotePercentage')
-        span.small {{remotePercentage}}%
-      .col-3
-        label.col-form-label(for='salary') Salary
-        Slider(name="salary" :min='0', :max='50000', :interval='500', tooltip='false', :tooltip-dir="['left','right']", v-model='fund')
-        span.small.float-left {{fund[0]}} PLN
-        span.small.float-right {{fund[1]}} PLN
-      .col-3
-        label.col-form-label(for='experienceRequired') Experience required
-        Slider(name='experienceRequired', :min='0', :max='20', tooltip='false', :interval='1', v-model='exp')
-        span.small {{exp}} years
-    .form-row.mt-4
-      .form-group.col-4
-        label
-          input(type='checkbox', v-model='remote')
-          |  This position requires remote
-      .form-group.col-4
-        label
-          input(type='checkbox', v-model='relocation')
-          |  This position requires relocation
-      .form-group.col-4
-        label
-          input(type='checkbox', v-model='relocationPackage')
-          |  Relocation package offered
-    button.btn.btn-info.float-right(:type="jobToEdit ? 'button' : 'submit'" @click="jobToEdit ? updateJob() : ''")
-      |{{!jobToEdit ? 'Next' : 'Update'}}
+<template>
+  <div>
+    <form id="aboutJob" @submit.stop.prevent="emitJobToParent">
+      <h1>About the job</h1>
+      <hr />
+      <div class="form-row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="jobTitle">Job title</label>
+            <input
+                class="form-control"
+                name="jobTitle"
+                type="text"
+                v-model="title"
+                placeholder="ex. Chief Data Analyst, Technical Support Engineer"
+            />
+            <small class="invalid-feedback help-block"></small>
+          </div>
+          <div class="form-group">
+            <label for="jobDescription">Job description</label>
+            <textarea
+                class="form-control"
+                name="jobDescription"
+                rows="4"
+                v-model="description"
+                placeholder="What is this person being hired to do"
+            ></textarea>
+            <small class="invalid-feedback help-block"></small>
+          </div>
+          <div class="form-group">
+            <label for="jobDescriptionPreview">Description preview</label>
+            <vue-markdown :source="description" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="contractType">Contract type</label>
+            <multiselect
+                v-model="contractType"
+                :options="['B2B', 'UoP', 'Contract', 'Other']"
+                :searchable="false"
+                :multiple="true"
+                :close-on-select="false"
+                :show-labels="false"
+                placeholder="Pick a type"
+            />
+            <small class="invalid-feedback help-block"></small>
+          </div>
+          <div class="form-group">
+            <label for="jobLocation">Location</label>
+            <input
+                class="form-control"
+                name="jobLocation"
+                type="text"
+                v-model="location"
+                placeholder="Enter work location"
+            />
+            <small class="invalid-feedback help-block"></small>
+          </div>
+          <div class="form-group">
+            <label for="recruitmentTime">Recruitment time</label>
+            <input
+                class="form-control"
+                name="recruitmentTime"
+                type="number"
+                v-model="duration"
+                placeholder="Enter how many days from apply to offer"
+            />
+            <small class="invalid-feedback help-block"></small>
+          </div>
+        </div>
+      </div>
+      <br />
+      <h5>SKILLS</h5>
+      <hr />
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label id="kwErrMsg" for="skillsMust">Must have</label>
+            <Keywords
+                :keywords="this.keywords"
+                @keywords="keywordsChange"
+                :skills="skills"
+                @skills="skillsChange"
+                placeholder="eg. PHP"
+                name="skillsMust"
+            />
+            <small class="invalid-feedback help-block">sample error</small>
+          </div>
+          <div class="form-group">
+            <label id="kwErrMsg" for="skillsNice">Nice to have</label>
+            <Keywords
+                :skills="skillsNice"
+                @skills="skillsNiceChange"
+                placeholder="eg. Javascript"
+                name="skillsNice"
+            />
+            <small class="invalid-feedback help-block">sample error</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <h5>FRAMEWORKS</h5>
+          <hr />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label id="kwErrMsg" for="mustHave">Must have</label>
+            <Keywords
+                :keywords="this.keywords"
+                @keywords="keywordsChange"
+                :skills="skills"
+                @skills="skillsChange"
+                placeholder="eg. Angular"
+                name="mustHave"
+            />
+            <small class="invalid-feedback help-block">sample error</small>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label id="kwErrMsg" for="mustHave">Nice to have</label>
+              <Keywords
+                  :keywords="this.keywords"
+                  @keywords="keywordsChange"
+                  :skills="skills"
+                  @skills="skillsChange"
+                  placeholder="eg. Vue.js"
+                  name="mustHave"
+              />
+              <small class="invalid-feedback help-block">sample error</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <h5>METHODOLOGIES</h5>
+          <hr />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label id="kwErrMsg" for="skillsMust">Must have</label>
+            <Keywords
+                :keywords="this.keywords"
+                @keywords="keywordsChange"
+                :skills="skills"
+                @skills="skillsChange"
+                placeholder="eg. Agile"
+                name="skillsMust"
+            />
+            <small class="invalid-feedback help-block">sample error</small>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label id="kwErrMsg" for="skillsNice">Nice to have</label>
+              <Keywords
+                  :keywords="this.keywords"
+                  @keywords="keywordsChange"
+                  :skills="skills"
+                  @skills="skillsChange"
+                  placeholder="eg. Lean"
+                  name="skillsNice"
+              />
+              <small class="invalid-feedback help-block">sample error</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row mt-2">
+        <div class="col-3">
+          <label class="col-form-label" for="travel">% Travel of role</label>
+          <Slider
+              name="travel"
+              ref="slider"
+              :min="0"
+              :max="100"
+              tooltip="false"
+              :interval="5"
+              v-model="travelPercentage"
+          />
+          <span class="small">{{ travelPercentage }}%</span>
+        </div>
+        <div class="col-3">
+          <label class="col-form-label" for="remoteWork">% Remote work possible</label>
+          <Slider
+              name="remoteWork"
+              :min="0"
+              :max="100"
+              tooltip="false"
+              :interval="5"
+              v-model="remotePercentage"
+          />
+          <span class="small">{{ remotePercentage }}%</span>
+        </div>
+        <div class="col-3">
+          <label class="col-form-label" for="salary">Salary</label>
+          <Slider
+              name="salary"
+              :min="0"
+              :max="50000"
+              :interval="500"
+              tooltip="false"
+              :tooltip-dir="['left', 'right']"
+              v-model="fund"
+          />
+          <span class="small float-left">{{ fund[0] }} PLN</span>
+          <span class="small float-right">{{ fund[1] }} PLN</span>
+        </div>
+        <div class="col-3">
+          <label class="col-form-label" for="experienceRequired">Experience required</label>
+          <Slider
+              name="experienceRequired"
+              :min="0"
+              :max="20"
+              tooltip="false"
+              :interval="1"
+              v-model="exp"
+          />
+          <span class="small">{{ exp }} years</span>
+        </div>
+      </div>
+      <div class="form-row mt-4">
+        <div class="form-group col-4">
+          <label>
+            <input type="checkbox" v-model="remote" />
+            This position requires remote
+          </label>
+        </div>
+        <div class="form-group col-4">
+          <label>
+            <input type="checkbox" v-model="relocation" />
+            This position requires relocation
+          </label>
+        </div>
+        <div class="form-group col-4">
+          <label>
+            <input type="checkbox" v-model="relocationPackage" />
+            Relocation package offered
+          </label>
+        </div>
+      </div>
+      <button
+          class="btn btn-info float-right"
+          :type="jobToEdit ? 'button' : 'submit'"
+          @click="jobToEdit ? updateJob() : ''"
+      >
+        {{ !jobToEdit ? 'Next' : 'Update' }}
+      </button>
+    </form>
+  </div>
 </template>
 <script>
 import Keywords from './Keywords'

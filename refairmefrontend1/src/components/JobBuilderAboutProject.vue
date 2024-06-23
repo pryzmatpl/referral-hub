@@ -1,99 +1,159 @@
-<template lang="pug">
-  div
-    h1 About the project
-    hr
-    form#aboutProject(@submit.prevent="emitProjectToParent")
-      .row 
-        .col
-          label Choose existing project:
-      .form-row
-        select(v-model="selectedProjectIndex")
-          option(value="" disabled) choose project
-          option(v-for="(value, index) in projects", :value="index") {{value.name}}
-      .row
-        .col
-          p OR create new project below:
-      .row
-        .col-6
-          .form-group
-            label(for="projectTitle") Project title
-            input.form-control(
-              v-model="name"
-              name="projectTitle" type="text" placeholder="Enter new project title"
-            )
-          .form-group
-            label(for="whyWorkOnProject") Why would someone want to work on the project?
-            textarea.form-control(
-              name="whyWorkOnProject"
-              v-model="description"
-              rows=5
-              type="text"
-              placeholder="The project is designed to solve the problem about recruitment. It has a small agile team who are building a game changer. If you want to work in a fast moving environment and are solutions orientated this is for you "
-            )
-            small.invalid-feedback.help-block
-          .form-group
-            label(for="projectMethodology") Work methodology
-            .form-check(v-for="method in ['issue tracking tool','knowledge repository','code reviews','pair programming','unit testing','TDD','integration testing','Agile','Lean','Scrum','Waterfall']")
-              input.form-check-input(type="checkbox" name="checkbox" v-model="methodology", :value="method")
-              label.form-check-label {{method}}
-          .form-group
-            label(for="perks") Perks
-            .form-check(v-for="perk in perks")
-              input.form-check-input(type="checkbox" name="checkbox" v-model="selectedPerks", :value="perk")
-              label.form-check-label {{perk.name}}
-        .col-6
-          .row
-            .col
-              .form-group
-                label How many people on project?
-                b-button-group.w-100
-                  b-button.w-100(
-                    v-for="teamSizeOption in ['<10','<50','100+']"
-                    :key="teamSizeOption"
-                    type='button'
-                    variant="outline-secondary"
-                    @click="staff = teamSizeOption"
-                    :class="{active: staff === teamSizeOption}"
-                  ) {{teamSizeOption}}
-            .col
-              .form-group
-                label What stage is project at?
-                multiselect(
-                  v-model="stage"
-                  :options="['greenfield','ongoing development','maintenance']"
-                  :searchable="false",
-                  :close-on-select="true",
-                  :show-labels="false"
-                  placeholder="Pick a type"
-                )
-          .form-group
-            label(for="projectStack") What is the project techstack?
-            textarea.form-control(
-              name="projectStack"
-              v-model="stack"
-              rows=5
-              type="text"
-              placeholder="Please describe technology stack"
-            )
-            small.invalid-feedback.help-block
-
-          .form-row.m-0
-            label Weekly work breakdown
-          .form-row
-            .col-8
-              .form-group.row(v-for="(value, key, index) in breakdown").mt-0.mb-0
-                label.col-5 {{value.label}} 
-                .col-4.pl-0.pr-0
-                  Slider(name='expslider', :process-style="{backgroundColor: labelColors[key]}",
-                    :min='1', :max='100', tooltip='none', :interval='1', v-model='value.value'
-                  )
-                .col
-                  //span {{value.value}}
-                  span {{ formattedBreakdown[key].value}}
-                    small %
-            .col-4
-              chart(chart-id='chart', :chart-data='chartData', :options='options')
-      button.btn.btn-info.float-right(type="submit") Next
+<template>
+  <div>
+    <h1>About the project</h1>
+    <hr />
+    <form id="aboutProject" @submit.prevent="emitProjectToParent">
+      <div class="row">
+        <div class="col">
+          <label>Choose existing project:</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <select v-model="selectedProjectIndex">
+          <option value="" disabled>choose project</option>
+          <option v-for="(value, index) in projects" :key="index" :value="index">
+            {{ value.name }}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p>OR create new project below:</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="projectTitle">Project title</label>
+            <input
+                class="form-control"
+                v-model="name"
+                name="projectTitle"
+                type="text"
+                placeholder="Enter new project title"
+            />
+          </div>
+          <div class="form-group">
+            <label for="whyWorkOnProject">Why would someone want to work on the project?</label>
+            <textarea
+                class="form-control"
+                name="whyWorkOnProject"
+                v-model="description"
+                rows="5"
+                type="text"
+                placeholder="The project is designed to solve the problem about recruitment. It has a small agile team who are building a game changer. If you want to work in a fast moving environment and are solutions orientated this is for you "
+            ></textarea>
+            <small class="invalid-feedback help-block"></small>
+          </div>
+          <div class="form-group">
+            <label for="projectMethodology">Work methodology</label>
+            <div
+                class="form-check"
+                v-for="method in ['issue tracking tool','knowledge repository','code reviews','pair programming','unit testing','TDD','integration testing','Agile','Lean','Scrum','Waterfall']"
+                :key="method"
+            >
+              <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="checkbox"
+                  v-model="methodology"
+                  :value="method"
+              />
+              <label class="form-check-label">{{ method }}</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="perks">Perks</label>
+            <div class="form-check" v-for="perk in perks" :key="perk.name">
+              <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="checkbox"
+                  v-model="selectedPerks"
+                  :value="perk"
+              />
+              <label class="form-check-label">{{ perk.name }}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label>How many people on project?</label>
+                <b-button-group class="w-100">
+                  <b-button
+                      class="w-100"
+                      v-for="teamSizeOption in ['<10','<50','100+']"
+                      :key="teamSizeOption"
+                      type="button"
+                      variant="outline-secondary"
+                      @click="staff = teamSizeOption"
+                      :class="{ active: staff === teamSizeOption }"
+                  >
+                    {{ teamSizeOption }}
+                  </b-button>
+                </b-button-group>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label>What stage is project at?</label>
+                <multiselect
+                    v-model="stage"
+                    :options="['greenfield','ongoing development','maintenance']"
+                    :searchable="false"
+                    :close-on-select="true"
+                    :show-labels="false"
+                    placeholder="Pick a type"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="projectStack">What is the project techstack?</label>
+            <textarea
+                class="form-control"
+                name="projectStack"
+                v-model="stack"
+                rows="5"
+                type="text"
+                placeholder="Please describe technology stack"
+            ></textarea>
+            <small class="invalid-feedback help-block"></small>
+          </div>
+          <div class="form-row m-0">
+            <label>Weekly work breakdown</label>
+          </div>
+          <div class="form-row">
+            <div class="col-8">
+              <div class="form-group row" v-for="(value, key, index) in breakdown" :key="index">
+                <label class="col-5">{{ value.label }}</label>
+                <div class="col-4 pl-0 pr-0">
+                  <Slider
+                      name="expslider"
+                      :process-style="{ backgroundColor: labelColors[key] }"
+                      :min="1"
+                      :max="100"
+                      tooltip="none"
+                      :interval="1"
+                      v-model="value.value"
+                  />
+                </div>
+                <div class="col">
+                  <span>{{ formattedBreakdown[key].value }} <small>%</small></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <chart chart-id="chart" :chart-data="chartData" :options="options" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-info float-right" type="submit">Next</button>
+    </form>
+  </div>
 </template>
 <script>
 import validation from '../validation.js'

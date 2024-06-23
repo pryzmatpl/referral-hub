@@ -1,12 +1,14 @@
-<template lang="pug">
-.form-group.col-12
-  label(:for="slug") {{name}}
-  input.form-control(
-    :name="slug"
-    v-bind:value="value"
-    v-on:input="$emit('input', $event.target.value)"
-  )
-  small(v-if="error") Error placeholder
+<template>
+  <div class="form-group col-12">
+    <label :for="slug">{{ name }}</label>
+    <input
+        class="form-control"
+        :name="slug"
+        :value="value"
+        @input="$emit('input', $event.target.value)"
+    />
+    <small v-if="error">Error placeholder</small>
+  </div>
 </template>
 <script>
 export default {

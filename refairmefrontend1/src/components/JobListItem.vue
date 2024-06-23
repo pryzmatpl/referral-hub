@@ -1,68 +1,79 @@
-<template lang="pug">
-div
-  .card.mb-3.shadow(
-    style="cursor: pointer"
-    v-on:mouseover="switchJobHighlight($event, true)"
-    v-on:mouseout="switchJobHighlight($event, false)"
-    )
-    .card-body(@click="onRowClick")
-      .row
-        .col-12.col-sm-2
-          img(:src="job.company.logo" width="120px")
-        .col-12.col-sm-6
-          h4 {{job.title}}
-          p {{job.company.name}}
-        .col-12.col-sm-4(style="text-align: right" v-b-tooltip.html.bottom="'Get a reward of up to this amount if your referral is hired'")
-          .row
-            .col
-              div
-                h4(style="display: inline-block; text-align: right") {{job.fund[0] | groupZeros}} - {{job.fund[1] | groupZeros}}
-                p.float-right PLN
-              p {{formattedContractType}}
-          .row(style="color: #FF0000;text-align: right")
-            .col
-              div()
-                font-awesome-icon(:icon='infoIcon' style="color:black").mr-1
-                p(style="display: inline-block").mr-1 REWARD:
-                h4(style="display: inline-block;text-align: right")  {{job.fund[0] * 0.25 | groupZeros}}
-                p.float-right PLN
-      hr
-      .row
-        .col-3(style="border-right: 1px solid rgba(0,0,0,0.1)")
-          p Where:
-          p.small {{job.location}}
-        .col-4(style="border-right: 1px solid rgba(0,0,0,0.1)")
-          p From apply to offer:
-          b-progress(:max="100" height="2rem" show-value :variant="job.duration < 22 ? 'success' : 'warning'")
-            b-progress-bar(
-              :value="job.duration"
-            ) {{job.duration}} days
-          //.progress(style="height: 1.5rem")
-            .progress-bar.progress-bar-striped.bg-success(
-              role='progressbar', 
-
-              :aria-valuenow='30',
-              aria-valuemin='0',
-              aria-valuemax='100'
-            ) {{job.duration}}
-
-        .col-5
-          p Technologies:
-          //span.tag(v-for="keyword in job.keywords.slice(0,4)")
-          button.btn.tag(v-for="keyword in job.keywords.slice(0,4)") {{keyword}}
-    .card-footer(v-if="isJobListing && isUserAllowed")
-      font-awesome-icon.float-right(:icon='deleteIcon'
-        v-on:mouseover="switchWarningHighlight($event, true)"
-        v-on:mouseout="switchWarningHighlight($event, false)"
-        v-on:click="deleteJob(job.id)"
-        v-b-tooltip="'Delete without warning'"
+<template>
+  <div>
+    <div
+        class="card mb-3 shadow"
         style="cursor: pointer"
-        )
-      font-awesome-icon.float-right(
-        :icon='editIcon'
-        style="margin: 0 15px; cursor: pointer"
-        @click="$emit('jobToEdit', job)"
-      )
+        @mouseover="switchJobHighlight($event, true)"
+        @mouseout="switchJobHighlight($event, false)"
+    >
+      <div class="card-body" @click="onRowClick">
+        <div class="row">
+          <div class="col-12 col-sm-2">
+            <img :src="job.company.logo" width="120px" />
+          </div>
+          <div class="col-12 col-sm-6">
+            <h4>{{ job.title }}</h4>
+            <p>{{ job.company.name }}</p>
+          </div>
+          <div class="col-12 col-sm-4" style="text-align: right" v-b-tooltip.html.bottom="'Get a reward of up to this amount if your referral is hired'">
+            <div class="row">
+              <div class="col">
+                <div>
+                  <h4 style="display: inline-block; text-align: right">{{ job.fund[0] | groupZeros }} - {{ job.fund[1] | groupZeros }}</h4>
+                  <p class="float-right">PLN</p>
+                </div>
+                <p>{{ formattedContractType }}</p>
+              </div>
+            </div>
+            <div class="row" style="color: #FF0000; text-align: right">
+              <div class="col">
+                <div>
+                  <font-awesome-icon :icon="infoIcon" style="color:black" class="mr-1" />
+                  <p style="display: inline-block" class="mr-1">REWARD:</p>
+                  <h4 style="display: inline-block; text-align: right">{{ job.fund[0] * 0.25 | groupZeros }}</h4>
+                  <p class="float-right">PLN</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-3" style="border-right: 1px solid rgba(0,0,0,0.1)">
+            <p>Where:</p>
+            <p class="small">{{ job.location }}</p>
+          </div>
+          <div class="col-4" style="border-right: 1px solid rgba(0,0,0,0.1)">
+            <p>From apply to offer:</p>
+            <b-progress :max="100" height="2rem" show-value :variant="job.duration < 22 ? 'success' : 'warning'">
+              <b-progress-bar :value="job.duration">{{ job.duration }} days</b-progress-bar>
+            </b-progress>
+          </div>
+          <div class="col-5">
+            <p>Technologies:</p>
+            <button class="btn tag" v-for="keyword in job.keywords.slice(0, 4)" :key="keyword">{{ keyword }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer" v-if="isJobListing && isUserAllowed">
+        <font-awesome-icon
+            class="float-right"
+            :icon="deleteIcon"
+            @mouseover="switchWarningHighlight($event, true)"
+            @mouseout="switchWarningHighlight($event, false)"
+            @click="deleteJob(job.id)"
+            v-b-tooltip="'Delete without warning'"
+            style="cursor: pointer"
+        />
+        <font-awesome-icon
+            class="float-right"
+            :icon="editIcon"
+            style="margin: 0 15px; cursor: pointer"
+            @click="$emit('jobToEdit', job)"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'

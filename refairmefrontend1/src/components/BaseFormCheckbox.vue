@@ -1,14 +1,16 @@
-<template lang="pug">
-.form-check.col-12
-  input.form-check-input(
-    type="checkbox"
-    :id="slug"
-    :name="slug"
-    :value="val"
-    v-model="checked"
-  )
-  label.form-check-label(:for="slug") {{name}}
-  small(v-if="error") Error placeholder
+<template>
+  <div class="form-check col-12">
+    <input
+        class="form-check-input"
+        type="checkbox"
+        :id="slug"
+        :name="slug"
+        :value="val"
+        v-model="checked"
+    />
+    <label class="form-check-label" :for="slug">{{ name }}</label>
+    <small v-if="error">Error placeholder</small>
+  </div>
 </template>
 <script>
 export default {

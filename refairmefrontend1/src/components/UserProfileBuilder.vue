@@ -1,60 +1,91 @@
-<template lang="pug">
-  div
-      .col-xs-12
-        h1.card-title(style='color: #B0AFAB') User: {{userInput.firstname}} {{userInput.lastname}}
-        .row
-          .col
-            input.form-control(type="text" v-model="userInput.firstname" placeholder="enter your first name")
-          .col
-            input.form-control(type="text" v-model="userInput.lastname" placeholder="enter your last name")
-      hr
-      .row
-        .col-xs-12.col-md-6
-          h4 1. Select your job status
-          Slider.ml-4(name='expslider'
-            :min='0', :max='3', tooltip='none', :interval='1'
-            v-model="userInput.jobStatus"
-            piecewise="true"
-            :piecewiseStyle="piecewiseStyle"
-            :piecewiseActiveStyle="piecewiseActiveStyle"
-            piecewiseLabel="true"
-            :data="['Not looking','Not looking, but open','Casually looking','Actively looking']" 
-          )
-      hr
-      .row
-        .col-xs-12.col-md-8
-          h4 2. Enter your skills
-          RefairKeywords#profilekeywords(
-            :keywords="userInput.keywords" v-on:keywords='updateProfileKeywords'
-            :skills="userInput.skills" @skills='updateSkills'
-          )
-        .col-xs-12.col-md-6
-          //ChartJs(chart-id='kwchart', :height='250', :chart-data='patterndatakw')
-      hr
-      .row
-        .col-12
-          h4 3. What is the notice period in Your current job
-          input.form-control.col-6(v-model='userInput.noticePeriod' type="text" placeholder="eg. one month from the start of the next month")
-      hr
-      .row
-        .col-12
-          h4 4. When is the best time to contact you
-          textarea.form-control.col-6(v-model='userInput.availability' rows=3 placeholder="available monday between 12 and 2,\ntuesday, wednesday, thursday after 4 pm")
-      hr
-      .row
-        .col-12
-          h4 5. Show matching jobs above this salary
-          b-input-group(append='PLN')
-            b-form-input.col-6(v-model='userInput.expectedSalary' type='number' placeholder="eg. 7000 (don't price yourself out of market)")
-          p(v-if="userInput.expectedSalary > 99999 && userInput.expectedSalary < 999999") Are you Elon Musk?
-          p(v-if="userInput.expectedSalary >= 999999") Try the dark web
-      hr
-      .row
-        .col-12
-          a.btn.btn-info(href='#', @click='saveProfile') Save Profile
-        
+<template>
+  <div>
+    <div class="col-xs-12">
+      <h1 class="card-title" style="color: #B0AFAB">User: {{ userInput.firstname }} {{ userInput.lastname }}</h1>
+      <div class="row">
+        <div class="col">
+          <input class="form-control" type="text" v-model="userInput.firstname" placeholder="enter your first name" />
+        </div>
+        <div class="col">
+          <input class="form-control" type="text" v-model="userInput.lastname" placeholder="enter your last name" />
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <h4>1. Select your job status</h4>
+        <Slider
+          class="ml-4"
+          name="expslider"
+          :min="0"
+          :max="3"
+          tooltip="none"
+          :interval="1"
+          v-model="userInput.jobStatus"
+          piecewise="true"
+          :piecewiseStyle="piecewiseStyle"
+          :piecewiseActiveStyle="piecewiseActiveStyle"
+          piecewiseLabel="true"
+          :data="['Not looking','Not looking, but open','Casually looking','Actively looking']"
+        />
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <h4>2. Enter your skills</h4>
+        <RefairKeywords
+          :keywords="userInput.keywords"
+          @keywords="updateProfileKeywords"
+          :skills="userInput.skills"
+          @skills="updateSkills"
+        />
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <!-- ChartJs(chart-id='kwchart', :height='250', :chart-data='patterndatakw') -->
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-12">
+        <h4>3. What is the notice period in Your current job</h4>
+        <input class="form-control col-6" v-model="userInput.noticePeriod" type="text" placeholder="eg. one month from the start of the next month" />
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-12">
+        <h4>4. When is the best time to contact you</h4>
+        <textarea class="form-control col-6" v-model="userInput.availability" rows="3" placeholder="available monday between 12 and 2, tuesday, wednesday, thursday after 4 pm"></textarea>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-12">
+        <h4>5. Show matching jobs above this salary</h4>
+        <b-input-group append="PLN">
+          <b-form-input class="col-6" v-model="userInput.expectedSalary" type="number" placeholder="eg. 7000 (don't price yourself out of market)" />
+        </b-input-group>
+        <p v-if="userInput.expectedSalary > 99999 && userInput.expectedSalary < 999999">Are you Elon Musk?</p>
+        <p v-if="userInput.expectedSalary >= 999999">Try the dark web</p>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-12">
+        <a class="btn btn-info" href="#" @click="saveProfile">Save Profile</a>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
+import { ref, reactive, watch, onMounted } from 'vue'
+import { faCog } from '@fortawesome/fontawesome-free-solid'
+import RefairKeywords from '@/components/Keywords.vue'
+import JobListItem from '@/components/JobListItem'
+import Slider from 'vue-slider-component'
+
 import Vue from 'vue'
 import {
   mixins,

@@ -1,19 +1,14 @@
-<template lang="pug">
-  div
-    b-table(
+<template>
+  <div>
+    <b-table
         :items="jobs"
         @row-clicked="onRowClicked"
-        :fields="['jobsId','job.title','createdAt']"
-      )
-    b-modal(
-      v-model="modalShow"
-      size="lg"
-      hide-footer
-    )
-      JobDetails(
-        v-if="modalShow"
-        :jobId="jobId"
-      )
+        :fields="['jobsId', 'job.title', 'createdAt']"
+    ></b-table>
+    <b-modal v-model="modalShow" size="lg" hide-footer>
+      <JobDetails v-if="modalShow" :jobId="jobId" />
+    </b-modal>
+  </div>
 </template>
 <script>
 import JobDetails from '@/pages/JobDetails'

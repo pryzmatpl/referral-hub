@@ -1,27 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
-import VueAxios from 'vue-axios';
-import helper from '@/helpers.js'
-//require('dotenv').config();
-require('jquery')
+import { createStore } from 'vuex';
+import axios from 'axios';
+import helper from '@/helpers.js';
+import { reactive } from 'vue';
 
-Vue.use(Vuex);
-Vue.use(VueAxios, axios);
-Vue.prototype.http = axios
-// root state object.
-// each Vuex instance is just a single state tree.
-
-const backend = axios.create({
-  baseURL: process.env.BACKEND_URL,
-  timeout: 5000,
-  crossDomain: true,
-});
-
-var state = {
+// Create a reactive state object
+const state = reactive({
   showloading: 0,
   isAuthenticated: false,
-  backend,
+  backend: axios.create({
+    baseURL: process.env.BACKEND_URL,
+    timeout: 5000,
+    crossDomain: true,
+  }),
   planck: 'FRESH',
   dehashedData: {
     SESSION_AUTH: '',
@@ -36,22 +26,15 @@ var state = {
       { language: 'Angular', technology: 'Frontend' },
       { language: 'HTML', technology: 'Frontend' },
       { language: 'CSS', technology: 'Frontend' },
-      
       { language: 'Node.js', technology: 'Backend' },
       { language: 'Ruby', technology: 'Backend' },
       { language: 'PHP', technology: 'Backend' },
-      
-      // TODO what about full stack?
-
       { language: 'Android', technology: 'Mobile' },
       { language: 'iOS', technology: 'Mobile' },
-
       { language: 'DevOps', technology: 'DevOps' },
       { language: 'Support', technology: 'DevOps' },
       { language: 'Testing', technology: 'DevOps' },
-
       { language: 'UI/UX', technology: 'Design' },
-
       { language: 'Business Inteligence', technology: 'Data' },
       { language: 'Business Analyst', technology: 'Data' },
     ],
@@ -78,11 +61,9 @@ var state = {
     ]
   },
   filterSelections: {
-    //basic
     technology: '',
     languages: [],
     city: '',
-    //advanced
     employment: '',
     workload: '',
     teamSize: '',
@@ -95,16 +76,16 @@ var state = {
   jobsCount: '',
   resultPages: 0,
   currentPage: 0
-}
+});
 
-backend.defaults.headers['planck'] = state.planck
+state.backend.defaults.headers['planck'] = state.planck;
 
 // mutations are operations that actually mutates the state.
 // each mutation handler gets the entire state tree as the
 // first argument, followed by additional payload arguments.
 // mutations must be synchronous and can be recorded by plugins
 // for debugging purposes.
-var mutations = {
+const mutations = {
   show(state) {
     state.showloading = true;
   },
@@ -181,7 +162,7 @@ var mutations = {
 }
 // actions are functions that cause side effects and can involve
 // asynchronous operations.
-var actions = {
+const actions = {
   show: ({
     commit
   }) => commit('show'),
@@ -267,7 +248,7 @@ var actions = {
 }
 
 // getters are functions
-var getters = {
+const getters = {
   mystate: (event, getters) => state.showloading,
 
   isAuthenticated: (state) => state.isAuthenticated,
@@ -295,10 +276,9 @@ var getters = {
 
 // A Vuex instance is created by combining the state, mutations, actions,
 // and getters.
-export default new Vuex.Store({
+export default createStore({
   state,
-  getters,
-  actions,
   mutations,
-  helper
+  actions,
+  getters
 });

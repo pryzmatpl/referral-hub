@@ -1,14 +1,31 @@
-<template lang="pug">
-  div
-    .row
-      .col-6
-        .input-group
-          input.form-control(v-model="salary" type="number" placeholder="enter you salary")
-          .input-group-append
-            button.btn.btn-outline-secondary(@click="updateChart") Update chart
-    .row
-      .col-6
-        img(:src="'data:image/jpeg;base64,'+data")
+<template>
+  <div>
+    <div class="row">
+      <div class="col-6">
+        <div class="input-group">
+          <input
+              class="form-control"
+              v-model="salary"
+              type="number"
+              placeholder="enter your salary"
+          />
+          <div class="input-group-append">
+            <button
+                class="btn btn-outline-secondary"
+                @click="updateChart"
+            >
+              Update chart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <img :src="'data:image/jpeg;base64,' + data" />
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
