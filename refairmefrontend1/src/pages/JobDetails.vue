@@ -1,203 +1,257 @@
-<template lang="pug">
-  div
-    .row(style="background:white; padding-top:26px")
-      .col-12.col-lg-6
-        .row
-          .col-4.col-sm-3
-            img(:src="job.company.logo" style="max-width: 140px")
-          .col-8.col-sm-9
-            h4 {{job.title}}
-            p {{job.company.name}}
-      .col-12.col-lg-6
-        .row
-          .col-5
-            h4(v-if="job.fund") {{job.fund[0] | groupZeros}} - {{job.fund[1] | groupZeros}} PLN
-            p monthly / gross
-          .col(style="color: #FF0000;text-align: right" v-b-tooltip title="Get a reward of up to this amount if your referral is hired")
-            h4(v-if="job.fund") {{job.fund[0] * 0.25 | groupZeros}} PLN
-            p REWARD
+<template>
+  <div>
+    <div class="row" style="background:white; padding-top:26px">
+      <div class="col-12 col-lg-6">
+        <div class="row">
+          <div class="col-4 col-sm-3">
+            <img :src="job.company.logo" style="max-width: 140px">
+          </div>
+          <div class="col-8 col-sm-9">
+            <h4>{{ job.title }}</h4>
+            <p>{{ job.company.name }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="row">
+          <div class="col-5">
+            <h4 v-if="job.fund">{{ job.fund[0] | groupZeros }} - {{ job.fund[1] | groupZeros }} PLN</h4>
+            <p>monthly / gross</p>
+          </div>
+          <div class="col" style="color: #FF0000;text-align: right" v-b-tooltip title="Get a reward of up to this amount if your referral is hired">
+            <h4 v-if="job.fund">{{ job.fund[0] * 0.25 | groupZeros }} PLN</h4>
+            <p>REWARD</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    .row
-      .col
-        a.nav-link.py-3.px-0(href="#" @click="back") < Back
+    <div class="row">
+      <div class="col">
+        <a class="nav-link py-3 px-0" href="#" @click="back">&lt; Back</a>
+      </div>
+    </div>
 
-    .row
-      .col-12.col-sm-6.d-flex.pl-0
-        .white.shadow
-          h4.mb-3.blue-font Project info
-          .row
-            .col-4
-              p Project type:
-            .col-8l
-              p 
-          .row
-            .col-4
-              p Project team size:
-            .col-8
-              p {{job.project.staff}}
-          .row
-            .col-4
-              p Stage:
-            .col-8
-              p {{job.project.stage}}
-          .row
-            .col-4
-              p Travel involved:
-            .col-8
-              b-progress(:max="100", show-value)
-                b-progress-bar.blue(:value="job.travelPercentage") {{job.travelPercentage}}%
-          .row
-            .col-4
-              p Remote possible:
-            .col-8
-              b-progress(:max="100", show-value)
-                b-progress-bar.blue(:value="job.remotePercentage") {{job.remotePercentage}}%
+    <div class="row">
+      <div class="col-12 col-sm-6 d-flex pl-0">
+        <div class="white shadow">
+          <h4 class="mb-3 blue-font">Project info</h4>
+          <div class="row">
+            <div class="col-4">
+              <p>Project type:</p>
+            </div>
+            <div class="col-8">
+              <p></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Project team size:</p>
+            </div>
+            <div class="col-8">
+              <p>{{ job.project.staff }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Stage:</p>
+            </div>
+            <div class="col-8">
+              <p>{{ job.project.stage }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Travel involved:</p>
+            </div>
+            <div class="col-8">
+              <b-progress :max="100" show-value>
+                <b-progress-bar class="blue" :value="job.travelPercentage">{{ job.travelPercentage }}%</b-progress-bar>
+              </b-progress>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Remote possible:</p>
+            </div>
+            <div class="col-8">
+              <b-progress :max="100" show-value>
+                <b-progress-bar class="blue" :value="job.remotePercentage">{{ job.remotePercentage }}%</b-progress-bar>
+              </b-progress>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 d-flex pr-0">
+        <div class="white shadow">
+          <h4 class="mb-3 blue-font">Job profile</h4>
+          <div class="row">
+            <div class="col-4">
+              <p>Location:</p>
+            </div>
+            <div class="col-8">
+              <p>{{ job.location }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Contract type:</p>
+            </div>
+            <div class="col-8">
+              <p>{{ formattedContractType }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Workload:</p>
+            </div>
+            <div class="col-8">
+              <p>{{ job.project.workload }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Remote required:</p>
+            </div>
+            <div class="col-8">
+              <p>{{ job.remote == 0 ? 'No' : 'Yes' }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Relocation required:</p>
+            </div>
+            <div class="col-8">
+              <p>{{ job.relocation == 0 ? 'No' : 'Yes' }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <p>Relocation package:</p>
+            </div>
+            <div class="col-8">
+              <p>{{ job.relocationPackage == 0 ? 'No' : 'Yes' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      .col-12.col-sm-6.d-flex.pr-0
-        .white.shadow
-          h4.mb-3.blue-font Job profile
-          .row
-            .col-4
-              p Location:
-            .col-8
-              p {{job.location}}
-          .row
-            .col-4
-              p Contract type:
-            .col-8
-              p {{formattedContractType}}
-          .row
-            .col-4
-              p Workload:
-            .col-8
-              p {{job.project.workload}}
-          .row
-            .col-4
-              p Remote required:
-            .col-8
-              p {{job.remote == 0 ? 'No' : 'Yes'}}
-          .row
-            .col-4
-              p Relocation required:
-            .col-8
-              p {{job.relocation == 0 ? 'No' : 'Yes'}}
-          .row
-            .col-4
-              p Relocation package:
-            .col-8
-              p {{job.relocationPackage == 0 ? 'No' : 'Yes'}}
+    <div class="row mt-4" style="background: white" class="shadow">
+      <div class="col" style="padding:24px">
+        <h4 class="blue-font">Required skills</h4>
+        <div class="row">
+          <div v-for="skill in job.skills" :key="skill.name" v-b-tooltip :title="skill.exp == 3 ? '5+ years of experience' : skill.exp == 2 ? '3-5 years of experience' : skill.exp == 1 ? '1-2 years of experience' : ''" class="col-12 col-sm-6 col-lg-4 mt-3">
+            <span>{{ skill.name }}</span>
+            <br>
+            <span v-if="skill.exp == 1" class="small">BASIC</span>
+            <span v-if="skill.exp == 2" class="small">ADVANCED</span>
+            <span v-if="skill.exp == 3" class="small">EXPERT</span>
+            <span class="dot blue"></span>
+            <span :class="[skill.exp == '3' || skill.exp == '2' ? 'blue' : '']" class="dot"></span>
+            <span :class="[skill.exp == '3' ? 'blue' : '']" class="dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    .row.mt-4(style="background: white").shadow
-      .col(style="padding:24px")
-        h4.blue-font Required skills
-        .row
-          .col-12.col-sm-6.col-lg-4(v-for="skill in job.skills", :key="skill.name"
-              v-b-tooltip
-              :title="skill.exp == 3 ? '5+ years of experience' : skill.exp == 2 ? '3-5 years of experience' : skill.exp == 1 ? '1-2 years of experience' : ''"
-            ).mt-3
-            span {{skill.name}}
-            br
-            span.small(v-if="skill.exp == 1") BASIC
-            span.small(v-if="skill.exp == 2") ADVANCED
-            span.small(v-if="skill.exp == 3") EXPERT
-            span.dot.blue
-            span.dot(:class="[skill.exp == '3' || skill.exp == '2' ? 'blue' : '']")
-            span.dot(:class="[skill.exp == '3' ? 'blue' : '']")
+    <div class="row mt-4" style="background: white" class="shadow">
+      <div class="col" style="padding:24px">
+        <h4 class="blue-font">Work time division</h4>
+        <div class="row">
+          <div v-for="(value, key, index) in job.project.breakdown" :key="key" class="col-6 col-sm-4 col-lg-2">
+            <p style="text-align: center">{{ value.label }}</p>
+            <div class="GaugeMeter" :data-percent="value.value" data-append="%" data-theme="DarkBlue-LightBlue" data-style="Full" data-width="12" data-size="150px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    .row.mt-4(style="background: white").shadow
-      .col(style="padding:24px")
-        h4.blue-font Work time division
-        .row
-          .col-6.col-sm-4.col-lg-2(v-for="(value, key, index) in job.project.breakdown", :key="key")
-            p(style="text-align: center") {{value.label}}
-            .GaugeMeter#GaugeMeter_1(
-              :data-percent="value.value"
-              data-append="%"
-              data-theme="DarkBlue-LightBlue"
-              data-style="Full"
-              data-width=12
-              data-size="150px"
-            )
+    <div class="row mt-4" style="background:white" class="shadow">
+      <div class="col" style="padding:24px">
+        <h4 class="blue-font">Methodologies</h4>
+        <div class="row">
+          <div v-for="m in job.project.methodology" :key="m" class="col-12 col-sm-6 col-lg-3 mt-4">
+            <font-awesome-icon :icon="yesIcon" :color="'#26A4ED'" class="fa-2x mr-2" style="vertical-align: middle"></font-awesome-icon>
+            <span>{{ m }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    .row.mt-4(style="background:white").shadow
-      .col(style="padding:24px")
-        h4.blue-font Methodologies
-        .row
-          .col-12.col-sm-6.col-lg-3.mt-4(v-for="m in job.project.methodology", :key="m")
-            font-awesome-icon.fa-2x.mr-2(
-              :icon="yesIcon"
-              :color="'#26A4ED'"
-              style="vertical-align: middle"
-            )
-            span {{m}}
+    <div class="row mt-4" style="background: white" class="shadow">
+      <div class="col" style="padding:24px">
+        <h4 class="blue-font">Other perks</h4>
+        <div class="row">
+          <div v-for="perk in job.project.perks" :key="perk.name" class="col-12 col-sm-6 col-lg-3 mt-4">
+            <font-awesome-icon :icon="perk.available ? yesIcon : noIcon" :color="perk.available ? '#26A4ED' : 'gray'" class="fa-2x mr-2" style="vertical-align: middle"></font-awesome-icon>
+            <span>{{ perk.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    .row.mt-4(style="background: white").shadow
-      .col(style="padding:24px")
-        h4.blue-font Other perks
-        .row
-          .col-12.col-sm-6.col-lg-3.mt-4(v-for="perk in job.project.perks", :key="perk.name")
-            //font-awesome-icon.fa-2x.mr-2(
-              :icon="perk.available ? yesIcon : noIcon"
-              :color="[perk.available ? '#26A4ED' : 'gray']"
-              style="vertical-align: middle"
-              )
-            font-awesome-icon.fa-2x.mr-2(
-              :icon="yesIcon"
-              :color="'#26A4ED'"
-              style="vertical-align: middle"
-            )
-            span {{perk.name}}
+    <div class="row mt-4" style="background: white" class="shadow">
+      <div class="col-12 col-md-6" style="padding: 24px">
+        <h4 class="blue-font">Why work on this project?</h4>
+        <div class="row">
+          <div class="col-12">
+            <p>{{ job.project.description }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6" style="padding: 24px">
+        <h4 class="blue-font">What's the tech stack?</h4>
+        <div class="row">
+          <div class="col-12">
+            <p>{{ job.project.stack }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    .row.mt-4(style="background: white").shadow
-      .col-12.col-md-6(style="padding: 24px")
-        h4.blue-font Why work on this project?
-        .row
-          .col-12
-            p {{job.project.description}}
-      .col-12.col-md-6(style="padding: 24px")
-        h4.blue-font What's the tech stack?
-        .row
-          .col-12
-            p {{job.project.stack}}
+    <div class="row mt-4" style="background: white" class="shadow">
+      <div class="col" style="padding: 24px">
+        <h4 class="blue-font">Description</h4>
+        <div class="row">
+          <div class="col-12">
+            <p>{{ job.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    .row.mt-4(style="background: white").shadow
-      .col(style="padding: 24px")
-        h4.blue-font Description
-        .row
-          .col-12
-            p {{job.description}}
+    <div class="row mt-2">
+      <div class="col">
+        <button class="btn btn-lg btn-primary float-right w-100" @click="apply">Apply</button>
+      </div>
+      <div class="col">
+        <a :href="`mailto:recruit@techsorted.com?subject=Job nr: ${job.id}&body=Hello!%0A%0AYou are applying for postion: ${job.title}%0Ain company: ${job.company.name}%0A%0APlease attach CV and fill in details below:%0A-when best to call you:%0A-what's your notice period:%0A-what salary are you interested in:%0A-best method of contact: (email/sms)%0A%0AWe'll reply soon!%0A%0AThanks,%0ARefair.me team`">
+          <button class="btn btn-lg btn-primary float-right w-100">Apply with CV</button>
+        </a>
+      </div>
+      <div class="col">
+        <button class="btn btn-lg btn-primary w-100" @click="showReferralModal">Refer</button>
+      </div>
+    </div>
+    <div class="row mt-1 mb-5">
+      <div class="col">
+        <a class="nav-link py-3 px-0" href="#" @click="back">&lt; Back</a>
+      </div>
+    </div>
 
-    .row.mt-2
-      .col
-        button.btn.btn-lg.btn-primary.float-right.w-100(@click="apply") Apply
-      .col
-        a(:href="`mailto:recruit@techsorted.com?subject=Job nr: ${job.id}&body=Hello!%0A%0AYou are applying for postion: ${job.title}%0Ain company: ${job.company.name}%0A%0APlease attach CV and fill in details below:%0A-when best to call you:%0A-what's your notice period:%0A-what salary are you interested in:%0A-best method of contact: (email/sms)%0A%0AWe'll reply soon!%0A%0AThanks,%0ARefair.me team`")
-          button.btn.btn-lg.btn-primary.float-right.w-100 Apply with CV
-      .col
-        button.btn.btn-lg.btn-primary.w-100(@click="showReferralModal") Refer
-    .row.mt-1.mb-5
-      .col
-        a.nav-link.py-3.px-0(href="#" @click="back") < Back
-        
-    b-modal#editModal(
-      v-model="modalShow"
-      title="Send your CV"
-      size="lg"
-      hide-footer
-    )
-      p Please send your CV to: 
-        a(href="mailto: w@refair.me") refair@refair.me
-        
-    b-modal#referModal(
-      v-model="referModalShow"
-      title="Refer a friend"
-      size="lg"
-      hide-footer
-    )
-      p For this referral you can earn at least {{reward}} PLN
-      input.form-control(v-model="referralEmail" type="email" placeholder="your friend's email")
-      b-btn.btn-success.float-right.mt-2(@click="sendReferral") Send
+    <b-modal id="editModal" v-model="modalShow" title="Send your CV" size="lg" hide-footer>
+      <p>Please send your CV to: <a href="mailto: w@refair.me">refair@refair.me</a></p>
+    </b-modal>
+
+    <b-modal id="referModal" v-model="referModalShow" title="Refer a friend" size="lg" hide-footer>
+      <p>For this referral you can earn at least {{ reward }} PLN</p>
+      <input class="form-control" v-model="referralEmail" type="email" placeholder="your friend's email">
+      <b-btn class="btn-success float-right mt-2" @click="sendReferral">Send</b-btn>
+    </b-modal>
+  </div>
 </template>
+
 <script>
 import gauge from '../GaugeMeter.js'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
