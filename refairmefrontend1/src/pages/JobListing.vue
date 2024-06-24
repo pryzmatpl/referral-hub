@@ -1,41 +1,51 @@
-<template lang="pug">
-  div
-    h2.mt-3.mb-4.text-center My job listing
-    font-awesome-icon.fa-3x.center(v-if="loading", :icon='loadingIcon' spin)
-    JobListItem(
+<template lang="html">
+  <div>
+    <h2 class="mt-3 mb-4 text-center">My job listing</h2>
+    <font-awesome-icon v-if="loading" :icon="loadingIcon" spin class="fa-3x center"></font-awesome-icon>
+    <JobListItem
       v-for="job in jobListing"
       :job="job"
       :key="job.id"
-      v-on:jobToEdit="selectJob"
-      v-on:fetchJobs="getJobs"
-    )
-    nav(aria-label='Page navigation example')
-      ul.pagination.justify-content-center
-        //li.page-item
-          a.page-link(href='#', aria-label='Previous')
-            span(aria-hidden='true') «
-            span.sr-only Previous
-        li.page-item(v-for="o in resultPages")
-          a.page-link(href='#' @click="updateCurrentPage(o - 1)") {{o}}
-        //li.page-item
-          a.page-link(href='#', aria-label='Next')
-            span(aria-hidden='true') »
-            span.sr-only Next
-    b-modal(
+      @jobToEdit="selectJob"
+      @fetchJobs="getJobs"
+    />
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <!-- li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">«</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li -->
+        <li class="page-item" v-for="o in resultPages" :key="o">
+          <a class="page-link" href="#" @click="updateCurrentPage(o - 1)">{{ o }}</a>
+        </li>
+        <!-- li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">»</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li -->
+      </ul>
+    </nav>
+    <b-modal
       ref="modal"
       v-model="modalShow"
       :title="'Edit job nr ' + job.id"
       size="lg"
       hide-footer
-      )
-      JobBuilderAboutJob(
+    >
+      <JobBuilderAboutJob
         v-if="modalShow"
         :companyId="job.company.id"
         :projectId="job.project.id"
         :jobToEdit="job"
-        v-on:closeModal="modalShow = false"
-      )
+        @closeModal="modalShow = false"
+      />
+    </b-modal>
+  </div>
 </template>
+
 <script>
 import store from '@/store/index.js'
 import {mapGetters, mapActions, mapState} from 'vuex'

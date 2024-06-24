@@ -1,33 +1,54 @@
-<template lang="pug">
-  .col-12.d-flex.justify-content-center
-    .card.mt-2
-      .card-body
-        h1.text-left(style="font-size: 36px") Enter new password
-        form(action="" v-on:submit.prevent="setNewPassword()" method="post")
-          //small.help-block(style="color: red") {{error}}
-          .form-group
-            label(for="email") Email
-            input.form-control(
+<template>
+  <div class="col-12 d-flex justify-content-center">
+    <div class="card mt-2">
+      <div class="card-body">
+        <h1 class="text-left" style="font-size: 36px">Enter new password</h1>
+        <form action="" @submit.prevent="setNewPassword()" method="post">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              class="form-control"
               v-model="email"
-              type="email" name="email" id="email"
+              type="email"
+              name="email"
+              id="email"
               placeholder="E-mail"
-            )
-          .form-group
-            label(for='password') Password
-            .input-group
-              input.form-control(:type="[!isVisible ? 'password' : 'text']", name='password', placeholder="Password", v-model='password')
-              .input-group-append
-                //button.btn.btn-outline-secondary(type="button" @click="isVisible = !isVisible")
-                .input-group-text
-                  font-awesome-icon(
-                    :icon="isVisible ? eyeIcon : eyeSlashIcon" 
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group">
+              <input
+                class="form-control"
+                :type="!isVisible ? 'password' : 'text'"
+                name="password"
+                placeholder="Password"
+                v-model="password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <font-awesome-icon
+                    :icon="isVisible ? eyeIcon : eyeSlashIcon"
                     @click="isVisible = !isVisible"
-                  )
-          p(v-if="message != ''") {{message}}
-            br
-            | You will be redirected to log in screen now.
-          button(v-if="message == ''").btn.btn-info.btn-lg Set new password
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <p v-if="message != ''">
+            {{ message }}
+            <br />
+            You will be redirected to log in screen now.
+          </p>
+          <button v-if="message == ''" class="btn btn-info btn-lg">
+            Set new password
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
+
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import {

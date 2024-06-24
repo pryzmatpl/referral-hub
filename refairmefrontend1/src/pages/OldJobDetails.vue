@@ -1,27 +1,37 @@
-<template lang="pug">
-div
-  .card
-    .card-body
-      .alert(
-        v-bind:class="[applyResponse.state == 'success' ? alertClasses.success : alertClasses.error]"
-        v-if='applyResponse.message'
-        role='alert'
-      )
-        | {{applyResponse.message}}
-      h1
-        | {{job.title}}
-        button.btn.btn-success.float-right.col-3(@click='apply')
-          | Apply
-          font-awesome-icon(v-if='loading', :icon='cogIcon', spin='')
-      h4.text-muted {{job.fund}} - {{job.fund}} PLN
-      small.badge.badge-pill.badge-light REMOTE = {{job.remote}}
-      small.badge.badge-pill.badge-light RELOCATION = {{job.relocation}}
-  .card.mt-3
-    .card-body
-      h4 Description
-      .row
-        .col-6.text-muted(v-html="job.description")
+<template lang="html">
+  <div>
+    <div class="card">
+      <div class="card-body">
+        <div 
+          v-bind:class="[applyResponse.state == 'success' ? alertClasses.success : alertClasses.error]"
+          v-if="applyResponse.message"
+          role="alert"
+        >
+          {{ applyResponse.message }}
+        </div>
+        <h1>
+          {{ job.title }}
+          <button class="btn btn-success float-right col-3" @click="apply">
+            Apply
+            <font-awesome-icon v-if="loading" :icon="cogIcon" spin />
+          </button>
+        </h1>
+        <h4 class="text-muted">{{ job.fund }} - {{ job.fund }} PLN</h4>
+        <small class="badge badge-pill badge-light">REMOTE = {{ job.remote }}</small>
+        <small class="badge badge-pill badge-light">RELOCATION = {{ job.relocation }}</small>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="card-body">
+        <h4>Description</h4>
+        <div class="row">
+          <div class="col-6 text-muted" v-html="job.description"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+
 <script>
 import VueChartJs from 'vue-chartjs'
 import {
