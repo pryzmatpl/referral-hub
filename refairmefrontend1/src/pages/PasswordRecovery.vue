@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import {
   faEye,
   faEyeSlash
@@ -58,7 +57,6 @@ import {
 
 export default {
   components: {
-    FontAwesomeIcon
   },
 
   computed: {

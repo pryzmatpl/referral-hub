@@ -24,7 +24,7 @@
 </template>
 <script>
 import Vue from 'vue'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   faCog
 } from '@fortawesome/fontawesome-free-solid'

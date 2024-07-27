@@ -38,7 +38,7 @@ import {
   mixins,
   HorizontalBar
 } from 'vue-chartjs'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   faCog
 } from '@fortawesome/fontawesome-free-solid'

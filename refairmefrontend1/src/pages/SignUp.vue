@@ -77,7 +77,7 @@
 <script>
 import helpy from '../helpers.js'
 import Multiselect from 'vue-multiselect'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   faEye,
   faEyeSlash

@@ -76,7 +76,6 @@
   </div>
 </template>
 <script>
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import {
   faCheck,
   faTimes,
@@ -89,7 +88,6 @@ import JobBuilderAboutJob from '@/components/JobBuilderAboutJob'
 
 export default {
   components: {
-    FontAwesomeIcon,
     JobBuilderAboutJob
   },
 

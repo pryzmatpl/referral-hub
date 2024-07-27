@@ -254,7 +254,7 @@
 
 <script>
 import gauge from '../GaugeMeter.js'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   faCheckCircle,
   faTimesCircle

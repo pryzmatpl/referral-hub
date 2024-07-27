@@ -117,12 +117,10 @@
 import Multiselect from 'vue-multiselect'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { faMoneyBillAlt, faWrench, faUsers } from '@fortawesome/fontawesome-free-solid'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
     Multiselect,
-    FontAwesomeIcon
   },
 
   computed: {

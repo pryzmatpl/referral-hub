@@ -16,6 +16,7 @@ module.exports = {
   mode: "production",
   context: path.resolve(__dirname, "./"),
   plugins: [
+    new VueLoaderPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jquery: "jquery",
@@ -78,6 +79,7 @@ module.exports = {
       },*/
       {
         test: /\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
         include: [resolve("src"), resolve("test"), resolve("node_modules/webpack-dev-server/client")],
       },
@@ -107,9 +109,7 @@ module.exports = {
       },
       {
         test: /\.sass$/,
-        use: [{
-          loader: "sass-loader",
-        }],
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.css$/,

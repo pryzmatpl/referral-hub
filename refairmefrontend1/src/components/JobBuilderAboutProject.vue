@@ -160,11 +160,10 @@ import validation from '../validation.js'
 import Multiselect from 'vue-multiselect'
 import Slider from 'vue-slider-component'
 import {
-  mixins,
   Doughnut,
   PolarArea
 } from 'vue-chartjs'
-//import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+//
 
 import {
   faTag

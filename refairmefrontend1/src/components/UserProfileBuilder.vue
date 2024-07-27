@@ -92,7 +92,7 @@ import {
   HorizontalBar
 } from 'vue-chartjs'
 import RefairKeywords from '@/components/Keywords.vue'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   faCog
 } from '@fortawesome/fontawesome-free-solid'

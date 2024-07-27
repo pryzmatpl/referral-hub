@@ -49,7 +49,7 @@
 <script>
 import store from '@/store/index.js'
 import {mapGetters, mapActions, mapState} from 'vuex'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   faCheck,
   faTimes,
@@ -62,7 +62,6 @@ import JobListItem from '@/components/JobListItem'
 
 export default {
   components: {
-    FontAwesomeIcon,
     JobBuilderAboutJob,
     JobListItem
   },
