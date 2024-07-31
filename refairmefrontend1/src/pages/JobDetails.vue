@@ -137,7 +137,7 @@
       </div>
     </div>
 
-    <div class="row mt-4" style="background: white" class="shadow">
+    <div class="row mt-4 shadow" style="background: white">
       <div class="col" style="padding:24px">
         <h4 class="blue-font">Required skills</h4>
         <div class="row">
@@ -155,7 +155,7 @@
       </div>
     </div>
 
-    <div class="row mt-4" style="background: white" class="shadow">
+    <div class="row mt-4 shadow" style="background: white">
       <div class="col" style="padding:24px">
         <h4 class="blue-font">Work time division</h4>
         <div class="row">
@@ -167,7 +167,7 @@
       </div>
     </div>
 
-    <div class="row mt-4" style="background:white" class="shadow">
+    <div class="row mt-4 shadow" style="background:white">
       <div class="col" style="padding:24px">
         <h4 class="blue-font">Methodologies</h4>
         <div class="row">
@@ -179,7 +179,7 @@
       </div>
     </div>
 
-    <div class="row mt-4" style="background: white" class="shadow">
+    <div class="row mt-4 shadow" style="background: white">
       <div class="col" style="padding:24px">
         <h4 class="blue-font">Other perks</h4>
         <div class="row">
@@ -191,7 +191,7 @@
       </div>
     </div>
 
-    <div class="row mt-4" style="background: white" class="shadow">
+    <div class="row mt-4 shadow" style="background: white">
       <div class="col-12 col-md-6" style="padding: 24px">
         <h4 class="blue-font">Why work on this project?</h4>
         <div class="row">
@@ -210,7 +210,7 @@
       </div>
     </div>
 
-    <div class="row mt-4" style="background: white" class="shadow">
+    <div class="row mt-4 shadow" style="background: white">
       <div class="col" style="padding: 24px">
         <h4 class="blue-font">Description</h4>
         <div class="row">
