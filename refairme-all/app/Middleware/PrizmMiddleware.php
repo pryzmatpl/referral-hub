@@ -32,8 +32,6 @@ class PrizmMiddleware extends Middleware
 
   public function __invoke($request,$response,$next)
   {
-      $aplanck = $request->getHeader('planck')[0];
-
       $aroute = $request->getUri()->getPath();
 
       //In case we confirm the user, drop this middleware
@@ -42,41 +40,9 @@ class PrizmMiddleware extends Middleware
 	return $response->withJson(['message'=>"Your account is confirmed. Return to your application to log in!",
 				    'status'=>"Success"]);
       }
-      
-      if($aplanck != 'FRESH'){
-	$dataList = $this->spawn($aplanck);
-	
-	if($dataList['auth']){
-	  $_SESSION['creds']['token'] = $aplanck;
-	  $_SESSION['creds']['dataList']=$dataList;
 
-	  $response = $next($request, $response);
-	  
-	  $explodedResp =  $response->withHeader('planck', $aplanck)
-	    ->withHeader('Access-Control-Allow-Origin', '*')
-	    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, Access-Control-Allow-Origin')
-	    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-	  return $explodedResp;
-	}else{
+      return $next($request, $response);
 
-	  $response = $next($request, $response);
-	  
-	  $explodedResp =  $response->withHeader('planck', 'TAINTED')
-	    ->withHeader('Access-Control-Allow-Origin', '*')
-	    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, Access-Control-Allow-Origin')
-	    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-	  return $explodedResp;
-	}
-      }else{
-
-	$response = $next($request, $response);
-	  
-	$explodedResp =  $response->withHeader('planck', "FRESH")
-	  ->withHeader('Access-Control-Allow-Origin', '*')
-	  ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, Access-Control-Allow-Origin')
-	  ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-	return $explodedResp;
-      }
   }
   
 

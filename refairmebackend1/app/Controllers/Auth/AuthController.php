@@ -98,7 +98,7 @@ class AuthController extends Controller
 							   'user' => $payload['email']];
 	    $_SESSION['user'] = $user;
 
-            return $response->withHeader('planck', $cornerstone)->withJson(array('planck' => $cornerstone,
+            return $response->withJson(array('planck' => $cornerstone,
 										 'state' => 'success',
 										 'auth' => true));
         }
@@ -122,8 +122,7 @@ class AuthController extends Controller
     $cornerstone = $this->iwahash($cornerstone, "SESSION_AUTH", "false");
 
     //TODO: Serving the planck in the header and json response - don't know which will be faster to do for demo
-    return $response->withHeader('planck', $cornerstone)
-      ->withJson(array('planck'=>$cornerstone,
+    return $response->withJson(array('planck'=>$cornerstone,
 		       'dehashed'=>$this->dehash($cornerstone)
 		       ));
     }catch(Exception $e){
