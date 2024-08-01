@@ -23,7 +23,7 @@ services:
         networks:
             - default
         depends_on:
-            - mysql
+            - mysql_aimatch
             - redis
             - meilisearch
             - selenium
@@ -42,8 +42,10 @@ services:
         networks:
             - default
         depends_on:
-            - mysql
-    mysql:
+            - mysql_aimatch
+
+
+    mysql_aimatch:
         image: 'mysql/mysql-server:8.0'
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
