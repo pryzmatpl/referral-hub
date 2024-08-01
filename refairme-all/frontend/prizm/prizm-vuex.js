@@ -31,7 +31,7 @@ var state = {
   },
 }
 
-backend.defaults.headers['planck'] = state.planck
+// BULL SHTI backend.defaults.headers['planck'] = state.planck
 
 // mutations are operations that actually mutates the state.
 // each mutation handler gets the entire state tree as the
@@ -56,7 +56,7 @@ var mutations = {
         state.dehashedData[temp[0]] = temp[1]
       }
       state.isAuthenticated = true
-      backend.defaults.headers['planck'] = state.planck
+      // THIS MIGHT BE USEFUL backend.defaults.headers['planck'] = state.planck
     }
   },
   unauthenticate(state) {
