@@ -29,7 +29,7 @@
           </div>
           <div class="form-group">
             <label for="jobDescriptionPreview">Description preview</label>
-            <vue-markdown :source="description" />
+            <Markdown :source="description" />
           </div>
         </div>
         <div class="col-6">
@@ -258,7 +258,7 @@
 import Keywords from './Keywords'
 import Slider from 'vue-slider-component'
 import validation from '../validation.js'
-import VueMarkdown from 'vue-markdown'
+import { Markdown } from 'vue3-markdown-it'
 import Multiselect from 'vue-multiselect'
 
 // TODO to be used instead of Keywords
@@ -268,7 +268,7 @@ export default {
   components: {
     Keywords,
     Slider,
-    VueMarkdown,
+    Markdown,
     Multiselect
   },
   
@@ -402,14 +402,20 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-  .card
-    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
-    border: 0
-  .clickable
-    cursor: pointer
-  label
-    font-weight: bold
-    font-size: 16px
+<style lang="scss" scoped>
+.card {
+  box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1);
+  border: 0;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+@import 'vue-multiselect/dist/vue-multiselect.css';
 </style>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

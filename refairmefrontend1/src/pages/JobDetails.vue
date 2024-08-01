@@ -264,7 +264,7 @@ export default {
   props: ['jobId'],
 
   components: {
-    FontAwesomeIcon
+   
   },
 
   mounted () {
@@ -398,76 +398,65 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-  @import '@/assets/settings.sass'
-  
-  .white
-    background: white
-    padding: 30px
-    width: 100%
-  .dot
-    height: 10px
-    width: 10px
-    margin: 0 5px
-    background-color: #bbb
-    border-radius: 50%
-    display: inline-block
+<style lang="scss" scoped>
+@import '@/assets/settings.scss';
 
-  .blue
-    background-color: $primaryColor
-
-  .blue-font
-    color: $primaryColor
-  
-  .font-awesome-icon
-    margin-right: 10px
-  
-  .shadow
-    box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1)
-    border: 0
-
-</style>
-<style>
-.GaugeMeter{
-	Position:        Relative;
-	Text-Align:      Center;
-	Overflow:        Hidden;
-	Cursor:          Default;
+.white {
+  background: white;
+  padding: 30px;
+  width: 100%;
 }
 
-.GaugeMeter SPAN,
-    .GaugeMeter B{
-      top: 23%;
-      font-size: 45px;
-      Width: 100%;
-      left: 0%;
-      Position: Absolute;
-      Text-align: Center;
-      Display: Inline-Block;
-      Color: RGBa(0,0,0,.8);
-      Font-Weight: 400;
-      Font-Family: "Open Sans", Arial;
-      Overflow: Hidden;
-      White-Space: NoWrap;
-      Text-Overflow: Ellipsis;
-}
-.GaugeMeter[data-style="Semi"] B{
-	Margin:          0 10%;
-	Width:           80%;
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.GaugeMeter S,
-    .GaugeMeter U{
-    	Text-Decoration: None;
-    	Font-Size:       .5em;
-    	Opacity:         .5;
+.blue {
+  background-color: $primaryColor;
 }
 
-.GaugeMeter B{
-	Color:           Black;
-	Font-Weight:     300;
-	Font-Size:       .5em;
-	Opacity:         .8;
+.blue-font {
+  color: $primaryColor;
+}
+
+.font-awesome-icon {
+  margin-right: 10px;
+}
+
+.shadow {
+  box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
+  border: 0;
+}
+
+// Add the styles from the second block here
+.GaugeMeter {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  cursor: default;
+
+  span,
+  b {
+    top: 23%;
+    font-size: 45px;
+    width: 100%;
+    left: 0%;
+    position: absolute;
+    text-align: center;
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 400;
+    font-family: "Open Sans", Arial;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 </style>
+
 

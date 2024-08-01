@@ -85,7 +85,6 @@ import {
 
 export default {
   components: {
-    FontAwesomeIcon,
     Multiselect
   },
 
@@ -168,29 +167,43 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-.container
-  margin-top: 20px
-  margin-bottom: 20px
-.inner-container
-  background: white
-  padding-bottom: 20px
-  padding-top: 20px
-  border-radius: 5px
-h1
-  font-size: 60px
-  margin-top: 40px
-  margin-bottom: 20px
-  text-align: center
-.help-block
-  color: red
-.text-muted
-  margin-bottom: 10px
-button
-  width: 100%
-.shadow
-  box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1)
-  border: 0
+<style lang="scss" scoped>
+.container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
+.inner-container {
+  background: white;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  border-radius: 5px;
+}
+
+h1 
+{
+  font-size: 60px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.help-block {
+  color: red;
+}
+
+.text-muted {
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+}
+
+.shadow {
+  box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
+  border: 0;
+}
+
+@import 'vue-multiselect/dist/vue-multiselect.css';
 </style>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

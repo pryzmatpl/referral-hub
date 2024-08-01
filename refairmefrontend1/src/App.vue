@@ -90,19 +90,26 @@ export default {
   }
 }
 </script>
-<style lang="sass">
-//@import '../node_modules/bootstrap/scss/bootstrap.scss'
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro')
-@import '@/assets/settings.sass'
+<style lang="scss">
+//@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+@import '@/assets/settings.scss';
 
-body
+body {
   font-family: 'Source Sans Pro', sans-serif;
-nav
-  background-color: white
-  border-bottom: 1px solid rgba(0,0,0,0.1)
-  margin: 0 auto
-.max-width
-  max-width: 100% !important
-h1,h2,a
-  color: $primaryColor
+}
+
+nav {
+  background-color: white;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  margin: 0 auto;
+}
+
+.max-width {
+  max-width: 100% !important;
+}
+
+h1, h2, a {
+  color: $primaryColor;
+}
 </style>

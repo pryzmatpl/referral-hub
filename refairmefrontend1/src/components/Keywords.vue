@@ -160,10 +160,10 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-  @import '@/assets/settings.sass'
-
-  .badge
+<style lang="scss" scoped>
+  @import '@/assets/settings.scss';
+/*
+.badge {
     font-size: 1.1em
     cursor: pointer
     font-weight: normal
@@ -171,5 +171,6 @@ export default {
     margin: 3px
     background-color: #424242
     border-radius: 3px
-
+  }
+    */
 </style>

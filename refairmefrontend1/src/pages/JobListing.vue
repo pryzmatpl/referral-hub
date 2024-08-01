@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div>
     <h2 class="mt-3 mb-4 text-center">My job listing</h2>
     <font-awesome-icon v-if="loading" :icon="loadingIcon" spin class="fa-3x center"></font-awesome-icon>
@@ -142,14 +142,19 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-  .card
-    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
-    border: 0
-  .red-background
-    background-color: red
-  .fa-3x
-    display: inline-block
-    width: 100%
-    margin-bottom: 10px
+<style lang="scss" scoped>
+.card {
+  box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1);
+  border: 0;
+}
+
+.red-background {
+  background-color: red;
+}
+
+.fa-3x {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 10px;
+}
 </style>

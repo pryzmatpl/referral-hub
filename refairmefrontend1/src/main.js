@@ -3,25 +3,23 @@ import { createRouter, createWebHistory } from "vue-router";
 import router from "./router";
 import store from "@/store/index.js";
 
-import { BootstrapVue } from "bootstrap-vue";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
+import BootstrapVue3 from 'bootstrap-vue-3'
+
+
 // import VueAnalytics from 'vue-analytics'
+import App from "./App";
 
 const isProd = process.env.NODE_ENV === "production";
 
 const app = createApp(App);
 
-app.use(BootstrapVue);
-app.use(createRouter({
-  history: createWebHistory(),
-  routes: router,
-}));
+app.use(BootstrapVue3);
+app.use(router);
 app.use(store);
 app.config.devtools = true;
 app.config.performance = true;
 app.config.productionTip = false;
 
-import App from "./App";
+
 
 app.mount("#app");

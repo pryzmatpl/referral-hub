@@ -36,7 +36,7 @@ import ProfileApplied from '@/components/UserProfileJobsApplied'
 
 export default {
   components: {
-    FontAwesomeIcon,
+    
     JobListItem,
     ProfileBuilder,
     ProfileExperience,
@@ -128,19 +128,31 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-.h1
-  margin-bottom: 100px
-tbody tr
-  cursor: pointer
-.card
-  box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
-  border: 0
-a
-  color: inherit
-  cursor: pointer
-.nav-link.active
-  border-bottom: 4px solid #42bff4
-.nav-justified
-  border-bottom: 0.25px solid lightgray
+
+<style lang="scss" scoped>
+.h1 {
+  margin-bottom: 100px;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+.card {
+  box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1);
+  border: 0;
+}
+
+a {
+  color: inherit;
+  cursor: pointer;
+}
+
+.nav-link.active {
+  border-bottom: 4px solid #42bff4;
+}
+
+.nav-justified {
+  border-bottom: 0.25px solid lightgray;
+}
 </style>

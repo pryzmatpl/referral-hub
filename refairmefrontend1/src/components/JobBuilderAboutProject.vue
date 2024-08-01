@@ -171,7 +171,7 @@ import {
 
 var chart = {
   extends: Doughnut,
-  mixins: [mixins.reactiveProp],
+  // mixins: [mixins.reactiveProp],
   props: ['options'],
   mounted() {
     if (this.chartData) {
@@ -406,8 +406,12 @@ export default {
   }
 }
 </script>
-<style lang="sass">
+<style lang="scss">
+/*
   .card
-    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
-    border: 0
+    {
+      box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+      border: 0;
+    }
+      */
 </style>

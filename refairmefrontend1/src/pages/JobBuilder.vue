@@ -133,20 +133,33 @@ export default{
   }
 }
 </script>
-<style lang="sass">
-  .card
-    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
-    border: 0
-  a
-    color: inherit
-    cursor: pointer
-  .nav-link.active
-    border-bottom: 4px solid #28a745
-  .nav-justified
-    border-bottom: 0.25px solid lightgray
-  .fade-enter-active, .fade-leave-active
-    transition: opacity .1s
-  .fade-enter, .fade-leave-to
-    opacity: 0
+<style lang="scss">
+.card {
+  box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1);
+  border: 0;
+}
+
+a {
+  color: inherit;
+  cursor: pointer;
+}
+
+.nav-link.active {
+  border-bottom: 4px solid #28a745;
+}
+
+.nav-justified {
+  border-bottom: 0.25px solid lightgray;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+@import 'vue-multiselect/dist/vue-multiselect.css';
 </style>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+

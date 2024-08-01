@@ -91,13 +91,8 @@ import {
   mixins,
   HorizontalBar
 } from 'vue-chartjs'
-import RefairKeywords from '@/components/Keywords.vue'
 
-import {
-  faCog
-} from '@fortawesome/fontawesome-free-solid'
-import JobListItem from '@/components/JobListItem'
-import Slider from 'vue-slider-component'
+
 /*
 var ChartJs = {
   extends: HorizontalBar,
@@ -126,7 +121,7 @@ export default {
 
   components: {
     RefairKeywords,
-    FontAwesomeIcon,
+    
     //ChartJs,
     JobListItem,
     Slider
@@ -279,16 +274,23 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-  @import '@/assets/settings.sass'
+<style lang="scss" scoped>
+@import '@/assets/settings.scss';
 
-  .h1
-    margin-bottom: 100px
-  h4
-    color: $primaryColor
-  tbody tr
-    cursor: pointer
-  .card
-    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
-    border: 0
+.h1 {
+  margin-bottom: 100px;
+}
+
+h4 {
+  color: $primaryColor;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+.card {
+  box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1);
+  border: 0;
+}
 </style>

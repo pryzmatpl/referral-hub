@@ -293,10 +293,12 @@ export default {
 
 }
 </script>
-<style lang="sass" scoped>
-  .shadow
-    box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1)
-    border: 0
+<style lang="scss" scoped>
+.shadow {
+  box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
+  border: 0;
+}
+
+@import 'vue-multiselect/dist/vue-multiselect.css';
 </style>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

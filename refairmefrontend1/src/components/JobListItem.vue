@@ -151,23 +151,30 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-  .tag
-    background-color: #4a90e2
-    color: white
-    padding: 3px 8px
-    margin: 2px
-    font-size: 15px
-    border-radius: 30px
-  .red-background
-    background-color: red
-  .fa-3x
-    display: inline-block
-    width: 100%
-    margin-bottom: 10px
-  .shadow
-    box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1)
-    border: 0
+<style lang="scss" scoped>
+.tag {
+  background-color: #4a90e2;
+  color: white;
+  padding: 3px 8px;
+  margin: 2px;
+  font-size: 15px;
+  border-radius: 30px;
+}
+
+.red-background {
+  background-color: red;
+}
+
+.fa-3x {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.shadow {
+  box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
+  border: 0;
+}
 </style>
 
 

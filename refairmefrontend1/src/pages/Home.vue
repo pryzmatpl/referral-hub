@@ -157,26 +157,34 @@ export default {
 }
 
 </script>
-<style lang="sass" scoped>
-  .container
-    background-color: #42bff4
-    background-size: 100% 100%
-    max-width: 100%
-    height: 500px
+<style lang="scss" scoped>
+.container {
+  background-color: #42bff4;
+  background-size: 100% 100%;
+  max-width: 100%;
+  height: 500px;
+}
 
-  .search-panel
-    width: 100%
-    height: 500px
+.search-panel {
+  width: 100%;
+  height: 500px;
+}
 
-  .col-4
-    .card
-      cursor: pointer
-  
-  .shadow
-    box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1)
-    border: 0
-  
-  .pointer
-    cursor: pointer
+.col-4 {
+  .card {
+    cursor: pointer;
+  }
+}
+
+.shadow {
+  box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
+  border: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+@import 'vue-multiselect/dist/vue-multiselect.css';
 </style>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+

@@ -305,15 +305,20 @@ export default {
   }
 }
 </script>
-<style lang="sass">
-  .card
-    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
-    border: 0
-  .custom-file-label
-    text-overflow: ellipsis
-    overflow: hidden
-    padding-right: 80px
-    white-space: nowrap
-  .custom-file-input
-    cursor: pointer
+<style lang="scss">
+.card {
+  box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1);
+  border: 0;
+}
+
+.custom-file-label {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 80px;
+  white-space: nowrap;
+}
+
+.custom-file-input {
+  cursor: pointer;
+}
 </style>

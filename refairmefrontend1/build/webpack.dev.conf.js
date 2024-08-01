@@ -1,81 +1,67 @@
 'use strict'
 const utils = require('./utils')
-const {webpack, ProvidePlugin, NamedModulesPlugin, DefinePlugin, HotModuleReplacementPlugin,NoEmitOnErrorsPlugin} = require('webpack')
+const webpack = require('webpack')
 const config = require('../config')
-const {merge} = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const path = require('path')
-const Dotenv = require('dotenv-webpack')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
 const portfinder = require('portfinder')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
-  /*
   module: {
-    rules: utils.styleLoaders({
-      sourceMap: config.dev.cssSourceMap,
-      usePostCSS: false
-    })
-  },*/
-  // cheap-module-eval-source-map is faster for development
-  //devtool: config.dev.devtool,
-
-  // these devServer options should be customized in /config/index.js
+    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
+  },
+  // Update this line to use a valid devtool option
+  devtool: 'eval-cheap-module-source-map',
   devServer: {
-    //clientLogLevel: 'warning',
+    client: {
+      logging: 'info',
+      overlay: config.dev.errorOverlay ? { warnings: false, errors: true } : false,
+    },
     historyApiFallback: {
       rewrites: [
         { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
       ],
     },
     hot: true,
-    //contentBase: false, // since we use CopyWebpackPlugin.
+    static: {
+      directory: path.join(__dirname, '../static'),
+      publicPath: config.dev.assetsPublicPath,
+    },
     compress: true,
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
-    // overlay: config.dev.errorOverlay
-    //   ? { warnings: false, errors: true }
-    //   : false
+    proxy: config.dev.proxyTable,
   },
   plugins: [
-
-    new DefinePlugin({
+    new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
-    new HotModuleReplacementPlugin(),    
-    new NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
       inject: true
-    }),/*
-    // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.dev.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ]),*/
-    new ProvidePlugin({
-      $: 'jquery',
-      jquery: 'jquery',
-      'window.jQuery': 'jquery',
-      jQuery: 'jquery'
     }),
-    new Dotenv({
-      path: './.env', // Path to .env file (this is the default)
-      safe: false // load .env.example (defaults to "false" which does not use dotenv-safe)
-    })
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../static'),
+          to: config.dev.assetsSubDirectory,
+          globOptions: {
+            ignore: ['.*']
+          }
+        }
+      ]
+    }),
+    new VueLoaderPlugin()
   ]
 })
 
@@ -85,10 +71,10 @@ module.exports = new Promise((resolve, reject) => {
     if (err) {
       reject(err)
     } else {
-      // publish the new Port, necessary for e2e tests
       process.env.PORT = port
-      // add port to devServer config
       devWebpackConfig.devServer.port = port
+
+      console.log(`Your application is running here: http://${devWebpackConfig.devServer.host || 'localhost'}:${port}`)
 
       resolve(devWebpackConfig)
     }

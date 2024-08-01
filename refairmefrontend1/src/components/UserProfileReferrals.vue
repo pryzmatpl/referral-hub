@@ -41,9 +41,10 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-  .modal-dialog
+<style lang="scss" scoped>
+  .modal-dialog {
     max-width: 90%
+  }
 </style>
 
 
