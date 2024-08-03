@@ -10,7 +10,7 @@
         <div class="card col-8 shadow">
           <div class="card-body">
             <form>
-              <div class="form-row mb-2">
+              <div class="form-row d-flex mb-2">
                 <div class="form-group col-12 col-sm-6 col-lg-3">
                   <label>Job Category</label>
                   <multiselect
@@ -179,6 +179,10 @@ export default {
 .shadow {
   box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
   border: 0;
+}
+
+.d-flex label {
+  margin-bottom: 0.5rem;
 }
 
 .pointer {

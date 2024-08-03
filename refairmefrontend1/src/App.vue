@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav id="mainNav" class="navbar navbar-expand-lg navbar-light text-uppercase">
+    <nav id="mainNav" class="navbar navbar-expand-lg navbar-light text-uppercase p-2 px-3">
       <router-link class="navbar-brand" to="/">
         <!-- <img src="./assets/refairme_logo.png" height="50"> -->
         <img src="./assets/refair-me-logo.svg" height="70" class="ml-2">
@@ -9,7 +9,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div id="navbarResponsive" class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item mx-0 mx-lg-1" v-if="isAuthenticated">
             <router-link class="nav-link py-3 px-0 px-lg-3" to="/search">Search</router-link>
           </li>
