@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import router from "./router";
 import store from "@/store/index.js";
 
+import { library } from '@fortawesome/fontawesome-svg-core' 
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faMoneyBillAlt } from "@fortawesome/fontawesome-free-solid";
+library.add(faMoneyBillAlt)
+
 import BootstrapVue3 from 'bootstrap-vue-3'
 
 
@@ -22,4 +27,4 @@ app.config.productionTip = false;
 
 
 
-app.mount("#app");
+app.component('font-awesome-icon', FontAwesomeIcon).mount("#app");
