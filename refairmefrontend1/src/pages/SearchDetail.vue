@@ -19,7 +19,7 @@
             <div class="form-group col-12 col-sm-4 col-md-4 p-2">
               <label>Job Category</label>
               <multiselect
-                :value="filterSelections.technology"
+                v-model="filterSelections.technology"
                 @input="updateFilterSelection"
                 :options="technologyList"
                 :preselect-first="true"
@@ -30,7 +30,7 @@
             <div class="form-group col-12 col-sm-4 col-md-4 p-2">
               <label class="typo__label">Language</label>
               <multiselect
-                :value="filterSelections.languages"
+                v-model="filterSelections.languages"
                 @input="updateFilterLanguages"
                 :options="languageList"
                 :multiple="true"
@@ -57,7 +57,7 @@
             <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Location</label>
               <multiselect
-                :value="filterSelections.city"
+                v-model="filterSelections.city"
                 @input="updateFilterCity"
                 :options="filterDefaults.cities"
                 :searchable="false"
@@ -76,7 +76,7 @@
             <div class="form-group col-4 p-2">
               <label>Employment type</label>
               <multiselect
-                :value="filterSelections.employment"
+                v-model="filterSelections.employment"
                 @input="updateFilterEmployment"
                 :options="filterDefaults.employment"
                 :searchable="false"
@@ -88,7 +88,7 @@
             <div class="form-group col-4 p-2">
               <label>Workload</label>
               <multiselect
-                :value="filterSelections.workload"
+                v-model="filterSelections.workload"
                 @input="updateFilterWorkload"
                 :options="filterDefaults.workload"
                 :searchable="false"
