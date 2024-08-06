@@ -22,7 +22,6 @@ var state = {
   showloading: 0,
   isAuthenticated: false,
   backend,
-  planck: 'FRESH',
   dehashedData: {
     SESSION_AUTH: '',
     SESSION_STATE: '',
