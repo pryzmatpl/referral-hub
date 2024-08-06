@@ -14,7 +14,7 @@
                 <div class="form-group col-12 col-sm-6 col-lg-3">
                   <label>Job Category</label>
                   <multiselect
-                    :value="filterSelections.technology"
+                    v-model="filterSelections.technology"
                     @input="updateFilterSelection"
                     :options="technologyList"
                     select-label=""
@@ -50,7 +50,7 @@
                 <div class="form-group col-12 col-sm-6 col-lg-3">
                   <label>Location</label>
                   <multiselect
-                    :value="filterSelections.city"
+                    v-model="filterSelections.city"
                     @input="updateFilterCity"
                     :options="filterDefaults.cities"
                     searchable="false"
