@@ -160,6 +160,26 @@
                 >{{ teamSizeOption }}</b-button>
               </b-button-group>
             </div>
+            <div class="form-group col-12 col-sm-6 col-md-4 p-2">
+              <label>Travel involved</label>
+              <div class="ml-1">
+                <div
+                  v-for="option in [{ name: 'Yes', value: 1 }, { name: 'No', value: 0 }]"
+                  :key="option.value"
+                  class="form-check form-check-inline"
+                >
+                  <input
+                    id="inlineRadio1"
+                    class="form-check-input"
+                    type="radio"
+                    v-model="relocation"
+                    :value="option.value"
+                    name="inlineRadioOptions"
+                  />
+                  <label class="form-check-label" for="inlineRadio1">{{ option.name }}</label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -184,23 +204,31 @@
           </div>
         </div>
       </div>
+      <div class="card mt-2 shadow">
+        <div class="card-body">
+          <h5>Project</h5>
+          <div class="row p-2">
+            <div
+              v-for="(item, index) in formResources.methodologies"
+              :key="index"
+              class="form-check col-12 col-sm-6 col-md-3 mb-1"
+            >
+              <input
+                class="form-check-input"
+                type="checkbox"
+                :value="item"
+                v-model="selectedMethodologies"
+                :id="index"
+              />
+              <label class="form-check-label" :for="item">{{ item }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row justify-content-center pt-2 m-4">
         <router-link class="btn btn-info w-50" to="/results" tag="button">
           {{ jobListingLength }} Jobs You Can Start Today
         </router-link>
-      </div>
-      <div>
-        <h2>Specs</h2>
-        <div class="form-row">
-          <BaseFormGroupInput class="col-md-4" name="Travel involved" :error="true" />
-          <BaseFormGroupInput class="col-md-4" name="Remote possible" v-model="remotePossible" />
-          <BaseFormGroupInput class="col-md-4" name="Relocation package" />
-        </div>
-        <h2>Project</h2>
-        <div v-for="(item, index) in formResources.methodologies" :key="index">
-          <BaseFormCheckbox :name="item" v-model="selectedMethodologies" :val="item" />
-        </div>
-        <span>{{ selectedMethodologies }}</span>
       </div>
     </form>
   </div>
