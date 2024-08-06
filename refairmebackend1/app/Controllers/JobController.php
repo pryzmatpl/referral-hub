@@ -112,7 +112,7 @@ class JobController extends Controller {
                     'pages'=>$noOfPages,
                     'count'=>$aCount];
 
-                return $response($aresults);
+                return $response->withJson($aresults);
 
             }else{
                 $results = $jobdescs->get();
