@@ -24,7 +24,7 @@
                       <span v-if="recovery">Recover password</span>
                       <span v-else>Sign In</span>
                     </button>
-                    <div class="mt-1">
+                    <div class="mt-1 d-flex justify-content-between">
                       <small class="float-left"><a href="#" @click="recovery = !recovery">Forgot password?</a></small>
                       <small class="float-right"><router-link to="/auth/signup">Don't have an account?</router-link></small>
                     </div>
