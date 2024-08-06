@@ -24,13 +24,13 @@
                 <div class="form-group col-12 col-sm-6 col-lg-3">
                   <label class="typo__label">Subcategory</label>
                   <multiselect
-                    :value="filterSelections.languages"
+                    v-model="filterSelections.languages"
                     @input="updateFilterLanguages"
                     :options="languageList"
                     multiple
                     searchable="false"
-                    close-on-select="false"
-                    clear-on-select="false"
+                    :close-on-select="false"
+                    :clear-on-select="false"
                     hide-selected
                     preserve-search
                     placeholder="Pick some"
@@ -39,10 +39,10 @@
                     select-label=""
                     deselect-label=""
                   >
-                    <template #tag="{ props }">
+                    <template #tag="{ option, remove }">
                       <span class="custom__tag">
-                        <span>{{ props.option.language }}</span>
-                        <span class="custom__remove" @click="props.remove(props.option)">❌</span>
+                        <span>{{ option.language }}</span>
+                        <span class="custom__remove" @click="remove(option)">❌</span>
                       </span>
                     </template>
                   </multiselect>
