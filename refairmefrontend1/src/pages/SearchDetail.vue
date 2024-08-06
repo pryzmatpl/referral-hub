@@ -134,6 +134,7 @@
             <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Minimum salary (monthly/gross)</label>
               <Slider
+                v-model="filterSelections.salary"
                 :min="0"
                 :max="20000"
                 tooltip="hover"
@@ -142,6 +143,7 @@
                 @callback="$store.commit('filterChange', { arg: 'salary', value: $refs.sal.getValue() })"
                 ref="sal"
               />
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
               <p>{{ filterSelections.salary }} PLN</p>
             </div>
             <div class="form-group col-12 col-sm-6 col-md-4 p-2">
@@ -297,6 +299,10 @@ export default {
 .shadow {
   box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
   border: 0;
+}
+
+#inlineRadio1 {
+  border: 1px solid black;
 }
 
 @import 'vue-multiselect/dist/vue-multiselect.css';
