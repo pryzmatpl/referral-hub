@@ -33,8 +33,7 @@ class PrizmMiddleware extends Middleware
     public function __invoke($request, $response, $next)
     {
       if(PHP_SAPI == 'cli') return $response;
-      
-        $aplanck = $request->getHeader('planck')[0];
+
         $aroute = $request->getUri()->getPath();
 	$getData = $request->getQueryParams();
 
@@ -72,10 +71,8 @@ class PrizmMiddleware extends Middleware
                 $_SESSION['creds']['token'] = $aplanck;
                 $_SESSION['creds']['dataList'] = $dataList;
 
-                $response = $next($request, $response);
+                return $next($request, $response);
 
-                $explodedResp = $response->withHeader('planck', $aplanck)
-                return $explodedResp;
             } else {
 
                 return $next($request, $response);
