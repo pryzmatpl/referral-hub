@@ -2,7 +2,7 @@
   <div class="container">
     <a class="nav-link py-3 px-0" href="#" @click="back">< Back</a>
     <div class="row">
-      <div class="col">
+      <div class="col d-flex justify-content-between">
         <h2 style="display: inline-block">Search results</h2>
         <a class="float-right" href="#" @click="clearAllFilters">Clear filters (show all jobs)</a>
       </div>
@@ -18,7 +18,7 @@
                 <div class="form-group">
                   <label>Job Category</label>
                   <multiselect
-                    :value="filterSelections.technology"
+                    v-model="filterSelections.technology"
                     @input="updateFilterSelection"
                     :options="technologyList"
                     :preselect-first="true"
@@ -29,7 +29,7 @@
                 <div class="form-group">
                   <label class="typo__label">Language</label>
                   <multiselect
-                    :value="filterSelections.languages"
+                    v-model="filterSelections.languages"
                     @input="updateFilterLanguages"
                     :options="languageList"
                     :multiple="true"
@@ -56,7 +56,7 @@
                 <div class="form-group">
                   <label>Contract type</label>
                   <multiselect
-                    :value="filterSelections.employment"
+                    v-model="filterSelections.employment"
                     @input="updateFilterEmployment"
                     :options="filterDefaults.employment"
                     :searchable="false"
@@ -68,7 +68,7 @@
                 <div class="form-group">
                   <label>Workload</label>
                   <multiselect
-                    :value="filterSelections.workload"
+                    v-model="filterSelections.workload"
                     @input="updateFilterWorkload"
                     :options="filterDefaults.workload"
                     :searchable="false"
@@ -116,10 +116,11 @@
                     :max="50000"
                     tooltip="hover"
                     :interval="1000"
-                    :value="filterSelections.salary"
+                    v-model="filterSelections.salary"
                     @callback="$store.commit('filterChange', { arg: 'salary', value: $refs['sal'].getValue() })"
                     ref="sal"
                   />
+                  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
                   <p>{{ filterSelections.salary }} PLN</p>
                 </div>
                 <div class="form-group">
@@ -127,6 +128,7 @@
                   <div>
                     <div class="form-check form-check-inline" v-for="option in [{ name: 'Yes', value: 1 }, { name: 'No', value: 0 }]" :key="option.value">
                       <input
+                        id="inlineRadio1"
                         class="form-check-input"
                         type="radio"
                         name="inlineRadioOptions"
@@ -260,6 +262,10 @@ export default {
 .shadow {
   box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
   border: 0;
+}
+
+#inlineRadio1 {
+  border: 1px solid black;
 }
 
 @import 'vue-multiselect/dist/vue-multiselect.css';
