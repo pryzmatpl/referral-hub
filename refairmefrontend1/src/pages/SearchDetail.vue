@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container col-10">
     <form>
       <div class="row">
         <div class="col-4">
@@ -8,15 +8,15 @@
         <div class="col-4">
           <h2 class="mt-3 mb-4 text-center">Detail search</h2>
         </div>
-        <div class="col-4">
-          <a href="#" class="float-right py-3 px-0" @click="clearAllFilters">Clear all filters</a>
+        <div class="col-4 d-flex justify-content-end">
+          <a href="#" class="py-3 px-0" @click="clearAllFilters">Clear all filters</a>
         </div>
       </div>
       <div class="card shadow">
         <div class="card-body">
           <h5>Basic filter</h5>
-          <div class="form-row mb-2">
-            <div class="form-group col-12 col-sm-6 col-md-4">
+          <div class="form-row mb-2 d-flex">
+            <div class="form-group col-12 col-sm-4 col-md-4 p-2">
               <label>Job Category</label>
               <multiselect
                 :value="filterSelections.technology"
@@ -27,7 +27,7 @@
                 deselectLabel=""
               />
             </div>
-            <div class="form-group col-12 col-sm-6 col-md-4">
+            <div class="form-group col-12 col-sm-4 col-md-4 p-2">
               <label class="typo__label">Language</label>
               <multiselect
                 :value="filterSelections.languages"
@@ -54,7 +54,7 @@
                 </template>
               </multiselect>
             </div>
-            <div class="form-group col-12 col-sm-6 col-md-4">
+            <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Location</label>
               <multiselect
                 :value="filterSelections.city"
@@ -72,8 +72,8 @@
       <div class="card mt-3 shadow">
         <div class="card-body">
           <h5>Contract type</h5>
-          <div class="form-row">
-            <div class="form-group col-12 col-sm-6 col-md-4">
+          <div class="form-row d-flex flex-wrap">
+            <div class="form-group col-4 p-2">
               <label>Employment type</label>
               <multiselect
                 :value="filterSelections.employment"
@@ -85,7 +85,7 @@
                 placeholder="Pick a type"
               />
             </div>
-            <div class="form-group col-12 col-sm-6 col-md-4">
+            <div class="form-group col-4 p-2">
               <label>Workload</label>
               <multiselect
                 :value="filterSelections.workload"
@@ -97,7 +97,7 @@
                 placeholder="Pick a type"
               />
             </div>
-            <div class="form-group col-12 col-sm-6 col-md-4">
+            <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Remote</label>
               <b-button-group class="w-100">
                 <b-button
@@ -111,7 +111,7 @@
                 >{{ remoteOption }}</b-button>
               </b-button-group>
             </div>
-            <div class="form-group col-12 col-sm-6 col-md-4">
+            <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Relocation package</label>
               <div class="ml-1">
                 <div
@@ -131,7 +131,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-12 col-sm-6 col-md-4">
+            <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Minimum salary (monthly/gross)</label>
               <Slider
                 :min="0"
@@ -144,7 +144,7 @@
               />
               <p>{{ filterSelections.salary }} PLN</p>
             </div>
-            <div class="form-group col-12 col-sm-6 col-md-4">
+            <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Project team size</label>
               <b-button-group class="w-100">
                 <b-button
@@ -164,7 +164,7 @@
       <div class="card mt-2 shadow">
         <div class="card-body">
           <h5>Other perks</h5>
-          <div class="row">
+          <div class="row p-2">
             <div
               v-for="perk in filterDefaults.perks"
               :key="perk"
@@ -182,7 +182,7 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center pt-2 mb-5">
+      <div class="row justify-content-center pt-2 m-4">
         <router-link class="btn btn-info w-50" to="/results" tag="button">
           {{ jobListingLength }} Jobs You Can Start Today
         </router-link>
