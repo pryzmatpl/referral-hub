@@ -101,6 +101,7 @@ class JobController extends Controller {
             $aCount = $jobdescs->count();
 
             if( !isset($currentPage) ){
+
                 $results = $jobdescs->all();
 
                 foreach($results as &$job){
@@ -111,7 +112,8 @@ class JobController extends Controller {
                     'pages'=>$noOfPages,
                     'count'=>$aCount];
 
-                return $response->withJson(cc($aresults));
+                return $response($aresults);
+
             }else{
                 $results = $jobdescs->get();
 

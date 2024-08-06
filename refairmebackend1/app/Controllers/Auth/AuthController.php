@@ -63,8 +63,7 @@ class AuthController extends Controller
         if (!$auth) {
 	  $thistate = "Validation failed - you stated a malformed email address or a wrong password for " . $request->getParam('email');
 
-            return $response->withHeader('Access-Control-Allow-Origin', '*')
-                ->withJson(array('message' => $thistate,
+            return $response->withJson(array('message' => $thistate,
                     'state' => 'error',
                     'auth' => false));
 
