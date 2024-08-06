@@ -148,8 +148,7 @@ try{
 
         $response = $next($request, $response);
 
-        return $response->withHeader("Access-Control-Allow-Methods", implode(",", $methods))
-            ->withHeader("Access-Control-Allow-Origin", '*');
+        return $response;
     });
 
     require_once __DIR__ . '/database.php';

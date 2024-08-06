@@ -75,29 +75,15 @@ class PrizmMiddleware extends Middleware
                 $response = $next($request, $response);
 
                 $explodedResp = $response->withHeader('planck', $aplanck)
-                    ->withHeader('Access-Control-Allow-Origin', '*')
-                    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, Access-Control-Allow-Origin')
-                    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
                 return $explodedResp;
             } else {
 
-                $response = $next($request, $response);
-
-                $explodedResp = $response->withHeader('planck', 'TAINTED')
-                    ->withHeader('Access-Control-Allow-Origin', '*')
-                    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, Access-Control-Allow-Origin')
-                    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-                return $explodedResp;
+                return $next($request, $response);
             }
         } else {
 
-            $response = $next($request, $response);
+            return $next($request, $response);
 
-            $explodedResp = $response->withHeader('planck', "FRESH")
-                ->withHeader('Access-Control-Allow-Origin', '*')
-                ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, Access-Control-Allow-Origin')
-                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-            return $explodedResp;
         }
     }
   
