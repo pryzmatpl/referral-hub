@@ -12,7 +12,6 @@ const state = reactive({
     timeout: 5000,
     crossDomain: true,
   }),
-  planck: 'FRESH',
   dehashedData: {
     SESSION_AUTH: '',
     SESSION_STATE: '',
@@ -78,7 +77,6 @@ const state = reactive({
   currentPage: 0
 });
 
-state.backend.defaults.headers['planck'] = state.planck;
 
 // mutations are operations that actually mutates the state.
 // each mutation handler gets the entire state tree as the
@@ -105,7 +103,6 @@ const mutations = {
         state.dehashedData[temp[0]] = temp[1]
       }
       state.isAuthenticated = true
-      backend.defaults.headers['planck'] = state.planck
     }
   },
 

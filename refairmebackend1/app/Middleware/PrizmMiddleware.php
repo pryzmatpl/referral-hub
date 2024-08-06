@@ -59,29 +59,8 @@ class PrizmMiddleware extends Middleware
 
         $_SESSION['user'] = null;
 
-        if ($aplanck != 'FRESH') {
-            $dataList = $this->spawn($aplanck);
-
-            $dataList_arr = json_decode($dataList, true);
-            if (isset($dataList_arr[3]['EMAIL'])) {
-                $_SESSION['user'] = User::where('email', urldecode($dataList_arr[3]['EMAIL']))->first();
-            }
-
-            if ($dataList['auth']) {
-                $_SESSION['creds']['token'] = $aplanck;
-                $_SESSION['creds']['dataList'] = $dataList;
-
-                return $next($request, $response);
-
-            } else {
-
-                return $next($request, $response);
-            }
-        } else {
-
             return $next($request, $response);
 
-        }
     }
   
 
