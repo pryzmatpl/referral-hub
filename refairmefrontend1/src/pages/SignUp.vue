@@ -116,7 +116,6 @@ export default {
         let headerRegister = {
           'Content-Type': 'multipart/form-data',
           'Authorization': 'Basic REGISTER',
-          'Access-Control-Allow-Origin': '*',
         }
 
         this.$store.state.backend
