@@ -14,7 +14,7 @@
                 <div class="form-group col-12 col-sm-6 col-lg-3">
                   <label>Job Category</label>
                   <multiselect
-                    :value="filterSelections.technology"
+                    v-model="filterSelections.technology"
                     @input="updateFilterSelection"
                     :options="technologyList"
                     select-label=""
@@ -24,13 +24,13 @@
                 <div class="form-group col-12 col-sm-6 col-lg-3">
                   <label class="typo__label">Subcategory</label>
                   <multiselect
-                    :value="filterSelections.languages"
+                    v-model="filterSelections.languages"
                     @input="updateFilterLanguages"
                     :options="languageList"
                     multiple
                     searchable="false"
-                    close-on-select="false"
-                    clear-on-select="false"
+                    :close-on-select="false"
+                    :clear-on-select="false"
                     hide-selected
                     preserve-search
                     placeholder="Pick some"
@@ -39,10 +39,10 @@
                     select-label=""
                     deselect-label=""
                   >
-                    <template #tag="{ props }">
+                    <template #tag="{ option, remove }">
                       <span class="custom__tag">
-                        <span>{{ props.option.language }}</span>
-                        <span class="custom__remove" @click="props.remove(props.option)">❌</span>
+                        <span>{{ option.language }}</span>
+                        <span class="custom__remove" @click="remove(option)">❌</span>
                       </span>
                     </template>
                   </multiselect>
@@ -50,7 +50,7 @@
                 <div class="form-group col-12 col-sm-6 col-lg-3">
                   <label>Location</label>
                   <multiselect
-                    :value="filterSelections.city"
+                    v-model="filterSelections.city"
                     @input="updateFilterCity"
                     :options="filterDefaults.cities"
                     searchable="false"
@@ -72,36 +72,36 @@
         </div>
       </div>
     </div>
-    <div class="row" style="margin: 0 auto; margin-top: -20px;">
+    <div class="row justify-content-center" style="margin: 0 auto; margin-top: -20px;">
       <div class="col-8 pl-0 pr-0">
         <div class="row">
-          <div class="col-12 col-md-6 pl-0">
+          <div class="col-12 col-md-4 pl-0">
             <div class="card text-left shadow" @click="$router.push({ name: 'Profile', params: { tab: 1 } })">
               <div class="card-body">
                 <h2 class="card-title">
-                  <font-awesome-icon :icon="moneyIcon" />
+                  <font-awesome-icon :icon="moneyIcon" :style="{color: '#42bff4'}" />
                   Salary survey
                 </h2>
                 <p class="card-text">Create profile and get free report on how your salary compares</p>
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6 pr-0">
+          <div class="col-12 col-md-4 pr-0">
             <div class="card text-left shadow" @click="$router.push({ name: 'Profile', params: { tab: 1 } })">
               <div class="card-body">
                 <h2 class="card-title">
-                  <font-awesome-icon :icon="wrenchIcon" />
+                  <font-awesome-icon :icon="wrenchIcon" :style="{color: '#42bff4'}"/>
                   Skill survey
                 </h2>
                 <p class="card-text">Create profile see how your skills compare against your colleagues</p>
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6 pl-0">
+          <div class="col-12 col-md-4 pl-0">
             <div class="card text-left shadow" @click="$router.push({ name: 'Profile', params: { tab: 1 } })">
               <div class="card-body">
                 <h2 class="card-title">
-                  <font-awesome-icon :icon="usersIcon" />
+                  <font-awesome-icon :icon="usersIcon" :style="{color: '#42bff4'}"/>
                   Career comparison
                 </h2>
                 <p class="card-text">Create profile and compare your career path against your peers</p>
@@ -187,6 +187,10 @@ export default {
 
 .pointer {
   cursor: pointer;
+}
+
+.card-title {
+  color: #42bff4;
 }
 
 @import 'vue-multiselect/dist/vue-multiselect.css';
