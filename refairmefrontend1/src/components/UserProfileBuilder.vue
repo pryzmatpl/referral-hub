@@ -29,6 +29,7 @@
           piecewiseLabel="true"
           :data="['Not looking','Not looking, but open','Casually looking','Actively looking']"
         />
+        {{ userInput.jobStatus || 'Not looking' }}
       </div>
     </div>
     <hr />

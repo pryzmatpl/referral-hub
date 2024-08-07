@@ -94,6 +94,7 @@ export default {
 //@import '../node_modules/bootstrap/scss/bootstrap.scss';
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 @import '@/assets/settings.scss';
+@import url('https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css');
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
