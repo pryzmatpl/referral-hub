@@ -22,7 +22,7 @@
     </div>
     <table>
       <tr v-for="keyword in keywords" :key="keyword">
-        <td>
+        <td class="p-4">
           <span class="badge badge-pill badge-light">
             <label>{{ keyword }}</label>
             <span
@@ -35,35 +35,19 @@
             </span>
           </span>
         </td>
-        <td>
-          <b-form-radio-group
-              class="col-4"
-              v-model="skills[keywords.indexOf(keyword)].exp"
-              :key="keyword"
-              style="display: inline"
-          >
-            <b-form-radio
-                value="1"
-                v-b-tooltip="'1-2 years'"
-                style="color: red"
-            >
-              BASIC
-            </b-form-radio>
-            <b-form-radio
-                value="2"
-                v-b-tooltip="'3-5 years'"
-            >
-              ADVANCED
-            </b-form-radio>
-            <b-form-radio
-                value="3"
-                v-b-tooltip="'5+ years'"
-            >
-              EXPERT
-            </b-form-radio>
-          </b-form-radio-group>
+        <td style="width: 10rem" class="p-1">
+          <vue-slider
+            v-model="skills[keywords.indexOf(keyword)].exp"
+            :min="1"
+            :max="3"
+            :interval="1"
+            :marks="marks"
+            :tooltip="'focus'"
+            :tooltip-formatter="tooltipFormatter"
+          ></vue-slider>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
         </td>
-        <td v-if="isParentProfile">
+        <td v-if="isParentProfile" class="p-3">
           <b-input-group append="years">
             <b-form-input
                 class="col-3"
@@ -77,7 +61,13 @@
   </div>
 </template>
 <script>
+import VueSlider from 'vue-slider-component'
+
+
 export default {
+  components: {
+    VueSlider
+  },
   props: {
     keywords: {
       type: Array,
@@ -103,6 +93,11 @@ export default {
 
   data () {
     return {
+      marks: {
+        1: 'BASIC',
+        2: 'ADVANCED',
+        3: 'EXPERT'
+      },
       isParentProfile: this.$route.path == '/profile',
       newKeyword: ''
     }
@@ -156,21 +151,34 @@ export default {
       let array = this.keywords
       array.push(keyword)
       return array;
+    },
+
+    tooltipFormatter(value) {
+      const tooltips = {
+        1: '1-2 years',
+        2: '3-5 years',
+        3: '5+ years'
+      }
+      return tooltips[value]
     }
   }
 }
 </script>
 <style lang="scss" scoped>
   @import '@/assets/settings.scss';
-/*
+
 .badge {
-    font-size: 1.1em
-    cursor: pointer
-    font-weight: normal
-    color: white
-    margin: 3px
-    background-color: #424242
-    border-radius: 3px
+    font-size: 1.1em;
+    cursor: pointer;
+    font-weight: normal;
+    color: white;
+    margin: 3px;
+    background-color: #424242;
+    border-radius: 3px;
   }
-    */
+</style>
+<style lang="scss">
+  .vue-slider-mark-label {
+    font-size: 0.7em !important;
+}
 </style>
