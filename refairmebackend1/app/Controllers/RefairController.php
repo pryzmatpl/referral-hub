@@ -1,11 +1,12 @@
 <?php
 namespace App\Controllers;
+use Exception;
 use Nette\Mail\Message;
 use Knp\Menu\MenuFactory;
 use Respect\Validation\Validator as v;
 use Knp\Menu\Renderer\ListRenderer;
-use \League\OAuth2\Client\Provider\LinkedIn as OauthLI;
-use \League\OAuth2\Client\Provider\Github as OauthGH;
+use League\OAuth2\Client\Provider\LinkedIn as OauthLI;
+use League\OAuth2\Client\Provider\Github as OauthGH;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Project;
@@ -18,7 +19,7 @@ use App\Models\Jobdesc;
 use App\Models\Jobweight;
 use App\Models\Userweight;
 use App\Models\Linkedinimport;
-use \Requests;
+use Requests;
 use App\Models\Signoff;
 use App\Classes\Fitnesscalc;
 use App\Classes\Individual;
@@ -29,7 +30,7 @@ use Slim\Http\UploadedFile;
 use App\Classes\Population;
 use App\Classes\Algorithm;
 use Illuminate\Database\Capsule\Manager as DB;
-use \SlimSession\Helper as Session;
+use SlimSession\Helper as Session;
 
 class RefairController extends Controller {
   public function index($request, $response, $args){
@@ -42,7 +43,7 @@ class RefairController extends Controller {
 
   function throwIfNone(&$val){
     if( ($val === '') || ($val === NULL) ){
-      throw new \Exception("Value should not be empty : ".print_r($val));
+      throw new Exception("Value should not be empty : ".print_r($val));
     }
   }
 
@@ -99,7 +100,7 @@ class RefairController extends Controller {
       $retarr = ["results"=>[json_encode($query,true)]];
 
       if(strlen($query) < 3){
-	throw new \Exception("The input array cannot be empty");
+	throw new Exception("The input array cannot be empty");
       }else
 	{
 	  //TODO:Replace pristine with proper base_url
@@ -240,7 +241,7 @@ class RefairController extends Controller {
                  'methodologies_must' => empty($auid->methodologies_must) ? array() : $auid->methodologies_must,
                  'methodologies_nice' => empty($auid->methodologies_nice) ? array() : $auid->methodologies_nice
      ]);
-    }catch(\Exception $e){
+    }catch(Exception $e){
       print_r($e);
     }
   }
@@ -307,7 +308,7 @@ class RefairController extends Controller {
 
       return $response->withJson($retarr);
 
-    }catch(\Exception $e){
+    }catch(Exception $e){
       print_r($e);
     }
   }
@@ -369,7 +370,7 @@ class RefairController extends Controller {
 
       return $response->withJson($retarr);
 
-    }catch(\Exception $e){
+    }catch(Exception $e){
       print_r($e);
     }
   }

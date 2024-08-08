@@ -1,6 +1,7 @@
 <?php
 namespace App\Middleware;
 
+use Exception;
 use Nette\Mail\Message;
 
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Carlosocarvalho\SimpleInput\Input\Input;
+use function Exception;
 
 const ORIGIN = 'prizm';
 const SEPARATOR = '~';
@@ -89,7 +91,7 @@ class PrizmMiddleware extends Middleware
 
   public function cleanhash($endpoint){
     if( !strcmp($endpoint,'') ){
-      throw new \Exception("Endpoint cannot be empty to retrieve next hash");
+      throw new Exception("Endpoint cannot be empty to retrieve next hash");
     }
 
     $elems = base64_decode($endpoint);
@@ -122,7 +124,7 @@ class PrizmMiddleware extends Middleware
       $rawd = explode(CHILDSEPARATOR, $val);
 
       if(count($rawd) > 2){
-	throw \Exception('Something went wrong when separating token '.print_r($rawd));
+	throw Exception('Something went wrong when separating token '.print_r($rawd));
       }
       
       $key = $rawd[0];
@@ -137,18 +139,18 @@ class PrizmMiddleware extends Middleware
   public function iwahash($origin,$dataid,$data){
     //Initialize origin
     if( !strcmp($origin,'') ){
-      throw new \Exception("Origin is required, it is currently: ' ".$origin." '.");
+      throw new Exception("Origin is required, it is currently: ' ".$origin." '.");
     }
 
     //Check if dataid has the childseparator within it
     if( strpos($dataid, CHILDSEPARATOR) != FALSE ){
-      throw new \Exception("dataid cannot have the child separator, ' ".CHILDSEPARATOR." ' , within it");
+      throw new Exception("dataid cannot have the child separator, ' ".CHILDSEPARATOR." ' , within it");
     }
 
     //Check if dataid is not empty
     if( !strcmp($dataid,'') ){
       return $origin;
-      throw new \Exception('Origin must always be set for the hashgraph');
+      throw new Exception('Origin must always be set for the hashgraph');
       // Origin should be hashed always
     }
 

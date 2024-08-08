@@ -6,7 +6,8 @@ use Knp\Menu\Renderer\ListRenderer;
 use App\Models\User;
 use App\Models\Cart;
 use Illuminate\Database\Capsule\Manager as DB;
-use \SlimSession\Helper as Session;
+use Requests;
+use SlimSession\Helper as Session;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,7 @@ class HomeController extends Controller
   {
     try{
       $menus = $this->buildmenu();
-      $session = new \SlimSession\Helper;
+      $session = new Session;
 
       $viewedcats = $this->view->fetch('partial_shopifycategories.twig', array('categories'=>$cats));
       $categorybd = $this->view->fetch('categories.twig', array('categories'=>$currentCats));
@@ -53,7 +54,7 @@ class HomeController extends Controller
     //This one is an endpoint for the crawler, triggered by email detection in website body
         
     $sfcustomeraddendpoint ="https://cloudconversion-api-developer-edition.na17.force.com/services/apexrest/ECS/customers";
-    \Requests::register_autoloader();
+    Requests::register_autoloader();
     $headers = array('Accept' => 'application/json');
     //$result = \Requests::get($sfcustomeraddendpoint,$headers)->body; //Here we will be upserting customers
     //Via Cloudconversion 

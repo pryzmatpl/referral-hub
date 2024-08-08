@@ -2,12 +2,13 @@
 namespace App\Controllers;
 
 use App\Models\Cart;
+use Exception;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;
 use App\Models\User;
 use App\Models\Appointment;
 use Illuminate\Database\Capsule\Manager as DB;
-use \SlimSession\Helper as Session;
+use SlimSession\Helper as Session;
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -90,7 +91,7 @@ class AppointmentsController extends Controller
     {
       $data = sc($request->getParams());
       $appointment = Appointment::find($args['id']);
-      if (is_null($appointment)) throw new \Exception('Appointment not found.');
+      if (is_null($appointment)) throw new Exception('Appointment not found.');
       
       ( !is_null($data['candidate_id']) ) ? $appointment->candidate_id = $data['candidate_id'] : exit("No candidate id");
       ( !is_null($data['recruiter_id']) ) ? $appointment->recruiter_id = $data['recruiter_id'] : exit("No recruiter id");
@@ -112,7 +113,7 @@ class AppointmentsController extends Controller
 
       $appointment = Appointment::find($args['id']);
 
-      if (is_null($appointment)) throw new \Exception('Appointment not found.');
+      if (is_null($appointment)) throw new Exception('Appointment not found.');
 
       $appointment->delete();
 

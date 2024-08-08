@@ -1,17 +1,18 @@
 <?php
 namespace App\Controllers;
+use Exception;
 use Nette\Mail\Message;
 use Respect\Validation\Validator as v;
 use App\Models\Referral;
 use App\Models\ReferralState;
 use App\Models\User;
-use \Requests;
+use Requests;
 use Slim\Http\Request;
 use Slim\Csrf\Guard;
 use Slim\Http\Response;
 use Slim\Http\UploadedFile;
 use Illuminate\Database\Capsule\Manager as DB;
-use \SlimSession\Helper as Session;
+use SlimSession\Helper as Session;
 use App\Models\Jobdesc;
 use App\Models\Company;
 
@@ -27,7 +28,7 @@ class ReferralController extends Controller
             $user = User::where('email', $email)->first();
 
             if(empty($user))
-                throw new \Exception('User not found.');
+                throw new Exception('User not found.');
 
             $referrals = Referral::where('users_id', $user->id)
             ->with('User')
@@ -35,7 +36,7 @@ class ReferralController extends Controller
             ->get();
 
             return $response->withJson(cc($referrals->toArray()));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return json_encode($e);
         }
     }
@@ -49,7 +50,7 @@ class ReferralController extends Controller
             ->get();
 
             return $response->withJson(cc($referrals->toArray()));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return json_encode($e);
         }
     }
@@ -113,7 +114,7 @@ class ReferralController extends Controller
                 'referral'=> cc($referral->toArray())
             ]);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return json_encode($e);
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Project;
+use Exception;
 
 class ProjectController extends Controller {
 
@@ -77,7 +78,7 @@ class ProjectController extends Controller {
             $id = $args['id'];
 
             $project = Project::where('id', $id);
-            if (is_null($project)) throw new \Exception('');
+            if (is_null($project)) throw new Exception('');
 
             if (isset($data['staff'])) $project->staff = $data['staff'];
             if (isset($data['description'])) $project->description = $data['description'];

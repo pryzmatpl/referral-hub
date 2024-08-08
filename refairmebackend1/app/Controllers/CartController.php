@@ -1,6 +1,8 @@
 <?php
 namespace App\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;
 use App\Models\User;
@@ -10,7 +12,8 @@ use App\Classes\Individual;
 use App\Classes\Population;
 use App\Classes\Algorithm;
 use Illuminate\Database\Capsule\Manager as DB;
-use \SlimSession\Helper as Session;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use SlimSession\Helper as Session;
 
 class CartController extends Controller
 {
@@ -185,8 +188,8 @@ class CartController extends Controller
 
 	    $request->reparseBody();
 	    return $response->withRedirect(cart.mainrevpost,
-					   array('id'=>$cartid));;
-	}catch(Exception $e){
+					   array('id'=>$cartid));
+        }catch(Exception $e){
 	  print_r($e);
 	}
     }
@@ -294,7 +297,7 @@ class CartController extends Controller
 
     public function loadiwacarts($request, $response, $args){
         try{
-            $session = new \SlimSession\Helper;
+            $session = new Session;
             //STRICTLY 4 MY D.E.B.U.G.G.A.Z
             $allGetVars = $request->getQueryParams();
             $hash = $args['hash'];
@@ -428,7 +431,7 @@ class CartController extends Controller
     public function loadid($request, $response){
         //You can optimize the cart only from JSON!
         try{
-            $session = new \SlimSession\Helper;
+            $session = new Session;
             $allGetVars = $request->getQueryParams();
             $qhash = $allGetVars['hash'];
             $placearr = json_decode($this->hashplace($qhash));
@@ -439,7 +442,7 @@ class CartController extends Controller
             //STRICTLY 4 MY D.E.B.U.G.G.A.Z
             $session['loadedcart'] = $returnee;
     
-            return json_encode($returnee,true);;
+            return json_encode($returnee,true);
         }catch(Exception $e){
             print_r($e);
         }
@@ -447,7 +450,7 @@ class CartController extends Controller
   
     public function optimizeid($request, $response,$args){
         try{
-            $session = new \SlimSession\Helper;
+            $session = new Session;
             $cid = $args['id'];
 
             if(isset($session['currcarts'])){
@@ -511,7 +514,7 @@ class CartController extends Controller
 
     public function getCartDiff($request, $response){
         try{
-            $session = new \SlimSession\Helper;
+            $session = new Session;
             $optcart = $session['optcart'];
             $loaded = $session['loadedcart'];
 
@@ -601,7 +604,7 @@ class CartController extends Controller
                 // Use this to interact with an API on the users behalf
                 echo $accessToken->getToken();
 
-            } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+            } catch (IdentityProviderException $e) {
                 // Failed to get the access token or user details.
                 exit($e->getMessage());
 
@@ -612,7 +615,7 @@ class CartController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -623,8 +626,8 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -635,7 +638,7 @@ class CartController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($hid = 0)
     {
@@ -649,7 +652,7 @@ class CartController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function optimize(&$optcart){
         $time1 = microtime(true);
@@ -750,9 +753,9 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $hid = 0)
     {
@@ -764,7 +767,7 @@ class CartController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($hid = 0)
     {

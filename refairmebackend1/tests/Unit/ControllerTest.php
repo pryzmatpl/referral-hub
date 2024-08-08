@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
-use \App\Controllers\Controller;
+use App\Controllers\Controller;
 
-final class ControllerTest extends \PHPUnit\Framework\TestCase
+final class ControllerTest extends TestCase
 {
   //Testing the hashing scheme for iwahash with base64_encode
   public function testIwahash()
@@ -18,7 +18,7 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
     $dat='';
     $container='';
     
-    $nucon = new \App\Controllers\Controller($container);
+    $nucon = new Controller($container);
     $this->assertEquals('NAME:PIOTR',
 			$nucon->iwadehash('cHJpem1+TkFNRTpQSU9UUg==',$dat));
   }
@@ -28,7 +28,7 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
     $dat='';
     $container='';
     
-    $nucon = new \App\Controllers\Controller($container);
+    $nucon = new Controller($container);
     $this->assertEquals('NAME:PIOTR~SURNAME:SLUPSKI~BIRTH:19.04.1989~EMAIL:piotroxp@gmail.com',
 			$nucon->iwadehash('cHJpem1+TkFNRTpQSU9UUn5TVVJOQU1FOlNMVVBTS0l+QklSVEg6MTkuMDQuMTk4OX5FTUFJTDpwaW90cm94cEBnbWFpbC5jb20=',$dat));
   }
@@ -38,7 +38,7 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
     $dat='prizm';
     $container='';
     
-    $nucon = new \App\Controllers\Controller($container);
+    $nucon = new Controller($container);
     $hash = $nucon->iwahash($dat,'NAME','PIOTR');
     $hash = $nucon->iwahash($hash,'SURNAME','SLUPSKI');
     $hash = $nucon->iwahash($hash,'BIRTH','19.04.1989');
@@ -53,8 +53,8 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
     $dat='';
     $container='';
 
-    $this->expectException(\Exception::class);
-    $nucon = new \App\Controllers\Controller($container);
+    $this->expectException(Exception::class);
+    $nucon = new Controller($container);
     $nucon->iwahash($dat,'TEST','TEST');
   }
 
@@ -63,7 +63,7 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
     $dat='';
     $container='';
 
-    $nucon = new \App\Controllers\Controller($container);
+    $nucon = new Controller($container);
     $res = $nucon->iwahash('prizm','','');
 
     $this->assertEquals('prizm',
@@ -72,7 +72,7 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
 
   public function testOrigin(){
     $container='';
-    $nucon = new \App\Controllers\Controller($container);
+    $nucon = new Controller($container);
     $origin = $nucon->origin('cHJpem1+TkFNRTpQSU9UUn5TVVJOQU1FOlNMVVBTS0l+QklSVEg6MTkuMDQuMTk4OX5FTUFJTDpwaW90cm94cEBnbWFpbC5jb20=');
     $orig ='prizm';
     $this->assertEquals($orig,
@@ -81,7 +81,7 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
 
   public function testCleandata(){
     $container='';
-    $nucon = new \App\Controllers\Controller($container);
+    $nucon = new Controller($container);
     $origin = $nucon->cleandata('cHJpem1+TkFNRTpQSU9UUn5TVVJOQU1FOlNMVVBTS0l+QklSVEg6MTkuMDQuMTk4OX5FTUFJTDpwaW90cm94cEBnbWFpbC5jb20=');
     $orig ='NAME:PIOTR~SURNAME:SLUPSKI~BIRTH:19.04.1989~EMAIL:piotroxp@gmail.com';
     $this->assertEquals($orig,
@@ -90,7 +90,7 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
 
   public function testTraverse(){
     $container='';
-    $nucon = new \App\Controllers\Controller($container);
+    $nucon = new Controller($container);
     $elemes = $nucon->iwadehash('cHJpem1+TkFNRTpQSU9UUn5TVVJOQU1FOlNMVVBTS0l+QklSVEg6MTkuMDQuMTk4OX5FTUFJTDpwaW90cm94cEBnbWFpbC5jb20=');
     $elemes = explode('~',$elemes);
     $origin = $nucon->traverse($elemes,'NAME');
@@ -101,7 +101,7 @@ final class ControllerTest extends \PHPUnit\Framework\TestCase
 
   public function testSpawn(){
     $container='';
-    $nucon = new \App\Controllers\Controller($container);
+    $nucon = new Controller($container);
     $elemes = json_decode($nucon->spawn('cHJpem1+TkFNRTpQSU9UUn5TVVJOQU1FOlNMVVBTS0l+QklSVEg6MTkuMDQuMTk4OX5FTUFJTDpwaW90cm94cEBnbWFpbC5jb20='),true);
     $orig ='PIOTR';
     print_r($elemes);

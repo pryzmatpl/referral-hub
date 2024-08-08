@@ -10,7 +10,7 @@ use App\Classes\Individual;
 use App\Classes\Population;
 use App\Classes\Algorithm;
 use Illuminate\Database\Capsule\Manager as DB;
-use \SlimSession\Helper as Session;
+use SlimSession\Helper as Session;
 
 define('MODALREFER',"modal-refer");
 define('MODALADDLOCATION',"modal-addlocation");

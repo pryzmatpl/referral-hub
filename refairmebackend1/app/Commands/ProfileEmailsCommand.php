@@ -6,6 +6,7 @@ use App\Models\Jobdesc;
 use App\Models\User;
 use Exception;
 use Nette\Mail\Message;
+use Nette\Mail\SmtpMailer;
 
 
 class ProfileEmailsCommand {
@@ -33,7 +34,7 @@ class ProfileEmailsCommand {
 				       ];
       }
 
-      $mailer = new \Nette\Mail\SmtpMailer($settings_mailer);
+      $mailer = new SmtpMailer($settings_mailer);
 	
       foreach ($users as $user) {
 	$categories = array_keys($user['matched_jobs']);

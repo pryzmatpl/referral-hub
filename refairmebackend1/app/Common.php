@@ -63,7 +63,7 @@ function hasOneOfWords($string, array $words, $return_word = false) {
 
 function throwIfNone(&$val){
   if( ($val === '') || ($val === NULL) ){
-    throw new \Exception("Value should not be empty : ".print_r($val));
+    throw new Exception("Value should not be empty : ".print_r($val));
   }
 }
 

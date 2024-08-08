@@ -199,7 +199,7 @@ export default {
           || validation.validateKeywords(self.keywords, $('#kwErrMsg')) == false){
           validated = false
           window.scroll(0,0)
-        };
+        }
       })
       return validated;
     }

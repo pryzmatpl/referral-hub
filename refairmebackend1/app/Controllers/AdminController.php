@@ -4,8 +4,8 @@ use Nette\Mail\Message;
 use Knp\Menu\MenuFactory;
 use Respect\Validation\Validator as v;
 use Knp\Menu\Renderer\ListRenderer;
-use \League\OAuth2\Client\Provider\LinkedIn as OauthLI;
-use \League\OAuth2\Client\Provider\Github as OauthGH;
+use League\OAuth2\Client\Provider\LinkedIn as OauthLI;
+use League\OAuth2\Client\Provider\Github as OauthGH;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\Location;
@@ -22,7 +22,7 @@ use Slim\Http\UploadedFile;
 use App\Classes\Population;
 use App\Classes\Algorithm;
 use Illuminate\Database\Capsule\Manager as DB;
-use \SlimSession\Helper as Session;
+use SlimSession\Helper as Session;
 
 
 class AdminController extends Controller{

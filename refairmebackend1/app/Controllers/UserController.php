@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Userweight;
+use Exception;
 
 class UserController extends Controller {
 
@@ -17,7 +18,7 @@ class UserController extends Controller {
                 $user = User::where(['id' => $_SESSION['user']->id])->with('skills', 'weights')->first();
             }
             return $response->withJson(cc($user->toArray()));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return json_encode($e);
         }
     }
@@ -31,7 +32,7 @@ class UserController extends Controller {
                 $user = User::find($_SESSION['user']->id);
             }
 
-            if (is_null($user)) throw new \Exception('User not found.');
+            if (is_null($user)) throw new Exception('User not found.');
 
             if (isset($data['first_name'])) $user->first_name = $data['first_name'];
             if (isset($data['last_name'])) $user->last_name = $data['last_name'];
@@ -61,7 +62,7 @@ class UserController extends Controller {
             $user->save();
 
             return $response->withJson(['message' => 'User updated.']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return json_encode($e);
         }
     }

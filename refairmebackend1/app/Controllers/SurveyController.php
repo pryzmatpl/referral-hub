@@ -1,11 +1,12 @@
 <?php
 namespace App\Controllers;
+use Exception;
 use Nette\Mail\Message;
 use Knp\Menu\MenuFactory;
 use Respect\Validation\Validator as v;
 use Knp\Menu\Renderer\ListRenderer;
-use \League\OAuth2\Client\Provider\LinkedIn as OauthLI;
-use \League\OAuth2\Client\Provider\Github as OauthGH;
+use League\OAuth2\Client\Provider\LinkedIn as OauthLI;
+use League\OAuth2\Client\Provider\Github as OauthGH;
 use App\Models\User;
 use App\Models\OA2Clients;
 use App\Models\Cart;
@@ -14,18 +15,19 @@ use App\Models\Referral;
 use App\Models\Jobdesc;
 use App\Models\Jobweight;
 use App\Models\Linkedinimport;
-use \Requests;
+use Requests;
 use App\Models\Signoff;
 use App\Classes\Fitnesscalc;
 use App\Classes\Individual;
 use Slim\Http\Request;
 use Slim\Csrf\Guard;
 use Slim\Http\Response;
+use Slim\Http\Stream;
 use Slim\Http\UploadedFile;
 use App\Classes\Population;
 use App\Classes\Algorithm;
 use Illuminate\Database\Capsule\Manager as DB;
-use \SlimSession\Helper as Session;
+use SlimSession\Helper as Session;
 
 class RefairController extends Controller {
   private function _rd_referrer_redirect($referrer=''){
@@ -210,7 +212,7 @@ class RefairController extends Controller {
 	$jbdscnu['locationnew'] = $alocation[0];
 	$newjobs[] = $jbdscnu;
       }
-      return json_encode($newjobs,true);;
+      return json_encode($newjobs,true);
     }catch(Exception $e){
       return $e;
     }
@@ -227,7 +229,7 @@ class RefairController extends Controller {
 	$newrefs[] = $jbdscnu;
       }
       array_reverse($newrefs,false);
-      return json_encode($newrefs,true);;
+      return json_encode($newrefs,true);
     }catch(Exception $e){
       return $e;
     }
@@ -623,14 +625,14 @@ class RefairController extends Controller {
       
       $session = new Session;
       if( $session['booted_signoff'] == undefined ){
-	throw new \Exception("Our server does not match your signoff Hash. What are you doing - using the stack without a UI? : h1# ".$postedHashh.", h2# ".$session['booted_signoff'] );
+	throw new Exception("Our server does not match your signoff Hash. What are you doing - using the stack without a UI? : h1# ".$postedHashh.", h2# ".$session['booted_signoff'] );
       }else{
 	$booted = $session['booted_signoff'];
 	$as = Signoff::where('statehash', $booted)->get();
 	
 	$signoff = json_decode($as,true)[0]; //Get signoffhash
 	if($signoff == undefined){
-	  throw new \Exception("Signoff is undefined in session. Are you trying to hack us?");
+	  throw new Exception("Signoff is undefined in session. Are you trying to hack us?");
 	}else{
 	  
 	  // handle single input with single file upload
@@ -706,12 +708,12 @@ class RefairController extends Controller {
 
       $session = new Session;
       if( $session['booted_signoff'] == undefined ){
-	throw new \Exception("Our server does not match your signoff Hash. What are you doing - using the stack without a UI? : h1# ".$postedHashh.", h2# ".$session['booted_signoff'] );
+	throw new Exception("Our server does not match your signoff Hash. What are you doing - using the stack without a UI? : h1# ".$postedHashh.", h2# ".$session['booted_signoff'] );
       }else{
 	$signoff = json_decode(Signoff::where('statehash',
 					      $session['booted_signoff'])->get(),true)[0]; //Get signoffhash
 	if($signoff == undefined){
-	  throw new \Exception("Signoff is undefined in session. Are you trying to hack us?");
+	  throw new Exception("Signoff is undefined in session. Are you trying to hack us?");
 	}else{
 	
 	  // handle single input with single file upload
@@ -765,7 +767,7 @@ class RefairController extends Controller {
   }
   
   public function csrftoken($request, $response, $args){
-    $slimGuard = new \Slim\Csrf\Guard;
+    $slimGuard = new Guard;
     //    $slimGuard->validateStorage();
     // Generate new tokens
     $csrfNameKey = $slimGuard->getTokenNameKey();
@@ -1578,7 +1580,7 @@ class RefairController extends Controller {
   public function processOauth($request, $response, $args){
     $burl = env('BASE_URL');
     
-    $provider = new \League\OAuth2\Client\Provider\LinkedIn([
+    $provider = new OauthLI([
 							     'clientId'          => '78wq38drug572o',
 							     'clientSecret'      => '0xDQcGgexlkIhh7z',
 							     'redirectUri'       => $burl.'/processoauth']);
@@ -1656,8 +1658,8 @@ class RefairController extends Controller {
 				'cvadded' => false
 				  ]);
 
-	    \Requests::register_autoloader();
-	    $userDats = \Requests::get('https://api.linkedin.com/v1/people/~?format=json&oauth2_access_token='.$token);
+	    Requests::register_autoloader();
+	    $userDats = Requests::get('https://api.linkedin.com/v1/people/~?format=json&oauth2_access_token='.$token);
 	    //	    $userSkills = \Requests::get('https://api.linkedin.com/v1/people/id='.$userDats['id'].'/skills~?format=json&oauth2_access_token='.$token);
 	    //After having a token, the request above supposedly takes the profile data
 	    //We store it in the tags of LinkedinImport
@@ -1795,7 +1797,7 @@ class RefairController extends Controller {
   public function processgithuboauth($request, $response, $args){
     $burl = env('BASE_URL');
     
-    $provider = new \League\OAuth2\Client\Provider\Github([
+    $provider = new OauthGH([
 							   'clientId'          => 'd0fdd90b1907699b4f60',
 							   'clientSecret'      => 'a336d077030896c838a48decfbaa6bd935a0ac4b',
 							   'redirectUri'       => $burl.'/processgithub']);
@@ -1875,8 +1877,8 @@ class RefairController extends Controller {
 				'cvadded' => false
 				  ]);
 
-	    \Requests::register_autoloader();
-	    $userDats = \Requests::get('https://api.linkedin.com/v1/people/~?format=json&oauth2_access_token='.$token);
+	    Requests::register_autoloader();
+	    $userDats = Requests::get('https://api.linkedin.com/v1/people/~?format=json&oauth2_access_token='.$token);
 	    //After having a token, the request above supposedly takes the profile data
 	    //We store it in the tags of LinkedinImport
 	      
@@ -1994,7 +1996,7 @@ class RefairController extends Controller {
     $file = '/usr/share/nginx/html/storage/cvs/'.$filename;
     $fh = fopen($file, 'rb');
 
-    $stream = new \Slim\Http\Stream($fh); // create a stream instance for the response body
+    $stream = new Stream($fh); // create a stream instance for the response body
 
     return $response->withHeader('Content-Type', 'application/force-download')
       ->withHeader('Content-Type', 'application/octet-stream')

@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
-use \Slim\App;
-use \Slim\Http\RequestBody;
-use \Slim\Http\Request;
-use \Slim\Http\Uri;
-use \Slim\Http\Headers;
-use \Slim\Http\Environment;
-use \Slim\Http\Response;
-use \App\Controllers\AppointmentsController;
+use Slim\App;
+use Slim\Http\RequestBody;
+use Slim\Http\Request;
+use Slim\Http\Uri;
+use Slim\Http\Headers;
+use Slim\Http\Environment;
+use Slim\Http\Response;
+use App\Controllers\AppointmentsController;
 
-final class AppointmentsControllerTest extends \PHPUnit\Framework\TestCase
+final class AppointmentsControllerTest extends TestCase
 {
   public function testCreate()
   {
-    $env = \Slim\Http\Environment::mock([
+    $env = Environment::mock([
 					 'REQUEST_METHOD' => 'POST',
 					 'REQUEST_URI' => '/appointments/add',
 					 'QUERY_STRING'=>'']
@@ -48,14 +48,14 @@ final class AppointmentsControllerTest extends \PHPUnit\Framework\TestCase
   public function testGet()
   {
     // We need a request and response object to invoke the action
-    $environment = \Slim\Http\Environment::mock([
+    $environment = Environment::mock([
 						 'REQUEST_METHOD' => 'GET',
 						 'REQUEST_URI' => '/appointments/get',
 						 'QUERY_STRING'=>'']
 						);
     
-    $request = \Slim\Http\Request::createFromEnvironment($environment);
-    $response = new \Slim\Http\Response();
+    $request = Request::createFromEnvironment($environment);
+    $response = new Response();
     
     // run the controller action and test it
     $response = AppointmentsController::get($request, $response, []);

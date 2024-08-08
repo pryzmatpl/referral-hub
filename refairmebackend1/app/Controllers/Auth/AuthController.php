@@ -1,5 +1,6 @@
 <?php
 namespace App\Controllers\Auth;
+use Exception;
 use Nette\Mail\Message;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,11 +17,13 @@ use App\Controllers\Controller;
 use Respect\Validation\Validator as v;
 use Litipk\Jiffy\UniversalTimestamp;
 //Adding PSR classes to boost our auth controller
+use Slim\Csrf\Guard;
 use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Carlosocarvalho\SimpleInput\Input\Input;
+use SlimSession\Helper;
 
 const ORIGIN = "prizm";
 const SEPARATOR = "~";
@@ -201,11 +204,11 @@ class AuthController extends Controller
 	$message = "Succesfull Registration!";
       } else {
 	$errmsg = "Mailer could not send Emails, but user added.";
-	throw new \Exception($errmsg);
+	throw new Exception($errmsg);
       }
 
       return $response->withJson(array('message' => $message, 'state' => 'Success'));
-    }catch(\Exception $e){
+    }catch(Exception $e){
       print_r($e);
     }
   }
@@ -240,13 +243,13 @@ class AuthController extends Controller
 
   public function csrftoken($request, $response, $args){
     try{
-    $session = new \SlimSession\Helper;
+    $session = new Helper;
 
       if(isset($session['csrf_keypair'])){
 	return $response->withJson($session['csrf_keypair']);
       }else{
 
-	$slimGuard = new \Slim\Csrf\Guard;
+	$slimGuard = new Guard;
 	//    $slimGuard->validateStorage();
 	// Generate new tokens
 	$csrfNameKey = $slimGuard->getTokenNameKey();
@@ -257,7 +260,7 @@ class AuthController extends Controller
 
 	return $response->withJson($keyPair);
       }
-    }catch(\Exception $e){
+    }catch(Exception $e){
       return print_r($e);
     }
   }

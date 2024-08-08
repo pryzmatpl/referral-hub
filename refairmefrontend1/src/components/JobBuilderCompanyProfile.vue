@@ -256,7 +256,7 @@ export default {
         if(validation.validateField($(this)) == false){
           validated = false
           window.scroll(0,0)
-        };
+        }
       })
 
       return validated;

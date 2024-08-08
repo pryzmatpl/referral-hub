@@ -22,20 +22,17 @@ use App\Controllers\UserController;
 use App\Middleware\CsrfViewMiddleware;
 use App\Middleware\OldInputMiddleware;
 use App\Middleware\ValidationErrorsMiddleware;
+use App\Router;
 use DavidePastore\Slim\Validation\Validation;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
 use Respect\Validation\Validator as v;
-use Aurmil\Slim\CsrfTokenToView;
-use Aurmil\Slim\CsrfTokenToHeaders;
 use RKA\Middleware\IpAddress;
 use Slim\App;
+use Slim\Factory\AppFactory;
 use Slim\Flash\Messages;
-use Slim\Http\Request;
 use Slim\Csrf\Guard;
-use Slim\Http\Response;
 use App\Middleware\PrizmMiddleware;
-use Illuminate\Pagination;
 use Slim\Middleware\Session;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
@@ -44,9 +41,11 @@ use SlimSession\Helper;
 require __DIR__ . '/../vendor/autoload.php';
 
 try {
-    $dotenv = (new Dotenv(__DIR__ . '/../'))->load();
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+    $dotenv->load();
 } catch (InvalidPathException $e) {
-    print_r($e);
+    // Log the error or handle it appropriately
+    error_log('Could not load .env file: ' . $e->getMessage());
 }
 
 ////SETTTINGS
@@ -76,13 +75,12 @@ $commands = [
     'FixCommand' => FixCommand::class
 ];
 
-$app = new App([
+$config = [
     'settings' => [
         'displayErrorDetails' => true,
         'mailer' => $settings_mailer,
         'determineRouteBeforeAppMiddleware' => true
     ],
-    'commands' => $commands,
     'view' => [
         'template_path' => __DIR__ . getenv('TWIG_TEMPLATES'),
         'twig' => [
@@ -90,37 +88,24 @@ $app = new App([
             'auto_reload' => true,
         ],
     ],
-
-    // monolog settings
     'logger' => [
         'name' => 'refairme',
         'path' => __DIR__ . getenv('LOG_PATH'),
     ],
-    //error
     'displayErrorDetails' => true,
-    //Uploads directory
-]);
+];
 
-$container = $app->getContainer();
-
-//Create the validators
-$usernameValidator = v::alnum()->noWhitespace()->length(1, 15);
-$ageValidator = v::numeric()->positive()->between(1, 20);
-$validators = array(
-    'username' => $usernameValidator,
-);
 
 try{
+    $app = AppFactory::create();
+    $app->addRoutingMiddleware();
+
+    $errorMiddleware = $app->addErrorMiddleware(true, true, true);
+
     // Register middleware for all routes
     // If you are implementing per-route checks you must not add this
     //$app->add(SlimCLIRunner::class);
-
-    if(PHP_SAPI != 'cli') $app->add(new Validation($validators));
-
     $app->add(new IpAddress(true));
-
-    if(PHP_SAPI != 'cli') $app->add(new PrizmMiddleware($container));
-
     $app->add(new Session([
             'name' => 'prizm_session',
             'autorefresh' => true,
@@ -152,7 +137,6 @@ try{
     });
 
     require_once __DIR__ . '/database.php';
-    //require_once __DIR__ . '/oauth2.php';
     require_once __DIR__ . '/scaffolds.php';
 
     $container['mailer'] = function($container) {
@@ -163,15 +147,10 @@ try{
         return new \App\Auth\Auth;
     };
 
-/*    $container['oauth2'] = function($container) {
-        return new Middleware\Authorization($server, $app->getContainer());
-    };*/
-
     $container['flash'] = function($container) {
         return new Messages;
     };
 
-// Register globally to app
     $container['session'] = function ($c) {
         return new Helper;
     };
@@ -260,18 +239,14 @@ try{
         return new Guard;
     };
 
+    Router::registerRoutes($app);
+
     $app->add(new ValidationErrorsMiddleware($container));
     $app->add(new OldInputMiddleware($container));
     $app->add(new CsrfViewMiddleware($container));
 
-    v::with('App\\Validation\\Rules\\');
-
+    //v::with('App\\Validation\\Rules\\');
     require __DIR__ . '/../app/Common.php';
-
-    require __DIR__ . '/../app/routes.php';
-
-    $_SESSION['app']=$app;
-
 }catch(Exception $e){
     print_r($e);
 }
