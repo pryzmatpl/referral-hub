@@ -54,7 +54,7 @@
                     <div class="form-row">
                       <div class="col">
                         <small class="form-text text-muted">
-                          By signing up you agree to the <a href="/privacypolicy">Privacy Policy</a>
+                          By signing up you agree to the <router-link to="/privacypolicy">Privacy Policy</router-link>
                         </small>
                       </div>
                     </div>
