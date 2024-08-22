@@ -1,10 +1,10 @@
-var Base64 = require('js-base64').Base64
+//var Base64 = require('js-base64').Base64
 
 const HASH_SEPARATOR = '~'
 const HASH_BASE = 'prizm'
 
 export default {
-  iwahash (particle, origin = 'prizm') {
+  /*iwahash (particle, origin = 'prizm') {
     return Base64.encode(origin + '~' + particle);
   },
   
@@ -46,5 +46,5 @@ export default {
     } else {
       return data + HASH_SEPARATOR + this.iwadehash(nexthash, data)
     }
-  }
+  }*/
 }
