@@ -139,6 +139,4 @@ RUN chmod -R 777 /var/www/html/storage/app/chunks
 RUN chown www-data:www-data /run/php
 RUN chmod +x /usr/local/bin/start-container
 
-EXPOSE 80 443
-
 ENTRYPOINT ["start-container"]
