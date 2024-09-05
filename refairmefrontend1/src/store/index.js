@@ -176,7 +176,7 @@ const actions = {
       password: payload.locpass
     }
 
-    return backend
+    return axios
     .get("api/auth/signin", {params})
     .then(function(ret) {
       if (ret.data.auth) {
