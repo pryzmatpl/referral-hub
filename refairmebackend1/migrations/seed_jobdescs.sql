@@ -18,34 +18,7 @@
 --
 -- Table structure for table `jobdescs`
 --
-
-DROP TABLE IF EXISTS `jobdescs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `jobdescs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `jobtitle` varchar(255) DEFAULT NULL,
-  `required_exp` text,
-  `required_fund` text,
-  `required_relocation` int(11) DEFAULT NULL,
-  `required_remote` int(11) DEFAULT NULL,
-  `regdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `keywords` varchar(255) DEFAULT NULL,
-  `location` varchar(255) DEFAULT NULL,
-  `description` text,
-  `poster_id` varchar(255) DEFAULT NULL,
-  `bounty` float DEFAULT NULL,
-  `hash` blob,
-  `musthave` text,
-  `nicetohave` text,
-  `essentials` text,
-  `specs` text,
-  `other` text,
-  `created_at` text,
-  `updated_at` text,
-  `currency` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8;
+jobdescs.php
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

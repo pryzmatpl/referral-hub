@@ -37,7 +37,6 @@ const router = createRouter({
   history: createMemoryHistory(),
   routes: routes // Make sure to pass the routes array here
 })
-
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.state.isAuthenticated) {
     next({ name: 'SignIn' })

@@ -47,7 +47,8 @@
         "league/oauth2-github": "^2.0",
         "akrabat/rka-ip-address-middleware": "^0.5.0",
         "tuupola/slim-jwt-auth": "^2.3",
-        "litipk/php-jiffy": "^1.4"
+        "litipk/php-jiffy": "^1.4",
+        "ext-pdo": "*"
     },
     "scripts": {
     },
