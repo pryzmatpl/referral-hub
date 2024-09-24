@@ -247,6 +247,8 @@ try{
 
     //v::with('App\\Validation\\Rules\\');
     require __DIR__ . '/../app/Common.php';
+
+    $app->run();
 }catch(Exception $e){
     print_r($e);
 }
