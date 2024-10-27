@@ -1,7 +1,9 @@
 <?php
 
+use DI\Container;
 use Slim\Factory\AppFactory;
 use Slim\Middleware\ErrorMiddleware;
+use Slim\Middleware\Session;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 use Dotenv\Dotenv;
@@ -16,9 +18,8 @@ use App\Router;
 use App\Validation\Validator;
 use RKA\Middleware\IpAddress;
 use SlimSession\Helper;
-use SlimSession\Middleware as SessionMiddleware;
-use Respect\Validation\Validator as v;
 
+$container = new Container();
 
 // Load environment variables
 try {
@@ -28,16 +29,19 @@ try {
     error_log('Could not load .env file: ' . $e->getMessage());
 }
 
+// Register globally to app
+$container->set('session', function () {
+    return new Helper();
+});
+
 // Create Slim App instance
 $app = AppFactory::create();
+AppFactory::setContainer($container);
 $app->addRoutingMiddleware();
-
-// Create container
-$container = $app->getContainer();
 
 // Register Middleware
 $app->add(new IpAddress(true));
-$app->add(new SessionMiddleware([
+$app->add(new Session([
     'name' => 'prizm_session',
     'autorefresh' => true,
     'lifetime' => '1 hour',

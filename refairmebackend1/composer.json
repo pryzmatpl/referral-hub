@@ -24,7 +24,7 @@
         "vlucas/phpdotenv": "^5.6",
         "phpunit/phpunit": "*",
         "knplabs/knp-menu": "^2.2",
-        "bryanjhv/slim-session": "*",
+        "bryanjhv/slim-session": "~4.0",
         "chadicus/slim-oauth2-middleware": "*",
         "davidepastore/slim-validation": "*",
 	"nette/mail": "^2.4",
@@ -45,7 +45,8 @@
         "tuupola/slim-jwt-auth": "^2.3",
         "litipk/php-jiffy": "^1.4",
         "adrianfalleiro/slim-cli-runner": "*",
-        "illuminate/pagination": "*"
+        "illuminate/pagination": "*",
+        "bryanjhv/slim-session": "~4.0"
     },
     "scripts": {
     },
