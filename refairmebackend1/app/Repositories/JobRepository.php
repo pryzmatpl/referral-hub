@@ -18,14 +18,11 @@ class JobRepository {
 
     public function search(array $params) {
         // Implement your search logic using Eloquent or Query Builder
-
-        $data = Jobdesc::where()->get();
-
+        $data = Jobdesc::where()->get($params);
+        return $data;
     }
 
     public function findById(int $id): ?Jobdesc {
         return Jobdesc::find($id);
     }
-
-    // Additional methods for interacting with the Jobdesc model...
 }
