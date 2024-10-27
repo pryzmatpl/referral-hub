@@ -14,19 +14,19 @@ class Algorithm{
     public static $elitism=true;
 
     /* Public methods */
-    
+
     // Convenience random function
     private static function random() {
         return (float)rand()/(float)getrandmax();  /* return number from 0 .. 1 as a decimal */
     }
-	
+
     public static function evolvePopulation( $pop) {
         $newPopulation = new population($pop->size(), false);
-	  
+
         // Keep our best individual
         if (algorithm::$elitism) {
             $newPopulation->saveIndividual(0, $pop->getFittest());
-	    }
+        }
 
         // Crossover population
         $elitismOffset=0;
@@ -35,12 +35,12 @@ class Algorithm{
         } else {
             $elitismOffset = 0;
         }
-		
+
         // Loop over the population size and create new individuals with
         // crossover
-	
-        for ($i = $elitismOffset; $i < $pop->size(); $i++) 
-		{	 
+
+        for ($i = $elitismOffset; $i < $pop->size(); $i++)
+        {
             $indiv1 = algorithm::poolSelection($pop);
             $indiv2 = algorithm::poolSelection($pop);
             $newIndiv =  algorithm::crossover($indiv1, $indiv2);
@@ -48,23 +48,23 @@ class Algorithm{
         }
 
         // Mutate population
-	
+
         for ($i=$elitismOffset; $i < $newPopulation->size(); $i++) {
             algorithm::mutate($newPopulation->getIndividual($i));
         }
-	
+
         return $newPopulation;
     }
 
     // Crossover individuals (aka reproduction)
-    private static function  crossover($indiv1, $indiv2) 
+    private static function  crossover($indiv1, $indiv2)
     {
         $newSol = new individual();  //create a offspring
         // Loop through genes
         for ($i=0; $i < $indiv1->size(); $i++) {
             // Crossover at which point 0..1 , .50 50% of time
             if (  algorithm::random() <= algorithm::$uniformRate)
-			{
+            {
                 $newSol->setGene($i, $indiv1->getGene($i) );
             } else {
                 $newSol->setGene($i, $indiv2->getGene($i));
@@ -90,10 +90,10 @@ class Algorithm{
     private static function poolSelection($pop) {
         // Create a pool population
         $pool = new population(algorithm::$poolSize, false);
-	
+
         for ($i=0; $i < algorithm::$poolSize; $i++) {
             $randomId = rand(0, $pop->size()-1 ); //Get a random individual from anywhere in the population
-			$pool->saveIndividual($i, $pop->getIndividual( $randomId));
+            $pool->saveIndividual($i, $pop->getIndividual( $randomId));
 
         }
         // Get the fittest

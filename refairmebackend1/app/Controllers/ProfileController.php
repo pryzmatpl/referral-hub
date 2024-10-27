@@ -25,5 +25,5 @@ class ProfileController extends Controller
     {
 
     }
-    
+
 }

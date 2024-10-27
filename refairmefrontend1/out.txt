@@ -1,0 +1,901 @@
+
+> dev
+> webpack-dev-server --progress --config build/webpack.dev.conf.js
+
+assets by status 2.66 MiB [cached] 4 assets
+Entrypoint app = app.css app.js
+orphan modules 299 KiB (javascript) 13.5 KiB (runtime) [orphan] 41 modules
+runtime modules 32.9 KiB 16 modules
+javascript modules 2.01 MiB
+  modules by path ./node_modules/ 1.85 MiB 98 modules
+  modules by path ./src/ 163 KiB
+    modules by path ./src/components/*.vue 66.5 KiB 47 modules
+    modules by path ./src/pages/*.vue 75.3 KiB 42 modules
+    modules by path ./src/*.vue 4.28 KiB 4 modules
+    modules by path ./src/*.js 5.65 KiB
+      ./src/main.js 684 bytes [built] [code generated]
+      + 2 modules
+    ./src/router/index.js 3.22 KiB [built] [code generated]
+    ./src/store/index.js 8.55 KiB [built] [code generated]
+css ./node_modules/css-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.css 275 KiB [built] [code generated]
+
+WARNING in ./src/router/index.js 43:19-25
+export 'default' (imported as 'Router') was not found in 'vue-router' (possible exports: NavigationFailureType, RouterLink, RouterView, START_LOCATION, createMemoryHistory, createRouter, createRouterMatcher, createWebHashHistory, createWebHistory, isNavigationFailure, loadRouteLocation, matchedRouteKey, onBeforeRouteLeave, onBeforeRouteUpdate, parseQuery, routeLocationKey, routerKey, routerViewLocationKey, stringifyQuery, useLink, useRoute, useRouter, viewDepthKey)
+ @ ./src/main.js 3:0-30 18:10-16
+
+WARNING in DefinePlugin
+Conflicting values for 'process.env'
+
+1 WARNING in child compilations (Use 'stats.children: true' resp. '--stats-children' for more details)
+
+1 warning has detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+ERROR in ./node_modules/@fortawesome/vue-fontawesome/index.es.js 2:0-58
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/@fortawesome/vue-fontawesome'
+ @ ./src/components/JobBuilderAboutProject.vue?vue&type=script&lang=js 29:27-65
+ @ ./src/components/JobBuilderAboutProject.vue 2:0-73 3:0-68 3:0-68 8:49-55
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 4:0-72 11:4-26
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/App.vue?vue&type=style&index=0&id=7ba5bd90&lang=sass 3:0
+Module parse failed: Unexpected character '@' (3:0)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+| //@import '../node_modules/bootstrap/scss/bootstrap.scss'
+> @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro')
+| @import '@/assets/settings.sass'
+| 
+ @ ./src/App.vue 5:0-63
+ @ ./src/main.js 13:22-25 25:0-24
+
+ERROR in ./src/App.vue?vue&type=template&id=7ba5bd90 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <nav id="mainNav" class="navbar navbar-expand-lg navbar-light text-uppercase">
+|       <router-link class="navbar-brand" to="/">
+ @ ./src/App.vue 1:0-64 8:68-74 18:63-20:3 19:29-35 18:2-20:4
+ @ ./src/main.js 13:22-25 25:0-24
+
+ERROR in ./src/App.vue
+Module Error (from ./node_modules/vue-loader/dist/index.js):
+vue-loader was used without the corresponding plugin. Make sure to include VueLoaderPlugin in your webpack config.
+ @ ./src/main.js 13:22-25 25:0-24
+
+ERROR in ./src/components/BaseFormCheckbox.vue?vue&type=template&id=0a9d6e48 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div class="form-check col-12">
+|     <input
+|         class="form-check-input"
+ @ ./src/components/BaseFormCheckbox.vue 1:0-77 6:68-74 16:76-18:3 17:29-35 16:2-18:4
+ @ ./src/pages/SearchDetail.vue?vue&type=script&lang=js 3:0-60 11:4-20
+ @ ./src/pages/SearchDetail.vue 2:0-63 3:0-58 3:0-58 9:49-55
+ @ ./src/router/index.js 21:0-47 55:17-29
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/BaseFormGroupInput.vue?vue&type=template&id=2b2eafd0 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div class="form-group col-12">
+|     <label :for="slug">{{ name }}</label>
+|     <input
+ @ ./src/components/BaseFormGroupInput.vue 1:0-79 6:68-74 16:78-18:3 17:29-35 16:2-18:4
+ @ ./src/pages/SearchDetail.vue?vue&type=script&lang=js 2:0-64 10:4-22
+ @ ./src/pages/SearchDetail.vue 2:0-63 3:0-58 3:0-58 9:49-55
+ @ ./src/router/index.js 21:0-47 55:17-29
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderAboutJob.vue?vue&type=script&lang=js 5:0-38
+Module not found: Error: Can't resolve 'vue-markdown' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/components'
+ @ ./src/components/JobBuilderAboutJob.vue 2:0-69 3:0-64 3:0-64 9:49-55
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 5:0-64 12:4-22
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderAboutJob.vue?vue&type=style&index=0&id=6acc875e&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .card
+|     box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+|     border: 0
+ @ ./src/components/JobBuilderAboutJob.vue 5:0-90
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 5:0-64 12:4-22
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderAboutJob.vue?vue&type=template&id=6acc875e&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <form id="aboutJob" @submit.stop.prevent="emitJobToParent">
+|       <h1>About the job</h1>
+ @ ./src/components/JobBuilderAboutJob.vue 1:0-91 9:68-74 19:90-21:3 20:29-35 19:2-21:4
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 5:0-64 12:4-22
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderAboutJob.vue 6:0-94
+Module not found: Error: Can't resolve 'vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=1&lang=css&external' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/components'
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 5:0-64 12:4-22
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderAboutProject.vue?vue&type=style&index=0&id=31bf3c3a&lang=sass 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .card
+|     box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+|     border: 0
+ @ ./src/components/JobBuilderAboutProject.vue 5:0-82
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 4:0-72 11:4-26
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderAboutProject.vue?vue&type=template&id=31bf3c3a 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <h1>About the project</h1>
+|     <hr />
+ @ ./src/components/JobBuilderAboutProject.vue 1:0-83 8:68-74 18:82-20:3 19:29-35 18:2-20:4
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 4:0-72 11:4-26
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderCompanyProfile.vue?vue&type=style&index=0&id=01bac65a&lang=sass 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .card
+|     box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+|     border: 0
+ @ ./src/components/JobBuilderCompanyProfile.vue 5:0-84
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 3:0-76 10:4-28
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderCompanyProfile.vue?vue&type=template&id=01bac65a 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <h1>About the project</h1>
+|     <hr />
+ @ ./src/components/JobBuilderCompanyProfile.vue 1:0-85 8:68-74 18:84-20:3 19:29-35 18:2-20:4
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 3:0-76 10:4-28
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobBuilderConfirmation.vue?vue&type=template&id=3096d523 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div style="text-align: center">
+|     <h1>Confirm adding job</h1>
+|     <p>Looks like all is good and you are ready to submit your job proposal. Click the button below to submit!</p>
+ @ ./src/components/JobBuilderConfirmation.vue 1:0-83 6:68-74 16:82-18:3 17:29-35 16:2-18:4
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 6:0-72 13:4-26
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobListItem.vue?vue&type=style&index=0&id=15fe6aa4&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .tag
+|     background-color: #4a90e2
+|     color: white
+ @ ./src/components/JobListItem.vue 5:0-83
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 7:0-50 16:4-15
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/JobListItem.vue?vue&type=template&id=15fe6aa4&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <div
+|         class="card mb-3 shadow"
+ @ ./src/components/JobListItem.vue 1:0-84 8:68-74 18:83-20:3 19:29-35 18:2-20:4
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 7:0-50 16:4-15
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/Keywords.vue?vue&type=style&index=0&id=6bca4a4c&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected character '@' (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   @import '@/assets/settings.sass'
+| 
+|   .badge
+ @ ./src/components/Keywords.vue 5:0-80
+ @ ./src/components/JobBuilderAboutJob.vue?vue&type=script&lang=js 2:0-33 13:4-12
+ @ ./src/components/JobBuilderAboutJob.vue 2:0-69 3:0-64 3:0-64 9:49-55
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 5:0-64 12:4-22
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/Keywords.vue?vue&type=template&id=6bca4a4c&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <div>
+|       <div class="form-group">
+ @ ./src/components/Keywords.vue 1:0-81 8:68-74 18:80-20:3 19:29-35 18:2-20:4
+ @ ./src/components/JobBuilderAboutJob.vue?vue&type=script&lang=js 2:0-33 13:4-12
+ @ ./src/components/JobBuilderAboutJob.vue 2:0-69 3:0-64 3:0-64 9:49-55
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 5:0-64 12:4-22
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/SalarySurvey.vue?vue&type=template&id=7d6a6ff4 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <div class="row">
+|       <div class="col-6">
+ @ ./src/components/SalarySurvey.vue 1:0-73 6:68-74 16:72-18:3 17:29-35 16:2-18:4
+ @ ./src/router/index.js 26:0-52 52:17-29
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileBuilder.vue?vue&type=script&lang=js
+Module Error (from ./node_modules/vue-loader/dist/index.js):
+[vue/compiler-sfc] Identifier 'RefairKeywords' has already been declared. (13:7)
+
+/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/components/UserProfileBuilder.vue
+92 |    HorizontalBar
+93 |  } from 'vue-chartjs'
+94 |  import RefairKeywords from '@/components/Keywords.vue'
+   |         ^
+95 |  
+96 |  import {
+ @ ./src/components/UserProfileBuilder.vue 2:0-69 3:0-64 3:0-64 8:49-55
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 8:0-60 17:4-18
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileBuilder.vue?vue&type=script&lang=js
+Module build failed (from ./node_modules/vue-loader/dist/index.js):
+TypeError: Cannot read properties of null (reading 'content')
+    at selectBlock (/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/vue-loader/dist/select.js:23:45)
+    at Object.loader (/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/vue-loader/dist/index.js:93:41)
+ @ ./src/components/UserProfileBuilder.vue 2:0-69 3:0-64 3:0-64 8:49-55
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 8:0-60 17:4-18
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileBuilder.vue?vue&type=style&index=0&id=9ee47be6&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected character '@' (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   @import '@/assets/settings.sass'
+| 
+|   .h1
+ @ ./src/components/UserProfileBuilder.vue 5:0-90
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 8:0-60 17:4-18
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileBuilder.vue?vue&type=template&id=9ee47be6&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <div class="col-xs-12">
+|       <h1 class="card-title" style="color: #B0AFAB">User: {{ userInput.firstname }} {{ userInput.lastname }}</h1>
+ @ ./src/components/UserProfileBuilder.vue 1:0-91 8:68-74 18:90-20:3 19:29-35 18:2-20:4
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 8:0-60 17:4-18
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileExperience.vue?vue&type=style&index=0&id=57d2a930&lang=sass&scoped=true 3:15
+Module parse failed: Unexpected token (3:15)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+|   label
+>     font-weight: 700
+| 
+ @ ./src/components/UserProfileExperience.vue 5:0-93
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 9:0-66 18:4-21
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileExperience.vue?vue&type=template&id=57d2a930&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <form class="mt-3" @submit.stop.prevent="addExperience">
+|       <h1>Most recent experience</h1>
+ @ ./src/components/UserProfileExperience.vue 1:0-94 8:68-74 18:93-20:3 19:29-35 18:2-20:4
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 9:0-66 18:4-21
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileJobsApplied.vue?vue&type=template&id=451f428e 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <b-table
+|         :items="jobs"
+ @ ./src/components/UserProfileJobsApplied.vue 1:0-83 6:68-74 16:82-18:3 17:29-35 16:2-18:4
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 11:0-64 20:4-18
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileReferrals.vue?vue&type=style&index=0&id=0cf0f6e8&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .modal-dialog
+|     max-width: 90%
+| 
+ @ ./src/components/UserProfileReferrals.vue 5:0-92
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 10:0-64 19:4-20
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/components/UserProfileReferrals.vue?vue&type=template&id=0cf0f6e8&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <b-table
+|         :items="referrals"
+ @ ./src/components/UserProfileReferrals.vue 1:0-93 8:68-74 18:92-20:3 19:29-35 18:2-20:4
+ @ ./src/pages/UserProfile.vue?vue&type=script&lang=js 10:0-64 19:4-20
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/Home.vue?vue&type=style&index=0&id=5a90ec03&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .container
+|     background-color: #42bff4
+|     background-size: 100% 100%
+ @ ./src/pages/Home.vue 5:0-76
+ @ ./src/router/index.js 14:0-35 49:17-21
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/Home.vue?vue&type=template&id=5a90ec03&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div class="container" style="max-width: 100%;">
+|     <div class="search-panel">
+|       <div class="row justify-content-center pt-5">
+ @ ./src/pages/Home.vue 1:0-77 9:68-74 19:76-21:3 20:29-35 19:2-21:4
+ @ ./src/router/index.js 14:0-35 49:17-21
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/Home.vue 6:0-94
+Module not found: Error: Can't resolve 'vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=1&lang=css&external' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages'
+ @ ./src/router/index.js 14:0-35 49:17-21
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobBuilder.vue?vue&type=style&index=0&id=2f8233c2&lang=sass 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .card
+|     box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+|     border: 0
+ @ ./src/pages/JobBuilder.vue 5:0-70
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobBuilder.vue?vue&type=template&id=2f8233c2 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <h2 class="mt-3 mb-4 text-center">So you think you can create an competitive offer?</h2>
+|     <div class="card">
+ @ ./src/pages/JobBuilder.vue 1:0-71 9:68-74 19:70-21:3 20:29-35 19:2-21:4
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobBuilder.vue 6:0-94
+Module not found: Error: Can't resolve 'vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=1&lang=css&external' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages'
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobDetails.vue
+Module Error (from ./node_modules/vue-loader/dist/index.js):
+
+VueCompilerError: Duplicate attribute.
+at /nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages/JobDetails.vue:140:53
+138|      </div>
+139|  
+140|      <div class="row mt-4" style="background: white" class="shadow">
+   |                                                      ^
+141|        <div class="col" style="padding:24px">
+142|          <h4 class="blue-font">Required skills</h4>
+ @ ./src/router/index.js 19:0-47 101:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobDetails.vue
+Module Error (from ./node_modules/vue-loader/dist/index.js):
+
+VueCompilerError: Duplicate attribute.
+at /nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages/JobDetails.vue:158:53
+156|      </div>
+157|  
+158|      <div class="row mt-4" style="background: white" class="shadow">
+   |                                                      ^
+159|        <div class="col" style="padding:24px">
+160|          <h4 class="blue-font">Work time division</h4>
+ @ ./src/router/index.js 19:0-47 101:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobDetails.vue
+Module Error (from ./node_modules/vue-loader/dist/index.js):
+
+VueCompilerError: Duplicate attribute.
+at /nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages/JobDetails.vue:170:52
+168|      </div>
+169|  
+170|      <div class="row mt-4" style="background:white" class="shadow">
+   |                                                     ^
+171|        <div class="col" style="padding:24px">
+172|          <h4 class="blue-font">Methodologies</h4>
+ @ ./src/router/index.js 19:0-47 101:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobDetails.vue
+Module Error (from ./node_modules/vue-loader/dist/index.js):
+
+VueCompilerError: Duplicate attribute.
+at /nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages/JobDetails.vue:182:53
+180|      </div>
+181|  
+182|      <div class="row mt-4" style="background: white" class="shadow">
+   |                                                      ^
+183|        <div class="col" style="padding:24px">
+184|          <h4 class="blue-font">Other perks</h4>
+ @ ./src/router/index.js 19:0-47 101:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobDetails.vue
+Module Error (from ./node_modules/vue-loader/dist/index.js):
+
+VueCompilerError: Duplicate attribute.
+at /nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages/JobDetails.vue:194:53
+192|      </div>
+193|  
+194|      <div class="row mt-4" style="background: white" class="shadow">
+   |                                                      ^
+195|        <div class="col-12 col-md-6" style="padding: 24px">
+196|          <h4 class="blue-font">Why work on this project?</h4>
+ @ ./src/router/index.js 19:0-47 101:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobDetails.vue
+Module Error (from ./node_modules/vue-loader/dist/index.js):
+
+VueCompilerError: Duplicate attribute.
+at /nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages/JobDetails.vue:213:53
+211|      </div>
+212|  
+213|      <div class="row mt-4" style="background: white" class="shadow">
+   |                                                      ^
+214|        <div class="col" style="padding: 24px">
+215|          <h4 class="blue-font">Description</h4>
+ @ ./src/router/index.js 19:0-47 101:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobListing.vue?vue&type=style&index=0&id=a4153baa&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .card
+|     box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+|     border: 0
+ @ ./src/pages/JobListing.vue 5:0-82
+ @ ./src/router/index.js 20:0-43 81:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/JobListing.vue?vue&type=template&id=a4153baa&scoped=true&lang=html 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <h2 class="mt-3 mb-4 text-center">My job listing</h2>
+|     <font-awesome-icon v-if="loading" :icon="loadingIcon" spin class="fa-3x center"></font-awesome-icon>
+ @ ./src/pages/JobListing.vue 1:0-93 8:68-74 18:92-20:3 19:29-35 18:2-20:4
+ @ ./src/router/index.js 20:0-43 81:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/PasswordRecovery.vue?vue&type=template&id=652377f4 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div class="col-12 d-flex justify-content-center">
+|     <div class="card mt-2">
+|       <div class="card-body">
+ @ ./src/pages/PasswordRecovery.vue 1:0-77 6:68-74 16:76-18:3 17:29-35 16:2-18:4
+ @ ./src/router/index.js 24:0-55 77:17-33
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/PrivacyPolicy.vue?vue&type=template&id=d5b2b434 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div class="card mt-2">
+|     <div class="card-body">
+|       <h1>Privacy policy</h1>
+ @ ./src/pages/PrivacyPolicy.vue 1:0-74 6:68-74 16:73-18:3 17:29-35 16:2-18:4
+ @ ./src/router/index.js 25:0-49 104:17-30
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SearchDetail.vue?vue&type=style&index=0&id=4b50eb86&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .shadow
+|     box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1)
+|     border: 0
+ @ ./src/pages/SearchDetail.vue 5:0-84
+ @ ./src/router/index.js 21:0-47 55:17-29
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SearchDetail.vue?vue&type=template&id=4b50eb86&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div class="container">
+|     <form>
+|       <div class="row">
+ @ ./src/pages/SearchDetail.vue 1:0-85 9:68-74 19:84-21:3 20:29-35 19:2-21:4
+ @ ./src/router/index.js 21:0-47 55:17-29
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SearchDetail.vue 6:0-94
+Module not found: Error: Can't resolve 'vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=1&lang=css&external' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages'
+ @ ./src/router/index.js 21:0-47 55:17-29
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SearchResults.vue?vue&type=style&index=0&id=6318a38c&lang=sass&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   .btn.active
+|     z-index: 0 // without that gets in front of vue-multiselect
+|   .shadow
+ @ ./src/pages/SearchResults.vue 5:0-85
+ @ ./src/router/index.js 22:0-49 59:17-30
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SearchResults.vue?vue&type=template&id=6318a38c&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div class="container">
+|     <a class="nav-link py-3 px-0" href="#" @click="back">< Back</a>
+|     <div class="row">
+ @ ./src/pages/SearchResults.vue 1:0-86 9:68-74 19:85-21:3 20:29-35 19:2-21:4
+ @ ./src/router/index.js 22:0-49 59:17-30
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SearchResults.vue 6:0-94
+Module not found: Error: Can't resolve 'vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=1&lang=css&external' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages'
+ @ ./src/router/index.js 22:0-49 59:17-30
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SignIn.vue?vue&type=style&index=0&id=cc333334&lang=sass&scoped=true 2:0
+Module parse failed: Unexpected token (2:0)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+> .container
+|   margin-top: 20px
+|   margin-bottom: 20px
+ @ ./src/pages/SignIn.vue 5:0-78
+ @ ./src/router/index.js 17:0-39 67:17-23
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SignIn.vue?vue&type=template&id=cc333334&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <h2 class="mt-3 mb-4 text-center">Welcome back to Refair.me</h2>
+|     <div class="container" style="margin-top:20px;margin-bottom:20px;">
+ @ ./src/pages/SignIn.vue 1:0-79 8:68-74 18:78-20:3 19:29-35 18:2-20:4
+ @ ./src/router/index.js 17:0-39 67:17-23
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SignUp.vue?vue&type=style&index=0&id=a3068648&lang=sass&scoped=true 2:0
+Module parse failed: Unexpected token (2:0)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+> .container
+|   margin-top: 20px
+|   margin-bottom: 20px
+ @ ./src/pages/SignUp.vue 5:0-78
+ @ ./src/router/index.js 16:0-40 63:17-23
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SignUp.vue?vue&type=template&id=a3068648&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <h2 class="mt-3 mb-4 text-center">Welcome to Refair.me</h2>
+|     <div class="container shadow">
+ @ ./src/pages/SignUp.vue 1:0-79 9:68-74 19:78-21:3 20:29-35 19:2-21:4
+ @ ./src/router/index.js 16:0-40 63:17-23
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SignUp.vue 6:0-94
+Module not found: Error: Can't resolve 'vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=1&lang=css&external' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages'
+ @ ./src/router/index.js 16:0-40 63:17-23
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/SignUpConfirmation.vue?vue&type=template&id=023324b1 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div class="card mt-3 text-center">
+|     <div class="card-body">
+|       <h1>{{status}}</h1>
+ @ ./src/pages/SignUpConfirmation.vue 1:0-79 6:68-74 16:78-18:3 17:29-35 16:2-18:4
+ @ ./src/router/index.js 23:0-59 74:17-35
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/UserProfile.vue?vue&type=script&lang=js 2:0-21
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/pages'
+ @ ./src/pages/UserProfile.vue 2:0-62 3:0-57 3:0-57 8:49-55
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/UserProfile.vue?vue&type=style&index=0&id=684be52c&lang=sass&scoped=true 2:0
+Module parse failed: Unexpected token (2:0)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+> .h1
+|   margin-bottom: 100px
+| tbody tr
+ @ ./src/pages/UserProfile.vue 5:0-83
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./src/pages/UserProfile.vue?vue&type=template&id=684be52c&scoped=true 2:2
+Module parse failed: Unexpected token (2:2)
+File was processed with these loaders:
+ * ./node_modules/vue-loader/dist/index.js
+You may need an additional loader to handle the result of these loaders.
+| 
+>   <div>
+|     <h2 class="mt-3 mb-4 text-center">My profile</h2>
+|     <div class="card">
+ @ ./src/pages/UserProfile.vue 1:0-84 8:68-74 18:83-20:3 19:29-35 18:2-20:4
+ @ ./src/router/index.js 15:0-45 88:17-28
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./node_modules/vue-multiselect/dist/vue-multiselect.esm.js 1:0-215
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/vue-multiselect/dist'
+ @ ./src/pages/SignUp.vue?vue&type=script&lang=js 3:0-41 13:4-15
+ @ ./src/pages/SignUp.vue 2:0-57 3:0-52 3:0-52 9:49-55
+ @ ./src/router/index.js 16:0-40 63:17-23
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./node_modules/vue-slider-component/dist/vue-slider-component.umd.min.js 1:84-98
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/vue-slider-component/dist'
+ @ ./src/pages/SearchDetail.vue?vue&type=script&lang=js 5:0-41 13:4-10
+ @ ./src/pages/SearchDetail.vue 2:0-63 3:0-58 3:0-58 9:49-55
+ @ ./src/router/index.js 21:0-47 55:17-29
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./node_modules/vuex/dist/vuex.esm-bundler.js 6:0-69
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/vuex/dist'
+ @ ./src/store/index.js 1:0-35 279:15-26
+ @ ./src/main.js 4:0-37 20:8-13
+
+ERROR in ./src/main.js 1:0-32
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src'
+
+ERROR in ./src/main.js 6:0-45
+Module not found: Error: Can't resolve 'bootstrap-vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src'
+
+ERROR in ./src/main.js 8:0-46
+Module not found: Error: Can't resolve 'bootstrap-vue/dist/bootstrap-vue.css' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src'
+
+ERROR in ./src/store/index.js 4:0-31
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/src/store'
+ @ ./src/main.js 4:0-37 20:8-13
+
+ERROR in ./node_modules/vue-chartjs/dist/index.js 2:0-124
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/vue-chartjs/dist'
+ @ ./src/components/JobBuilderAboutProject.vue?vue&type=script&lang=js 5:0-8:20 16:11-19
+ @ ./src/components/JobBuilderAboutProject.vue 2:0-73 3:0-68 3:0-68 8:49-55
+ @ ./src/pages/JobBuilder.vue?vue&type=script&lang=js 4:0-72 11:4-26
+ @ ./src/pages/JobBuilder.vue 2:0-61 3:0-56 3:0-56 9:49-55
+ @ ./src/router/index.js 18:0-47 95:17-27
+ @ ./src/main.js 3:0-30 18:10-16
+
+ERROR in ./node_modules/vue-router/dist/vue-router.mjs 6:0-210
+Module not found: Error: Can't resolve 'vue' in '/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/vue-router/dist'
+ @ ./src/main.js 2:0-60 16:8-20 17:11-27
+
+ERROR in Error: Child compilation failed:
+  Module not found: Error: Can't resolve 'html-loader' in '/nvme2/Current_Projec  ts/referral-hub/refairmefrontend1'
+  ModuleNotFoundError: Module not found: Error: Can't resolve 'html-loader' in '  /nvme2/Current_Projects/referral-hub/refairmefrontend1'
+      at /nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/web  pack/lib/Compilation.js:2100:28
+      at /nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/web  pack/lib/NormalModuleFactory.js:904:13
+      at eval (eval at create (/nvme2/Current_Projects/referral-hub/refairmefron  tend1/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:10:1)
+      at /nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/web  pack/lib/NormalModuleFactory.js:341:22
+      at eval (eval at create (/nvme2/Current_Projects/referral-hub/refairmefron  tend1/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:9:1)
+      at /nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/web  pack/lib/NormalModuleFactory.js:639:15
+      at /nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/web  pack/lib/NormalModuleFactory.js:151:11
+      at /nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/web  pack/lib/NormalModuleFactory.js:715:8
+      at /nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modules/neo  -async/async.js:2830:7
+      at done (/nvme2/Current_Projects/referral-hub/refairmefrontend1/node_modul  es/neo-async/async.js:2925:13)
+  
+  - Compilation.js:2100 
+    [refairmefrontend1]/[webpack]/lib/Compilation.js:2100:28
+  
+  - NormalModuleFactory.js:904 
+    [refairmefrontend1]/[webpack]/lib/NormalModuleFactory.js:904:13
+  
+  
+  - NormalModuleFactory.js:341 
+    [refairmefrontend1]/[webpack]/lib/NormalModuleFactory.js:341:22
+  
+  
+  - NormalModuleFactory.js:639 
+    [refairmefrontend1]/[webpack]/lib/NormalModuleFactory.js:639:15
+  
+  - NormalModuleFactory.js:151 
+    [refairmefrontend1]/[webpack]/lib/NormalModuleFactory.js:151:11
+  
+  - NormalModuleFactory.js:715 
+    [refairmefrontend1]/[webpack]/lib/NormalModuleFactory.js:715:8
+  
+  - async.js:2830 
+    [refairmefrontend1]/[neo-async]/async.js:2830:7
+  
+  - async.js:2925 done
+    [refairmefrontend1]/[neo-async]/async.js:2925:13
+  
+  - child-compiler.js:174 
+    [refairmefrontend1]/[html-webpack-plugin]/lib/child-compiler.js:174:18
+  
+  - Compiler.js:625 finalCallback
+    [refairmefrontend1]/[webpack]/lib/Compiler.js:625:5
+  
+  - Compiler.js:660 
+    [refairmefrontend1]/[webpack]/lib/Compiler.js:660:11
+  
+  - Compiler.js:1349 
+    [refairmefrontend1]/[webpack]/lib/Compiler.js:1349:17
+  
+  
+  - task_queues:95 process.processTicksAndRejections
+    node:internal/process/task_queues:95:5
+
+1 ERROR in child compilations (Use 'stats.children: true' resp. '--stats-children' for more details)
+
+26 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.93.0 compiled with 71 errors and 3 warnings in 1442 ms

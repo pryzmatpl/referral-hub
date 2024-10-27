@@ -33,62 +33,62 @@ class Account extends Controller {
 
     private function profile($hhash){
         //TODO: Fill this
-        
+
     }
 
-    
+
     public function addlocation(){
         try{
-        $locationdata = array(
-            'id'=>base64_decode($this->input->get('loc_locid')),
-            'jobref_hashes'=>NULL, //calculated in model
-            'name'=>base64_decode($this->input->get('loc_name')),
-            'city'=>base64_decode($this->input->get('loc_city')),
-            'country'=>base64_decode($this->input->get('loc_country')),
-            'address'=>base64_decode($this->input->get('loc_address')),
-            'zip'=>base64_decode($this->input->get('loc_zip')),
-            'lat'=>base64_decode($this->input->get('loc_lat')),
-            'lng'=>base64_decode($this->input->get('loc_lon')),
-            'hash'=>base64_decode($this->input->get('loc_hash')), //calculated in model
-            'regdate'=>NULL, //calcluated in model
-            'userid'=>base64_decode($this->input->get('loc_userid')),
-            'description'=>base64_decode($this->input->get('loc_desc'))
-        );
+            $locationdata = array(
+                'id'=>base64_decode($this->input->get('loc_locid')),
+                'jobref_hashes'=>NULL, //calculated in model
+                'name'=>base64_decode($this->input->get('loc_name')),
+                'city'=>base64_decode($this->input->get('loc_city')),
+                'country'=>base64_decode($this->input->get('loc_country')),
+                'address'=>base64_decode($this->input->get('loc_address')),
+                'zip'=>base64_decode($this->input->get('loc_zip')),
+                'lat'=>base64_decode($this->input->get('loc_lat')),
+                'lng'=>base64_decode($this->input->get('loc_lon')),
+                'hash'=>base64_decode($this->input->get('loc_hash')), //calculated in model
+                'regdate'=>NULL, //calcluated in model
+                'userid'=>base64_decode($this->input->get('loc_userid')),
+                'description'=>base64_decode($this->input->get('loc_desc'))
+            );
 
-        if(!strcmp($locationdata['id'],"hawking")){
-            // there is emptiness in the data
-            $locationdata['id']= NULL;
-            $locationdata['hash']= NULL;
-            if($this->location_model->insert($locationdata)){
-                $this->session->set_flashdata('message',"  You have added a new location:".$_GET['loc_name'].$_GET['loc_userid']);
-                echo json_encode(array('message',"You have sucessfully added a new location:".$_GET['loc_name']));
+            if(!strcmp($locationdata['id'],"hawking")){
+                // there is emptiness in the data
+                $locationdata['id']= NULL;
+                $locationdata['hash']= NULL;
+                if($this->location_model->insert($locationdata)){
+                    $this->session->set_flashdata('message',"  You have added a new location:".$_GET['loc_name'].$_GET['loc_userid']);
+                    echo json_encode(array('message',"You have sucessfully added a new location:".$_GET['loc_name']));
+                }else{
+                    echo json_encode(array('message',"You have failed adding a location:".$_GET['loc_name']));
+                }
             }else{
-                echo json_encode(array('message',"You have failed adding a location:".$_GET['loc_name']));
+                $locid = $locationdata['id'];
+                unset($locationdata['id']);
+                unset($locationdata['jobref_hashes']);
+                unset($locationdata['hash']);
+                unset($locationdata['userid']);
+                unset($locationdata['regdate']);
+
+                if(!$this->location_model->delete($locid)){
+                    echo json_encode(array('message',"Something fishy is going on - no location:".$_GET['loc_name']));
+                }
+
+                if($this->location_model->update($locationdata,$locid)){
+                    $this->session->set_flashdata('message',"  You have updated location:".$_GET['loc_name'].$_GET['loc_userid']);
+                    echo json_encode(array('message',"You have sucessfully edited a new location:".$_GET['loc_name']));
+                }else{
+                    echo json_encode(array('message',"You have failed editing a  location:".$_GET['loc_name']));
+                }
             }
-        }else{
-            $locid = $locationdata['id'];
-            unset($locationdata['id']);
-            unset($locationdata['jobref_hashes']);
-            unset($locationdata['hash']);
-            unset($locationdata['userid']);
-            unset($locationdata['regdate']);
-            
-            if(!$this->location_model->delete($locid)){
-                echo json_encode(array('message',"Something fishy is going on - no location:".$_GET['loc_name']));
-            }
-            
-            if($this->location_model->update($locationdata,$locid)){
-                $this->session->set_flashdata('message',"  You have updated location:".$_GET['loc_name'].$_GET['loc_userid']);
-                echo json_encode(array('message',"You have sucessfully edited a new location:".$_GET['loc_name']));
-            }else{
-                echo json_encode(array('message',"You have failed editing a  location:".$_GET['loc_name']));
-            }
-        }
         }catch(Exception $e){
-            echo json_encode(array('message',"You met an exception:".$e->value));
+            echo json_encode(array('message',"You met an exception:".$e->getMessage()));
         }
     }
-    
+
     private function network($hhash){
         echo "<h2>Network</h2>";
         $this->parts[TITLE] = $this->load->view('title-refair',$this->pasdat,true);
@@ -106,7 +106,7 @@ class Account extends Controller {
         $this->parts[WAITING] = $this->load->view('waiting',$this->pasdat,true);
         $this->parts[FLASH] = $this->load->view('flash',$this->pasdat,true);
     }
-    
+
     function _enableRequests(){
         require(APPPATH.'/libraries/Utility/FilteredIterator.php');
         require(APPPATH.'/libraries/Utility/CaseInsensitiveDictionary.php');
@@ -162,12 +162,12 @@ class Account extends Controller {
         //Nothing is base64 here
         $CI=& get_instance();
         $GLOBALS['active']=false;
-        
+
         $CI->password = $this->input->post('password');
-        
+
         $user_row = $this->user_model->get_by('email',$email);
         $passwd_row = $this->password_model->get_by('uid',$user_row->id);
-        
+
         if($passwd_row != false){
             if(!strcmp($CI->password,$passwd_row->secpasswd)){
                 if(!strcmp($email,$user_row->email)){
@@ -179,7 +179,7 @@ class Account extends Controller {
 
         return false;
     }
-    
+
     public function notifications(){
     }
 

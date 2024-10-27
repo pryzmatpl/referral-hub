@@ -40,9 +40,9 @@ class CartController extends Controller
         $allPostPutVars = $request->getParsedBody();
         //POST or PUT
         $queryHash = $allGetVars['hash'];
-        
+
         $placearr =  json_decode($this->hashplace($queryHash));
-        
+
         $appname = $this->traverse($placearr,'SHOPIFYNAME');
         $appid = $this->traverse($placearr,'SHOPIFYID');
         $appkey = $this->traverse($placearr,'SHOPIFYKEY');
@@ -50,13 +50,13 @@ class CartController extends Controller
         $cartlist = [];
         foreach($draftOrders as $cart){
             $cartlist[] = array('id'=>$cart->id,
-                                'status'=>$cart->status,
-                                'name'=>$cart->name,
-                                'created_at'=>$cart->created_at,
-                                'total_price'=>$cart->total_price);
+                'status'=>$cart->status,
+                'name'=>$cart->name,
+                'created_at'=>$cart->created_at,
+                'total_price'=>$cart->total_price);
         }
         return json_encode($cartlist);
-    } 
+    }
 
     public function loadcarts_json($request, $response){
         try{
@@ -66,9 +66,9 @@ class CartController extends Controller
             //POST or PUT
 
             $queryHash = $allGetVars['hash'];
-        
+
             $placearr =  json_decode($this->hashplace($queryHash));
-        
+
             $appname = $this->traverse($placearr,'SHOPIFYNAME');
             $appid = $this->traverse($placearr,'SHOPIFYID');
             $appkey = $this->traverse($placearr,'SHOPIFYKEY');
@@ -76,14 +76,14 @@ class CartController extends Controller
             $analyze = json_decode( $this->getdrafts($appname, $appid, $appkey) );
 
             $totalret = array();
-    
+
             $margin = 0.4;
             foreach($analyze as $cart){
                 foreach($cart->line_items as $item){
                     $qnt = $item->quantity;
                     $prc = $item->price;
                     $profit = $qnt*$prc*$margin;
-	
+
                     $quantityTotal += $qnt;
                     $skus += 1;
                     $projectedProfit += $profit;
@@ -91,7 +91,7 @@ class CartController extends Controller
 
                 $newcart = array('cart'=>$cart);
                 $newcart['noskus'] = $skus;
-                $newcart['projectedprofit'] = "$projectedProfit"; 
+                $newcart['projectedprofit'] = "$projectedProfit";
                 $newcart['retailmargin'] = '0.4';
                 $newcart['allquantity'] = $quantityTotal;
                 $totalret[]=$newcart;
@@ -99,7 +99,7 @@ class CartController extends Controller
 
             $session = new Session;
             $session['currcarts'] = array('carts'=>$totalret); //Representation of all carts
-    
+
             return json_encode(array('carts'=>$totalret));
         }catch(Exception $e){
             print_r($e);
@@ -108,22 +108,22 @@ class CartController extends Controller
 
     public function getthumbs($request, $response, $args){
         $pdid = $args['id'];
-        
-        $jsond = json_decode(file_get_contents('https://7297545fa55025db90542de74bb6e236:491ffa620d7cfbf189873bc929958b89@iwaboo2.myshopify.com/admin/products/'.$pdid.'/images.json'));         
+
+        $jsond = json_decode(file_get_contents('https://7297545fa55025db90542de74bb6e236:491ffa620d7cfbf189873bc929958b89@iwaboo2.myshopify.com/admin/products/'.$pdid.'/images.json'));
 
         return json_encode($jsond);
     }
-    
+
     public function additemtocart($request, $response, $args){
         try{
             $session = new Session;
 
             $hash = $args['ophash'];
             $unwrap=array();
-            $data = $this->iwadehash($hash,$unwrap); 
-            $data = explode('~', $data); 
-            $operands = $this->getOps($data); 
-      
+            $data = $this->iwadehash($hash,$unwrap);
+            $data = explode('~', $data);
+            $operands = $this->getOps($data);
+
             if(isset($session['optcart'])){
                 $optcart = $session['optcart'];
                 foreach($optcart->line_items as $lineitem){
@@ -169,40 +169,40 @@ class CartController extends Controller
         try{
             $session = new Session;
 
-	    $allPostPutVars = $request->getParsedBody();
-	    $prodid = $allPostPutVars['prodid'];
-	    $varid = $allPostPutVars['variantid'];
-	    $quantity = $allPostPutVars['actquantity'];
-	    $cartid = $allPostPutVars['cartid'];
+            $allPostPutVars = $request->getParsedBody();
+            $prodid = $allPostPutVars['prodid'];
+            $varid = $allPostPutVars['variantid'];
+            $quantity = $allPostPutVars['actquantity'];
+            $cartid = $allPostPutVars['cartid'];
 
-	    print_r($cartid.$prodid);
-	    
+            print_r($cartid.$prodid);
+
             foreach($session['optcart']['cart']['line_items'] as $lineitem){
-	      if( (!strcmp($lineitem['product_id'], $prodid)) && (!strcmp($lineitem['variant_id'], $varid))){
-		$lineitem['quantity'] = $quantity;
-		break;
-	      }
+                if( (!strcmp($lineitem['product_id'], $prodid)) && (!strcmp($lineitem['variant_id'], $varid))){
+                    $lineitem['quantity'] = $quantity;
+                    break;
+                }
             }
 
-	    $this->flash->addMessage('Test',$quantity);
+            $this->flash->addMessage('Test',$quantity);
 
-	    $request->reparseBody();
-	    return $response->withRedirect(cart.mainrevpost,
-					   array('id'=>$cartid));
+            $request->reparseBody();
+            return $response->withRedirect(cart.mainrevpost,
+                array('id'=>$cartid));
         }catch(Exception $e){
-	  print_r($e);
-	}
+            print_r($e);
+        }
     }
-  
+
     public function delitemtocart($request, $response, $args){
         try{
             $session = new Session;
 
             $hash = $args['ophash'];
             $unwrap=array();
-            $data = $this->iwadehash($hash,$unwrap); 
-            $data = explode('~', $data); 
-            $operands = $this->getOps($data); 
+            $data = $this->iwadehash($hash,$unwrap);
+            $data = explode('~', $data);
+            $operands = $this->getOps($data);
 
             if(isset($session['optcart'])){
                 $optcart = $session['optcart'];
@@ -238,7 +238,7 @@ class CartController extends Controller
             print_r($e);
         }
     }
-  
+
     public function sendreview($request, $response){
         return $response."REVIEWPLACEHOLDER";
     }
@@ -246,12 +246,12 @@ class CartController extends Controller
     public function checkout($request, $response){
         return $response."CHECKOUTPLACEHOLDER";
     }
-    
+
     public function getdrafts($appname, $appid, $appkey){
         $jsond = json_decode(file_get_contents('https://7297545fa55025db90542de74bb6e236:491ffa620d7cfbf189873bc929958b89@iwaboo2.myshopify.com/admin/draft_orders.json'));
 
         $carts = array();
-        
+
         foreach($jsond->draft_orders as $cart){
             $carts[] = $cart;
         }
@@ -260,7 +260,7 @@ class CartController extends Controller
         // $querystr = "https://".$appid.":".$appkey."@".$appname.".myshopify.com/admin/draft_orders.json";
         // return file_get_contents($querystr) or die( "Failed getting your carts, please recheck your appname, id, key and validate your app has enabled the private app");
     }
-  
+
     public function sessioncart($request, $response,$args){
         try{
             $session = new Session;
@@ -270,22 +270,22 @@ class CartController extends Controller
 
                 $allGetVars = $request->getQueryParams();
                 $hash = $args['hash'];
-      
+
                 $unwrap=array();
                 $data = $this->iwadehash($hash,$unwrap);
                 $data = explode('~', $data);
                 $operands = $this->getOps($data);
 
                 $fillable = array('originalowner'=>json_encode($operands['ORIGINALOWNER']),
-                                  'newowner'=>json_encode($operands['NEWOWNER']),
-                                  'originid'=>json_encode($operands['ORIGINID']),
-                                  'jsoncart'=>json_encode($returnee),
-                                  'status'=>'MIGRATED');
+                    'newowner'=>json_encode($operands['NEWOWNER']),
+                    'originid'=>json_encode($operands['ORIGINID']),
+                    'jsoncart'=>json_encode($returnee),
+                    'status'=>'MIGRATED');
 
                 $newcart = new Cart();
                 $newcart->fill($fillable);
                 $newcart->save();
-      
+
                 return json_encode("Cart is saved for later. It should pop up in the \"iWABOO Carts\" section of ".$operands['NEWOWNER']." profile.");
             }else{
                 $this->flash->addMessage('Error','You did not optimize any cart');
@@ -302,12 +302,12 @@ class CartController extends Controller
             $allGetVars = $request->getQueryParams();
             $hash = $args['hash'];
             $shopifyid = $args['id'];
-      
+
             $unwrap=array();
             $data = $this->iwadehash($hash,$unwrap);
             $data = explode('~', $data);
             $operands = $this->getOps($data);
-    
+
             $ownedCarts = Cart::where('originalowner',json_encode($operands['EMAIL']))->get(); //illuminate
 
             $options = array(); //I truly, truly hate myself for this ;(
@@ -319,7 +319,7 @@ class CartController extends Controller
             }
 
             $session['iwaboocarts'] = $ownedCarts; // Storing DB carts
-    
+
             foreach($options as $option){
                 echo $option;
             }
@@ -327,14 +327,14 @@ class CartController extends Controller
             print_r($E);
         }
     }
-  
+
     public function loadiwacartid($request, $response, $args){
         try{
             $session = new Session;
             //STRICTLY 4 MY D.E.B.U.G.G.A.Z
             $allGetVars = $request->getQueryParams();
             $thisid = $args['id'];
-      
+
             $owned = Cart::where('id', intval($thisid))->get()->toArray();
 
             $session = new Session;
@@ -342,7 +342,7 @@ class CartController extends Controller
             $optcart = json_decode($owned[0]['jsoncart']);
             $optcart->$cartid = $thisid;
             $session['optcart'] = $optcart;
-    
+
             return json_encode( $optcart ); // json encoded in db
         }catch(Exception $e){
             print_r($e);
@@ -351,81 +351,81 @@ class CartController extends Controller
 
     public function index($request, $response, $args)
     {
-      try{
-	$session = new Session;
-	$carts = array();
-	$menus = $this->buildmenu();
+        try{
+            $session = new Session;
+            $carts = array();
+            $menus = $this->buildmenu();
 
-	$fromindex = true; //We suppose we're here from main window
-	
-	//We know we need the category data from session
-	$categories = json_decode($this->getcategories(), true);
+            $fromindex = true; //We suppose we're here from main window
 
-	$cartid = $args['id'];
-	
-	if($request->isPost()){
-	  $this->flash->addMessage("info", "Posted to edit the cart");
-	  $storedCarts = $session['optcart'];
+            //We know we need the category data from session
+            $categories = json_decode($this->getcategories(), true);
 
-	  $posts = $request->getParsedBody();
-	  $quantity=$posts['actquantity'];
-	  $prodid=$posts['prodid'];
-	  $varid=$posts['varid'];
-	  $cartid=$posts['cartid'];
+            $cartid = $args['id'];
 
-	  foreach($storedCarts->cart->line_items as $lineitem){
-	    if( (!strcmp($lineitem->product_id, $prodid)) &&
-		(!strcmp($lineitem->variant_id, $varid)) ){
-	      $lineitem->quantity = $quantity;
-	      break;
-	    }
-	  }
-	  
-	  $percartData = $this->categorizecartsess($storedCarts->cart,
-	  					   $categories);
-	}else{
-	  if(isset($args['id'])){
-	    print_r("isntPost1");
-	    $storedCarts = Cart::where('id',$args['id'])->get(); //illuminate
-	    $cartss = json_decode($storedCarts[0]['jsoncart'], true);
-	    $percartData = $this->categorizecart( $cartss['cart'],
-						  $categories);
-	  }else{
-	    $latestcart = Cart::orderBy('created_at', 'desc')->first();
-	    $cart = json_decode($latestcart['jsoncart'],true);
-	    $percartData = $this->categorizecart( $cart['cart'],
-						  $categories);
-	    
-	  }
-	}
+            if($request->isPost()){
+                $this->flash->addMessage("info", "Posted to edit the cart");
+                $storedCarts = $session['optcart'];
 
-	$stored = $this->view->fetch('bycategory-frommockup.twig', array('categories'=>$percartData,
-							      'fromindex'=>$fromindex,
-							      'cartid'=>$cartid));
-	//Get user list 
-	$users = User::all();
-	$optsUsers = '';
-	foreach($users as $user){
-	  $emaild = $user['email'];
-	  $named = $user['name'];
-	  $optsUsers = $optsUsers."<option value=\"".$emaild."\">".$named."</option>" ;
-	}
-	  
-	//DIRFTY
-	//Building one big string for options.
-	//I despise myself
-	$request->reparseBody();
-	return $this->view->render($response,
-				   'homecart.twig',
-				   array('menus'=>$menus ,
-					 'emailoptions'=>$optsUsers,
-					 'carts'=>$stored,
-					 'cartid'=>$cartid,
-					 'fromindex'=>$fromindex
-					 ));
-      }catch(Exception $e){
-	print_r($e);
-      }
+                $posts = $request->getParsedBody();
+                $quantity=$posts['actquantity'];
+                $prodid=$posts['prodid'];
+                $varid=$posts['varid'];
+                $cartid=$posts['cartid'];
+
+                foreach($storedCarts->cart->line_items as $lineitem){
+                    if( (!strcmp($lineitem->product_id, $prodid)) &&
+                        (!strcmp($lineitem->variant_id, $varid)) ){
+                        $lineitem->quantity = $quantity;
+                        break;
+                    }
+                }
+
+                $percartData = $this->categorizecartsess($storedCarts->cart,
+                    $categories);
+            }else{
+                if(isset($args['id'])){
+                    print_r("isntPost1");
+                    $storedCarts = Cart::where('id',$args['id'])->get(); //illuminate
+                    $cartss = json_decode($storedCarts[0]['jsoncart'], true);
+                    $percartData = $this->categorizecart( $cartss['cart'],
+                        $categories);
+                }else{
+                    $latestcart = Cart::orderBy('created_at', 'desc')->first();
+                    $cart = json_decode($latestcart['jsoncart'],true);
+                    $percartData = $this->categorizecart( $cart['cart'],
+                        $categories);
+
+                }
+            }
+
+            $stored = $this->view->fetch('bycategory-frommockup.twig', array('categories'=>$percartData,
+                'fromindex'=>$fromindex,
+                'cartid'=>$cartid));
+            //Get user list
+            $users = User::all();
+            $optsUsers = '';
+            foreach($users as $user){
+                $emaild = $user['email'];
+                $named = $user['name'];
+                $optsUsers = $optsUsers."<option value=\"".$emaild."\">".$named."</option>" ;
+            }
+
+            //DIRFTY
+            //Building one big string for options.
+            //I despise myself
+            $request->reparseBody();
+            return $this->view->render($response,
+                'homecart.twig',
+                array('menus'=>$menus ,
+                    'emailoptions'=>$optsUsers,
+                    'carts'=>$stored,
+                    'cartid'=>$cartid,
+                    'fromindex'=>$fromindex
+                ));
+        }catch(Exception $e){
+            print_r($e);
+        }
     }
 
     public function loadid($request, $response){
@@ -441,13 +441,13 @@ class CartController extends Controller
             $returnee = $jsond;
             //STRICTLY 4 MY D.E.B.U.G.G.A.Z
             $session['loadedcart'] = $returnee;
-    
+
             return json_encode($returnee,true);
         }catch(Exception $e){
             print_r($e);
         }
     }
-  
+
     public function optimizeid($request, $response,$args){
         try{
             $session = new Session;
@@ -467,13 +467,13 @@ class CartController extends Controller
                 $loadedcartbe = json_decode($this->loadid($request,$response),true);
                 $loadedcart = $loadedcartbe['draft_order'];
             }
-    
+
             $arrnew = array();
             foreach($loadedcart->line_items as $line_item){
                 $arrnew[] = array('variant_id' => $line_item->variant_id,
-                                  'product_id' => $line_item->product_id,
-                                  'quantity'  => $line_item->quantity,
-                                  'price'  => $line_item->price);
+                    'product_id' => $line_item->product_id,
+                    'quantity'  => $line_item->quantity,
+                    'price'  => $line_item->price);
             }
 
             $optimized = $this->optimize($arrnew);
@@ -485,12 +485,12 @@ class CartController extends Controller
 
             $projectedProfit = 0.0;
             $totalPrice = 0.0;
-      
+
             foreach($loadedcart->line_items as $item){
                 $qnt = $item->quantity;
                 $prc = $item->price;
                 $profit = (double)$qnt*(double)$prc*0.4;
-	
+
                 $quantityTotal += $qnt;
                 $totalPrice += (double)$prc;
                 $skus += 1;
@@ -499,11 +499,11 @@ class CartController extends Controller
 
             $newcart = array('cart'=>$loadedcart);
             $newcart['noskus'] = $skus;
-            $newcart['projectedprofit'] = "$projectedProfit"; 
+            $newcart['projectedprofit'] = "$projectedProfit";
             $newcart['retailmargin'] = '0.4';
             $newcart['allquantity'] = $quantityTotal;
             $newcart['totalprice'] = "$totalPrice";
-    
+
             $session['optcart'] = $newcart;
 
             return json_encode($newcart);
@@ -522,7 +522,7 @@ class CartController extends Controller
             $id = 0;
 
             $totaldiff = 0;
-            
+
             foreach($loaded->line_items as $optimizedvalue){
                 $totaldiff += (-$optcart->line_items[$id]->quantity*$optcart->line_items[$id]->price + $optimizedvalue->quantity*$optimizedvalue->quantity);
                 $id++;
@@ -530,7 +530,7 @@ class CartController extends Controller
             }
 
             $loaded->total_price = $totaldiff;
-            
+
             $id=0;
             foreach($loaded->line_items as $line_item){
                 $line_item->quantity = $diffarr[$id];
@@ -541,10 +541,10 @@ class CartController extends Controller
         }catch(Exception $e){
             print_r($e);
         }
-    
+
     }
 
-    
+
     private function processShopifyLogin()
     {
         if (!isset($_GET['code'])) {
@@ -561,8 +561,8 @@ class CartController extends Controller
                     'read_fulfillments', 'write_fulfillments',
                     'read_shipping', 'write_shipping',
                     'read_analytics',
-				]
-		    ];
+                ]
+            ];
             // Fetch the authorization URL from the provider; this returns the
             // urlAuthorize option and generates and applies any necessary parameters
             // (e.g. state).
@@ -583,7 +583,7 @@ class CartController extends Controller
             if (isset($_SESSION['oauth2state'])) {
                 unset($_SESSION['oauth2state']);
             }
-    
+
             exit('Invalid state');
 
         } else {
@@ -645,7 +645,7 @@ class CartController extends Controller
         //ID must be our hash
         //
         return view('cart_show');
-        
+
     }
 
     /**
@@ -657,7 +657,7 @@ class CartController extends Controller
     public function optimize(&$optcart){
         $time1 = microtime(true);
         $size = count($optcart);
-        
+
         $myPop = new Population( $size, $optcart, true);
 
         $generationCount=0;
@@ -667,9 +667,9 @@ class CartController extends Controller
         {
             $generationCount++;
             $most_fit=$myPop->getFittest()->getFitness();
-          
+
             $myPop = algorithm::evolvePopulation($myPop); //create a new generation
-       
+
             if ($most_fit < $most_fit_last) //display only generations when there has been a change
             {
                 $most_fit_last=$most_fit;
@@ -677,19 +677,19 @@ class CartController extends Controller
             }
             else
                 $generation_stagnant++; //no improvement increment may want to end early
-     
+
             if ( $generation_stagnant > algorithm::$max_generation_stagnant)
             {
                 //echo "\n-- Ending TOO MANY (".algorithm::$max_generation_stagnant.") stagnant generations unchanged. Ending APPROX solution below \n..)";
                 break;
             }
-      
+
         }  //end of while loop
         //we're done
         $time2 = microtime(true);
 
         $genes = $myPop->getFittest()->genes;
-        
+
         return $genes;
     }
 
@@ -699,7 +699,7 @@ class CartController extends Controller
         $shopifysecretid = '491ffa620d7cfbf189873bc929958b89';
         $redirect = 'http://54.193.26.78/home';
         $shop = 'iwaboo2.myshopify.com';
-        
+
         $provider = new Shopify([
             'clientId'                => $shopifyclientid,    // The client ID assigned to you by the Shopify
             'clientSecret'            => $shopifysecretid,   // The client password assigned to you by the Shopify
@@ -714,7 +714,7 @@ class CartController extends Controller
         //we redirect to our app if we will build public apps, but right now
         //its a blueprint to get providers for private apps
         $redirect = 'http://54.193.26.78/home';
-        
+
         $provider = new Shopify([
             'clientId'                => $shopifyclientid,    // The client ID assigned to you by the Shopify
             'clientSecret'            => $shopifysecretid,   // The client password assigned to you by the Shopify
@@ -724,7 +724,7 @@ class CartController extends Controller
 
         return $provider;
     }
-    
+
     private function support_processOperandsClean($hid, $operands){
         $decr=array();
         $changes=array();
@@ -739,14 +739,14 @@ class CartController extends Controller
         $changes=array();
         $decrypted_arr = $this->iwadehash($hid,$decr);
         $changed_arr = $this->iwadehash($operands,$changes);
-        
+
         return $hid;
     }
 
     public function edit($hid, $operands)
     {
         $decrypted_arr = $this->support_processOperandsClean($hid,$operands);
-        
+
         return view('cart_edit',['hashorg'=>$decrypted_arr]);
     }
 
@@ -774,7 +774,7 @@ class CartController extends Controller
         return view('cart_destroy');
         //
     }
-    
+
     //Enable review
     public function review($hid = 0)
     {
@@ -783,15 +783,15 @@ class CartController extends Controller
 
     function getOps($data){
         $operands = array();
-        
+
         foreach($data as $op){
             $newDat = explode(':',$op);
             $operands[$newDat[0]] = $newDat[1];
         }
-        
+
         return $operands;
     }
-    
+
     function unsetValue(array $array, $value, $strict = TRUE)
     {
         //With <3 from Stack overflow https://stackoverflow.com/questions/3573313/php-remove-object-from-array

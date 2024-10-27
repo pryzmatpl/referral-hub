@@ -6,16 +6,16 @@ use App\Classes\Fitnesscalc;
 class Individual {
     public $genes = array();  //defines an empty  array of genes arbitrary length
     public $fitness = 0;
-	// Cache
-	
-	public function random() {
+    // Cache
+
+    public function random() {
         return (float)rand()/(float)getrandmax();
-	}
+    }
 
     // Create a random individual
     public function generateIndividual($size,$fourcolumn) {
         //We generate a population based on randomization of counts
-		//now lets randomly load the genes (array of ascii characters)	 to the size of the array
+        //now lets randomly load the genes (array of ascii characters)	 to the size of the array
         $it = 0;
         foreach($fourcolumn as $item){
             $item['quantity'] =  rand(1, 3*$item['quantity']);
@@ -23,7 +23,7 @@ class Individual {
             $it++;
         }
     }
-    
+
     /* Getters and setters */
     // Use this if you want to create individuals with different gene lengths
     public function getGene($index) {
@@ -53,7 +53,7 @@ class Individual {
         for ($i = 0; $i <  count($this->genes); $i++) {
             $geneString .= $this->getGene($i);
         }
-		print_r($geneString);
+        print_r($geneString);
         return (string)$geneString;
     }
 }

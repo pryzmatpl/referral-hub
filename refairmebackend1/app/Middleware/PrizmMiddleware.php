@@ -34,13 +34,13 @@ class PrizmMiddleware extends Middleware
 
     public function __invoke($request, $response, $next)
     {
-      if(PHP_SAPI == 'cli') return $response;
+        if(PHP_SAPI == 'cli') return $response;
 
         $aroute = $request->getUri()->getPath();
-	$getData = $request->getQueryParams();
+        $getData = $request->getQueryParams();
 
-	$cid=end(explode('/',$aroute));
-	
+        $cid=end(explode('/',$aroute));
+
         //In case we confirm the user, drop this middleware
         if ($aroute === '/auth/confirm') {
             $response = $next($request, $response);
@@ -61,112 +61,112 @@ class PrizmMiddleware extends Middleware
 
         $_SESSION['user'] = null;
 
-            return $next($request, $response);
+        return $next($request, $response);
 
     }
-  
 
-  public function origin($endpoint){
-    return $this->cleanhash($endpoint);
-  }
 
-  public function cleandata($endpoint){
-    $curr = base64_decode($endpoint);
-    $immediate = explode(SEPARATOR, $curr);
-    $data = array_slice($immediate,1);
-    unset($immediate);
-    return join(SEPARATOR,$data);
-  }
-
-  public function traverse($unwrapped, $optid){
-    foreach($unwrapped as $value){
-      $ops = explode(CHILDSEPARATOR,$value);
-      $actualOp = strval($ops[0]);
-      $data = strval($ops[1]);
-      if( !strcmp(strval($optid), $actualOp) ) return $data;
+    public function origin($endpoint){
+        return $this->cleanhash($endpoint);
     }
 
-    return 'prizm';
-  }
-
-  public function cleanhash($endpoint){
-    if( !strcmp($endpoint,'') ){
-      throw new Exception("Endpoint cannot be empty to retrieve next hash");
+    public function cleandata($endpoint){
+        $curr = base64_decode($endpoint);
+        $immediate = explode(SEPARATOR, $curr);
+        $data = array_slice($immediate,1);
+        unset($immediate);
+        return join(SEPARATOR,$data);
     }
 
-    $elems = base64_decode($endpoint);
+    public function traverse($unwrapped, $optid){
+        foreach($unwrapped as $value){
+            $ops = explode(CHILDSEPARATOR,$value);
+            $actualOp = strval($ops[0]);
+            $data = strval($ops[1]);
+            if( !strcmp(strval($optid), $actualOp) ) return $data;
+        }
 
-    $exploded_elems = explode(SEPARATOR, $elems);
-
-    return $exploded_elems[0];
-  }
-  
-  public function iwadehash($endpoint,$data=''){
-    if( !strcmp($endpoint, ORIGIN) ){
-      return $data;
+        return 'prizm';
     }
 
-    $nexthash = $this->cleanhash($endpoint);
-    $data = $this->cleandata($endpoint);
+    public function cleanhash($endpoint){
+        if( !strcmp($endpoint,'') ){
+            throw new Exception("Endpoint cannot be empty to retrieve next hash");
+        }
 
-    if( !strcmp( $data, $this->iwadehash($nexthash, $data)) ){
-      return $data; //We arrived at single data, should be hash cornerstone
-    }else{
-      return $data.SEPARATOR.$this->iwadehash($nexthash, $data);
-    }
-  }
+        $elems = base64_decode($endpoint);
 
-  public function dehash($endpoint){
-    $dehashedStr = $this->iwadehash($endpoint);
-    $dehashedToks = explode(SEPARATOR, $dehashedStr);
-    
-    foreach($dehashedToks as $val){
-      $rawd = explode(CHILDSEPARATOR, $val);
+        $exploded_elems = explode(SEPARATOR, $elems);
 
-      if(count($rawd) > 2){
-	throw Exception('Something went wrong when separating token '.print_r($rawd));
-      }
-      
-      $key = $rawd[0];
-      $val = $rawd[1];
-      
-      $data[$key] = urldecode($val);
-    }
-    
-    return $data;
-  }
-  
-  public function iwahash($origin,$dataid,$data){
-    //Initialize origin
-    if( !strcmp($origin,'') ){
-      throw new Exception("Origin is required, it is currently: ' ".$origin." '.");
+        return $exploded_elems[0];
     }
 
-    //Check if dataid has the childseparator within it
-    if( strpos($dataid, CHILDSEPARATOR) != FALSE ){
-      throw new Exception("dataid cannot have the child separator, ' ".CHILDSEPARATOR." ' , within it");
+    public function iwadehash($endpoint,$data=''){
+        if( !strcmp($endpoint, ORIGIN) ){
+            return $data;
+        }
+
+        $nexthash = $this->cleanhash($endpoint);
+        $data = $this->cleandata($endpoint);
+
+        if( !strcmp( $data, $this->iwadehash($nexthash, $data)) ){
+            return $data; //We arrived at single data, should be hash cornerstone
+        }else{
+            return $data.SEPARATOR.$this->iwadehash($nexthash, $data);
+        }
     }
 
-    //Check if dataid is not empty
-    if( !strcmp($dataid,'') ){
-      return $origin;
-      throw new Exception('Origin must always be set for the hashgraph');
-      // Origin should be hashed always
+    public function dehash($endpoint){
+        $dehashedStr = $this->iwadehash($endpoint);
+        $dehashedToks = explode(SEPARATOR, $dehashedStr);
+
+        foreach($dehashedToks as $val){
+            $rawd = explode(CHILDSEPARATOR, $val);
+
+            if(count($rawd) > 2){
+                throw Exception('Something went wrong when separating token '.print_r($rawd));
+            }
+
+            $key = $rawd[0];
+            $val = $rawd[1];
+
+            $data[$key] = urldecode($val);
+        }
+
+        return $data;
     }
 
-    //Return the hashgraph
-    return base64_encode($origin.SEPARATOR.$dataid.CHILDSEPARATOR.urlencode($data));
-  }
+    public function iwahash($origin,$dataid,$data){
+        //Initialize origin
+        if( !strcmp($origin,'') ){
+            throw new Exception("Origin is required, it is currently: ' ".$origin." '.");
+        }
 
-  public function spawn($queryHash){       
-    $placeholder = $this->iwadehash($queryHash);
-    $placearr = explode(SEPARATOR,$placeholder);
+        //Check if dataid has the childseparator within it
+        if( strpos($dataid, CHILDSEPARATOR) != FALSE ){
+            throw new Exception("dataid cannot have the child separator, ' ".CHILDSEPARATOR." ' , within it");
+        }
 
-    foreach($placearr as $item){
-      $command = explode(CHILDSEPARATOR,$item);
-      $retarr[] = [$command[0]=>$command[1]];
+        //Check if dataid is not empty
+        if( !strcmp($dataid,'') ){
+            return $origin;
+            throw new Exception('Origin must always be set for the hashgraph');
+            // Origin should be hashed always
+        }
+
+        //Return the hashgraph
+        return base64_encode($origin.SEPARATOR.$dataid.CHILDSEPARATOR.urlencode($data));
     }
 
-    return json_encode($retarr,true);
-  }
+    public function spawn($queryHash){
+        $placeholder = $this->iwadehash($queryHash);
+        $placearr = explode(SEPARATOR,$placeholder);
+
+        foreach($placearr as $item){
+            $command = explode(CHILDSEPARATOR,$item);
+            $retarr[] = [$command[0]=>$command[1]];
+        }
+
+        return json_encode($retarr,true);
+    }
 }

@@ -50,8 +50,8 @@ function sc($array) {
 }
 
 function isAssoc(array $arr) {
-  if (array() === $arr) return false;
-  return array_keys($arr) !== range(0, count($arr) - 1);
+    if (array() === $arr) return false;
+    return array_keys($arr) !== range(0, count($arr) - 1);
 }
 
 function hasOneOfWords($string, array $words, $return_word = false) {
@@ -62,22 +62,22 @@ function hasOneOfWords($string, array $words, $return_word = false) {
 }
 
 function throwIfNone(&$val){
-  if( ($val === '') || ($val === NULL) ){
-    throw new Exception("Value should not be empty : ".print_r($val));
-  }
+    if( ($val === '') || ($val === NULL) ){
+        throw new Exception("Value should not be empty : ".print_r($val));
+    }
 }
 
 function dotify($arr, $exceptions=0){
-  $retarr=[];
-  
-  if( !is_null($arr) ){
+    $retarr=[];
 
-    foreach ( $arr as $key => $value){
-      $newkey = str_replace('_','.',$key);
-      $retarr[$newkey] = $value;
+    if( !is_null($arr) ){
+
+        foreach ( $arr as $key => $value){
+            $newkey = str_replace('_','.',$key);
+            $retarr[$newkey] = $value;
+        }
+
     }
 
-  }
-  
-  return $retarr;
+    return $retarr;
 }

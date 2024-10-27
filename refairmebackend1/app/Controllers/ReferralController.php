@@ -31,9 +31,9 @@ class ReferralController extends Controller
                 throw new Exception('User not found.');
 
             $referrals = Referral::where('users_id', $user->id)
-            ->with('User')
-            ->with('Job')
-            ->get();
+                ->with('User')
+                ->with('Job')
+                ->get();
 
             return $response->withJson(cc($referrals->toArray()));
         } catch (Exception $e) {
@@ -45,9 +45,9 @@ class ReferralController extends Controller
         try {
             $email = strip_tags($args['email']);
             $referrals = Referral::where('email', $email)
-            ->with('User')
-            ->with('Job')
-            ->get();
+                ->with('User')
+                ->with('Job')
+                ->get();
 
             return $response->withJson(cc($referrals->toArray()));
         } catch (Exception $e) {
@@ -143,16 +143,16 @@ class ReferralController extends Controller
         $mail = new Message;
 
         $mail
-        ->setFrom(env('MAIL_USERNAME'))
-        ->addTo($params->email)
-        ->setSubject('You received a new job offer')
-        ->setHTMLBody(renderEmailTemplate('referral_job', array(
-            'user_email' => $params->user->email,
-            'user_name' => $params->user->name,
-            'email' => $params->email,
-            'company' => $params->company->name,
-            'job' => $params->job->title,
-        )));
+            ->setFrom(env('MAIL_USERNAME'))
+            ->addTo($params->email)
+            ->setSubject('You received a new job offer')
+            ->setHTMLBody(renderEmailTemplate('referral_job', array(
+                'user_email' => $params->user->email,
+                'user_name' => $params->user->name,
+                'email' => $params->email,
+                'company' => $params->company->name,
+                'job' => $params->job->title,
+            )));
 
         return !$this->mailer->send($mail);
     }
@@ -161,16 +161,16 @@ class ReferralController extends Controller
         $mail = new Message;
 
         $mail
-        ->setFrom(env('MAIL_USERNAME'))
-        ->addTo($params->email)
-        ->setSubject('You referred a person to work as '.$params->job->title)
-        ->setHTMLBody(renderEmailTemplate('referral_confirmation', array(
-            'user_email' => $params->user->email,
-            'user_name' => $params->user->name,
-            'email' => $params->email,
-            'company' => $params->company->name,
-            'job' => $params->job->title,
-        )));
+            ->setFrom(env('MAIL_USERNAME'))
+            ->addTo($params->email)
+            ->setSubject('You referred a person to work as '.$params->job->title)
+            ->setHTMLBody(renderEmailTemplate('referral_confirmation', array(
+                'user_email' => $params->user->email,
+                'user_name' => $params->user->name,
+                'email' => $params->email,
+                'company' => $params->company->name,
+                'job' => $params->job->title,
+            )));
 
         return !$this->mailer->send($mail);
     }
