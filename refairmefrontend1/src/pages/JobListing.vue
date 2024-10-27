@@ -86,7 +86,7 @@ export default {
 
   data () {
     return {
-      //jobs:[],
+      jobs:store.jobListing,
       job: {
         company: { id: 0},
         project: { id: 0}
@@ -109,8 +109,7 @@ export default {
 
     getJobs () {
       this.$store.dispatch('getJobs')
-    }
-    /*
+    },
     editJob (id) { // to delete
       this.callBuilder('/job/update/')(id)
     },
@@ -138,7 +137,6 @@ export default {
           .finally(() => this.loading = false)
       }
     }
-*/
   }
 }
 </script>

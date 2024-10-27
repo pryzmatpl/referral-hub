@@ -9,17 +9,18 @@
       <div class="card-body" @click="onRowClick">
         <div class="row">
           <div class="col-12 col-sm-2">
-            <img :src="job.company.logo" width="120px" />
+<!--            <img :src="job.company.logo" width="120px" />-->
           </div>
           <div class="col-12 col-sm-6">
-            <h4>{{ job.title }}</h4>
-            <p>{{ job.company.name }}</p>
+            <h4>{{ job.jobtitle }}</h4>
+            <p v-html='job.description'></p>
+<!--            <p>{{ job.company.name }}</p>-->
           </div>
           <div class="col-12 col-sm-4" style="text-align: right" v-b-tooltip.html.bottom="'Get a reward of up to this amount if your referral is hired'">
             <div class="row">
               <div class="col">
                 <div>
-                  <h4 style="display: inline-block; text-align: right">{{ job.fund[0] | groupZeros }} - {{ job.fund[1] | groupZeros }}</h4>
+<!--                  <h4 style="display: inline-block; text-align: right">{{ job.fund[0] | groupZeros }} - {{ job.fund[1] | groupZeros }}</h4>-->
                   <p class="float-right">PLN</p>
                 </div>
                 <p>{{ formattedContractType }}</p>
@@ -30,7 +31,7 @@
                 <div>
                   <font-awesome-icon :icon="infoIcon" style="color:black" class="mr-1" />
                   <p style="display: inline-block" class="mr-1">REWARD:</p>
-                  <h4 style="display: inline-block; text-align: right">{{ job.fund[0] * 0.25 | groupZeros }}</h4>
+<!--                  <h4 style="display: inline-block; text-align: right">{{ job.fund[0] * 0.25 | groupZeros }}</h4>-->
                   <p class="float-right">PLN</p>
                 </div>
               </div>
@@ -51,7 +52,7 @@
           </div>
           <div class="col-5">
             <p>Technologies:</p>
-            <button class="btn tag" v-for="keyword in job.keywords.slice(0, 4)" :key="keyword">{{ keyword }}</button>
+            <button class="btn tag" v-for="keyword in job.keywords.split(',')" :key="keyword">{{ keyword }}</button>
           </div>
         </div>
       </div>
@@ -104,7 +105,7 @@ export default {
     infoIcon: () => faQuestionCircle,
     isJobListing: vm => vm.$route.path == '/jobs',
     isUserAllowed: vm => vm.$store.state.dehashedData.CURRENT_ROLE === 'admin',
-    formattedContractType: vm => vm.job.contractType.join(', ')
+    formattedContractType: 'TEST',
   },
 
   filters: {

@@ -125,7 +125,8 @@ const mutations = {
   },
 
   setJobs(state, payload) {
-    state.jobListing = payload
+    console.log(payload);
+    state.jobListing = payload;
   },
 
   setJobsCount(state, payload) {
@@ -232,7 +233,8 @@ const actions = {
     state.backend
       .get(baseUrl)
       .then(ret => {
-        commit('setJobs', ret.data.data)
+        state.jobListing = ret.data;
+        commit('setJobs', ret.data)
         commit('setJobsCount', ret.data.count)
         commit('setResultPages', ret.data.pages)
         console.log(ret)
