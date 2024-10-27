@@ -2,21 +2,14 @@
 
 use DI\Container;
 use Slim\Factory\AppFactory;
-use Slim\Middleware\ErrorMiddleware;
 use Slim\Middleware\Session;
-use Slim\Views\Twig;
-use Slim\Views\TwigMiddleware;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
 use Slim\Csrf\Guard;
 use Slim\Flash\Messages;
 use Psr\Container\ContainerInterface;
-use App\Middleware\CsrfViewMiddleware;
-use App\Middleware\OldInputMiddleware;
-use App\Middleware\ValidationErrorsMiddleware;
 use App\Router;
 use App\Validation\Validator;
-use RKA\Middleware\IpAddress;
 use SlimSession\Helper;
 
 $container = new Container();
@@ -40,17 +33,11 @@ AppFactory::setContainer($container);
 $app->addRoutingMiddleware();
 
 // Register Middleware
-$app->add(new IpAddress(true));
 $app->add(new Session([
     'name' => 'prizm_session',
     'autorefresh' => true,
     'lifetime' => '1 hour',
 ]));
-
-$app->add(TwigMiddleware::createFromContainer($app, Twig::class));
-$app->add(new ValidationErrorsMiddleware($container));
-$app->add(new OldInputMiddleware($container));
-$app->add(new CsrfViewMiddleware($container));
 
 // Error Handling Middleware
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
