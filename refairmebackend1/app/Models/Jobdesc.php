@@ -47,16 +47,6 @@ class Jobdesc extends Model {
         'methodologies_nice' => 'array'
     ];
 
-    protected $appends = array('company');
-
-    public function getCompanyAttribute() {
-        return $this->company;
-    }
-
-    public function setCompanyAttribute($value) {
-        $this->company = $value;
-    }
-
     public function project() {
         return $this->belongsTo('App\Models\Project');
     }
