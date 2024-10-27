@@ -4,8 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Jobdesc extends Model {
-
-    protected $table = 'jobs';
+    protected $table = 'jobdescs';
 
     protected $fillable = [
         'id',

@@ -18,11 +18,18 @@ class JobController extends Controller {
     public function get(Request $request, Response $response, array $args): Response {
         try {
             $params = $request->getQueryParams();
-            $jobs = $this->jobService->searchJobs($params);
+            if ($params['logic'] == 'all') {
+                $jobs = $this->jobService->all();
+            } else {
+                $jobs = $this->jobService->searchJobs($params);
+            }
 
-            return $response->withJson($jobs);
+            $response->getBody()->write(json_encode($jobs));
+
+            return $response;
         } catch (\Exception $e) {
-            return $response->withJson(['error' => $e->getMessage()], 500);
+            $response->getBody()->write(json_encode(['error' => $e->getMessage()]));
+            return $response;
         }
     }
 

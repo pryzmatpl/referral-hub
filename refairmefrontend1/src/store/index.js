@@ -217,7 +217,8 @@ const actions = {
   updateCurrentPage: ({commit}, value) => commit('setCurrentPage', value),
 
   getJobs ({commit, state, getters}) {
-    let baseUrl = process.env.BACKEND_URL + `/getjobs?logic=and&with=company,project&page=${state.currentPage}`
+    //let baseUrl = process.env.BACKEND_URL + `/getjobs?logic=and&with=company,project&page=${state.currentPage}`
+    let baseUrl = process.env.BACKEND_URL + `/getjobs?logic=all&page=${state.currentPage}`
     if(getters.keywordsToString != '') baseUrl += `&keywords=${this.getters.keywordsToString}`
     if(state.filterSelections.city !== '' && state.filterSelections.city !== null) baseUrl += `&location=${state.filterSelections.city}`
     if(state.filterSelections.employment !== '' && state.filterSelections.employment !== null) baseUrl += `&contractType=${state.filterSelections.employment}`

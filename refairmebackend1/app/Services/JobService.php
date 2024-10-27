@@ -16,6 +16,10 @@ class JobService {
         $this->jobRepository = $jobRepository;
     }
 
+    public function all() {
+        return $this->jobRepository->all();
+    }
+
     public function searchJobs(array $params) {
         // Handle searching logic and any complex operations
         return $this->jobRepository->search($params);
