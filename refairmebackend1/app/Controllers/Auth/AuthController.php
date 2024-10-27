@@ -2,15 +2,8 @@
 namespace App\Controllers\Auth;
 use Exception;
 use Nette\Mail\Message;
-
-use Illuminate\Database\Eloquent\Model;
-
-use Knp\Menu\MenuFactory;
-use Knp\Menu\Renderer\ListRenderer;
-
 use App\Models\User;
 use App\Models\Product;
-use App\Models\OA2Clients;
 use App\Models\UserPermission;
 use App\Models\Group;
 use App\Controllers\Controller;
@@ -18,11 +11,6 @@ use Respect\Validation\Validator as v;
 use Litipk\Jiffy\UniversalTimestamp;
 //Adding PSR classes to boost our auth controller
 use Slim\Csrf\Guard;
-use Slim\Views\Twig;
-use Psr\Log\LoggerInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-use Carlosocarvalho\SimpleInput\Input\Input;
 use SlimSession\Helper;
 
 const ORIGIN = "prizm";

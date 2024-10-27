@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\Auth\AuthController;
+use App\Controllers\JobController;
 use DI\Container;
 use Slim\Factory\AppFactory;
 use Slim\Middleware\Session;
@@ -28,9 +30,11 @@ $container->set('session', function () {
 });
 
 // Create Slim App instance
-$app = AppFactory::create();
-AppFactory::setContainer($container);
+$app = AppFactory::create(container:$container);
 $app->addRoutingMiddleware();
+
+// Register Routes
+Router::registerRoutes($app);
 
 // Register Middleware
 $app->add(new Session([
@@ -75,28 +79,8 @@ $container->set('session', function () {
     return new Helper();
 });
 
-$container->set(Twig::class, function (ContainerInterface $container) {
-    $twig = Twig::create(__DIR__ . '/../' . getenv('TWIG_TEMPLATES'), [
-        'cache' => false,
-    ]);
-
-    // Add global variables
-    $twig->getEnvironment()->addGlobal('auth', [
-        'check' => $container->get('auth')->check(),
-        'user' => $container->get('auth')->user(),
-    ]);
-    $twig->getEnvironment()->addGlobal('flash', $container->get('flash'));
-
-    return $twig;
-});
-
 $container->set('validator', function () {
     return new Validator();
-});
-
-// Register Controllers
-$container->set(HomeController::class, function (ContainerInterface $container) {
-    return new HomeController($container);
 });
 
 // Register CSRF Middleware
@@ -104,8 +88,6 @@ $container->set('csrf', function () {
     return new Guard();
 });
 
-// Register Routes
-Router::registerRoutes($app);
 
 // Run the application
 $app->run();
