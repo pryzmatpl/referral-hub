@@ -30,7 +30,7 @@ RUN find /var/php83libs -name "*.pkg.tar.zst" -exec pacman -U --noconfirm {} +
 
 # Setup user and directories
 RUN useradd -m -s /bin/bash www-data && \
-    mkdir -p /var/www/html/storage/app/public/files /var/www/html/storage/app/chunks && \
+    mkdir -p /var/www/html/storage/app/public/files /var/www/html/storage/app/chunks /run/php && \
     chown -R www-data:www-data /var/www/html
 
 # Configure PHP-FPM and Supervisor
