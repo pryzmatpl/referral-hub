@@ -10,50 +10,49 @@
             "name": "HavenShen",
             "email": "havenshen@gmail.com"
         },{
-	    "name":"Piotr Słupski",
-	    "email":"piotr.slupski@pryzmat.pl"
-	}
+            "name":"Piotr Słupski",
+            "email":"piotr.slupski@pryzmat.pl"
+        }
     ],
     "require": {
         "slim/slim": "*",
         "slim/twig-view": "*",
-        "illuminate/database": "^5.2",
-        "respect/validation": "^1.0",
+        "respect/validation": "*",
         "slim/csrf": "*",
         "slim/flash": "*",
-        "vlucas/phpdotenv": "^5.6",
+        "vlucas/phpdotenv": "*",
         "phpunit/phpunit": "*",
-        "knplabs/knp-menu": "^2.2",
-        "bryanjhv/slim-session": "~4.0",
+        "knplabs/knp-menu": "*",
+        "bryanjhv/slim-session": "*",
         "chadicus/slim-oauth2-middleware": "*",
         "davidepastore/slim-validation": "*",
-	"nette/mail": "^2.4",
-        "rmccue/requests": "^1.7",
+        "nette/mail": "*",
+        "rmccue/requests": "*",
         "chadicus/slim-oauth2": "*",
         "chadicus/slim-oauth2-http": "*",
-        "guzzlehttp/guzzle": "^6.3",
-        "illuminate/events": "^5.5",
-	"davedevelopment/phpmig": "^1.2",
-        "carlosocarvalho/simple-input": "^1.0",
-	"symfony/process": "^3.0",
-	"monolog/monolog":"^1.21",
-        "phpmailer/phpmailer": "^6.0",
-        "league/oauth2-client": "^2.2",
-        "league/oauth2-linkedin": "^2.1",
-        "league/oauth2-github": "^2.0",
-        "akrabat/rka-ip-address-middleware": "^0.5.0",
-        "tuupola/slim-jwt-auth": "^2.3",
-        "litipk/php-jiffy": "^1.4",
+        "guzzlehttp/guzzle": "*",
+        "illuminate/events": "*",
+        "davedevelopment/phpmig": "*",
+        "carlosocarvalho/simple-input": "*",
+        "symfony/process": "*",
+        "monolog/monolog":"*",
+        "phpmailer/phpmailer": "*",
+        "league/oauth2-client": "*",
+        "league/oauth2-linkedin": "*",
+        "league/oauth2-github": "*",
+        "tuupola/slim-jwt-auth": "*",
+        "litipk/php-jiffy": "*",
         "adrianfalleiro/slim-cli-runner": "*",
         "illuminate/pagination": "*",
-        "bryanjhv/slim-session": "~4.0"
+        "illuminate/database": "*",
+        "bryanjhv/slim-session": "*"
     },
     "scripts": {
     },
     "autoload": {
-    	"psr-4": {
-    		"App\\": "app/"
-    	}
+        "psr-4": {
+            "App\\": "app/"
+        }
     },
     "config": {
         "allow-plugins": {
