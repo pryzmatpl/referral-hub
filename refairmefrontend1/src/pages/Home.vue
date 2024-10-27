@@ -3,7 +3,7 @@
     <div class="search-panel">
       <div class="row justify-content-center pt-5">
         <div class="col-8 title p-0 d-none d-sm-block">
-          <h1 style="color: white; font-size: 48px;">Research Engine</h1>
+          <h1 style="color: white; font-size: 48px;">Find a job by criteria:</h1>
         </div>
       </div>
       <div class="row justify-content-center">
