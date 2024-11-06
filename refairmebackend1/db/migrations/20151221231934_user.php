@@ -1,6 +1,5 @@
 <?php
-use Illuminate\Database\Capsule\Manager as Capsule;
-use App\Model\User as Users;
+
 use Phinx\Migration\AbstractMigration;
 
 class CreateUsersTable extends AbstractMigration
@@ -10,48 +9,37 @@ class CreateUsersTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('users', function($table)
-        {
-            $table->increments('id');
-            $table->string('username');
-            $table->string('email')->unique()->nullable();
-            $table->string('password');
-            $table->integer('group_id');
-            $table->integer('status');
-            $table->timestamps();
-        });
-
-        $array = array(
-            array(
-                'username'  => 'admin',
-                'email'     => 'admin@slim.dev',
-                'password'  => '$2y$10$ElXh/aFKLN1Vf4t2G0DTnupWcEpS2/2OP8fIsQXjHp7KXE3bjcUke',
-                'group_id'  => '1',
-                'status'    => '1'
-            ),
-            array(
-                'username'  => 'moderator',
-                'email'     => 'moderator@slim.dev',
-                'password'  => '$2y$10$ElXh/aFKLN1Vf4t2G0DTnupWcEpS2/2OP8fIsQXjHp7KXE3bjcUke',
-                'group_id'  => '1',
-                'status'    => '1'
-            ),
-            array(
-                'username'  => 'user',
-                'email'     => 'user@slim.dev',
-                'password'  => '$2y$10$ElXh/aFKLN1Vf4t2G0DTnupWcEpS2/2OP8fIsQXjHp7KXE3bjcUke',
-                'group_id'  => '1',
-                'status'    => '1'
-            )
-            );
-        Users::insert($array);
+        $this->table('users')
+            ->addColumn('first_name', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('last_name', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('password', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('remember_token', 'string', ['limit' => 100, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('activated', 'boolean', ['default' => 0])
+            ->addColumn('token', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('signup_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('signup_confirmation_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('signup_sm_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('admin_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('updated_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('deleted_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('last_login', 'text', ['collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('activ_code', 'text', ['collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('group_id', 'integer', ['null' => true])
+            ->addColumn('activ', 'integer', ['null' => true])
+            ->addColumn('cvadded', 'boolean', ['null' => true])
+            ->addColumn('name', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('email', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addIndex(['email'], ['unique' => true, 'name' => 'users_email_unique'])
+            ->addTimestamps()
+            ->addSoftDelete()
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->drop('users');
+        $this->table('users')->drop()->save();
     }
 }

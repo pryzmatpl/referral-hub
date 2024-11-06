@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateThemesTable extends AbstractMigration
 {
@@ -10,28 +9,24 @@ class CreateThemesTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('themes', function ($table) {
-            $table->increments('id')->unsigned();
-            $table->string('name', 191)->collate('utf8mb4_unicode_ci')->unique();
-            $table->string('link', 191)->collate('utf8mb4_unicode_ci')->unique();
-            $table->string('notes', 191)->collate('utf8mb4_unicode_ci')->nullable();
-            $table->boolean('status')->default(1);
-            $table->integer('taggable_id')->unsigned();
-            $table->string('taggable_type', 191)->collate('utf8mb4_unicode_ci');
-            $table->timestamps();
-            $table->softDeletes();
-
-            // Indexes
-            $table->index(['taggable_id', 'taggable_type'], 'themes_taggable_id_taggable_type_index');
-            $table->index('id', 'themes_id_index');
-        });
+        $this->table('themes')
+            ->addColumn('name', 'string', ['limit' => 191, 'unique' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('link', 'string', ['limit' => 191, 'unique' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('notes', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addColumn('status', 'boolean', ['default' => 1])
+            ->addColumn('taggable_id', 'integer', ['signed' => false])
+            ->addColumn('taggable_type', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addTimestamps()
+            ->addSoftDelete()
+            ->addIndex(['taggable_id', 'taggable_type'], ['name' => 'themes_taggable_id_taggable_type_index'])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('themes');
+        $this->table('themes')->drop()->save();
     }
 }

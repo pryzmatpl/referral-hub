@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateUserWeightsTable extends AbstractMigration
 {
@@ -10,31 +9,32 @@ class CreateUserWeightsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('userweights', function ($table) {
-            $table->increments('id')->unsigned();
-            $table->double('aone')->notNullable();
-            $table->double('atwo')->notNullable();
-            $table->double('athree')->notNullable();
-            $table->double('afour')->notNullable();
-            $table->double('afive')->notNullable();
-            $table->double('asix')->notNullable();
-            $table->double('aseven')->notNullable();
-            $table->double('aeight')->notNullable();
-            $table->double('anine')->notNullable();
-            $table->double('aten')->notNullable();
-            $table->double('aeleven')->notNullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
-            $table->integer('userid')->nullable();
-            $table->text('keywords')->collation('utf8mb4_unicode_ci')->nullable();
-        });
+        $this->table('user_weights')
+            ->addColumn('weight_one', 'float') // More descriptive column names
+            ->addColumn('weight_two', 'float')
+            ->addColumn('weight_three', 'float')
+            ->addColumn('weight_four', 'float')
+            ->addColumn('weight_five', 'float')
+            ->addColumn('weight_six', 'float')
+            ->addColumn('weight_seven', 'float')
+            ->addColumn('weight_eight', 'float')
+            ->addColumn('weight_nine', 'float')
+            ->addColumn('weight_ten', 'float')
+            ->addColumn('weight_eleven', 'float')
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addColumn('user_id', 'integer', ['null' => true]) // Rename to user_id for clarity
+            ->addColumn('keywords', 'text', ['collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->addIndex(['user_id'], ['name' => 'user_weights_user_id_index'])
+            ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('userweights');
+        $this->table('user_weights')->drop()->save();
     }
 }

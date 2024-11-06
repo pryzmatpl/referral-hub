@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateLocationsTable extends AbstractMigration
 {
@@ -10,31 +9,30 @@ class CreateLocationsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('locations', function ($table) {
-            $table->increments('id');
-            $table->mediumBlob('jobref_hashes')->nullable();
-            $table->string('name', 255)->notNullable();
-            $table->string('city', 255)->notNullable();
-            $table->string('country', 255)->notNullable();
-            $table->string('address', 255)->notNullable();
-            $table->string('zip', 255)->notNullable();
-            $table->text('lat')->nullable();
-            $table->text('lng')->nullable();
-            $table->binary('hash')->nullable();
-            $table->timestamp('regdate')->default(Capsule::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
-            $table->string('userid', 255)->nullable();
-            $table->binary('description')->nullable();
-            $table->text('updated_at')->nullable();
-            $table->text('created_at')->nullable();
-            $table->text('currency')->nullable();
-        });
+        $this->table('locations')
+            ->addColumn('jobref_hashes', 'mediumblob', ['null' => true])
+            ->addColumn('name', 'string', ['limit' => 255])
+            ->addColumn('city', 'string', ['limit' => 255])
+            ->addColumn('country', 'string', ['limit' => 255])
+            ->addColumn('address', 'string', ['limit' => 255])
+            ->addColumn('zip', 'string', ['limit' => 255])
+            ->addColumn('lat', 'text', ['null' => true])
+            ->addColumn('lng', 'text', ['null' => true])
+            ->addColumn('hash', 'binary', ['null' => true])
+            ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('userid', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('description', 'binary', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('currency', 'text', ['null' => true])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('locations');
+        $this->table('locations')->drop()->save();
     }
 }

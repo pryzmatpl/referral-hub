@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateOauthJwtTable extends AbstractMigration
 {
@@ -10,18 +9,19 @@ class CreateOauthJwtTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('oauth_jwt', function ($table) {
-            $table->string('client_id', 80)->collation('utf8mb4_unicode_ci')->notNullable()->primary();
-            $table->string('subject', 80)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->string('public_key', 2000)->collation('utf8mb4_unicode_ci')->nullable();
-        });
+        $this->table('oauth_jwt')
+            ->addColumn('client_id', 'string', ['limit' => 80, 'null' => false, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addPrimaryKey('client_id')
+            ->addColumn('subject', 'string', ['limit' => 80, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('public_key', 'string', ['limit' => 2000, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('oauth_jwt');
+        $this->table('oauth_jwt')->drop()->save();
     }
 }

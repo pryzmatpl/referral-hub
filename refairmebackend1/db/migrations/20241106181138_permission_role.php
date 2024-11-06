@@ -1,37 +1,31 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
-class CreatePermissionUserTable extends AbstractMigration
+class CreatePermissionRoleTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
     public function change(): void
     {
-        Capsule::schema()->create('permission_user', function ($table) {
-            $table->increments('id')->unsigned();
-            $table->unsignedInteger('permission_id');
-            $table->unsignedInteger('user_id');
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
-
-            $table->foreign('permission_id')
-                ->references('id')->on('permissions')
-                ->onDelete('cascade');
-
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-        });
+        $this->table('permission_role')
+            ->addColumn('permission_id', 'integer', ['limit' => 10, 'signed' => false])
+            ->addColumn('role_id', 'integer', ['limit' => 10, 'signed' => false])
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addIndex(['permission_id'], ['name' => 'permission_role_permission_id_index'])
+            ->addIndex(['role_id'], ['name' => 'permission_role_role_id_index'])
+            ->addForeignKey('permission_id', 'permissions', 'id', ['delete' => 'CASCADE'])
+            ->addForeignKey('role_id', 'roles', 'id', ['delete' => 'CASCADE'])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('permission_user');
+        $this->table('permission_role')->drop()->save();
     }
 }

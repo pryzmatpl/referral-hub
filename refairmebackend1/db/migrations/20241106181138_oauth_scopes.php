@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateOauthScopesTable extends AbstractMigration
 {
@@ -10,20 +9,20 @@ class CreateOauthScopesTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('oauth_scopes', function ($table) {
-            $table->text('scope')->collate('utf8mb4_unicode_ci');
-            $table->boolean('is_default')->nullable();
-
-            // Optionally, you can define a primary key if needed
-            // $table->primary('scope'); // Uncomment if `scope` should be a primary key
-        });
+        $this->table('oauth_scopes')
+            ->addColumn('scope', 'text', ['null' => false, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('is_default', 'boolean', ['null' => true])
+            // Optionally, uncomment to add primary key
+            // ->addPrimaryKey('scope')
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('oauth_scopes');
+        $this->table('oauth_scopes')->drop()->save();
     }
 }
+

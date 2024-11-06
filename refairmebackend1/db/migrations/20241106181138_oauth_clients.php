@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateOauthClientsTable extends AbstractMigration
 {
@@ -10,23 +9,24 @@ class CreateOauthClientsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('oauth_clients', function ($table) {
-            $table->string('client_id', 80)->collation('utf8mb4_unicode_ci')->notNullable()->primary();
-            $table->string('client_secret', 5000)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->string('redirect_uri', 2000)->collation('utf8mb4_unicode_ci')->notNullable();
-            $table->string('grant_types', 80)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->string('scope', 100)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->string('user_id', 80)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->timestamp('updated_at')->nullable();
-            $table->timestamp('created_at')->nullable();
-        });
+        $this->table('oauth_clients')
+            ->addColumn('client_id', 'string', ['limit' => 80, 'null' => false, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addPrimaryKey('client_id')
+            ->addColumn('client_secret', 'string', ['limit' => 5000, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('redirect_uri', 'string', ['limit' => 2000, 'null' => false, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('grant_types', 'string', ['limit' => 80, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('scope', 'string', ['limit' => 100, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('user_id', 'string', ['limit' => 80, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('oauth_clients');
+        $this->table('oauth_clients')->drop()->save();
     }
 }

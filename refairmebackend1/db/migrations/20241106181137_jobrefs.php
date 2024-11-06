@@ -1,39 +1,33 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateJobrefsTable extends AbstractMigration
 {
-    /**
-     * Do the migration
-     */
     public function change(): void
     {
-        Capsule::schema()->create('jobrefs', function ($table) {
-            $table->increments('id');
-            $table->string('referred_id', 255)->nullable();
-            $table->string('location_id', 255)->nullable();
-            $table->string('name', 255)->nullable();
-            $table->string('keywords', 255)->nullable();
-            $table->timestamp('regdate')->default(Capsule::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
-            $table->binary('hash')->nullable();
-            $table->string('state', 255)->nullable();
-            $table->integer('jobid')->nullable();
-            $table->string('referrer_id', 255)->nullable();
-            $table->text('created_at')->nullable();
-            $table->text('updated_at')->nullable();
-            $table->text('interview_begin_hour')->nullable();
-            $table->text('interview_end_hour')->nullable();
-            $table->text('interview_date')->nullable();
-        });
+        $table = $this->table('jobrefs');
+
+        $table->addColumn('referred_id', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('location_id', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('name', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('keywords', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('hash', 'binary', ['null' => true])
+            ->addColumn('state', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('jobid', 'integer', ['null' => true])
+            ->addColumn('referrer_id', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('created_at', 'text', ['null' => true])
+            ->addColumn('updated_at', 'text', ['null' => true])
+            ->addColumn('interview_begin_hour', 'text', ['null' => true])
+            ->addColumn('interview_end_hour', 'text', ['null' => true])
+            ->addColumn('interview_date', 'text', ['null' => true])
+            ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('jobrefs');
+        $this->table('jobrefs')->drop()->save();
     }
 }
+

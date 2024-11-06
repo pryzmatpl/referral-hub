@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreatePermissionsTable extends AbstractMigration
 {
@@ -10,22 +9,22 @@ class CreatePermissionsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('permissions', function ($table) {
-            $table->increments('id')->unsigned();
-            $table->string('name', 191);
-            $table->string('slug', 191)->unique();
-            $table->string('description', 191)->nullable();
-            $table->string('model', 191)->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
-        });
+        $this->table('permissions')
+            ->addColumn('name', 'string', ['limit' => 191])
+            ->addColumn('slug', 'string', ['limit' => 191])
+            ->addColumn('description', 'string', ['limit' => 191, 'null' => true])
+            ->addColumn('model', 'string', ['limit' => 191, 'null' => true])
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addIndex('slug', ['unique' => true]) // Unique index for slug
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('permissions');
+        $this->table('permissions')->drop()->save();
     }
 }

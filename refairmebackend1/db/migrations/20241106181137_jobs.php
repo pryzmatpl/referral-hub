@@ -6,42 +6,36 @@ class CreateJobsTable extends AbstractMigration
 {
     public function change(): void
     {
-        $sql = "CREATE TABLE `jobs` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `title` text,
-            `exp` text,
-            `fund` text,
-            `relocation` int(11) DEFAULT NULL,
-            `remote` int(11) DEFAULT NULL,
-            `regdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            `keywords` varchar(255) DEFAULT NULL,
-            `location` varchar(255) DEFAULT NULL,
-            `description` text,
-            `posterId` varchar(255) DEFAULT NULL,
-            `bounty` float DEFAULT NULL,
-            `hash` blob,
-            `travelPercentage` int(11) DEFAULT NULL,
-            `remotePercentage` int(11) DEFAULT NULL,
-            `relocationPackage` int(11) DEFAULT NULL,
-            `projectId` varchar(255) DEFAULT NULL,
-            `other` text,
-            `created_at` timestamp NULL DEFAULT NULL,
-            `updated_at` timestamp NULL DEFAULT NULL,
-            `currency` varchar(50) DEFAULT NULL,
-            `companyId` int(11) DEFAULT NULL,
-            `contractType` varchar(255) DEFAULT NULL,
-            PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        $table = $this->table('jobs');
 
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $table->addColumn('title', 'text', ['null' => true])
+            ->addColumn('exp', 'text', ['null' => true])
+            ->addColumn('fund', 'text', ['null' => true])
+            ->addColumn('relocation', 'integer', ['null' => true])
+            ->addColumn('remote', 'integer', ['null' => true])
+            ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('keywords', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('location', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('description', 'text', ['null' => true])
+            ->addColumn('posterId', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('bounty', 'float', ['null' => true])
+            ->addColumn('hash', 'binary', ['null' => true])
+            ->addColumn('travelPercentage', 'integer', ['null' => true])
+            ->addColumn('remotePercentage', 'integer', ['null' => true])
+            ->addColumn('relocationPackage', 'integer', ['null' => true])
+            ->addColumn('projectId', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('other', 'text', ['null' => true])
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addColumn('currency', 'string', ['limit' => 50, 'null' => true])
+            ->addColumn('companyId', 'integer', ['null' => true])
+            ->addColumn('contractType', 'string', ['limit' => 255, 'null' => true])
+            ->addPrimaryKey(['id'])  // Primary key is automatically added by default in Phinx
+            ->create();
     }
 
-    public function down()
+    public function down(): void
     {
-        $sql = "DROP TABLE IF EXISTS `jobs`;";
-
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $this->table('jobs')->drop()->save();
     }
 }

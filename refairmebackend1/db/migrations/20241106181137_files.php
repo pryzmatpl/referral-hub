@@ -1,29 +1,22 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateFilesTable extends AbstractMigration
 {
-    /**
-     * Do the migration
-     */
     public function change(): void
     {
-        Capsule::schema()->create('files', function ($table) {
-            $table->increments('id');
-            $table->string('filename', 255)->collation('utf8mb4_unicode_ci')->notNullable();
-            $table->string('title', 100)->collation('utf8mb4_unicode_ci')->notNullable();
-            $table->binary('hash')->nullable();
-            $table->string('regdate', 255)->collation('utf8mb4_unicode_ci')->nullable();
-        });
+        $table = $this->table('files');
+
+        $table->addColumn('filename', 'string', ['limit' => 255, 'collation' => 'utf8mb4_unicode_ci', 'null' => false])
+            ->addColumn('title', 'string', ['limit' => 100, 'collation' => 'utf8mb4_unicode_ci', 'null' => false])
+            ->addColumn('hash', 'binary', ['null' => true])
+            ->addColumn('regdate', 'string', ['limit' => 255, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('files');
+        $this->table('files')->drop()->save();
     }
 }

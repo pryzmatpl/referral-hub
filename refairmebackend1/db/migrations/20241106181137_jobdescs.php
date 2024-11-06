@@ -6,40 +6,33 @@ class CreateJobdescsTable extends AbstractMigration
 {
     public function change(): void
     {
-        $sql = "CREATE TABLE `jobdescs` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `jobtitle` varchar(255) DEFAULT NULL,
-            `required_exp` text,
-            `required_fund` text,
-            `required_relocation` int(11) DEFAULT NULL,
-            `required_remote` int(11) DEFAULT NULL,
-            `regdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            `keywords` varchar(255) DEFAULT NULL,
-            `location` varchar(255) DEFAULT NULL,
-            `description` text,
-            `poster_id` varchar(255) DEFAULT NULL,
-            `bounty` float DEFAULT NULL,
-            `hash` blob,
-            `musthave` text,
-            `nicetohave` text,
-            `essentials` text,
-            `specs` text,
-            `other` text,
-            `created_at` timestamp NULL DEFAULT NULL,
-            `updated_at` timestamp NULL DEFAULT NULL,
-            `currency` varchar(50) DEFAULT NULL,
-            PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        $table = $this->table('jobdescs');
 
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $table->addColumn('jobtitle', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('required_exp', 'text', ['null' => true])
+            ->addColumn('required_fund', 'text', ['null' => true])
+            ->addColumn('required_relocation', 'integer', ['null' => true])
+            ->addColumn('required_remote', 'integer', ['null' => true])
+            ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('keywords', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('location', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('description', 'text', ['null' => true])
+            ->addColumn('poster_id', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('bounty', 'float', ['null' => true])
+            ->addColumn('hash', 'binary', ['null' => true])
+            ->addColumn('musthave', 'text', ['null' => true])
+            ->addColumn('nicetohave', 'text', ['null' => true])
+            ->addColumn('essentials', 'text', ['null' => true])
+            ->addColumn('specs', 'text', ['null' => true])
+            ->addColumn('other', 'text', ['null' => true])
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addColumn('currency', 'string', ['limit' => 50, 'null' => true])
+            ->create();
     }
 
-    public function down()
+    public function down(): void
     {
-        $sql = "DROP TABLE IF EXISTS `jobdescs`;";
-
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $this->table('jobdescs')->drop()->save();
     }
 }

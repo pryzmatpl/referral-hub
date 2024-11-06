@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateLoginAttemptsTable extends AbstractMigration
 {
@@ -10,19 +9,18 @@ class CreateLoginAttemptsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('login_attempts', function ($table) {
-            $table->increments('id');
-            $table->string('ip_address', 45)->notNullable();
-            $table->string('login', 100)->notNullable();
-            $table->unsignedInteger('time')->nullable();
-        });
+        $this->table('login_attempts')
+            ->addColumn('ip_address', 'string', ['limit' => 45])
+            ->addColumn('login', 'string', ['limit' => 100])
+            ->addColumn('time', 'integer', ['null' => true])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('login_attempts');
+        $this->table('login_attempts')->drop()->save();
     }
 }

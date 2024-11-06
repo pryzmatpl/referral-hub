@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreatePasswordResetsTable extends AbstractMigration
 {
@@ -10,23 +9,21 @@ class CreatePasswordResetsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('password_resets', function ($table) {
-            $table->increments('id');
-            $table->string('email', 191);
-            $table->string('token', 191);
-            $table->timestamp('created_at')->nullable();
-
-            $table->primary('id');
-            $table->index('email');
-            $table->index('token');
-        });
+        $this->table('password_resets')
+            ->addColumn('email', 'string', ['limit' => 191])
+            ->addColumn('token', 'string', ['limit' => 191])
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addPrimaryKey('id')
+            ->addIndex('email')
+            ->addIndex('token')
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('password_resets');
+        $this->table('password_resets')->drop()->save();
     }
 }

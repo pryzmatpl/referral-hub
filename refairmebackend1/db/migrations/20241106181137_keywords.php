@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
+
 
 class CreateKeywordsTable extends AbstractMigration
 {
@@ -10,24 +10,24 @@ class CreateKeywordsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('keywords', function ($table) {
-            $table->increments('id');
-            $table->integer('uid')->nullable();
-            $table->integer('termid')->nullable();
-            $table->string('keyone', 255)->nullable();
-            $table->string('keytwo', 255)->nullable();
-            $table->string('keythree', 255)->nullable();
-            $table->string('searchterm', 255)->nullable();
-            $table->timestamp('regdate')->default(Capsule::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
-            $table->integer('cnt')->nullable();
-        });
+        $this->table('keywords')
+            ->addColumn('uid', 'integer', ['null' => true])
+            ->addColumn('termid', 'integer', ['null' => true])
+            ->addColumn('keyone', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('keytwo', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('keythree', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('searchterm', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('regdate', 'timestamp', ['default' => Capsule::raw('CURRENT_TIMESTAMP'), 'update' => Capsule::raw('CURRENT_TIMESTAMP')])
+            ->addColumn('cnt', 'integer', ['null' => true])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('keywords');
+        $this->table('keywords')->drop()->save();
     }
 }
+

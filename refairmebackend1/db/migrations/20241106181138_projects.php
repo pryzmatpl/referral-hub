@@ -6,38 +6,29 @@ class CreateProjectsTable extends AbstractMigration
 {
     public function change(): void
     {
-        $sql = "CREATE TABLE `projects` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `description` text,
-            `posterId` varchar(255) DEFAULT NULL,
-            `staff` int(11) DEFAULT NULL,
-            `stack` text,
-            `breakdown` text,
-            `companyId` text,
-            `created_at` timestamp NULL DEFAULT NULL,
-            `updated_at` timestamp NULL DEFAULT NULL,
-            `currency` varchar(50) DEFAULT NULL,
-            `methodology` text,
-            `stage` text,
-            `name` text,
-            `contractType` varchar(255) DEFAULT NULL,
-            `logo` text,
-            `projectType` varchar(255) DEFAULT NULL,
-            `workload` text,
-            `requiredSkills` text,
-            `perks` text,
-            PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $this->table('projects')
+            ->addColumn('description', 'text', ['null' => true])
+            ->addColumn('posterId', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('staff', 'integer', ['null' => true])
+            ->addColumn('stack', 'text', ['null' => true])
+            ->addColumn('breakdown', 'text', ['null' => true])
+            ->addColumn('companyId', 'text', ['null' => true])
+            ->addColumn('currency', 'string', ['limit' => 50, 'null' => true])
+            ->addColumn('methodology', 'text', ['null' => true])
+            ->addColumn('stage', 'text', ['null' => true])
+            ->addColumn('name', 'text', ['null' => true])
+            ->addColumn('contractType', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('logo', 'text', ['null' => true])
+            ->addColumn('projectType', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('workload', 'text', ['null' => true])
+            ->addColumn('requiredSkills', 'text', ['null' => true])
+            ->addColumn('perks', 'text', ['null' => true])
+            ->addPrimaryKey('id')
+            ->create();
     }
 
-    public function down()
+    public function down(): void
     {
-        $sql = "DROP TABLE IF EXISTS `projects`;";
-
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $this->table('projects')->drop()->save();
     }
 }

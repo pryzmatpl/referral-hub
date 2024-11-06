@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreatePermissionUserTable extends AbstractMigration
 {
@@ -10,28 +9,21 @@ class CreatePermissionUserTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('permission_user', function ($table) {
-            $table->increments('id')->unsigned();
-            $table->unsignedInteger('permission_id');
-            $table->unsignedInteger('user_id');
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
-
-            $table->foreign('permission_id')
-                ->references('id')->on('permissions')
-                ->onDelete('cascade');
-
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-        });
+        $this->table('permission_user')
+            ->addColumn('permission_id', 'integer')
+            ->addColumn('user_id', 'integer')
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addForeignKey('permission_id', 'permissions', 'id', ['delete'=> 'CASCADE'])
+            ->addForeignKey('user_id', 'users', 'id', ['delete'=> 'CASCADE'])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('permission_user');
+        $this->table('permission_user')->drop()->save();
     }
 }

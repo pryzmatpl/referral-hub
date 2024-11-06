@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateMigrationsTable extends AbstractMigration
 {
@@ -10,18 +9,17 @@ class CreateMigrationsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('migrations', function ($table) {
-            $table->increments('id')->unsigned();
-            $table->string('migration', 255)->collation('utf8mb4_unicode_ci')->notNullable();
-            $table->integer('batch')->notNullable();
-        });
+        $this->table('migrations')
+            ->addColumn('migration', 'string', ['limit' => 255, 'null' => false, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('batch', 'integer', ['null' => false])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('migrations');
+        $this->table('migrations')->drop()->save();
     }
 }

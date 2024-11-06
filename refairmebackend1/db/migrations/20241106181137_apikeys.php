@@ -1,28 +1,23 @@
 <?php
+
 use Phinx\Migration\AbstractMigration;
 
 class CreateApikeysTable extends AbstractMigration
 {
     public function change(): void
     {
-        $sql = "CREATE TABLE `apikeys` (
-                `id` int(11) NOT NULL AUTO_INCREMENT,
-                `uid` int(11) DEFAULT NULL,
-                `securekey` varchar(255) DEFAULT NULL,
-                `regdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                `vendorid` int(11) DEFAULT NULL,
-                PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        $table = $this->table('apikeys');
 
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $table->addColumn('uid', 'integer', ['null' => true])
+            ->addColumn('securekey', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('vendorid', 'integer', ['null' => true])
+            ->create();
     }
 
-    public function down()
+    public function down(): void
     {
-        $sql = "DROP TABLE IF EXISTS `apikeys`;";
-
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $this->table('apikeys')->drop()->save();
     }
 }
+

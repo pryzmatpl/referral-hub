@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateLinkedinImportsTable extends AbstractMigration
 {
@@ -10,29 +9,28 @@ class CreateLinkedinImportsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('linkedin_imports', function ($table) {
-            $table->increments('id');
-            $table->string('firstName', 255)->notNullable();
-            $table->string('lastName', 255)->notNullable();
-            $table->string('company', 255)->notNullable();
-            $table->string('title', 255)->nullable();
-            $table->string('email', 255)->nullable();
-            $table->string('phone', 255)->nullable();
-            $table->string('notes', 255)->nullable();
-            $table->string('tags', 255)->nullable();
-            $table->string('uidInviter', 255)->nullable();
-            $table->timestamp('regdate')->default(Capsule::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
-            $table->timestamp('created_at')->default('0000-00-00 00:00:00');
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
-            $table->text('skills')->nullable();
-        });
+        $this->table('linkedin_imports')
+            ->addColumn('firstName', 'string', ['limit' => 255])
+            ->addColumn('lastName', 'string', ['limit' => 255])
+            ->addColumn('company', 'string', ['limit' => 255])
+            ->addColumn('title', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('email', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('phone', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('notes', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('tags', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('uidInviter', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('regdate', 'timestamp', ['default' => Capsule::raw('CURRENT_TIMESTAMP'), 'update' => Capsule::raw('CURRENT_TIMESTAMP')])
+            ->addColumn('created_at', 'timestamp', ['default' => '0000-00-00 00:00:00'])
+            ->addColumn('updated_at', 'timestamp', ['default' => '0000-00-00 00:00:00'])
+            ->addColumn('skills', 'text', ['null' => true])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('linkedin_imports');
+        $this->table('linkedin_imports')->drop()->save();
     }
 }

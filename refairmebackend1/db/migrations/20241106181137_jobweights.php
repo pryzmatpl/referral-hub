@@ -1,7 +1,7 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
+
 
 class CreateJobweightsTable extends AbstractMigration
 {
@@ -10,31 +10,30 @@ class CreateJobweightsTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('jobweights', function ($table) {
-            $table->increments('id');
-            $table->double('aone')->notNullable();
-            $table->double('atwo')->notNullable();
-            $table->double('athree')->notNullable();
-            $table->double('afour')->notNullable();
-            $table->double('afive')->notNullable();
-            $table->double('asix')->notNullable();
-            $table->double('aseven')->notNullable();
-            $table->double('aeight')->notNullable();
-            $table->double('anine')->notNullable();
-            $table->double('aten')->notNullable();
-            $table->double('aeleven')->notNullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
-            $table->integer('jobid')->nullable();
-            $table->text('keywords')->collation('utf8mb4_unicode_ci')->nullable();
-        });
+        $this->table('jobweights')
+            ->addColumn('aone', 'double')
+            ->addColumn('atwo', 'double')
+            ->addColumn('athree', 'double')
+            ->addColumn('afour', 'double')
+            ->addColumn('afive', 'double')
+            ->addColumn('asix', 'double')
+            ->addColumn('aseven', 'double')
+            ->addColumn('aeight', 'double')
+            ->addColumn('anine', 'double')
+            ->addColumn('aten', 'double')
+            ->addColumn('aeleven', 'double')
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
+            ->addColumn('jobid', 'integer', ['null' => true])
+            ->addColumn('keywords', 'text', ['collation' => 'utf8mb4_unicode_ci', 'null' => true])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('jobweights');
+        $this->table('jobweights')->drop()->save();
     }
 }

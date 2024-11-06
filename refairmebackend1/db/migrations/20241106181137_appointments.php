@@ -1,32 +1,26 @@
 <?php
+
 use Phinx\Migration\AbstractMigration;
 
 class CreateAppointmentsTable extends AbstractMigration
 {
     public function change(): void
     {
-        $sql = "CREATE TABLE `appointments` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `candidate_id` int(11) NOT NULL,
-            `recruiter_id` int(11) NOT NULL,
-            `appointment_start` datetime NOT NULL,
-            `appointment_end` datetime NOT NULL,
-            `status` text COLLATE utf8mb4_unicode_ci NOT NULL,
-            `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            `deleted_at` timestamp NULL DEFAULT NULL,
-            PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+        $table = $this->table('appointments');
 
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $table->addColumn('candidate_id', 'integer', ['null' => false])
+            ->addColumn('recruiter_id', 'integer', ['null' => false])
+            ->addColumn('appointment_start', 'datetime', ['null' => false])
+            ->addColumn('appointment_end', 'datetime', ['null' => false])
+            ->addColumn('status', 'text', ['null' => false, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('deleted_at', 'timestamp', ['null' => true, 'default' => null])
+            ->create();
     }
 
-    public function down()
+    public function down(): void
     {
-        $sql = "DROP TABLE IF EXISTS `appointments`;";
-
-        $container = $this->getContainer();
-        $container['db']->exec($sql);
+        $this->table('appointments')->drop()->save();
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateOauthAuthorizationCodesTable extends AbstractMigration
 {
@@ -10,21 +9,23 @@ class CreateOauthAuthorizationCodesTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('oauth_authorization_codes', function ($table) {
-            $table->string('authorization_code', 40)->collation('utf8mb4_unicode_ci')->notNullable()->primary();
-            $table->string('client_id', 80)->collation('utf8mb4_unicode_ci')->notNullable();
-            $table->string('user_id', 255)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->string('redirect_uri', 2000)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->timestamp('expires')->default(Capsule::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
-            $table->string('scope', 2000)->collation('utf8mb4_unicode_ci')->nullable();
-        });
+        $this->table('oauth_authorization_codes')
+            ->addColumn('authorization_code', 'string', ['limit' => 40, 'null' => false, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addPrimaryKey('authorization_code')
+            ->addColumn('client_id', 'string', ['limit' => 80, 'null' => false, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('user_id', 'string', ['limit' => 255, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('redirect_uri', 'string', ['limit' => 2000, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->addColumn('expires', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('scope', 'string', ['limit' => 2000, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
+            ->create();
     }
 
     /**
      * Undo the migration
      */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('oauth_authorization_codes');
+        $this->table('oauth_authorization_codes')->drop()->save();
     }
 }
+

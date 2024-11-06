@@ -1,31 +1,24 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateCompaniesTable extends AbstractMigration
 {
-    /**
-     * Do the migration
-     */
     public function change(): void
     {
-        Capsule::schema()->create('companies', function ($table) {
-            $table->increments('id');
-            $table->text('name')->nullable();
-            $table->text('description')->nullable();
-            $table->text('created_at')->nullable();
-            $table->text('updated_at')->nullable();
-            $table->text('currency')->nullable();
-            $table->text('posterId')->nullable();
-        });
+        $table = $this->table('companies');
+
+        $table->addColumn('name', 'text', ['null' => true])
+            ->addColumn('description', 'text', ['null' => true])
+            ->addColumn('created_at', 'timestamp', ['null' => true, 'default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', ['null' => true, 'default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('currency', 'text', ['null' => true])
+            ->addColumn('posterId', 'text', ['null' => true])
+            ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down()
+    public function down(): void
     {
-        Capsule::schema()->dropIfExists('companies');
+        $this->table('companies')->drop()->save();
     }
 }
