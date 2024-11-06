@@ -1,6 +1,6 @@
 # Copyright: PRIZM Piotr Słupski 2023
 
-clean: stopall cleanvolumes pruneall
+purge: stopall clean prune
 
 up:
 	docker-compose -f docker-compose.yml build && docker-compose -f docker-compose.yml up -d
@@ -8,9 +8,9 @@ up:
 stopall:
 	docker-compose down --remove-orphans -v
 
-cleanvolumes:
+clean:
 	docker volume prune -f
 
-pruneall:
+prune:
 	docker system prune --all -f
 
