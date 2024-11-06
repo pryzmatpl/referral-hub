@@ -8,7 +8,7 @@ up:
 migrate:
 	docker exec -it refairmebackend1-aimatch-1 php ./cli.php migrate
 
-stopall:
+down:
 	docker-compose down --remove-orphans -v
 
 clean:
