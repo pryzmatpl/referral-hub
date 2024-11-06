@@ -19,8 +19,4 @@ class CreateActivationsTable extends AbstractMigration
             ->create();
     }
 
-    public function down(): void
-    {
-        $this->table('activations')->drop()->save();
-    }
 }

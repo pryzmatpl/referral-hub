@@ -21,11 +21,4 @@ class CreatePermissionRoleTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('permission_role')->drop()->save();
-    }
 }

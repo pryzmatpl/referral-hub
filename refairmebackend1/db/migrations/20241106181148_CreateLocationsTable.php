@@ -28,11 +28,4 @@ class CreateLocationsTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('locations')->drop()->save();
-    }
 }

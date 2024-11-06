@@ -20,12 +20,5 @@ class CreateOauthAuthorizationCodesTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('oauth_authorization_codes')->drop()->save();
-    }
 }
 

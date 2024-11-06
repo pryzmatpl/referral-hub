@@ -19,11 +19,4 @@ class CreatePasswordResetsTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('password_resets')->drop()->save();
-    }
 }

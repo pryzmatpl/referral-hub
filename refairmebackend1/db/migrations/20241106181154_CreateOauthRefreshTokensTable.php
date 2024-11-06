@@ -19,11 +19,4 @@ class CreateOauthRefreshTokensTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('oauth_refresh_tokens')->drop()->save();
-    }
 }

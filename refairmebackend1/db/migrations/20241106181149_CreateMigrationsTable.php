@@ -15,11 +15,4 @@ class CreateMigrationsTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('migrations')->drop()->save();
-    }
 }

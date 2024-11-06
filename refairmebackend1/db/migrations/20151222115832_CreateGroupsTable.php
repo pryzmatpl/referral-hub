@@ -15,12 +15,4 @@ class CreateGroupsTable extends AbstractMigration
             ->addTimestamps()
             ->create();
     }
-
-    /**
-     * Down Method.
-     */
-    public function down(): void
-    {
-        $this->table('groups')->drop()->save();
-    }
 }

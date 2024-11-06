@@ -18,9 +18,4 @@ class CreateAppointmentsTable extends AbstractMigration
             ->addColumn('deleted_at', 'timestamp', ['null' => true, 'default' => null])
             ->create();
     }
-
-    public function down(): void
-    {
-        $this->table('appointments')->drop()->save();
-    }
 }

@@ -17,8 +17,4 @@ class CreateCompaniesTable extends AbstractMigration
             ->create();
     }
 
-    public function down(): void
-    {
-        $this->table('companies')->drop()->save();
-    }
 }

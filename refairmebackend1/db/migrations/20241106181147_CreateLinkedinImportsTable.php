@@ -26,11 +26,4 @@ class CreateLinkedinImportsTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('linkedin_imports')->drop()->save();
-    }
 }

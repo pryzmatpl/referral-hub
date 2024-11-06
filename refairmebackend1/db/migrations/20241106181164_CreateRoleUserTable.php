@@ -27,11 +27,4 @@ class CreateRoleUserTable extends AbstractMigration
         });
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down()
-    {
-        Capsule::schema()->dropIfExists('role_user');
-    }
 }

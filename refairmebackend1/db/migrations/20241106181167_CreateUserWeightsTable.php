@@ -30,11 +30,4 @@ class CreateUserWeightsTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('user_weights')->drop()->save();
-    }
 }

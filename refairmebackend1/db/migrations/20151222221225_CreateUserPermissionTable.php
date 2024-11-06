@@ -16,12 +16,4 @@ class CreateUserPermissionTable extends AbstractMigration
             ->addTimestamps()
             ->create();
     }
-
-    /**
-     * Down Method.
-     */
-    public function down(): void
-    {
-        $this->table('users_permission')->drop()->save();
-    }
 }

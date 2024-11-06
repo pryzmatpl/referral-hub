@@ -22,12 +22,5 @@ class CreateKeywordsTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('keywords')->drop()->save();
-    }
 }
 

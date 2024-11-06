@@ -17,12 +17,5 @@ class CreateOauthScopesTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('oauth_scopes')->drop()->save();
-    }
 }
 

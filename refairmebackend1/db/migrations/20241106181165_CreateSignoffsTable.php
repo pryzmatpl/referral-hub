@@ -27,8 +27,4 @@ class CreateSignoffsTable extends AbstractMigration
             ->create();
     }
 
-    public function down(): void
-    {
-        $this->table('signoffs')->drop()->save();
-    }
 }

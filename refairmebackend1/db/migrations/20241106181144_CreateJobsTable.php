@@ -34,8 +34,4 @@ class CreateJobsTable extends AbstractMigration
             ->create();
     }
 
-    public function down(): void
-    {
-        $this->table('jobs')->drop()->save();
-    }
 }

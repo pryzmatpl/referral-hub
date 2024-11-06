@@ -22,11 +22,4 @@ class CreateThemesTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('themes')->drop()->save();
-    }
 }

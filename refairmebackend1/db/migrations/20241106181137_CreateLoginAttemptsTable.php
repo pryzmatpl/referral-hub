@@ -15,12 +15,4 @@ class CreateLoginAttemptsTable extends AbstractMigration
             ->addColumn('time', 'integer', ['null' => true])
             ->create();
     }
-
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('login_attempts')->drop()->save();
-    }
 }

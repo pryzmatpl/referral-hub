@@ -15,9 +15,5 @@ class CreateApikeysTable extends AbstractMigration
             ->create();
     }
 
-    public function down(): void
-    {
-        $this->table('apikeys')->drop()->save();
-    }
 }
 

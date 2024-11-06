@@ -15,8 +15,4 @@ class CreateFilesTable extends AbstractMigration
             ->create();
     }
 
-    public function down(): void
-    {
-        $this->table('files')->drop()->save();
-    }
 }

@@ -22,11 +22,4 @@ class CreateOauthClientsTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('oauth_clients')->drop()->save();
-    }
 }

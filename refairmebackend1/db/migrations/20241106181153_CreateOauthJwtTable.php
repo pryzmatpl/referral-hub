@@ -17,11 +17,4 @@ class CreateOauthJwtTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('oauth_jwt')->drop()->save();
-    }
 }

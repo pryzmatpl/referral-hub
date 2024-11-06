@@ -19,11 +19,4 @@ class CreateOauthAccessTokensTable extends AbstractMigration
             ->create();
     }
 
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('oauth_access_tokens')->drop()->save();
-    }
 }

@@ -23,12 +23,4 @@ class CreateRolesTable extends AbstractMigration
             $table->unique('slug', 'roles_slug_unique');
         });
     }
-
-    /**
-     * Undo the migration
-     */
-    public function down()
-    {
-        Capsule::schema()->dropIfExists('roles');
-    }
 }

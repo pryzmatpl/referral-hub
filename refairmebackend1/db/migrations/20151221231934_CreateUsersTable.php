@@ -34,12 +34,4 @@ class CreateUsersTable extends AbstractMigration
             ->addSoftDelete()
             ->create();
     }
-
-    /**
-     * Undo the migration
-     */
-    public function down(): void
-    {
-        $this->table('users')->drop()->save();
-    }
 }
