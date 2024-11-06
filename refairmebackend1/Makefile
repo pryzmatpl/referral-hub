@@ -1,6 +1,6 @@
-# Copyright: PRIZM Piotr Słupski 2023
+# Copyright: PRIZM Piotr Słupski 2024
 
-purge: stopall clean prune
+purge: down clean prune
 
 up:
 	docker-compose -f docker-compose.yml build && docker-compose -f docker-compose.yml up -d
