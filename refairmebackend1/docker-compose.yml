@@ -23,7 +23,7 @@ services:
         networks:
             - default
         depends_on:
-            - mysql_aimatch
+            - mysql
             - redis
             - meilisearch
             - selenium
@@ -42,10 +42,8 @@ services:
         networks:
             - default
         depends_on:
-            - mysql_aimatch
-
-
-    mysql_aimatch:
+            - mysql
+    mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
@@ -65,7 +63,6 @@ services:
             retries: 3
             timeout: 5s
         pid: "host"
-
     redis:
         image: 'redis:alpine'
         ports:
@@ -116,6 +113,17 @@ services:
         command: ['/bin/sh', '-c', 'npm install && npm start']
         networks:
             - default
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - mysql
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+        restart: always
+        ports:
+            - 8081:80
 
 networks:
     default:

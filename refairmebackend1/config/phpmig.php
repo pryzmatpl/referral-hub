@@ -33,6 +33,7 @@ $container['db'] = function ($c) {
 $container['phpmig.adapter'] = function ($c) {
     return new Database($c['db'], 'migrations');
 };
+
 $container['phpmig.migrations_path'] = __DIR__ . DIRECTORY_SEPARATOR . 'migrations';
 
 return $container;

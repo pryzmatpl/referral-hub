@@ -47,7 +47,17 @@
         "illuminate/database": "*",
         "bryanjhv/slim-session": "*",
       "ext-pdo": "*",
-        "pimple/pimple": "^3.5"
+        "pimple/pimple": "^3.5",
+        "codeception/codeception": "^5.1",
+        "codeception/module-db": "^3.1",
+        "codeception/module-rest": "^3.4",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-symfony": "^3.4",
+        "codeception/phpunit-wrapper": "*",
+        "codeception/module-webdriver": "^4.0",
+        "codeception/module-phpbrowser": "^3.0",
+        "codeception/module-filesystem": "^3.0",
+        "captbaritone/mailcatcher-codeception-module": "^3.0"
     },
     "scripts": {
     },
