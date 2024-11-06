@@ -4,8 +4,7 @@ paths:
 
 environments:
     default_migration_table: migrations
-    default_environment: development
-    default_database: prism
+    default_database: development
 
     development:
         adapter: mysql
