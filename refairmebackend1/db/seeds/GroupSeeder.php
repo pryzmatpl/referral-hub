@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class GroupsSeeder extends AbstractSeed
+class GroupSeeder extends AbstractSeed
 {
     public function run(): void
     {

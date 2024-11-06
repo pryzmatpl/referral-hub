@@ -8,6 +8,9 @@ up:
 migrate:
 	docker exec -it refairmebackend1-aimatch-1 php ./cli.php migrate
 
+seed:
+	docker exec -it refairmebackend1-aimatch-1 php ./cli.php seed:run
+
 down:
 	docker-compose down --remove-orphans -v
 
