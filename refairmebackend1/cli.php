@@ -1,26 +1,16 @@
 <?php
-require 'vendor/autoload.php';
-
-use Phpmig\Console\Command;
+require './vendor/autoload.php';
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Console\Application;
 
+$dotenv = new Dotenv();
+$dotenv->load('./.env');
+
 $application = new Application();
-$configFile = __DIR__ . '/config/phpmig.php';
+$appName = env('APP_NAME');
+$application->setName($appName);
+print_r("++++++ CLI +++++\n");
 
-print_r("                               \n");
-print_r(" ++++++++++++++++++++++++++++++\n");
-print_r(" * Welcome to the AiMatch CLI *\n");
-print_r(" ++++++++++++++++++++++++++++++\n");
 
-$application->addCommands(array(
-            new Command\InitCommand(),
-            new Command\StatusCommand(),
-            new Command\CheckCommand(),
-            new Command\GenerateCommand(),
-            new Command\UpCommand(),
-            new Command\DownCommand(),
-            new Command\MigrateCommand(),
-            new Command\RollbackCommand(),
-            new Command\RedoCommand()
-        ));
+$application->addCommands([]);
 $application->run();
