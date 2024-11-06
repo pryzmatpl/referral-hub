@@ -1,14 +1,14 @@
 <?php
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Model\UserPermission as Permission;
 
-class UserPermission extends Migration
+class CreateUserPermissionTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
-    public function up()
+    public function change(): void
     {
         Capsule::schema()->create('users_permission', function($table)
         {

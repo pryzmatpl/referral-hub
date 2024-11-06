@@ -1,14 +1,14 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class CreateOauthScopesTable extends Migration
+class CreateOauthScopesTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
-    public function up()
+    public function change(): void
     {
         Capsule::schema()->create('oauth_scopes', function ($table) {
             $table->text('scope')->collate('utf8mb4_unicode_ci');

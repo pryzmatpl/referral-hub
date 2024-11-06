@@ -1,10 +1,10 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 
-class CreateJobsTable extends Migration
+class CreateJobsTable extends AbstractMigration
 {
-    public function up()
+    public function change(): void
     {
         $sql = "CREATE TABLE `jobs` (
             `id` int(11) NOT NULL AUTO_INCREMENT,

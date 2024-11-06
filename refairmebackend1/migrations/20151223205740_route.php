@@ -1,14 +1,14 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Model\Route as Routes;
-class Route extends Migration
+class CreateRoutesTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
-    public function up()
+    public function change(): void
     {
         Capsule::schema()->create('routes', function($table)
         {

@@ -1,14 +1,14 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class CreateRoleUserTable extends Migration
+class CreateRoleUserTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
-    public function up()
+    public function change(): void
     {
         Capsule::schema()->create('role_user', function ($table) {
             $table->increments('id')->unsigned();

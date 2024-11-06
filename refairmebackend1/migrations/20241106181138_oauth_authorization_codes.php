@@ -1,14 +1,14 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class CreateOauthAuthorizationCodesTable extends Migration
+class CreateOauthAuthorizationCodesTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
-    public function up()
+    public function change(): void
     {
         Capsule::schema()->create('oauth_authorization_codes', function ($table) {
             $table->string('authorization_code', 40)->collation('utf8mb4_unicode_ci')->notNullable()->primary();

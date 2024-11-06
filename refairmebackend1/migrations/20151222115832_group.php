@@ -1,14 +1,15 @@
 <?php
 
-use Phpmig\Migration\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Model\Group as Groups;
-class Group extends Migration
+use Phinx\Migration\AbstractMigration;
+
+class CreateGroupsTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
-    public function up()
+    public function change(): void
     {
         Capsule::schema()->create('groups', function($table)
         {

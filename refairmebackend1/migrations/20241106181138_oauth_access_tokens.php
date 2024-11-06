@@ -1,14 +1,14 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class CreateOauthAccessTokensTable extends Migration
+class CreateOauthAccessTokensTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
-    public function up()
+    public function change(): void
     {
         Capsule::schema()->create('oauth_access_tokens', function ($table) {
             $table->string('access_token', 40)->collation('utf8mb4_unicode_ci')->notNullable()->primary();

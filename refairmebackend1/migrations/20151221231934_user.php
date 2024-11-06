@@ -1,14 +1,14 @@
 <?php
-
-use Phpmig\Migration\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Model\User as Users;
-class User extends Migration
+use Phinx\Migration\AbstractMigration;
+
+class CreateUsersTable extends AbstractMigration
 {
     /**
      * Do the migration
      */
-    public function up()
+    public function change(): void
     {
         Capsule::schema()->create('users', function($table)
         {

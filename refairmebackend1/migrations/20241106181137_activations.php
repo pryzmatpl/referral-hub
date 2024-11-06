@@ -1,10 +1,10 @@
 <?php
 
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 
-class CreateActivationsTable extends Migration
+class CreateActivationsTable extends AbstractMigration
 {
-    public function up()
+    public function change(): void
     {
         $sql = "CREATE TABLE `activations` (
             `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

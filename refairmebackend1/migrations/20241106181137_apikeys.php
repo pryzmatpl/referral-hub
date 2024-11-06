@@ -1,9 +1,9 @@
 <?php
-use Phpmig\Migration\Migration;
+use Phinx\Migration\AbstractMigration;
 
-class CreateApikeysTable extends Migration
+class CreateApikeysTable extends AbstractMigration
 {
-    public function up()
+    public function change(): void
     {
         $sql = "CREATE TABLE `apikeys` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
