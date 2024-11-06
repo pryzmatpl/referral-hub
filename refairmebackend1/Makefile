@@ -3,10 +3,10 @@
 clean: stopall cleanvolumes pruneall
 
 up:
-	docker compose -f docker-compose.yml build && docker compose -f docker-compose.yml up -d
+	docker-compose -f docker-compose.yml build && docker-compose -f docker-compose.yml up -d
 
 stopall:
-	docker compose down --remove-orphans -v
+	docker-compose down --remove-orphans -v
 
 cleanvolumes:
 	docker volume prune -f

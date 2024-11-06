@@ -45,7 +45,9 @@
         "adrianfalleiro/slim-cli-runner": "*",
         "illuminate/pagination": "*",
         "illuminate/database": "*",
-        "bryanjhv/slim-session": "*"
+        "bryanjhv/slim-session": "*",
+      "ext-pdo": "*",
+        "pimple/pimple": "^3.5"
     },
     "scripts": {
     },
