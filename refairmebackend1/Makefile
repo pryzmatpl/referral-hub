@@ -5,6 +5,9 @@ purge: stopall clean prune
 up:
 	docker-compose -f docker-compose.yml build && docker-compose -f docker-compose.yml up -d
 
+migrate:
+	docker exec -it aimatch php ./cli.php migrate
+
 stopall:
 	docker-compose down --remove-orphans -v
 
