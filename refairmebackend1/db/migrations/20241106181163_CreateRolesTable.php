@@ -2,7 +2,6 @@
 
 use Phinx\Migration\AbstractMigration;
 
-
 class CreateRolesTable extends AbstractMigration
 {
     /**
@@ -10,17 +9,40 @@ class CreateRolesTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('roles', function ($table) {
-            $table->increments('id')->unsigned();
-            $table->string('name', 191)->collation('utf8mb4_unicode_ci')->notNullable();
-            $table->string('slug', 191)->collation('utf8mb4_unicode_ci')->notNullable();
-            $table->string('description', 191)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->integer('level')->default(1);
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
+        // Create the roles table
+        $table = $this->table('roles');
 
-            // Unique index on slug
-            $table->unique('slug', 'roles_slug_unique');
-        });
+        $table->addColumn('name', 'string', [
+            'limit' => 191,
+            'collation' => 'utf8mb4_unicode_ci',
+            'null' => false
+        ])
+            ->addColumn('slug', 'string', [
+                'limit' => 191,
+                'collation' => 'utf8mb4_unicode_ci',
+                'null' => false
+            ])
+            ->addColumn('description', 'string', [
+                'limit' => 191,
+                'collation' => 'utf8mb4_unicode_ci',
+                'null' => true
+            ])
+            ->addColumn('level', 'integer', [
+                'default' => 1
+            ])
+            ->addColumn('created_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'null' => true
+            ])
+            ->addColumn('updated_at', 'timestamp', [
+                'null' => true,
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->addIndex(['slug'], [
+                'unique' => true,
+                'name' => 'roles_slug_unique'
+            ])
+            ->create();
     }
 }
+

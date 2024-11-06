@@ -10,7 +10,7 @@ class CreateLocationsTable extends AbstractMigration
     public function change(): void
     {
         $this->table('locations')
-            ->addColumn('jobref_hashes', 'mediumblob', ['null' => true])
+            ->addColumn('jobref_hashes', 'blob', ['null' => true])
             ->addColumn('name', 'string', ['limit' => 255])
             ->addColumn('city', 'string', ['limit' => 255])
             ->addColumn('country', 'string', ['limit' => 255])

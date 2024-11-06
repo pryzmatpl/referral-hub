@@ -11,7 +11,6 @@ class CreateOauthAccessTokensTable extends AbstractMigration
     {
         $this->table('oauth_access_tokens')
             ->addColumn('access_token', 'string', ['limit' => 40, 'null' => false, 'collation' => 'utf8mb4_unicode_ci'])
-            ->addPrimaryKey('access_token')
             ->addColumn('client_id', 'string', ['limit' => 80, 'null' => false, 'collation' => 'utf8mb4_unicode_ci'])
             ->addColumn('user_id', 'string', ['limit' => 255, 'null' => true, 'collation' => 'utf8mb4_unicode_ci'])
             ->addColumn('expires', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])

@@ -19,9 +19,9 @@ class CreateLinkedinImportsTable extends AbstractMigration
             ->addColumn('notes', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('tags', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('uidInviter', 'string', ['limit' => 255, 'null' => true])
-            ->addColumn('regdate', 'timestamp', ['default' => Capsule::raw('CURRENT_TIMESTAMP'), 'update' => Capsule::raw('CURRENT_TIMESTAMP')])
-            ->addColumn('created_at', 'timestamp', ['default' => '0000-00-00 00:00:00'])
-            ->addColumn('updated_at', 'timestamp', ['default' => '0000-00-00 00:00:00'])
+            ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('skills', 'text', ['null' => true])
             ->create();
     }

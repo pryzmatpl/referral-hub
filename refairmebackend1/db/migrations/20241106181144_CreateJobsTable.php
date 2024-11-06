@@ -30,7 +30,6 @@ class CreateJobsTable extends AbstractMigration
             ->addColumn('currency', 'string', ['limit' => 50, 'null' => true])
             ->addColumn('companyId', 'integer', ['null' => true])
             ->addColumn('contractType', 'string', ['limit' => 255, 'null' => true])
-            ->addPrimaryKey(['id'])  // Primary key is automatically added by default in Phinx
             ->create();
     }
 

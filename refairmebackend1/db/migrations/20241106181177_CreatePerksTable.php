@@ -19,7 +19,6 @@ class CreatePerksTable extends AbstractMigration
             ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
             ->addColumn('target', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('agreed_referee', 'integer', ['null' => true])
-            ->addPrimaryKey('id')
             ->create();
     }
 

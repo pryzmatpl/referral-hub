@@ -2,7 +2,6 @@
 
 use Phinx\Migration\AbstractMigration;
 
-
 class CreateRoleUserTable extends AbstractMigration
 {
     /**
@@ -10,21 +9,31 @@ class CreateRoleUserTable extends AbstractMigration
      */
     public function change(): void
     {
-        Capsule::schema()->create('role_user', function ($table) {
-            $table->increments('id')->unsigned();
-            $table->unsignedInteger('role_id');
-            $table->unsignedInteger('user_id');
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
+        // Create the role_user table
+        $table = $this->table('role_user');
 
-            // Foreign key constraints
-            $table->foreign('role_id', 'role_user_role_id_foreign')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('user_id', 'role_user_user_id_foreign')->references('id')->on('users')->onDelete('cascade');
+        $table->addColumn('role_id', 'integer')
+            ->addColumn('user_id', 'integer')
+            ->addColumn('created_at', 'timestamp', ['null' => true])
+            ->addColumn('updated_at', 'timestamp', ['null' => true])
 
-            // Indexes
-            $table->index('role_id', 'role_user_role_id_index');
-            $table->index('user_id', 'role_user_user_id_index');
-        });
+            // Define indexes
+            ->addIndex(['role_id'], ['name' => 'role_user_role_id_index'])
+            ->addIndex(['user_id'], ['name' => 'role_user_user_id_index'])
+
+            // Define foreign keys
+            ->addForeignKey('role_id', 'roles', 'id', [
+                'delete' => 'CASCADE',
+                'update' => 'NO_ACTION',
+                'constraint' => 'role_user_role_id_foreign'
+            ])
+            ->addForeignKey('user_id', 'users', 'id', [
+                'delete' => 'CASCADE',
+                'update' => 'NO_ACTION',
+                'constraint' => 'role_user_user_id_foreign'
+            ])
+
+            ->create();
     }
-
 }
+

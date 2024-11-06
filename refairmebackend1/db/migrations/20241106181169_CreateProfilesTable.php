@@ -10,14 +10,14 @@ class CreateProfilesTable extends AbstractMigration
     public function change(): void
     {
         $this->table('profiles')
-            ->addColumn('user_id', 'integer', ['signed' => false])
-            ->addColumn('theme_id', 'integer', ['default' => 1, 'signed' => false])
+            ->addColumn('user_id', 'integer')
+            ->addColumn('theme_id', 'integer', ['default' => 1])
             ->addColumn('location', 'string', ['limit' => 191, 'null' => true])
             ->addColumn('bio', 'text', ['null' => true])
             ->addColumn('twitter_username', 'string', ['limit' => 191, 'null' => true])
             ->addColumn('github_username', 'string', ['limit' => 191, 'null' => true])
             ->addColumn('avatar', 'string', ['limit' => 191, 'null' => true])
-            ->addColumn('avatar_status', 'tinyinteger', ['default' => 0])
+            ->addColumn('avatar_status', 'integer', ['default' => 0])
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
 

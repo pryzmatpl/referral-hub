@@ -9,7 +9,7 @@ class CreateActivationsTable extends AbstractMigration
         $table = $this->table('activations', ['id' => false, 'primary_key' => 'id']);
 
         $table->addColumn('id', 'integer', ['signed' => false, 'identity' => true])
-            ->addColumn('user_id', 'integer', ['signed' => false])
+            ->addColumn('user_id', 'integer')
             ->addColumn('token', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])
             ->addColumn('ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci'])
             ->addColumn('created_at', 'timestamp', ['null' => true, 'default' => 'CURRENT_TIMESTAMP'])

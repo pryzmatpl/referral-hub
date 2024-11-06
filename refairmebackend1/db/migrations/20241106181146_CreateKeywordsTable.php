@@ -17,7 +17,7 @@ class CreateKeywordsTable extends AbstractMigration
             ->addColumn('keytwo', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('keythree', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('searchterm', 'string', ['limit' => 255, 'null' => true])
-            ->addColumn('regdate', 'timestamp', ['default' => Capsule::raw('CURRENT_TIMESTAMP'), 'update' => Capsule::raw('CURRENT_TIMESTAMP')])
+            ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
             ->addColumn('cnt', 'integer', ['null' => true])
             ->create();
     }

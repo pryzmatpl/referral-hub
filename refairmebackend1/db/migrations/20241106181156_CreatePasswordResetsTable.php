@@ -13,7 +13,6 @@ class CreatePasswordResetsTable extends AbstractMigration
             ->addColumn('email', 'string', ['limit' => 191])
             ->addColumn('token', 'string', ['limit' => 191])
             ->addColumn('created_at', 'timestamp', ['null' => true])
-            ->addPrimaryKey('id')
             ->addIndex('email')
             ->addIndex('token')
             ->create();

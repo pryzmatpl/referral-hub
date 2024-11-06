@@ -23,7 +23,6 @@ class CreateProjectsTable extends AbstractMigration
             ->addColumn('workload', 'text', ['null' => true])
             ->addColumn('requiredSkills', 'text', ['null' => true])
             ->addColumn('perks', 'text', ['null' => true])
-            ->addPrimaryKey('id')
             ->create();
     }
 
