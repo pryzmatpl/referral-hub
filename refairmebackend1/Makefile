@@ -5,6 +5,9 @@ purge: down clean prune
 up:
 	docker-compose -f docker-compose.yml build && docker-compose -f docker-compose.yml up -d
 
+debug:
+	docker-compose -f docker-compose-debug.yml build && docker-compose -f docker-compose-debug.yml up -d
+
 migrate:
 	docker exec -it refairmebackend1-aimatch-1 php ./cli.php migrate
 

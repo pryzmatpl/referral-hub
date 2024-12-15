@@ -5,47 +5,6 @@ services:
     aimatch:
         build:
             context: ./docker/8.2/
-            dockerfile: Dockerfile.app
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-        ports:
-            - '${APP_PORT:-80}:80'
-            - '443:443'
-        environment:
-            WWWUSER: 'www-data'
-            #XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-            #XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
-            UPLOAD_LIMIT: '6400M'
-            REDIS_HOST: 'redis'
-            TZ: Europe/Warsaw
-        volumes:
-            - '.:/var/www/html'
-        networks:
-            - default
-        depends_on:
-            - mysql
-            - redis
-            - meilisearch
-            - selenium
-    aimatch_queue:
-        build:
-            context: ./docker/8.2-queue/
-            dockerfile: Dockerfile.app-queue
-        environment:
-            WWWUSER: 'www-data'
-            LARAVEL_SAIL: 1
-            REDIS_HOST: 'redis' # Set the Redis host to the Redis container's service name
-            UPLOAD_LIMIT: '6400M'
-            TZ: Europe/Warsaw
-        volumes:
-            - '.:/var/www/html'
-        networks:
-            - default
-        depends_on:
-            - mysql
-    aimatch_debug:
-        build:
-            context: ./docker/8.2/
             dockerfile: Dockerfile.debug
         extra_hosts:
             - 'host.docker.internal:host-gateway'
@@ -68,7 +27,7 @@ services:
             - redis
             - meilisearch
             - selenium
-    aimatch_queue_debug:
+    aimatch_queue:
         build:
             context: ./docker/8.2-queue/
             dockerfile: Dockerfile.debug-queue
