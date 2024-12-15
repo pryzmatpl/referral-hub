@@ -1,16 +1,22 @@
-# Copyright: PRIZM Piotr Słupski 2023
+# Copyright: PRIZM Piotr Słupski 2024
 
-clean: stopall cleanvolumes pruneall
+purge: down clean prune
 
 up:
-	docker compose -f docker-compose.yml build && docker compose -f docker-compose.yml up -d
+	docker-compose -f docker-compose.yml build && docker-compose -f docker-compose.yml up -d
 
-stopall:
-	docker compose down --remove-orphans -v
+migrate:
+	docker exec -it refairmebackend1-aimatch-1 php ./cli.php migrate
 
-cleanvolumes:
+seed:
+	docker exec -it refairmebackend1-aimatch-1 php ./cli.php seed:run
+
+down:
+	docker-compose down --remove-orphans -v
+
+clean:
 	docker volume prune -f
 
-pruneall:
+prune:
 	docker system prune --all -f
 
