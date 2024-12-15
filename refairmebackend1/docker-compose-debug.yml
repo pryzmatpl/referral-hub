@@ -13,8 +13,8 @@ services:
             - '443:443'
         environment:
             WWWUSER: 'www-data'
-            #XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-            #XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-on}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
             UPLOAD_LIMIT: '6400M'
             REDIS_HOST: 'redis'
             TZ: Europe/Warsaw
