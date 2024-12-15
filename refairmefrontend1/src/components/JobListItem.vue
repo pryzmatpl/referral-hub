@@ -1,3 +1,67 @@
+<!--
+  - Copyright (c) 2024 Pryzmat sp. z o.o. (Pryzmat LLC)
+  - All rights reserved.
+  - 15.12.2024, 14:18
+  - JobListItem.vue
+  - referral-hub
+  -
+  - This software and its accompanying documentation are protected by copyright law and international treaties.
+  - Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
+  - is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
+  -->
+
+<script setup>
+import { useRoute, useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
+import { faEdit, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+
+const props = defineProps({
+  job: {
+    type: Object,
+    required: true
+  }
+})
+
+const route = useRoute()
+const router = useRouter()
+const modalShow = ref(false)
+
+const editIcon = faEdit
+const deleteIcon = faTrash
+const infoIcon = faQuestionCircle
+
+const isJobListing = computed(() => route.path === '/jobs')
+const isUserAllowed = computed(() => useStore().state.dehashedData.CURRENT_ROLE === 'admin')
+const formattedContractType = computed(() => 'TEST') // Placeholder, replace with actual logic
+
+// Methods
+const onRowClick = () => {
+  router.push(`/job/${props.job.id}`)
+}
+
+const deleteJob = async (id) => {
+  try {
+    await useStore().state.backend.get(`/job/delete/${id}`)
+    emit('fetchJobs')
+  } catch (error) {
+    alert(error.message)
+  }
+}
+
+const switchWarningHighlight = (event, hovering) => {
+  event.currentTarget.parentNode.parentNode.style.backgroundColor = hovering ? 'rgba(255,0,0,0.3)' : ''
+}
+
+const switchJobHighlight = (event, hovering) => {
+  event.currentTarget.style.backgroundColor = hovering ? 'rgba(57,143,168, 0.2)' : ''
+}
+
+const groupZeros = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+
+const emit = defineEmits(['jobToEdit', 'fetchJobs'])
+
+</script>
+
 <template>
   <div>
     <div
@@ -76,58 +140,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { useRoute, useRouter } from 'vue-router'
-import { computed, ref } from 'vue'
-import { faEdit, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-
-const props = defineProps({
-  job: {
-    type: Object,
-    required: true
-  }
-})
-
-const route = useRoute()
-const router = useRouter()
-const modalShow = ref(false)
-
-const editIcon = faEdit
-const deleteIcon = faTrash
-const infoIcon = faQuestionCircle
-
-const isJobListing = computed(() => route.path === '/jobs')
-const isUserAllowed = computed(() => useStore().state.dehashedData.CURRENT_ROLE === 'admin')
-const formattedContractType = computed(() => 'TEST') // Placeholder, replace with actual logic
-
-// Methods
-const onRowClick = () => {
-  router.push(`/job/${props.job.id}`)
-}
-
-const deleteJob = async (id) => {
-  try {
-    await useStore().state.backend.get(`/job/delete/${id}`)
-    emit('fetchJobs')
-  } catch (error) {
-    alert(error.message)
-  }
-}
-
-const switchWarningHighlight = (event, hovering) => {
-  event.currentTarget.parentNode.parentNode.style.backgroundColor = hovering ? 'rgba(255,0,0,0.3)' : ''
-}
-
-const switchJobHighlight = (event, hovering) => {
-  event.currentTarget.style.backgroundColor = hovering ? 'rgba(57,143,168, 0.2)' : ''
-}
-
-const groupZeros = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-
-const emit = defineEmits(['jobToEdit', 'fetchJobs'])
-
-</script>
 
 <style lang="scss" scoped>
 .tag {

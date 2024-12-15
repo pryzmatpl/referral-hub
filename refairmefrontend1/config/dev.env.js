@@ -6,5 +6,5 @@ require('dotenv').config()
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  BACKEND_URL: '"http://localhost:81"'
+  BACKEND_URL: '"http://localhost:80"'
 })

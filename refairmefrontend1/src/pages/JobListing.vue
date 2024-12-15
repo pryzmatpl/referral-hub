@@ -1,145 +1,116 @@
+<!--
+  - Copyright (c) 2024 Pryzmat sp. z o.o. (Pryzmat LLC)
+  - All rights reserved.
+  - 15.12.2024, 14:21
+  - JobListing.vue
+  - referral-hub
+  -
+  - This software and its accompanying documentation are protected by copyright law and international treaties.
+  - Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
+  - is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
+  -->
+
+<script setup>
+import { ref, computed, onMounted, watch } from 'vue'
+import { useStore } from 'vuex'
+import { faCheck, faTimes, faEdit, faTrash, faCog } from '@fortawesome/free-solid-svg-icons'
+
+// Components
+import JobBuilderAboutJob from '@/components/JobBuilderAboutJob.vue'
+import JobListItem from '@/components/JobListItem.vue'
+
+const store = useStore()
+
+// Computed properties
+const jobListing = computed(() => store.getters.jobListing)
+const resultPages = computed(() => store.getters.resultPages)
+const currentPage = computed(() => store.state.currentPage)
+
+// Icons
+const checkIcon = faCheck
+const crossIcon = faTimes
+const editIcon = faEdit
+const deleteIcon = faTrash
+const loadingIcon = faCog
+
+// Data
+const job = ref({
+  company: { id: 0 },
+  project: { id: 0 }
+})
+const loading = ref(false)
+const modalShow = ref(false)
+
+// Lifecycle hooks
+onMounted(() => {
+  getJobs()
+})
+
+// Watchers
+watch(currentPage, () => {
+  store.dispatch('getJobs')
+})
+
+// Methods
+const selectJob = (jobData) => {
+  job.value = jobData
+  modalShow.value = true // Note: Using v-model on b-modal will handle this
+  console.log('job')
+  console.log(jobData)
+}
+
+const getJobs = () => {
+  store.dispatch('getJobs')
+}
+
+const updateCurrentPage = (page) => {
+  store.dispatch('updateCurrentPage', page)
+}
+
+// Note: The following methods have been removed as they're not needed with the current structure:
+// - editJob
+// - deleteJob
+// - callBuilder
+
+</script>
+
 <template>
   <div>
     <h2 class="mt-3 mb-4 text-center">My job listing</h2>
     <font-awesome-icon v-if="loading" :icon="loadingIcon" spin class="fa-3x center"></font-awesome-icon>
     <JobListItem
-      v-for="job in jobListing"
-      :job="job"
-      :key="job.id"
-      @jobToEdit="selectJob"
-      @fetchJobs="getJobs"
+        v-for="job in jobListing"
+        :job="job"
+        :key="job.id"
+        @jobToEdit="selectJob"
+        @fetchJobs="getJobs"
     />
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-        <!-- li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">«</span>
-            <span class="sr-only">Previous</span>
-          </a>
-        </li -->
         <li class="page-item" v-for="o in resultPages" :key="o">
-          <a class="page-link" href="#" @click="updateCurrentPage(o - 1)">{{ o }}</a>
+          <a class="page-link" href="#" @click.prevent="updateCurrentPage(o - 1)">{{ o }}</a>
         </li>
-        <!-- li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">»</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li -->
       </ul>
     </nav>
     <b-modal
-      ref="modal"
-      v-model="modalShow"
-      :title="'Edit job nr ' + job.id"
-      size="lg"
-      hide-footer
+        ref="modal"
+        v-model="modalShow"
+        :title="'Edit job nr ' + job.id"
+        size="lg"
+        hide-footer
     >
       <JobBuilderAboutJob
-        v-if="modalShow"
-        :companyId="job.company.id"
-        :projectId="job.project.id"
-        :jobToEdit="job"
-        @closeModal="modalShow = false"
+          v-if="modalShow"
+          :companyId="job.company.id"
+          :projectId="job.project.id"
+          :jobToEdit="job"
+          @closeModal="modalShow = false"
       />
     </b-modal>
   </div>
 </template>
 
-<script>
-import store from '@/store/index.js'
-import {mapGetters, mapActions, mapState} from 'vuex'
 
-import {
-  faCheck,
-  faTimes,
-  faEdit,
-  faTrash,
-  faCog
-} from '@fortawesome/fontawesome-free-solid'
-import JobBuilderAboutJob from '@/components/JobBuilderAboutJob'
-import JobListItem from '@/components/JobListItem'
-
-export default {
-  components: {
-    JobBuilderAboutJob,
-    JobListItem
-  },
-
-  computed: {
-    ...mapGetters(['jobListing','resultPages']),
-    ...mapState(['currentPage']),
-    checkIcon: () => faCheck,
-    crossIcon: () => faTimes,
-    editIcon: () => faEdit,
-    deleteIcon: () => faTrash,
-    loadingIcon: () => faCog,
-  },
-
-  created () {
-    this.getJobs()
-  },
-
-  watch: {
-    'currentPage' () {this.$store.dispatch('getJobs')}
-  },
-
-  data () {
-    return {
-      jobs:store.jobListing,
-      job: {
-        company: { id: 0},
-        project: { id: 0}
-      },
-      loading: false,
-      modalShow: false
-    }
-  },
-
-  methods: {
-    ...mapActions([
-      'updateCurrentPage'
-    ]),
-    selectJob (job) {
-      this.job = job
-      this.$refs.modal.show()
-      console.log('job')
-      console.log(job)
-    },
-
-    getJobs () {
-      this.$store.dispatch('getJobs')
-    },
-    editJob (id) { // to delete
-      this.callBuilder('/job/update/')(id)
-    },
-    deleteJob (id) { //to delete
-      this.callBuilder('/job/delete/')(id)
-    },
-    callBuilder (endpoint) {
-      return arg => { // about to move to store
-        this.loading = true
-
-        const handler = jobs => {
-          if(endpoint == '/getjobs'){
-            this.jobs = []
-            console.log(jobs)
-            this.jobs = jobs
-          } else {
-            this.getJobs()
-          }
-        }
-
-        return this.$store.state.backend
-          .get(endpoint + (arg || ''))
-          .then(ret => handler(ret.data))
-          .catch(error => alert(error.message))
-          .finally(() => this.loading = false)
-      }
-    }
-  }
-}
-</script>
 <style lang="scss" scoped>
 .card {
   box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1);
