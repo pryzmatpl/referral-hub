@@ -36,7 +36,7 @@ RUN useradd -m -s /bin/bash www-data && \
 
 # Copy configuration files
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
-COPY ./config/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY ./config/conf.d/default.conf /etc/nginx/conf.d/default-ssl.conf
 COPY ./config/fpm-pool.conf /etc/php/php-fpm.d/www.conf
 COPY ./config/php.ini /etc/php82/conf.d/custom.ini
 COPY ./config/redis.ini /etc/php82/conf.d/redis.ini
