@@ -9,18 +9,18 @@
       <div class="card-body" @click="onRowClick">
         <div class="row">
           <div class="col-12 col-sm-2">
-<!--            <img :src="job.company.logo" width="120px" />-->
+            <!-- <img :src="job.company.logo" width="120px" /> -->
           </div>
           <div class="col-12 col-sm-6">
             <h4>{{ job.jobtitle }}</h4>
-            <p v-html='job.description'></p>
-<!--            <p>{{ job.company.name }}</p>-->
+            <p v-html="job.description"></p>
+            <!-- <p>{{ job.company.name }}</p> -->
           </div>
           <div class="col-12 col-sm-4" style="text-align: right" v-b-tooltip.html.bottom="'Get a reward of up to this amount if your referral is hired'">
             <div class="row">
               <div class="col">
                 <div>
-<!--                  <h4 style="display: inline-block; text-align: right">{{ job.fund[0] | groupZeros }} - {{ job.fund[1] | groupZeros }}</h4>-->
+                  <!-- <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0]) }} - {{ groupZeros(job.fund[1]) }}</h4> -->
                   <p class="float-right">PLN</p>
                 </div>
                 <p>{{ formattedContractType }}</p>
@@ -31,7 +31,7 @@
                 <div>
                   <font-awesome-icon :icon="infoIcon" style="color:black" class="mr-1" />
                   <p style="display: inline-block" class="mr-1">REWARD:</p>
-<!--                  <h4 style="display: inline-block; text-align: right">{{ job.fund[0] * 0.25 | groupZeros }}</h4>-->
+                  <!-- <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0] * 0.25) }}</h4> -->
                   <p class="float-right">PLN</p>
                 </div>
               </div>
@@ -70,88 +70,65 @@
             class="float-right"
             :icon="editIcon"
             style="margin: 0 15px; cursor: pointer"
-            @click="$emit('jobToEdit', job)"
+            @click="emit('jobToEdit', job)"
         />
       </div>
     </div>
   </div>
 </template>
-<script>
-import {
-  faCheck,
-  faTimes,
-  faEdit,
-  faTrash,
-  faCog,
-  faQuestionCircle
-} from '@fortawesome/fontawesome-free-solid'
-import JobBuilderAboutJob from '@/components/JobBuilderAboutJob'
 
-export default {
-  components: {
-    JobBuilderAboutJob
-  },
+<script setup>
+import { useRoute, useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
+import { faEdit, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
-  props: {
-    job: {
-      type: Object,
-      required: true
-    }
-  },
+const props = defineProps({
+  job: {
+    type: Object,
+    required: true
+  }
+})
 
-  computed: {
-    editIcon: () => faEdit,
-    deleteIcon: () => faTrash,
-    infoIcon: () => faQuestionCircle,
-    isJobListing: vm => vm.$route.path == '/jobs',
-    isUserAllowed: vm => vm.$store.state.dehashedData.CURRENT_ROLE === 'admin',
-    formattedContractType: 'TEST',
-  },
+const route = useRoute()
+const router = useRouter()
+const modalShow = ref(false)
 
-  filters: {
-    groupZeros: function(value) {
-      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-    }
-  },
+const editIcon = faEdit
+const deleteIcon = faTrash
+const infoIcon = faQuestionCircle
 
-  data (){
-    return {
-      //company: '',
-      modalShow: false
-    }
-  },
+const isJobListing = computed(() => route.path === '/jobs')
+const isUserAllowed = computed(() => useStore().state.dehashedData.CURRENT_ROLE === 'admin')
+const formattedContractType = computed(() => 'TEST') // Placeholder, replace with actual logic
 
-  methods: {
-    onRowClick () {
-      this.$router.push(`/job/${this.job.id}`)
-    },
+// Methods
+const onRowClick = () => {
+  router.push(`/job/${props.job.id}`)
+}
 
-    deleteJob (id) {
-      this.$store.state.backend
-        .get(`/job/delete/${id}`)
-        .then(ret => this.$emit('fetchJobs'))
-        .catch(error => alert(error.message))
-        //.finally(() => this.loading = false)
-    },
-
-    switchWarningHighlight (event, hovering) {
-      event
-      .currentTarget
-      .parentNode
-      .parentNode
-      .style
-      .backgroundColor = hovering ? 'rgba(255,0,0,0.3)' : ''
-    },
-
-    switchJobHighlight (event, hovering) {
-      event
-      .currentTarget
-      .style
-      .backgroundColor = hovering ? 'rgba(57,143,168, 0.2)' : ''
-    }
+const deleteJob = async (id) => {
+  try {
+    await useStore().state.backend.get(`/job/delete/${id}`)
+    emit('fetchJobs')
+  } catch (error) {
+    alert(error.message)
   }
 }
+
+const switchWarningHighlight = (event, hovering) => {
+  event.currentTarget.parentNode.parentNode.style.backgroundColor = hovering ? 'rgba(255,0,0,0.3)' : ''
+}
+
+const switchJobHighlight = (event, hovering) => {
+  event.currentTarget.style.backgroundColor = hovering ? 'rgba(57,143,168, 0.2)' : ''
+}
+
+const groupZeros = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+
+const emit = defineEmits(['jobToEdit', 'fetchJobs'])
+
 </script>
+
 <style lang="scss" scoped>
 .tag {
   background-color: #4a90e2;
@@ -177,5 +154,3 @@ export default {
   border: 0;
 }
 </style>
-
-
