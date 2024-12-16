@@ -22,7 +22,6 @@ class CreateProfilesTable extends AbstractMigration
             ->addColumn('updated_at', 'timestamp', ['null' => true])
 
             // Foreign key constraints
-            ->addForeignKey('theme_id', 'themes', 'id', ['delete'=> 'NO_ACTION', 'update' => 'NO_ACTION'])
             ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
 
             // Indexes
