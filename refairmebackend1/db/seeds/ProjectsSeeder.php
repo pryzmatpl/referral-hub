@@ -11,7 +11,7 @@ class ProjectsSeeder extends AbstractSeed
             [
                 'description' => 'A cutting-edge AI platform to optimize logistics.',
                 'posterId' => 1,
-                'staff' => json_encode(['Alice', 'Bob', 'Charlie']), // Example team members
+                'staff' => json_encode(['Alice']), // Example team members
                 'stack' => json_encode(['Python', 'TensorFlow', 'AWS']),
                 'breakdown' => json_encode(['Frontend' => 'React', 'Backend' => 'Django']),
                 'companyId' => 101,

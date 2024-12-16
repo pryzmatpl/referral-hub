@@ -9,7 +9,7 @@ class CreateProjectsTable extends AbstractMigration
         $this->table('projects')
             ->addColumn('description', 'text', ['null' => true])
             ->addColumn('posterId', 'string', ['limit' => 255, 'null' => true])
-            ->addColumn('staff', 'integer', ['null' => true])
+            ->addColumn('staff', 'string', ['null' => true])
             ->addColumn('stack', 'text', ['null' => true])
             ->addColumn('breakdown', 'text', ['null' => true])
             ->addColumn('companyId', 'text', ['null' => true])

@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class UserSeeder extends AbstractSeed
+class AUserSeeder extends AbstractSeed
 {
     public function run()
     {
@@ -52,6 +52,28 @@ class UserSeeder extends AbstractSeed
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
+            [
+                'first_name' => 'Charlie',
+                'last_name' => 'Brown',
+                'password' => password_hash('securepassword', PASSWORD_DEFAULT),
+                'remember_token' => bin2hex(random_bytes(16)),
+                'activated' => 1,
+                'signup_ip_address' => '192.168.2.300',
+                'signup_confirmation_ip_address' => null,
+                'signup_sm_ip_address' => null,
+                'admin_ip_address' => null,
+                'updated_ip_address' => null,
+                'deleted_ip_address' => null,
+                'last_login' => null,
+                'activ_code' => bin2hex(random_bytes(8)),
+                'group_id' => 2,
+                'activ' => 1,
+                'cvadded' => 1,
+                'name' => 'Charlie Brown',
+                'email' => 'charlie.brown@example.com',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]
         ];
 
         // Insert data into the users table
