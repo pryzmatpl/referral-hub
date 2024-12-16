@@ -32,7 +32,7 @@ class Seed extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $resp = system('./vendor/bin/phinx seed');
+        $resp = system('./vendor/bin/phinx seed:run');
         $output->write($resp);
         return Command::SUCCESS;
     }
