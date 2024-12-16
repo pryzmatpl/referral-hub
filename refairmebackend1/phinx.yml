@@ -10,8 +10,8 @@ environments:
         adapter: mysql
         host: mysql
         name: prism
-        user: prism
-        pass: 'poison11'
+        user: root
+        pass: 1tJ3nBCxy
         port: 3306
         charset: utf8
 
