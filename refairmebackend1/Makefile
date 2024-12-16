@@ -8,6 +8,9 @@ up:
 debug:
 	docker-compose -f docker-compose-debug.yml build && docker-compose -f docker-compose-debug.yml up -d
 
+cleandb:
+	docker exec -it refairmebackend1-aimatch-1 php ./cli.php cleandb
+
 migrate:
 	docker exec -it refairmebackend1-aimatch-1 php ./cli.php migrate
 

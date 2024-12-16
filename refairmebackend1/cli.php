@@ -1,6 +1,7 @@
 <?php
 require './vendor/autoload.php';
 
+use App\Cli\CleanDB;
 use App\Cli\Migrate;
 use App\Cli\Seed;
 use Symfony\Component\Dotenv\Dotenv;
@@ -25,7 +26,8 @@ print_r("++++++ CLI +++++\n");
  */
 $application->addCommands([
     new Migrate(),
-    new Seed()
+    new Seed(),
+    new CleanDB()
 ]);
 
 $application->run();

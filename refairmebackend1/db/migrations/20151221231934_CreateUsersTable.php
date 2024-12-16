@@ -15,7 +15,6 @@ class CreateUsersTable extends AbstractMigration
             ->addColumn('password', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])
             ->addColumn('remember_token', 'string', ['limit' => 100, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
             ->addColumn('activated', 'boolean', ['default' => 0])
-            ->addColumn('token', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])
             ->addColumn('signup_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
             ->addColumn('signup_confirmation_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
             ->addColumn('signup_sm_ip_address', 'string', ['limit' => 45, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
