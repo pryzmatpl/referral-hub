@@ -140,5 +140,5 @@ Debugging is supported via separate Dockerfiles and Xdebug configuration.
 ## Contact
 For issues or feature requests, contact the maintainer:
 - **Name**: Piotr Słupski
-- **Email**: [contact@example.com](mailto:contact@example.com)
+- **Email**: [piotr.slupski@pryzmat.pl](mailto:piotr.slupski@pryzmat.pl)
 
