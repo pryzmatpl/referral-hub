@@ -17,7 +17,7 @@ RUN pacman -Syuu --noconfirm --needed \
       curl nginx redis mariadb ffmpeg shadow supervisor git dma \
       libxslt unixodbc freetds tidy aspell enchant libvoikko hspell \
       hunspell nuspell net-snmp libsodium expac jq ninja python-tqdm \
-      fakechroot gtest meson python-pip capstone && \
+      fakechroot gtest meson python-pip capstone  composer && \
     pacman -Scc --noconfirm && rm -rf /var/cache/pacman/pkg/*
 
 # Create directory for PHP packages

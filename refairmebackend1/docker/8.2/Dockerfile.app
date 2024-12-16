@@ -17,7 +17,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
       curl nginx redis mariadb ffmpeg shadow supervisor git dma \
       libxslt unixodbc freetds tidy aspell enchant libvoikko hspell \
       hunspell nuspell net-snmp libsodium expac jq ninja python-tqdm \
-      fakechroot gtest meson python-pip capstone net-snmp && \
+      fakechroot gtest meson python-pip capstone net-snmp composer && \
     mkdir /var/php83libs
 
 # Copy PHP packages and install them

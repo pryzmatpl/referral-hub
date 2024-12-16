@@ -15,7 +15,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN pacman -Syuu --noconfirm \
       curl nginx redis mariadb ffmpeg shadow supervisor git dma libxslt unixodbc \
       freetds tidy aspell enchant libvoikko hspell hunspell nuspell net-snmp \
-      libsodium expac jq ninja python-tqdm fakechroot gtest meson python-pip xdebug capstone
+      libsodium expac jq ninja python-tqdm fakechroot gtest meson python-pip xdebug capstone composer
 
 # Create a directory for custom PHP packages
 RUN mkdir /var/php83libs
