@@ -12,13 +12,13 @@
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { computed, ref } from 'vue'
+import { computed, ref , defineProps} from 'vue'
 import { faEdit, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 const props = defineProps({
   job: {
     type: Object,
-    required: true
+    default: null
   }
 })
 
@@ -59,6 +59,10 @@ const switchJobHighlight = (event, hovering) => {
 const groupZeros = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
 const emit = defineEmits(['jobToEdit', 'fetchJobs'])
+
+const keywords = computed(() => {
+  return (this.$props.job != null) ? this.$props.job?.keywords.split(',') : "";
+});
 
 </script>
 
@@ -116,7 +120,7 @@ const emit = defineEmits(['jobToEdit', 'fetchJobs'])
           </div>
           <div class="col-5">
             <p>Technologies:</p>
-            <button class="btn tag" v-for="keyword in job.keywords.split(',')" :key="keyword">{{ keyword }}</button>
+            <button class="btn tag" v-for="keyword in keywords" :key="keyword">{{ keyword }}</button>
           </div>
         </div>
       </div>
