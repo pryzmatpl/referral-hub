@@ -20,8 +20,6 @@ services:
             TZ: Europe/Warsaw
         volumes:
             - '.:/var/www/html'
-        networks:
-            - default
         depends_on:
             - mysql
             - redis
@@ -39,8 +37,6 @@ services:
             TZ: Europe/Warsaw
         volumes:
             - '.:/var/www/html'
-        networks:
-            - default
         depends_on:
             - mysql
     mysql:
@@ -56,8 +52,6 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
             - 'mysql:/var/lib/mysql'
-        networks:
-            - default
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
@@ -69,8 +63,6 @@ services:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
             - 'redis:/data'
-        networks:
-            - default
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
@@ -111,8 +103,6 @@ services:
         volumes:
             - ./tests/Support/Mock:/app
         command: ['/bin/sh', '-c', 'npm install && npm start']
-        networks:
-            - default
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         links:
@@ -125,9 +115,6 @@ services:
         ports:
             - 8081:80
 
-networks:
-    default:
-        driver: bridge
 volumes:
     mysql:
         driver: local
