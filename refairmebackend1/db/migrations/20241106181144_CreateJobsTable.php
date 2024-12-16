@@ -22,7 +22,7 @@ class CreateJobsTable extends AbstractMigration
             ->addColumn('hash', 'binary', ['null' => true])
             ->addColumn('travelPercentage', 'integer', ['null' => true])
             ->addColumn('remotePercentage', 'integer', ['null' => true])
-            ->addColumn('relocationPackage', 'integer', ['null' => true])
+            ->addColumn('relocationPackage', 'string', ['null' => true])
             ->addColumn('projectId', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('other', 'text', ['null' => true])
             ->addColumn('created_at', 'timestamp', ['null' => true])
