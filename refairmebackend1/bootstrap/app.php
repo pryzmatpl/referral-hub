@@ -28,13 +28,13 @@ try {
     $dotenv->load();
 
     $capsule->addConnection([
-        'driver' => getenv('DB_DRIVER'),
-        'host' => getenv('DB_HOST'),
-        'database' => getenv('DB_DATABASE'),
-        'username' => getenv('DB_USERNAME'),
-        'password' => getenv('DB_PASSWORD'),
+        'driver' => $_ENV('DB_DRIVER'),
+        'host' => $_ENV('DB_HOST'),
+        'database' => $_ENV('DB_DATABASE'),
+        'username' => $_ENV('DB_USERNAME'),
+        'password' => $_ENV('DB_PASSWORD'),
         'charset' => 'utf8',
-        'port' => getenv('DB_PORT'),
+        'port' => $_ENV('DB_PORT'),
         'collation' => 'utf8_unicode_ci',
         'prefix' => ''
     ]);
@@ -85,12 +85,12 @@ $container->set('settings', function () {
     return [
         'displayErrorDetails' => true,
         'mailer' => [
-            'host' => getenv('MAIL_HOST'),
-            'username' => getenv('MAIL_USERNAME'),
-            'password' => getenv('MAIL_PASSWORD'),
-            'port' => getenv('MAIL_PORT'),
-            'secure' => getenv('MAIL_SECURE'),
-            'context' => strpos(getenv('MAIL_HOST'), '@gmail.com') !== false ? [
+            'host' => $_ENV('MAIL_HOST'),
+            'username' => $_ENV('MAIL_USERNAME'),
+            'password' => $_ENV('MAIL_PASSWORD'),
+            'port' => $_ENV('MAIL_PORT'),
+            'secure' => $_ENV('MAIL_SECURE'),
+            'context' => strpos($_ENV('MAIL_HOST'), '@gmail.com') !== false ? [
                 'ssl' => [
                     'verify_peer' => false,
                     'verify_peer_name' => false,
