@@ -16,6 +16,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Container\ContainerInterface;
 use Slim\Csrf\Guard;
+use Slim\Http\StatusCode;
 use SlimSession\Helper;
 
 class AuthController extends Controller
@@ -65,15 +66,20 @@ class AuthController extends Controller
     public function postSignIn(Request $request, Response $response): mixed
     {
         try {
-            $payload = $request->getQueryParams();
-            $auth = $this->auth->attempt($payload['email'], $payload['password']);
+            $payload = json_decode($request->getBody(), true);
+            $params = (array)$payload['params'];
+
+            $auth = $this->auth->attempt($params['email'], $params['password']);
 
             if (!$auth) {
-                return $response->withJson([
-                    'message' => "Validation failed - you stated a malformed email address or a wrong password for {$payload['email']}",
+                $response->getBody()->write(json_encode([
+                    'message' => "Validation failed - you stated a malformed email address or a wrong password for {$params['email']}",
                     'state' => 'error',
                     'auth' => false
-                ]);
+                ]));
+
+                return $response
+                    ->withHeader('Content-Type', 'application/json');
             }
 
             $user = User::where('email', $payload['email'])->first();
@@ -85,24 +91,24 @@ class AuthController extends Controller
                 'candidate' => $user->is_candidate
             ];
 
-            $cornerstone = $this->buildCornerstone($user, $payload['email'], json_encode($roles, true));
-
-            $_SESSION['creds'][urlencode($cornerstone)] = [
-                'token' => $cornerstone,
-                'user' => $payload['email']
-            ];
             $_SESSION['user'] = $user;
+            $_SESSION['user_roles'] = $roles;
 
-            return $response->withJson([
-                'planck' => $cornerstone,
+            $response->getBody()->write(json_encode([
                 'state' => 'success',
                 'auth' => true
-            ]);
+            ]));
+            return $response
+                ->withHeader('Content-Type', 'application/json');
         } catch (Exception $e) {
-            return $response->withStatus(500)->withJson([
+            $response->getBody()->write(json_encode([
                 'message' => 'Internal server error',
                 'error' => $e->getMessage()
-            ]);
+            ]));
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(StatusCode::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
