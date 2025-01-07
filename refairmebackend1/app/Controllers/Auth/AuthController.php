@@ -36,10 +36,6 @@ class AuthController extends Controller
         $this->logger =$logger;
     }
 
-    private const ORIGIN = "prizm";
-    private const SEPARATOR = "~";
-    private const CHILDSEPARATOR = ":";
-
     public function getSignOut($request, $response)
     {
         $this->auth->logout();
@@ -59,8 +55,14 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @param $request
+     * @param $response
+     * @return mixed
+     */
     public function postSignIn($request, $response)
     {
+        $this->logger->debug("HELLO");
         try {
             $payload = $request->getQueryParams();
             $auth = $this->auth->attempt($payload['email'], $payload['password']);
@@ -176,10 +178,20 @@ class AuthController extends Controller
         return !$validation->failed();
     }
 
+    function uuidv4()
+    {
+        $data = random_bytes(16);
+
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
+
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
+
     private function createUser($request): User
     {
         $email = $request->getParam('email');
-        $uniqueId = $this->generateUniqueId($email);
+        $uniqueId = $this->uuidv4();
         $accountName = $this->generateAccountName($email);
 
         $user = User::create([
@@ -201,16 +213,6 @@ class AuthController extends Controller
         return $user;
     }
 
-    private function generateUniqueId(string $email): string
-    {
-        $uniqueId = self::ORIGIN;
-        $uniqueId = $this->iwahash($uniqueId, "UMAIL", $email);
-        $uniqueId = $this->iwahash($uniqueId, "TOKEN", env('TOKEN'));
-        $uniqueId = $this->iwahash($uniqueId, "DATE", date('Ymdhis'));
-
-        return $uniqueId;
-    }
-
     private function generateAccountName(string $email): string
     {
         $parts = explode('@', $email);
@@ -230,9 +232,7 @@ class AuthController extends Controller
                 'link' => $activationLink
             ]));
 
-        if (!$this->mailer->send($mail)) {
-            throw new Exception("Mailer could not send Emails");
-        }
+        $this->mailer->send($mail);
     }
 
     public function confirmEmail($request, $response)
@@ -265,25 +265,4 @@ class AuthController extends Controller
         }
     }
 
-    public function csrftoken($request, $response)
-    {
-        try {
-            $session = new Helper;
-
-            if (isset($session['csrf_keypair'])) {
-                return $response->withJson($session['csrf_keypair']);
-            }
-
-            $slimGuard = new Guard;
-            $keyPair = $slimGuard->generateToken();
-            $session['csrf_keypair'] = $keyPair;
-
-            return $response->withJson($keyPair);
-        } catch (Exception $e) {
-            return $response->withStatus(500)->withJson([
-                'message' => 'Internal server error',
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
 }
