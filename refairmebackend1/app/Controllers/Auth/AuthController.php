@@ -1,256 +1,284 @@
 <?php
+
 namespace App\Controllers\Auth;
+
 use Exception;
 use Nette\Mail\Message;
 use App\Models\User;
-use App\Models\Product;
-use App\Models\UserPermission;
-use App\Models\Group;
 use App\Controllers\Controller;
 use Respect\Validation\Validator as v;
 use Litipk\Jiffy\UniversalTimestamp;
-//Adding PSR classes to boost our auth controller
+use Psr\Container\ContainerInterface;
 use Slim\Csrf\Guard;
 use SlimSession\Helper;
 
-const ORIGIN = "prizm";
-const SEPARATOR = "~";
-const CHILDSEPARATOR = ":";
-
 class AuthController extends Controller
 {
-    public function getSignOut($request,$response)
+    protected $container;
+    protected $auth;
+    protected $flash;
+    protected $view;
+    protected $validator;
+    protected $mailer;
+
+    public function __construct(ContainerInterface $container)
     {
-        $this->auth->logout();
-        return $response->withJson(array('state'=>'success',
-            'message'=>'You have been logged out'));
+        $this->container = $container;
+        $this->auth = $container->get('auth');
+        $this->flash = $container->get('flash');
+        $this->view = $container->get('view');
+        $this->validator = $container->get('validator');
+        $this->mailer = $container->get('mailer');
     }
 
-    public function getSignIn($request,$response)
+    private const ORIGIN = "prizm";
+    private const SEPARATOR = "~";
+    private const CHILDSEPARATOR = ":";
+
+    public function getSignOut($request, $response)
     {
+        $this->auth->logout();
+        return $response->withJson([
+            'state' => 'success',
+            'message' => 'You have been logged out'
+        ]);
+    }
 
-        $this->flash->addMessage('messages','Hello, please login.');
+    public function getSignIn($request, $response)
+    {
+        $this->flash->addMessage('messages', 'Hello, please login.');
 
-        $thistate =  json_encode('help');
-        $chuj = json_encode($this->flash->getMessages(),true);
-
-        return $this->view->render($response,
-            'app-boot.twig',
-            array('state'=>$thistate,
-                'messages'=> $chuj )
-        );
+        return $this->view->render($response, 'app-boot.twig', [
+            'state' => json_encode('help'),
+            'messages' => json_encode($this->flash->getMessages(), true)
+        ]);
     }
 
     public function postSignIn($request, $response)
     {
-        try{
-            //Attempt authentication
+        try {
             $payload = $request->getQueryParams();
-
-            $auth = $this->auth->attempt($payload['email'],
-                $payload['password']);
-
+            $auth = $this->auth->attempt($payload['email'], $payload['password']);
 
             if (!$auth) {
-                $thistate = "Validation failed - you stated a malformed email address or a wrong password for " . $request->getParam('email');
-
-                return $response->withJson(array('message' => $thistate,
+                return $response->withJson([
+                    'message' => "Validation failed - you stated a malformed email address or a wrong password for {$payload['email']}",
                     'state' => 'error',
-                    'auth' => false));
-
-            } else {
-                $user = User::where('email', '=', $request->getParam('email'))->first();
-                //Create cornerstone for hashgraph
-                $origin = env('HASH_BASE');
-
-                //Get timestamp for now
-                $now = UniversalTimestamp::now();
-
-                $roles['developer'] = $user->is_developer;
-                $roles['admin'] = $user->is_admin;
-                $roles['recruiter'] = $user->is_recruiter;
-                $roles['candidate'] = $user->is_candidate;
-
-                $roles = json_encode($roles, true);
-
-                //Initialize hashgraph with timestamp and data for frontend
-                $cornerstone = $this->iwahash($origin, "TIMESTAMP", $now);
-                $cornerstone = $this->iwahash($cornerstone, "ORIGIN", $origin);
-                $cornerstone = $this->iwahash($cornerstone, "EMAIL", $payload["email"]);
-                $cornerstone = $this->iwahash($cornerstone, "AUTH", "TRUE");
-                $cornerstone = $this->iwahash($cornerstone, "ROLES", $roles);
-                $cornerstone = $this->iwahash($cornerstone, "CURRENT_ROLE", $user->current_role);
-
-
-                //Save current token to current session ID - unique session resolving per user
-                //based on storing the tokenjo
-                $_SESSION['creds'][urlencode($cornerstone)] = ['token' => $cornerstone,
-                    'user' => $payload['email']];
-                $_SESSION['user'] = $user;
-
-                return $response->withJson(array('planck' => $cornerstone,
-                    'state' => 'success',
-                    'auth' => true));
+                    'auth' => false
+                ]);
             }
-        }catch(Exception $e){
-            print_r($e);
+
+            $user = User::where('email', $payload['email'])->first();
+
+            $roles = [
+                'developer' => $user->is_developer,
+                'admin' => $user->is_admin,
+                'recruiter' => $user->is_recruiter,
+                'candidate' => $user->is_candidate
+            ];
+
+            $cornerstone = $this->buildCornerstone($user, $payload['email'], json_encode($roles, true));
+
+            $_SESSION['creds'][urlencode($cornerstone)] = [
+                'token' => $cornerstone,
+                'user' => $payload['email']
+            ];
+            $_SESSION['user'] = $user;
+
+            return $response->withJson([
+                'planck' => $cornerstone,
+                'state' => 'success',
+                'auth' => true
+            ]);
+        } catch (Exception $e) {
+            return $response->withStatus(500)->withJson([
+                'message' => 'Internal server error',
+                'error' => $e->getMessage()
+            ]);
         }
     }
 
-    public function getSignUp($request,$response)
+    private function buildCornerstone(User $user, string $email, string $roles): string
     {
-        try{
-            //Create cornerstone for hashgraph
-            $origin = env('HASH_BASE');
+        $origin = env('HASH_BASE');
+        $now = UniversalTimestamp::now();
 
-            //Get timestamp for now
+        $cornerstone = $this->iwahash($origin, "TIMESTAMP", $now);
+        $cornerstone = $this->iwahash($cornerstone, "ORIGIN", $origin);
+        $cornerstone = $this->iwahash($cornerstone, "EMAIL", $email);
+        $cornerstone = $this->iwahash($cornerstone, "AUTH", "TRUE");
+        $cornerstone = $this->iwahash($cornerstone, "ROLES", $roles);
+        $cornerstone = $this->iwahash($cornerstone, "CURRENT_ROLE", $user->current_role);
+
+        return $cornerstone;
+    }
+
+    public function getSignUp($request, $response)
+    {
+        try {
+            $origin = env('HASH_BASE');
             $now = UniversalTimestamp::now();
 
-            //Initialize hashgraph with timestamp and data for frontend
             $cornerstone = $this->iwahash($origin, "TIMESTAMP", $now);
             $cornerstone = $this->iwahash($cornerstone, "ORIGIN", $origin);
             $cornerstone = $this->iwahash($cornerstone, "SESSION_AUTH", "false");
 
-            //TODO: Serving the planck in the header and json response - don't know which will be faster to do for demo
-            return $response->withJson(array('planck'=>$cornerstone,
-                'dehashed'=>$this->dehash($cornerstone)
-            ));
-        }catch(Exception $e){
-            print_r($e);
+            return $response->withJson([
+                'planck' => $cornerstone,
+                'dehashed' => $this->dehash($cornerstone)
+            ]);
+        } catch (Exception $e) {
+            return $response->withStatus(500)->withJson([
+                'message' => 'Internal server error',
+                'error' => $e->getMessage()
+            ]);
         }
     }
 
-    public function getSignUpLanding($request,$response)
+    public function postSignUp($request, $response)
     {
-        return $this->view->render($response,'app-boot.twig');
-    }
-
-    public function postSignUp($request, $response) {
-        try{
-            $roles = ['recruiter', 'candidate'];
-
-            $validation = $this->validator->validate($request, [
-                'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
-                'password' => v::noWhitespace()->notEmpty(),
-                'role'=>v::notEmpty()->in($roles)
-            ]);
-
-            if ($validation->failed()) {
-                $failmsg = 'Validation Failed - Email taken or in invalid format. ';
-                $state = 'error';
-                return $response->withJson(array('state' => $state, 'message' => $failmsg));
+        try {
+            if (!$this->validateSignUpRequest($request)) {
+                return $response->withJson([
+                    'state' => 'error',
+                    'message' => 'Validation Failed - Email taken or in invalid format.'
+                ]);
             }
 
-            $role = $request->getParam('role');
+            $user = $this->createUser($request);
+            $this->sendConfirmationEmail($user, $request->getParam('role'));
 
-            $umail = $request->getParam('email');
-            $token = env('TOKEN');
-
-            $uniqueId = 'prizm';
-            $uniqueId = $this->iwahash($uniqueId, "UMAIL", $umail);
-            $uniqueId = $this->iwahash($uniqueId, "TOKEN", $token);
-            $uniqueId = $this->iwahash($uniqueId, "DATE", date('Ymdhis'));
-
-            $aname = $umail;
-            $aname = explode('@', $aname)[0] . explode('@', $aname)[1] . md5(date('YMDS'));
-
-            $firstname = !empty($request->getParam('firstname')) ? $request->getParam('firstname') : null;
-            $lastname = !empty($request->getParam('lastname')) ? $request->getParam('lastname') : null;
-
-            $passw = $request->getParam('password');
-            $group = $request->getParam('chosengroup');
-
-            $user = User::create([
-                'email' => $umail,
-                'name' => $aname,
-                'first_name' => $firstname,
-                'last_name' => $lastname,
-                'password' => password_hash($passw, PASSWORD_DEFAULT),
-                'activ_code' => urlencode($uniqueId), // <-- add the activation code to database
-                'group_id' => $group,
-                'cvadded' => false,
+            return $response->withJson([
+                'message' => 'Successful Registration!',
+                'state' => 'Success'
             ]);
-            $user->current_role = strtolower($role);
-            $role = 'is_' . strtolower($role);
-            $user->$role = true;
-            $user->save();
-
-            $targetEmail = $request->getParam('email');
-
-            $alink = env('FRONTEND_URL') . "auth/confirm?code=" . urlencode($uniqueId);
-            $arole = $request->getParam('role');
-            $auname= env('MAIL_FROM');
-
-            $mail = new Message;
-            $mail->setFrom($auname)
-                ->addTo($targetEmail)
-                ->setSubject('Please confirm your email from Refair.me')
-                ->setHTMLBody(renderEmailTemplate('signup', ['role' => $arole,
-                    'link' => $alink]));
-
-            if (!$this->mailer->send($mail)) {
-                $message = "Succesfull Registration!";
-            } else {
-                $errmsg = "Mailer could not send Emails, but user added.";
-                throw new Exception($errmsg);
-            }
-
-            return $response->withJson(array('message' => $message, 'state' => 'Success'));
-        }catch(Exception $e){
-            print_r($e);
+        } catch (Exception $e) {
+            return $response->withStatus(500)->withJson([
+                'message' => 'Internal server error',
+                'error' => $e->getMessage()
+            ]);
         }
     }
 
-    public function confirmEmail($request,$response)
+    private function validateSignUpRequest($request): bool
     {
-        try{
+        $validation = $this->validator->validate($request, [
+            'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
+            'password' => v::noWhitespace()->notEmpty(),
+            'role' => v::notEmpty()->in(['recruiter', 'candidate'])
+        ]);
+
+        return !$validation->failed();
+    }
+
+    private function createUser($request): User
+    {
+        $email = $request->getParam('email');
+        $uniqueId = $this->generateUniqueId($email);
+        $accountName = $this->generateAccountName($email);
+
+        $user = User::create([
+            'email' => $email,
+            'name' => $accountName,
+            'first_name' => $request->getParam('firstname'),
+            'last_name' => $request->getParam('lastname'),
+            'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
+            'activ_code' => urlencode($uniqueId),
+            'group_id' => $request->getParam('chosengroup'),
+            'cvadded' => false,
+        ]);
+
+        $role = strtolower($request->getParam('role'));
+        $user->current_role = $role;
+        $user->{"is_$role"} = true;
+        $user->save();
+
+        return $user;
+    }
+
+    private function generateUniqueId(string $email): string
+    {
+        $uniqueId = self::ORIGIN;
+        $uniqueId = $this->iwahash($uniqueId, "UMAIL", $email);
+        $uniqueId = $this->iwahash($uniqueId, "TOKEN", env('TOKEN'));
+        $uniqueId = $this->iwahash($uniqueId, "DATE", date('Ymdhis'));
+
+        return $uniqueId;
+    }
+
+    private function generateAccountName(string $email): string
+    {
+        $parts = explode('@', $email);
+        return $parts[0] . $parts[1] . md5(date('YMDS'));
+    }
+
+    private function sendConfirmationEmail(User $user, string $role): void
+    {
+        $activationLink = env('FRONTEND_URL') . "auth/confirm?code=" . urlencode($user->activ_code);
+
+        $mail = new Message;
+        $mail->setFrom(env('MAIL_FROM'))
+            ->addTo($user->email)
+            ->setSubject('Please confirm your email from Refair.me')
+            ->setHTMLBody(renderEmailTemplate('signup', [
+                'role' => $role,
+                'link' => $activationLink
+            ]));
+
+        if (!$this->mailer->send($mail)) {
+            throw new Exception("Mailer could not send Emails");
+        }
+    }
+
+    public function confirmEmail($request, $response)
+    {
+        try {
             if (!$request->getParam('code')) {
-                $errmsg = 'No activation code available!';
-
-                return $response->withJson(['message'=>$errmsg]);
+                return $response->withJson([
+                    'message' => 'No activation code available!'
+                ]);
             }
 
             $user = User::where('activ_code', $request->getParam('code'))->first();
 
-            if($user->activ == 1){
-                $this->flash->addMessage('info','This user had already been activated.');
+            if ($user->activ == 1) {
+                $this->flash->addMessage('info', 'This user had already been activated.');
                 return $this->response->withRedirect($this->router->pathFor('auth.signin'));
-            }else{
-                $user->activ = 1;
-                $user->save();
-
-                //TODO: locale support necessary
-                $message = 'Your signup is a success. You can sign in now! Please return to your application window. ';
-
-                return $this->response->withJson( [ 'message' => $message ]);
             }
-        }catch(PDOException $e){
-            return print_r($e);
+
+            $user->activ = 1;
+            $user->save();
+
+            return $response->withJson([
+                'message' => 'Your signup is a success. You can sign in now! Please return to your application window.'
+            ]);
+        } catch (Exception $e) {
+            return $response->withStatus(500)->withJson([
+                'message' => 'Internal server error',
+                'error' => $e->getMessage()
+            ]);
         }
     }
 
-    public function csrftoken($request, $response, $args){
-        try{
+    public function csrftoken($request, $response)
+    {
+        try {
             $session = new Helper;
 
-            if(isset($session['csrf_keypair'])){
+            if (isset($session['csrf_keypair'])) {
                 return $response->withJson($session['csrf_keypair']);
-            }else{
-
-                $slimGuard = new Guard;
-                //    $slimGuard->validateStorage();
-                // Generate new tokens
-                $csrfNameKey = $slimGuard->getTokenNameKey();
-                $csrfValueKey = $slimGuard->getTokenValueKey();
-                $keyPair = $slimGuard->generateToken();
-
-                $session['csrf_keypair'] = $keyPair;
-
-                return $response->withJson($keyPair);
             }
-        }catch(Exception $e){
-            return print_r($e);
+
+            $slimGuard = new Guard;
+            $keyPair = $slimGuard->generateToken();
+            $session['csrf_keypair'] = $keyPair;
+
+            return $response->withJson($keyPair);
+        } catch (Exception $e) {
+            return $response->withStatus(500)->withJson([
+                'message' => 'Internal server error',
+                'error' => $e->getMessage()
+            ]);
         }
     }
-
 }

@@ -13,13 +13,13 @@
                 </div>
                 <div class="col"></div>
                 <div class="col-12 col-md-5">
-                  <h1 class="text-left" style="font-size: 50px;">{{recovery ? 'Recover password' : 'Sign In'}}</h1>
-                  <form action="" v-on:submit.prevent="recovery ? recoverPassword() : login()" method="post">
-                    <small class="help-block" style="color: red">{{error}}</small>
+                  <h1 class="text-left" style="font-size: 50px;">{{ recovery ? 'Recover password' : 'Sign In' }}</h1>
+                  <form action="" @submit.prevent="recovery ? recoverPassword() : login()">
+                    <small class="help-block" style="color: red">{{ error }}</small>
                     <input class="form-control" v-model="email" type="email" name="email" id="email" placeholder="E-mail">
                     <label for="password">Password</label>
                     <input class="form-control mt-2" v-show="!recovery" v-model="password" type="password" name="password" id="password" placeholder="Password">
-                    <p>{{recoveryResponse}}</p>
+                    <p>{{ recoveryResponse }}</p>
                     <button class="btn btn-info btn-lg">
                       <span v-if="recovery">Recover password</span>
                       <span v-else>Sign In</span>
@@ -37,68 +37,72 @@
       </div>
     </div>
   </div>
-
 </template>
-<script>
-import helpy from '../helpers.js'
 
-export default {
-  computed: {
-    isAuthenticated: vm => vm.$store.getters.isAuthenticated
-  },
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
 
-  mounted(){
-    this.error = this.$route.params.info
-  },
+const store = useStore()
+const router = useRouter()
+const route = useRoute()
 
-  data () {
-    return {
-      password: '',
-      email: '',
-      error: '',
-      recovery: false,
-      recoveryResponse: ''
+// Reactive state
+const password = ref('')
+const email = ref('')
+const error = ref('')
+const recovery = ref(false)
+const recoveryResponse = ref('')
+
+// Computed
+const isAuthenticated = computed(() => store.getters.isAuthenticated)
+
+// Lifecycle hooks
+onMounted(() => {
+  error.value = route.params.info
+})
+
+// Methods
+const login = async () => {
+  try {
+    const ret = await store.dispatch('signin', {
+      email: email.value,
+      password: password.value
+    })
+
+    const data = ret.data
+    if (data.state === 'error') {
+      error.value = data.message
+    } else {
+      if (route.query.job) {
+        router.push(`/job/${route.query.job}`)
+      } else {
+        router.push({
+          name: 'Profile',
+          params: { tab: route.params.tab }
+        })
+      }
     }
-  },
+  } catch (err) {
+    console.log(err)
+  } finally {
+    password.value = ''
+  }
+}
 
-  methods: {
-    login () {
-      this.$store.dispatch('signin', {
-        locmail: this.$data.email,
-        locpass: this.$data.password
-      })
-          .then(ret => {
-            const data = ret.data;
-            if(data.state === 'error'){
-              this.error = data.message
-            } else {
-              //if(this.$store.state.dehashedData.LAST_ROLE === 'candidate'){
-              /*
-              if(this.$route.query.job){
-                this.$router.push(`/job/${this.$route.query.job}`)
-              } else {
-                this.$router.push('/jobs')
-              }*/
-              //} else {
-              if(this.$route.query.job){
-                this.$router.push(`/job/${this.$route.query.job}`)
-              } else {
-                this.$router.push({name: 'Profile', params: { tab: this.$route.params.tab}})
-              }
-              //}
-            }
-          })
-          .catch(error => console.log(error))
-          .finally(() => this.password = '');
-    },
-
-    recoverPassword () {
-      this.$store.dispatch('passwordRecovery',{email: this.email})
-          .then(ret => this.recoveryResponse = ret.data.message)
-    }
+const recoverPassword = async () => {
+  try {
+    const ret = await store.dispatch('passwordRecovery', {
+      email: email.value
+    })
+    recoveryResponse.value = ret.data.message
+  } catch (err) {
+    console.log(err)
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .container {
   margin-top: 20px;
