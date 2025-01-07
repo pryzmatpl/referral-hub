@@ -11,10 +11,11 @@
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
 
+use App\Router;
 use DavidePastore\Slim\Validation\Validation;
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidPathException;;
+use Dotenv\Exception\InvalidPathException;
 use Slim\Factory\AppFactory;
 use Respect\Validation\Validator as v;
 use Aurmil\Slim\CsrfTokenToView;
@@ -32,7 +33,7 @@ try {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
 } catch (InvalidPathException $e) {
-    throw new \Exception("Failed to load environment");
+    throw new Exception("Failed to load environment");
 }
 
 // Create Container Builder
@@ -89,6 +90,7 @@ $app->add(function ($request, $response, $next) {
 });
 
 require_once __DIR__ . '/oauth2.php';
-require __DIR__ . '/../app/Router.php';
+
+Router::registerRoutes($app);
 
 return $app;

@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Controllers\Controller;
 use Respect\Validation\Validator as v;
 use Litipk\Jiffy\UniversalTimestamp;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Container\ContainerInterface;
 use Slim\Csrf\Guard;
 use SlimSession\Helper;
@@ -36,7 +38,7 @@ class AuthController extends Controller
         $this->logger =$logger;
     }
 
-    public function getSignOut($request, $response)
+    public function getSignOut(Request $request, Response $response)
     {
         $this->auth->logout();
         return $response->withJson([
@@ -47,6 +49,9 @@ class AuthController extends Controller
 
     public function getSignIn($request, $response)
     {
+        $response = $response->getBody()->write("HELLO");
+        $this->logger->debug("HELLO");
+        return $response;
         $this->flash->addMessage('messages', 'Hello, please login.');
 
         return $this->view->render($response, 'app-boot.twig', [
@@ -56,13 +61,15 @@ class AuthController extends Controller
     }
 
     /**
-     * @param $request
-     * @param $response
+     * @param Request $request
+     * @param Response $response
      * @return mixed
      */
-    public function postSignIn($request, $response)
+    public function postSignIn(Request $request, Response $response): mixed
     {
+        $response = $response->getBody()->write("HELLO");
         $this->logger->debug("HELLO");
+        return $response;
         try {
             $payload = $request->getQueryParams();
             $auth = $this->auth->attempt($payload['email'], $payload['password']);
