@@ -13,6 +13,7 @@
 
 use App\Controllers\Auth\AuthController;
 use DI\ContainerBuilder;
+use Slim\Csrf\Guard;
 use Slim\Views\Twig;
 use Slim\Flash\Messages;
 use Nette\Mail\SmtpMailer;
@@ -60,6 +61,9 @@ return function (ContainerBuilder $containerBuilder) {
             $log = new Logger('main');
             $log->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/app.log', Level::Debug));
             return $log;
+        },
+        'csrf' => function($c) {
+            return new Guard;
         },
         AuthController::class => function ($c) {
             return new AuthController(

@@ -66,19 +66,7 @@ AppFactory::setContainer(container: $container);
 $app = AppFactory::create();
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$errorMiddleware->setDefaultErrorHandler(function (
-    Psr\Http\Message\ServerRequestInterface $request,
-    Throwable $exception,
-    bool $displayErrorDetails,
-    bool $logErrors,
-    bool $logErrorDetails
-) use ($container) {
-    $logger = $container->get('logger');
-    $logger->error($exception->getMessage(), ['exception' => $exception]);
-    $response = new Slim\Psr7\Response();
-    $response->getBody()->write('An error occurred');
-    return $response->withStatus(500);
-});
+
 
 // Validators
 $usernameValidator = v::alnum()->noWhitespace()->length(1, 15);
