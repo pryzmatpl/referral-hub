@@ -49,9 +49,6 @@ class AuthController extends Controller
 
     public function getSignIn($request, $response)
     {
-        $response = $response->getBody()->write("HELLO");
-        $this->logger->debug("HELLO");
-        return $response;
         $this->flash->addMessage('messages', 'Hello, please login.');
 
         return $this->view->render($response, 'app-boot.twig', [
@@ -67,9 +64,6 @@ class AuthController extends Controller
      */
     public function postSignIn(Request $request, Response $response): mixed
     {
-        $response = $response->getBody()->write("HELLO");
-        $this->logger->debug("HELLO");
-        return $response;
         try {
             $payload = $request->getQueryParams();
             $auth = $this->auth->attempt($payload['email'], $payload['password']);

@@ -41,29 +41,35 @@ return function (ContainerBuilder $containerBuilder) {
             return new App\Validation\Validator();
         },
         'mailer' => function () {
-            return new Nette\Mail\SmtpMailer([
-                "host" => getenv('MAIL_HOST'),
-                "username" => getenv('MAIL_USERNAME'),
-                "password" => getenv('MAIL_PASSWORD'),
-                "secure" => getenv('MAIL_ENCRYPTION', 'tls'),
-                "port" => getenv('MAIL_PORT', 587),
-            ]);
+            return new Nette\Mail\SmtpMailer(
+                host: $_ENV['MAIL_HOST'],
+                username: $_ENV['MAIL_USERNAME'],
+                password:  $_ENV['MAIL_PASSWORD'],
+                port: $_ENV['MAIL_PORT'],
+                encryption: $_ENV['MAIL_ENCRYPTION'],
+            );
         },
         'db' => function ($c) {
+            $log = $c->get('logger');
+            $log->debug('DB_HOST: ' . $_ENV['DB_HOST']);
+            $log->debug('DB_DATABASE: ' . $_ENV['DB_DATABASE']);
             return new PDO(
-                "mysql:host=" . getenv('DB_HOST') . ";dbname=" . getenv('DB_DATABASE'),
-                getenv('DB_USERNAME'),
-                getenv('DB_PASSWORD'),
+                "mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_DATABASE'],
+                $_ENV['DB_USERNAME'],
+                $_ENV['DB_PASSWORD'],
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
         },
-        'logger' => function ($c) {
+        'logger' => function () {
             $log = new Logger('main');
             $log->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/app.log', Level::Debug));
             return $log;
         },
         'csrf' => function($c) {
             return new Guard;
+        },
+        'session' => function ($c) {
+            return new \SlimSession\Helper;
         },
         AuthController::class => function ($c) {
             return new AuthController(
