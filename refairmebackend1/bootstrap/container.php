@@ -24,9 +24,6 @@ use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-$log = new Logger('main');
-$log->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/app.log', Level::Debug));
-
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
         'auth' => function ($c) {
@@ -60,6 +57,8 @@ return function (ContainerBuilder $containerBuilder) {
             );
         },
         'logger' => function ($c) {
+            $log = new Logger('main');
+            $log->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/app.log', Level::Debug));
             return $log;
         },
         AuthController::class => function ($c) {

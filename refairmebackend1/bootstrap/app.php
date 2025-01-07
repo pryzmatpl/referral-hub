@@ -42,29 +42,11 @@ $containerBuilder = new ContainerBuilder();
 // Add container definitions
 $definitions = require __DIR__ . '/container.php';
 $definitions($containerBuilder);
-
-// Build PHP-DI Container instance
 $container = $containerBuilder->build();
 
-// Create App instance
 AppFactory::setContainer($container);
 $app = AppFactory::create();
-
-// Application settings
-$app->getContainer()->set('settings', [
-    'displayErrorDetails' => true,
-    'mailer' => [
-        'host' => getenv('MAIL_HOST'),
-        'username' => getenv('MAIL_USERNAME'),
-        'password' => getenv('MAIL_PASSWORD'),
-        'port' => getenv('MAIL_PORT'),
-        'secure' => getenv('MAIL_SECURE'),
-    ],
-    'determineRouteBeforeAppMiddleware' => true,
-]);
-
-// Session management
-$_SESSION['app'] = $container;
+// Create App instance
 
 // Validators
 $usernameValidator = v::alnum()->noWhitespace()->length(1, 15);
@@ -80,7 +62,6 @@ $app->add(new Session([
     'autorefresh' => true,
     'lifetime' => '1 hour',
 ]));
-$app->add(new PrizmMiddleware($container));
 $app->add(function ($request, $response, $next) {
     $route = $request->getAttribute("route");
     $methods = $route ? array_merge_recursive([], $route->getMethods()) : [$request->getMethod()];
