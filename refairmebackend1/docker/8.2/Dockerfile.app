@@ -46,6 +46,7 @@ COPY ./*.ini /etc/php/conf.d/
 
 # Make sure the start script is executable
 RUN chmod +x /usr/local/bin/start-container
+RUN chmod -R 777 /var/www/html/storage/logs
 
 EXPOSE 80 443
 
