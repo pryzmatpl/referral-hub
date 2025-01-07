@@ -34,7 +34,7 @@
         "illuminate/events": "*",
         "carlosocarvalho/simple-input": "*",
         "symfony/process": "*",
-        "monolog/monolog":"*",
+        "monolog/monolog":"^3.8",
         "phpmailer/phpmailer": "*",
         "league/oauth2-client": "*",
         "league/oauth2-linkedin": "*",

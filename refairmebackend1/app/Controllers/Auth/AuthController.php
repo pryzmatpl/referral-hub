@@ -2,7 +2,11 @@
 
 namespace App\Controllers\Auth;
 
+use App\Auth\Auth;
+use App\Validation\Validator;
 use Exception;
+use Monolog\Logger;
+use Nette\Mail\Mailer;
 use Nette\Mail\Message;
 use App\Models\User;
 use App\Controllers\Controller;
@@ -14,21 +18,22 @@ use SlimSession\Helper;
 
 class AuthController extends Controller
 {
-    protected $container;
     protected $auth;
-    protected $flash;
-    protected $view;
     protected $validator;
     protected $mailer;
+    protected $logger;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(
+        Auth $auth,
+        Validator $validator,
+        Mailer $mailer,
+        Logger $logger,
+    )
     {
-        $this->container = $container;
-        $this->auth = $container->get('auth');
-        $this->flash = $container->get('flash');
-        $this->view = $container->get('view');
-        $this->validator = $container->get('validator');
-        $this->mailer = $container->get('mailer');
+        $this->auth = $auth;
+        $this->validator = $validator;
+        $this->mailer = $mailer;
+        $this->logger =$logger;
     }
 
     private const ORIGIN = "prizm";

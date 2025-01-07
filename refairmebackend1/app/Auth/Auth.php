@@ -13,6 +13,7 @@
 
 namespace App\Auth;
 
+use Monolog\Logger;
 use PDO;
 use App\Models\User;
 use SlimSession\Helper as Session;
@@ -21,11 +22,15 @@ class Auth
 {
     protected $db;
     protected $session;
+    protected $logger;
 
-    public function __construct(PDO $db, Session $session)
+    public function __construct(PDO $db, Session $session, Logger $logger)
     {
         $this->db = $db;
         $this->session = $session;
+        $this->logger=$logger;
+
+        $this->logger->debug("Debug Message");
     }
 
     public function attempt(string $email, string $password): bool

@@ -11,6 +11,7 @@
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
 
+use App\Controllers\Auth\AuthController;
 use DI\ContainerBuilder;
 use Slim\Views\Twig;
 use Slim\Flash\Messages;
@@ -18,29 +19,27 @@ use Nette\Mail\SmtpMailer;
 use App\Auth\Auth;
 use App\Validation\Validator;
 
+
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
         'auth' => function ($c) {
             return new App\Auth\Auth(
                 $c->get('db'),
-                $c->get('session')
+                $c->get('session'),
+                $c->get('logger')
             );
         },
         'flash' => function () {
             return new Slim\Flash\Messages();
         },
-        'view' => function ($c) {
-            $view = Slim\Views\Twig::create(__DIR__ . '/../resources/views', [
-                'cache' => false,
-            ]);
-            $view->getEnvironment()->addGlobal('auth', $c->get('auth'));
-            $view->getEnvironment()->addGlobal('flash', $c->get('flash'));
-            return $view;
-        },
-        'validator' => function ($c) {
+        'validator' => function () {
             return new App\Validation\Validator();
         },
-        'mailer' => function ($c) {
+        'mailer' => function () {
             return new Nette\Mail\SmtpMailer([
                 "host" => getenv('MAIL_HOST'),
                 "username" => getenv('MAIL_USERNAME'),
@@ -55,6 +54,19 @@ return function (ContainerBuilder $containerBuilder) {
                 getenv('DB_USERNAME'),
                 getenv('DB_PASSWORD'),
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
+        },
+        'logger' => function ($c) {
+            $log = new Logger('main');
+            $log->pushHandler(new StreamHandler('../storage/logs/app.log', Level::Warning));
+            return $log;
+        },
+        AuthController::class => function ($c) {
+            return new AuthController(
+                $c->get('auth'),
+                $c->get('validator'),
+                $c->get('mailer'),
+                $c->get('logger'),
             );
         }
     ]);
