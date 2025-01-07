@@ -9,7 +9,6 @@ use App\Controllers\Auth\AuthController;
 use App\Controllers\Auth\PasswordController;
 use App\Controllers\ConsoleController;
 use App\Controllers\JobController;
-use App\Controllers\JonController;
 use App\Controllers\ProfileController;
 use App\Controllers\ProjectController;
 use App\Controllers\RefairController;
@@ -33,13 +32,12 @@ class Router {
         $app->get('/auth/signup', [AuthController::class, 'getSignUp'])->setName('auth.signup');
         $app->post('/auth/signup', [AuthController::class, 'postSignUp']);
         $app->get('/auth/confirm', [AuthController::class, 'confirmEmail'])->setName('auth.confirm');
-        $app->get('/auth/signin', [AuthController::class, 'getSignIn'])->setName('auth.signin');
+        $app->post('/auth/signin', [AuthController::class, 'postSignIn'])->setName('auth.signin');
         $app->get('/auth/recover', [AuthController::class, 'getChangePass'])->setName('auth.recover');
         $app->get('/auth/recover/{hash}', [AuthController::class, 'getChangePass']);
         $app->post('/auth/recover', [AuthController::class, 'postChangePass']);
         $app->post('/auth/change', [AuthController::class, 'changePass'])->setName('auth.pwdxchng');
         $app->get('/api/auth/signout', [AuthController::class, 'getSignOut'])->setName('auth.signout');
-        $app->get('/api/auth/signin', [AuthController::class, 'postSignIn']);
 
         $app->get('/api/job/{id}', [RefairController::class, 'getjob'])->setName('refair.job.get');
         $app->get('/matchprofile', [RefairController::class, 'matchprofile'])->setName('refair.matchprofile');
@@ -60,7 +58,7 @@ class Router {
         $app->get('/getjobs/{page}', [JobController::class, 'get'])->setName('refair.getjobs');
         $app->post('/getjobs', [JobController::class, 'get'])->setName('refair.getjobs');
         $app->post('/job/add', [JobController::class, 'add'])->setName('refair.add.job');
-        $app->post('/api/job/new', [JonController::class, 'add'])->setName('refair.add.new.job');
+        $app->post('/api/job/new', [JobController::class, 'add'])->setName('refair.add.new.job');
         $app->post('/job/update/{id}', [JobController::class, 'update'])->setName('refair.update.job');
         $app->get('/job/delete/{id}', [JobController::class, 'delete'])->setName('refair.delete.job');
 

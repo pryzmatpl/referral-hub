@@ -2,12 +2,8 @@
 
 namespace App\Validation;
 
-use Respect\Validation\Validator as Respect;
 use Respect\Validation\Exceptions\NestedValidationException;
 
-/**
-* 
-*/
 class Validator
 {
 	protected $errors;

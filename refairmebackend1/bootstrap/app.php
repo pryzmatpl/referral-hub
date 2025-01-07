@@ -1,32 +1,39 @@
 <?php
-use DI\Container;
-use Slim\Factory\AppFactory;
-use Slim\Middleware\Session;
+/*
+ * Copyright (c) 2025 Pryzmat sp. z o.o. (Pryzmat LLC)
+ * All rights reserved.
+ * 07.01.2025, 21:17
+ * app.php
+ * referral-hub
+ *
+ * This software and its accompanying documentation are protected by copyright law and international treaties.
+ * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
+ * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
+ */
+
+use App\Router;
+use DavidePastore\Slim\Validation\Validation;
+use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
-use Slim\Csrf\Guard;
-use Slim\Flash\Messages;
-use Psr\Container\ContainerInterface;
-use App\Router;
-use App\Validation\Validator;
-use SlimSession\Helper;
+use Slim\Factory\AppFactory;
+use Respect\Validation\Validator as v;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Processor\UidProcessor;
-use Monolog\Processor\MemoryUsageProcessor;
-use Monolog\Processor\IntrospectionProcessor;
+use Aurmil\Slim\CsrfTokenToView;
+use Aurmil\Slim\CsrfTokenToHeaders;
+use Slim\Http\Request;
+use Slim\Csrf\Guard;
+use Slim\Http\Response;
+use App\Middleware\PrizmMiddleware;
+use Slim\Middleware\Session;
 
-#use Illuminate\Events\Dispatcher;
+require __DIR__ . '/../vendor/autoload.php';
 
-$container = new Container();
-$capsule = new Capsule;
-
+$capsule = new Capsule();
 // Load environment variables
 try {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
-
     $config = [
         'driver' => $_ENV['DB_DRIVER'],
         'host' => $_ENV['DB_HOST'],
@@ -44,99 +51,35 @@ try {
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
 } catch (InvalidPathException $e) {
-    error_log('Could not load .env file: ' . $e->getMessage());
+    throw new Exception("Failed initialize");
 }
 
-// Register globally to app
-$container->set('session', function () {
-    return new Helper();
-});
+// Create Container Builder
+$containerBuilder = new ContainerBuilder();
 
-// Create Slim App instance ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-$app = AppFactory::create(container:$container);
-$app->addRoutingMiddleware();
-Router::registerRoutes($app);
+// Add container definitions
+$definitions = require __DIR__ . '/container.php';
+$definitions($containerBuilder);
+$container = $containerBuilder->build();
 
-// Set up the logger
-$container->set('logger', function () {
-    $logger = new Logger('app');
+AppFactory::setContainer(container: $container);
+$app = AppFactory::create();
 
-    // You can add various processors to add more contextual information to logs
-    $logger->pushProcessor(new UidProcessor());
-    $logger->pushProcessor(new MemoryUsageProcessor());
-    $logger->pushProcessor(new IntrospectionProcessor(Logger::DEBUG, ['App\\']));
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
-    // Stream handler to output logs to a file
-    $logFile = __DIR__ . '/../logs/app.log';
-    $streamHandler = new StreamHandler($logFile, Logger::DEBUG);
-    $logger->pushHandler($streamHandler);
 
-    return $logger;
-});
+// Validators
+$usernameValidator = v::alnum()->noWhitespace()->length(1, 15);
+$ageValidator = v::numeric()->positive()->between(1, 20);
 
-// Register Middleware
 $app->add(new Session([
     'name' => 'prizm_session',
     'autorefresh' => true,
     'lifetime' => '1 hour',
 ]));
 
-// Error Handling Middleware
-$errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$container->set('settings', function () {
-    return [
-        'displayErrorDetails' => true,
-        'mailer' => [
-            'host' => $_ENV('MAIL_HOST'),
-            'username' => $_ENV('MAIL_USERNAME'),
-            'password' => $_ENV('MAIL_PASSWORD'),
-            'port' => $_ENV('MAIL_PORT'),
-            'secure' => $_ENV('MAIL_SECURE'),
-            'context' => strpos($_ENV('MAIL_HOST'), '@gmail.com') !== false ? [
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
-                ],
-            ] : [],
-        ],
-    ];
-});
+require_once __DIR__ . '/oauth2.php';
 
-$container->set('mailer', function (ContainerInterface $container) {
-    return new Nette\Mail\SmtpMailer($container->get('settings')['mailer']);
-});
+Router::registerRoutes($app);
 
-$container->set('flash', function () {
-    return new Messages();
-});
-
-$container->set('session', function () {
-    return new Helper();
-});
-
-$container->set('validator', function () {
-    return new Validator();
-});
-
-$container->set('csrf', function () {
-    return new Guard();
-});
-
-$errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$errorMiddleware->setDefaultErrorHandler(function (
-    Psr\Http\Message\ServerRequestInterface $request,
-    Throwable $exception,
-    bool $displayErrorDetails,
-    bool $logErrors,
-    bool $logErrorDetails
-) use ($container) {
-    $logger = $container->get('logger');
-    $logger->error($exception->getMessage(), ['exception' => $exception]);
-    $response = new Slim\Psr7\Response();
-    $response->getBody()->write('An error occurred');
-    return $response->withStatus(500);
-});
-
-// Run the application
-$app->run();
+return $app;

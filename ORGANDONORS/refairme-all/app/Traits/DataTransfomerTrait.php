@@ -10,11 +10,19 @@
  * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
-namespace App\Controllers;
 
-/**
- * Main HTTP controller class
- */
-class Controller
+trait DataTransfomerTrait
 {
+    /**
+     * @param array $weightsOfDb
+     * @return array
+     *
+     * Transforms keyed job/profile weight values
+     * into raw data series
+     */
+    public function transformWeight(array $weightsOfDb): array
+    {
+        return array_values($weightsOfDb);
+    }
+
 }
