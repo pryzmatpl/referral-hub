@@ -1,4 +1,5 @@
 <template>
+  <ModalTarget />
   <div>
     <nav id="mainNav" class="navbar navbar-expand-lg navbar-light text-uppercase p-2 px-3">
       <router-link class="navbar-brand" to="/">

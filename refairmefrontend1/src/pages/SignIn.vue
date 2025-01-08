@@ -9,12 +9,12 @@
               <div class="row d-flex justify-content-center">
                 <div class="mb-5 col-6 d-none d-md-block">
                   <h1 class="text-start" style="font-size: 60px;">Recruitment, with you in a driver seat</h1>
-                  <p style="font-size: 18px; font-weight: 600">Every matching job, fast tracked and feedback to match your skills to best roles</p>                         
+                  <p style="font-size: 18px; font-weight: 600">Every matching job, fast tracked and feedback to match
+                    your skills to best roles</p>
                 </div>
-                <div class="d-flex justify-content-center">     
-                    <GoogleLogin :callback="login"/>  
-                    {{ user }}      
-                  </div>   
+                <div class="d-flex justify-content-center">
+                  <GoogleLogin :callback="login" />
+                </div>
               </div>
             </div>
           </div>
@@ -26,11 +26,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, defineAsyncComponent } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { decodeCredential } from 'vue3-google-login'
+import { openModal } from '@kolirt/vue-modal'
 
+import RoleModal from '@/components/RoleModal.vue'
 
 const store = useStore()
 const router = useRouter()
@@ -53,11 +55,11 @@ onMounted(() => {
 
 // Methods
 const login = async (res) => {
- 
+
   ////// TODO - LOGIC TO CHECK IF USER ALREADY EXISTS IN DATABASE OR SHOULD MODAL BE RENDERED ////
   const userData = decodeCredential(res.credential)
   const uniqueId = userData.sub
-  router.push('/')
+  runModal()
   ////////////////////////////////////////////////////////////////////////////////////////////////
 
   try {
@@ -78,7 +80,7 @@ const login = async (res) => {
           params: { tab: route.params.tab }
         })
       } */
-     router.push('/')
+      router.push('/')
     }
   } catch (err) {
     console.log(err)
@@ -87,15 +89,19 @@ const login = async (res) => {
   }
 }
 
-const recoverPassword = async () => {
-  try {
-    const ret = await store.dispatch('passwordRecovery', {
-      email: email.value
+function runModal() {
+  openModal(RoleModal, {
+    test: 'some props'
+  })
+    // runs when modal is closed via confirmModal
+    .then((data) => {
+      console.log('success', data)
+      router.push('/')
     })
-    recoveryResponse.value = ret.data.message
-  } catch (err) {
-    console.log(err)
-  }
+    // runs when modal is closed via closeModal or esc
+    .catch(() => {
+      console.log('catch')
+    })
 }
 </script>
 

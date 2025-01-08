@@ -4,6 +4,7 @@ import router from "./router";
 import store from "@/store/index.js";
 
 import vue3GoogleLogin from 'vue3-google-login'
+import { createModal } from '@kolirt/vue-modal'
 
 import { library } from '@fortawesome/fontawesome-svg-core' 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -26,6 +27,20 @@ app.use(store);
 app.use(vue3GoogleLogin, {
     clientId: '254777876915-4lgmqe9diaebsjchptmdrt2edlqo3tn8.apps.googleusercontent.com'
   })
+  app.use(createModal({
+    transitionTime: 200,
+    animationType: 'slideDown',
+    modalStyle: {
+      padding: '5rem 2rem',
+      align: 'center',
+      'z-index': 201
+    },
+    overlayStyle: {
+      'background-color': 'rgba(0, 0, 0, .5)',
+      'backdrop-filter': 'blur(5px)',
+      'z-index': 200
+    }
+  }))
 app.config.devtools = true;
 app.config.performance = true;
 app.config.productionTip = false;
