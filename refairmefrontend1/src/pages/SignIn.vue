@@ -57,14 +57,15 @@ const login = async () => {
     if (data.state === 'error') {
       error.value = data.message
     } else {
-      if (route.query.job) {
+      /* if (route.query.job) {
         router.push(`/job/${route.query.job}`)
       } else {
         router.push({
           name: 'Profile',
           params: { tab: route.params.tab }
         })
-      }
+      } */
+     router.push('/')
     }
   } catch (err) {
     console.log(err)
