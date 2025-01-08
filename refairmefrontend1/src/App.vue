@@ -23,9 +23,6 @@
             <router-link class="nav-link py-3 px-0 px-lg-3" to="/job/add">Add</router-link>
           </li>
           <li class="nav-item mx-0 mx-lg-1" v-if="!isAuthenticated">
-            <router-link class="nav-link py-3 px-0 px-lg-3" to="/auth/signup">Signup</router-link>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1" v-if="!isAuthenticated">
             <router-link class="nav-link py-3 px-0 px-lg-3" to="/auth/signin">Signin</router-link>
           </li>
           <li class="nav-item mx-0 mx-lg-1" v-if="isAuthenticated">
