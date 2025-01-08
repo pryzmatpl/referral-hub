@@ -6,12 +6,15 @@
         <div class="col-12 inner-container">
           <div class="panel panel-default">
             <div class="panel-body">
-              <div class="row">
-                <div class="col-6 d-none d-md-block">
-                  <h1 class="text-left" style="font-size: 60px;">Recruitment, with you in a driver seat</h1>
-                  <p style="font-size: 18px; font-weight: 600">Every matching job, fast tracked and feedback to match your skills to best roles</p>
+              <div class="row d-flex justify-content-center">
+                <div class="mb-5 col-6 d-none d-md-block">
+                  <h1 class="text-start" style="font-size: 60px;">Recruitment, with you in a driver seat</h1>
+                  <p style="font-size: 18px; font-weight: 600">Every matching job, fast tracked and feedback to match your skills to best roles</p>                         
                 </div>
-                <div class="col"></div>
+                <div class="d-flex justify-content-center">     
+                    <GoogleLogin :callback="login"/>  
+                    {{ user }}      
+                  </div>   
               </div>
             </div>
           </div>
@@ -19,12 +22,15 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+import { decodeCredential } from 'vue3-google-login'
+
 
 const store = useStore()
 const router = useRouter()
@@ -46,7 +52,14 @@ onMounted(() => {
 })
 
 // Methods
-const login = async () => {
+const login = async (res) => {
+ 
+  ////// TODO - LOGIC TO CHECK IF USER ALREADY EXISTS IN DATABASE OR SHOULD MODAL BE RENDERED ////
+  const userData = decodeCredential(res.credential)
+  const uniqueId = userData.sub
+  router.push('/')
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
   try {
     const ret = await store.dispatch('signin', {
       email: email.value,
