@@ -153,33 +153,42 @@ class AuthController extends Controller
     {
         try {
             if (!$this->validateSignUpRequest($request)) {
-                return $response->withJson([
+                $response->getBody()->write(json_encode([
                     'state' => 'error',
                     'message' => 'Validation Failed - Email taken or in invalid format.'
-                ]);
+                    ]));
+
+                return $response
+                    ->withHeader('Content-Type', 'application/json');
             }
 
             $user = $this->createUser($request);
-            $this->sendConfirmationEmail($user, $request->getParam('role'));
+            /* $this->sendConfirmationEmail($user, $request->$payload['role']); */
 
-            return $response->withJson([
+            $response->getBody()->write(json_encode([
                 'message' => 'Successful Registration!',
                 'state' => 'Success'
-            ]);
+                ]));
+            
+            return $response
+                ->withHeader('Content-Type', 'application/json');
         } catch (Exception $e) {
-            return $response->withStatus(500)->withJson([
+            $response->getBody()->write(json_encode([
                 'message' => 'Internal server error',
                 'error' => $e->getMessage()
-            ]);
+                ]));
+                
+            return $response
+                ->withHeader('Content-Type', 'application/json');
         }
     }
 
     private function validateSignUpRequest($request): bool
     {
         $validation = $this->validator->validate($request, [
-            'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
+            /* 'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
             'password' => v::noWhitespace()->notEmpty(),
-            'role' => v::notEmpty()->in(['recruiter', 'candidate'])
+            'role' => v::notEmpty()->in(['recruiter', 'candidate']) */
         ]);
 
         return !$validation->failed();
@@ -197,24 +206,24 @@ class AuthController extends Controller
 
     private function createUser($request): User
     {
-        $email = $request->getParam('email');
+        $payload = json_decode($request->getBody(), true);
+        $email = $payload['email'];
         $uniqueId = $this->uuidv4();
         $accountName = $this->generateAccountName($email);
+        $role = strtolower($request->$payload['role']);
 
         $user = User::create([
             'email' => $email,
             'name' => $accountName,
-            'first_name' => $request->getParam('firstname'),
-            'last_name' => $request->getParam('lastname'),
-            'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
+            'first_name' => $request->$payload['firstname'],
+            'last_name' => $request->$payload['lastname'],
+            'password' => password_hash($payload['password'], PASSWORD_DEFAULT),
             'activ_code' => urlencode($uniqueId),
-            'group_id' => $request->getParam('chosengroup'),
+            'group_id' => $request->$payload['chosenGroup'],
             'cvadded' => false,
+            'current_role' => $role
         ]);
 
-        $role = strtolower($request->getParam('role'));
-        $user->current_role = $role;
-        $user->{"is_$role"} = true;
         $user->save();
 
         return $user;
@@ -228,7 +237,7 @@ class AuthController extends Controller
 
     private function sendConfirmationEmail(User $user, string $role): void
     {
-        $activationLink = env('FRONTEND_URL') . "auth/confirm?code=" . urlencode($user->activ_code);
+       /*  $activationLink = env('FRONTEND_URL') . "auth/confirm?code=" . urlencode($user->activ_code);
 
         $mail = new Message;
         $mail->setFrom(env('MAIL_FROM'))
@@ -239,7 +248,7 @@ class AuthController extends Controller
                 'link' => $activationLink
             ]));
 
-        $this->mailer->send($mail);
+        $this->mailer->send($mail); */
     }
 
     public function confirmEmail($request, $response)
