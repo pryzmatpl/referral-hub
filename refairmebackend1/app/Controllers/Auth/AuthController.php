@@ -210,16 +210,16 @@ class AuthController extends Controller
         $email = $payload['email'];
         $uniqueId = $this->uuidv4();
         $accountName = $this->generateAccountName($email);
-        $role = strtolower($request->$payload['role']);
+        $role = $payload['role'];
 
         $user = User::create([
             'email' => $email,
             'name' => $accountName,
-            'first_name' => $request->$payload['firstname'],
-            'last_name' => $request->$payload['lastname'],
+            'first_name' => $payload['firstname'],
+            'last_name' => $payload['lastname'],
             'password' => password_hash($payload['password'], PASSWORD_DEFAULT),
             'activ_code' => urlencode($uniqueId),
-            'group_id' => $request->$payload['chosenGroup'],
+            'group_id' => $payload['chosenGroup'],
             'cvadded' => false,
             'current_role' => $role
         ]);
