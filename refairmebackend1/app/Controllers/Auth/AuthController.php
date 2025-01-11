@@ -69,20 +69,16 @@ class AuthController extends Controller
             $payload = json_decode($request->getBody(), true);
             $params = (array)$payload['params'];
 
-            $auth = $this->auth->attempt($params['email'], $params['password']);
+            $user = User::where('unique_id', $params['uniqueId'])->first();
 
-            if (!$auth) {
+            if (!$user) {
                 $response->getBody()->write(json_encode([
-                    'message' => "Validation failed - you stated a malformed email address or a wrong password for {$params['email']}",
-                    'state' => 'error',
+                    'state' => 'user not found',
                     'auth' => false
                 ]));
-
                 return $response
                     ->withHeader('Content-Type', 'application/json');
             }
-
-            $user = User::where('email', $params['email'])->first();
 
             $roles = [
                 'developer' => $user->is_developer,
@@ -221,7 +217,8 @@ class AuthController extends Controller
             'activ_code' => urlencode($uniqueId),
             'group_id' => $payload['chosenGroup'],
             'cvadded' => false,
-            'current_role' => $role
+            'current_role' => $role,
+            'unique_id' => $payload['uniqueId']
         ]);
 
         $user->save();

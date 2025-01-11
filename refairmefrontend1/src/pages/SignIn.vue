@@ -59,10 +59,26 @@ const login = async (res) => {
   ////// TODO - LOGIC TO CHECK IF USER ALREADY EXISTS IN DATABASE OR SHOULD MODAL BE RENDERED ////
   const userData = decodeCredential(res.credential)
   const uniqueId = userData.sub
-  runModal()
+  const ret = await store.dispatch('signin', {
+      uniqueId: userData.sub
+    })
+
+    const data = ret.data
+    console.log(data)
+    if (data.state === 'user not found') {
+      runModal(userData)
+      return
+    }
+
+  router.push('/')
+  console.log(userData)
+  return
   ////////////////////////////////////////////////////////////////////////////////////////////////
 
-  try {
+
+
+
+/*   try {
     const ret = await store.dispatch('signin', {
       email: email.value,
       password: password.value
@@ -72,31 +88,65 @@ const login = async (res) => {
     if (data.state === 'error') {
       error.value = data.message
     } else {
-      /* if (route.query.job) {
+      if (route.query.job) {
         router.push(`/job/${route.query.job}`)
       } else {
         router.push({
           name: 'Profile',
           params: { tab: route.params.tab }
         })
-      } */
+      }
       router.push('/')
     }
   } catch (err) {
     console.log(err)
   } finally {
     password.value = ''
-  }
+  } */
 }
 
-function runModal() {
+function runModal(userData) {
   openModal(RoleModal, {
     test: 'some props'
   })
     // runs when modal is closed via confirmModal
     .then((data) => {
-      console.log('success', data)
-      router.push('/')
+      console.log('success', data.value)
+
+      let headerRegister = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Basic REGISTER',
+      }
+
+      store.state.backend
+        .post('/auth/signup', {
+          firstname: userData['given_name'],
+          lastname: userData['family_name'],
+          email: userData.email,
+          uniqueId: userData.sub,
+          password: 'bla',
+          role: data.value,
+          headerRegister,
+          dehashed: {
+            SESSION_AUTH: false,
+            SESSION_STATE: 2,
+            SESSION_ID: '123ssdsdsd',
+            ORIGIN: 'prizm',
+            TIMESTAMP: '' //?
+          }
+        })
+        .then(ret => {
+          let data = ret.data;
+          store.commit('SET_AUTH', true)
+          router.push('/')
+          if (data.state === 'error') {
+            this.error = data.message
+          } else {
+          }
+        })
+        .catch(error => alert(error.message));
+
+      /* router.push('/') */
     })
     // runs when modal is closed via closeModal or esc
     .catch(() => {

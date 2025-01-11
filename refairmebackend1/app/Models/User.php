@@ -26,7 +26,8 @@ class User extends Model
 			 'scheduling',
 			 'expected_salary',
 			 'notice_period',
-       'current_role'
+       'current_role',
+       'unique_id'
 			 ];
 
   protected $casts = [
