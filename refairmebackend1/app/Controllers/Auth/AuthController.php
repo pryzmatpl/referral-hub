@@ -42,10 +42,13 @@ class AuthController extends Controller
     public function getSignOut(Request $request, Response $response)
     {
         $this->auth->logout();
-        return $response->withJson([
+
+        $response->getBody()->write(json_encode([
             'state' => 'success',
             'message' => 'You have been logged out'
-        ]);
+        ]));
+        return $response
+            ->withHeader('Content-Type', 'application/json');
     }
 
     public function getSignIn($request, $response)
