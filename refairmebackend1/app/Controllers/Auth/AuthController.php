@@ -82,7 +82,7 @@ class AuthController extends Controller
                     ->withHeader('Content-Type', 'application/json');
             }
 
-            $user = User::where('email', $payload['email'])->first();
+            $user = User::where('email', $params['email'])->first();
 
             $roles = [
                 'developer' => $user->is_developer,
