@@ -87,10 +87,10 @@ export default createStore({
   actions: {
     setLoading: ({ commit }, value) => commit('SET_LOADING', value),
 
-    async signin({ commit }, { email, password }) {
+    async signin({ commit }, { uniqueId }) {
       try {
         const response = await backend.post("/auth/signin", {
-          params: { email, password }
+          params: { uniqueId }
         });
 
         if (response.data.auth) {

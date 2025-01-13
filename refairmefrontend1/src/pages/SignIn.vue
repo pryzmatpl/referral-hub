@@ -6,29 +6,14 @@
         <div class="col-12 inner-container">
           <div class="panel panel-default">
             <div class="panel-body">
-              <div class="row">
-                <div class="col-6 d-none d-md-block">
-                  <h1 class="text-left" style="font-size: 60px;">Recruitment, with you in a driver seat</h1>
-                  <p style="font-size: 18px; font-weight: 600">Every matching job, fast tracked and feedback to match your skills to best roles</p>
+              <div class="row d-flex justify-content-center">
+                <div class="mb-5 col-6 d-none d-md-block">
+                  <h1 class="text-start" style="font-size: 60px;">Recruitment, with you in a driver seat</h1>
+                  <p style="font-size: 18px; font-weight: 600">Every matching job, fast tracked and feedback to match
+                    your skills to best roles</p>
                 </div>
-                <div class="col"></div>
-                <div class="col-12 col-md-5">
-                  <h1 class="text-left" style="font-size: 50px;">{{ recovery ? 'Recover password' : 'Sign In' }}</h1>
-                  <form action="" @submit.prevent="recovery ? recoverPassword() : login()">
-                    <small class="help-block" style="color: red">{{ error }}</small>
-                    <input class="form-control" v-model="email" type="email" name="email" id="email" placeholder="E-mail">
-                    <label for="password">Password</label>
-                    <input class="form-control mt-2" v-show="!recovery" v-model="password" type="password" name="password" id="password" placeholder="Password">
-                    <p>{{ recoveryResponse }}</p>
-                    <button class="btn btn-info btn-lg">
-                      <span v-if="recovery">Recover password</span>
-                      <span v-else>Sign In</span>
-                    </button>
-                    <div class="mt-1 d-flex justify-content-between">
-                      <small class="float-left"><a href="#" @click="recovery = !recovery">Forgot password?</a></small>
-                      <small class="float-right"><router-link to="/auth/signup">Don't have an account?</router-link></small>
-                    </div>
-                  </form>
+                <div class="d-flex justify-content-center">
+                  <GoogleLogin :callback="login" />
                 </div>
               </div>
             </div>
@@ -37,12 +22,17 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, defineAsyncComponent } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+import { decodeCredential } from 'vue3-google-login'
+import { openModal } from '@kolirt/vue-modal'
+
+import RoleModal from '@/components/RoleModal.vue'
 
 const store = useStore()
 const router = useRouter()
@@ -64,8 +54,31 @@ onMounted(() => {
 })
 
 // Methods
-const login = async () => {
-  try {
+const login = async (res) => {
+
+  ////// TODO - LOGIC TO CHECK IF USER ALREADY EXISTS IN DATABASE OR SHOULD MODAL BE RENDERED ////
+  const userData = decodeCredential(res.credential)
+  const uniqueId = userData.sub
+  const ret = await store.dispatch('signin', {
+      uniqueId: userData.sub
+    })
+
+    const data = ret.data
+    console.log(data)
+    if (data.state === 'user not found') {
+      runModal(userData)
+      return
+    }
+
+  router.push('/')
+  console.log(userData)
+  return
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+/*   try {
     const ret = await store.dispatch('signin', {
       email: email.value,
       password: password.value
@@ -83,23 +96,62 @@ const login = async () => {
           params: { tab: route.params.tab }
         })
       }
+      router.push('/')
     }
   } catch (err) {
     console.log(err)
   } finally {
     password.value = ''
-  }
+  } */
 }
 
-const recoverPassword = async () => {
-  try {
-    const ret = await store.dispatch('passwordRecovery', {
-      email: email.value
+function runModal(userData) {
+  openModal(RoleModal, {
+    test: 'some props'
+  })
+    // runs when modal is closed via confirmModal
+    .then((data) => {
+      console.log('success', data.value)
+
+      let headerRegister = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Basic REGISTER',
+      }
+
+      store.state.backend
+        .post('/auth/signup', {
+          firstname: userData['given_name'],
+          lastname: userData['family_name'],
+          email: userData.email,
+          uniqueId: userData.sub,
+          password: 'bla',
+          role: data.value,
+          headerRegister,
+          dehashed: {
+            SESSION_AUTH: false,
+            SESSION_STATE: 2,
+            SESSION_ID: '123ssdsdsd',
+            ORIGIN: 'prizm',
+            TIMESTAMP: '' //?
+          }
+        })
+        .then(ret => {
+          let data = ret.data;
+          store.commit('SET_AUTH', true)
+          router.push('/')
+          if (data.state === 'error') {
+            this.error = data.message
+          } else {
+          }
+        })
+        .catch(error => alert(error.message));
+
+      /* router.push('/') */
     })
-    recoveryResponse.value = ret.data.message
-  } catch (err) {
-    console.log(err)
-  }
+    // runs when modal is closed via closeModal or esc
+    .catch(() => {
+      console.log('catch')
+    })
 }
 </script>
 
