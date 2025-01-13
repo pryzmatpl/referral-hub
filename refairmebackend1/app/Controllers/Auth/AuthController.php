@@ -8,16 +8,11 @@ use App\Validation\Validator;
 use Exception;
 use Monolog\Logger;
 use Nette\Mail\Mailer;
-use Nette\Mail\Message;
 use App\Models\User;
 use App\Controllers\Controller;
-use Respect\Validation\Validator as v;
 use Litipk\Jiffy\UniversalTimestamp;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Container\ContainerInterface;
-use Slim\Csrf\Guard;
-use SlimSession\Helper;
 
 class AuthController extends Controller
 {
