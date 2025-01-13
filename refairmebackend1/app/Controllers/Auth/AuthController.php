@@ -3,6 +3,7 @@
 namespace App\Controllers\Auth;
 
 use App\Auth\Auth;
+use App\Http\HttpCodes;
 use App\Validation\Validator;
 use Exception;
 use Monolog\Logger;
@@ -16,7 +17,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Container\ContainerInterface;
 use Slim\Csrf\Guard;
-use Slim\Http\StatusCode;
 use SlimSession\Helper;
 
 class AuthController extends Controller
@@ -107,7 +107,7 @@ class AuthController extends Controller
 
             return $response
                 ->withHeader('Content-Type', 'application/json')
-                ->withStatus(StatusCode::HTTP_INTERNAL_SERVER_ERROR);
+                ->withStatus(HttpCodes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
