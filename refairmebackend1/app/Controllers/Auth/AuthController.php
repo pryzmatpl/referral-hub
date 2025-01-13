@@ -1,5 +1,15 @@
 <?php
-
+/*
+ * Copyright (c) 2025 Pryzmat sp. z o.o. (Pryzmat LLC)
+ * All rights reserved.
+ * 13.01.2025, 21:16
+ * AuthController.php
+ * referral-hub
+ *
+ * This software and its accompanying documentation are protected by copyright law and international treaties.
+ * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
+ * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
+ */
 namespace App\Controllers\Auth;
 
 use App\Auth\Auth;
@@ -16,10 +26,10 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AuthController extends Controller
 {
-    protected $auth;
-    protected $validator;
-    protected $mailer;
-    protected $logger;
+    protected Auth $auth;
+    protected Validator $validator;
+    protected Mailer $mailer;
+    protected Logger $logger;
 
     public function __construct(
         Auth $auth,

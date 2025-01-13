@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2024 Pryzmat sp. z o.o. (Pryzmat LLC)
+ * Copyright (c) 2025 Pryzmat sp. z o.o. (Pryzmat LLC)
  * All rights reserved.
  * 13.01.2025, 21:12
  * HttpCodes.php
