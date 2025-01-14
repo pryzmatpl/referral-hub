@@ -1,4 +1,4 @@
-import { createRouter, createMemoryHistory } from 'vue-router'
+import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import store from '@/store/index.js'
 
 import Home from '@/pages/Home.vue'
@@ -30,7 +30,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes: routes // Make sure to pass the routes array here
 })
 router.beforeEach((to, from, next) => {

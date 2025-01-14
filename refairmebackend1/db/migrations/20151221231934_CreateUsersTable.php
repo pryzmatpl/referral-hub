@@ -30,7 +30,6 @@ class CreateUsersTable extends AbstractMigration
             ->addColumn('unique_id', 'string')
             ->addColumn('name', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])
             ->addColumn('email', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
-            ->addIndex(['email'], ['unique' => true, 'name' => 'users_email_unique'])
             ->addTimestamps()
             ->create();
     }
