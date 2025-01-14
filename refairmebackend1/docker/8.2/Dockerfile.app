@@ -1,4 +1,4 @@
-# Copyright: PRIZM Piotr Słupski 2024
+# Copyright: PRIZM Piotr Słupski 2025
 
 FROM archlinux:base-devel
 

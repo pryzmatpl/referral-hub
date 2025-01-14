@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2024 Pryzmat sp. z o.o. (Pryzmat LLC)
+ * Copyright (c) 2025 Pryzmat sp. z o.o. (Pryzmat LLC)
  * All rights reserved.
  * 14.01.2025, 21:40
  * EmailService.php
