@@ -19,7 +19,7 @@ use DI\ContainerBuilder;
 use GuzzleHttp\Client;
 use Nette\Mail\Mailer;
 use Slim\Csrf\Guard;
-use Slim\Http\Environment;
+use Slim\Psr7\Environment;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Views\Twig;
 use Slim\Flash\Messages;
