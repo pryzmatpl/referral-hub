@@ -3,22 +3,18 @@
 namespace App\Controllers\Auth;
 
 use App\Auth\Auth;
+use App\Http\HttpCodes;
 use App\Validation\Validator;
 use Exception;
 use Monolog\Logger;
 use Nette\Mail\Mailer;
-use Nette\Mail\Message;
 use App\Models\User;
 use App\Controllers\Controller;
-use Respect\Validation\Validator as v;
 use Litipk\Jiffy\UniversalTimestamp;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Container\ContainerInterface;
-use Slim\Csrf\Guard;
-use Slim\Http\StatusCode;
-use SlimSession\Helper;
 use GuzzleHttp\Client;
+
 
 class AuthController extends Controller
 {
@@ -189,7 +185,7 @@ class AuthController extends Controller
 
             return $response
                 ->withHeader('Content-Type', 'application/json')
-                ->withStatus(StatusCode::HTTP_INTERNAL_SERVER_ERROR);
+                ->withStatus(HttpCodes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
