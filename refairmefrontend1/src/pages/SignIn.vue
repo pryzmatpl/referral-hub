@@ -13,7 +13,8 @@
                     your skills to best roles</p>
                 </div>
                 <div class="d-flex justify-content-center">
-                  <GoogleLogin :callback="login" />
+                  <GoogleLogin :callback="login" class="m-2"/>
+                  <div role="button" @click="linkedLogin" class="m-2"><img src="../assets/Sign-In-Small---Default.png"></div>
                 </div>
               </div>
             </div>
@@ -33,6 +34,7 @@ import { decodeCredential } from 'vue3-google-login'
 import { openModal } from '@kolirt/vue-modal'
 
 import RoleModal from '@/components/RoleModal.vue'
+import { getCode, getAccessToken, getUserInfo } from '../utils/signWithLinkedIn'
 
 const store = useStore()
 const router = useRouter()
@@ -44,13 +46,33 @@ const email = ref('')
 const error = ref('')
 const recovery = ref(false)
 const recoveryResponse = ref('')
+const linkedCode = ref('')
 
 // Computed
 const isAuthenticated = computed(() => store.getters.isAuthenticated)
 
 // Lifecycle hooks
-onMounted(() => {
+onMounted(async() => {
   error.value = route.params.info
+
+  //////// CHECK IF SIGN WITH LINKEDIN CODE IS PRESENT IN URL QUERY ///////////////////
+  linkedCode.value = route.query.code
+  if(linkedCode.value) {
+    const userInfo = await getAccessToken(linkedCode.value)
+
+    const ret = await store.dispatch('signin', {
+      uniqueId: userInfo.sub
+    })
+
+    const data = ret.data
+    console.log(data)
+    if (data.state === 'user not found') {
+      runModal(userInfo)
+      return
+    }
+
+    router.push('/')
+  }
 })
 
 // Methods
@@ -103,6 +125,12 @@ const login = async (res) => {
   } finally {
     password.value = ''
   } */
+}
+
+const linkedLogin = () => {
+  getCode()
+  getAccessToken()
+  getUserInfo()
 }
 
 function runModal(userData) {

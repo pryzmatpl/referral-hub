@@ -38,6 +38,8 @@ class Router {
         $app->post('/auth/recover', [AuthController::class, 'postChangePass']);
         $app->post('/auth/change', [AuthController::class, 'changePass'])->setName('auth.pwdxchng');
         $app->get('/api/auth/signout', [AuthController::class, 'getSignOut'])->setName('auth.signout');
+        $app->post('/auth/signin/linkedaccess', [AuthController::class, 'getLinkedInAccessToken']);
+        $app->post('/auth/signin/linkedinfo', [AuthController::class, 'getLinkedInUserInfo']);
 
         $app->get('/api/job/{id}', [RefairController::class, 'getjob'])->setName('refair.job.get');
         $app->get('/matchprofile', [RefairController::class, 'matchprofile'])->setName('refair.matchprofile');
