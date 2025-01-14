@@ -82,10 +82,13 @@ return function (ContainerBuilder $containerBuilder) {
         Client::class => function($c) {
             return new Client();
         },
+        Environment::class => function($c) {
+            return new Environment();
+        },
         'email.template.path' => 'resources/emails',
         EmailService::class => function ($c) {
             return new EmailService(
-                $c->get(Mailer::class),
+                $c->get('mailer'),
                 $c->get(Environment::class),
                 $c->get('logger'),
                 $c->get('email.template.path'));
@@ -108,6 +111,9 @@ return function (ContainerBuilder $containerBuilder) {
                 $c->get('validator'),
                 $c->get('mailer'),
                 $c->get('logger'),
+                $c->get(UserService::class),
+                $c->get(LinkedInService::class),
+                $c->get(Client::class),
             );
         }
     ]);
