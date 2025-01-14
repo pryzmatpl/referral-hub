@@ -29,6 +29,8 @@ class AUserSeeder extends AbstractSeed
                 'email' => 'alice.smith@example.com',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
+                "current_role" => 'recruiter',
+                "unique_id" => '123'
             ],
             [
                 'first_name' => 'Bob',
@@ -51,6 +53,9 @@ class AUserSeeder extends AbstractSeed
                 'email' => 'bob.johnson@example.com',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
+                "current_role" => 'recruiter',
+                "unique_id" => '456'
+
             ],
             [
                 'first_name' => 'Charlie',
@@ -73,6 +78,9 @@ class AUserSeeder extends AbstractSeed
                 'email' => 'charlie.brown@example.com',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
+                "current_role" => 'recruiter',
+                "unique_id" => '789'
+
             ]
         ];
 

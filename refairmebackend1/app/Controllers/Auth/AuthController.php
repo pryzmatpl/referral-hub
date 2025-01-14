@@ -18,6 +18,7 @@ use Psr\Container\ContainerInterface;
 use Slim\Csrf\Guard;
 use Slim\Http\StatusCode;
 use SlimSession\Helper;
+use GuzzleHttp\Client;
 
 class AuthController extends Controller
 {
@@ -49,6 +50,87 @@ class AuthController extends Controller
         ]));
         return $response
             ->withHeader('Content-Type', 'application/json');
+    }
+
+    public function getLinkedInAccessToken(Request $request, Response $response)
+    {
+        $LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken";
+        $LINKEDIN_REDIRECTION_URI = "http://localhost:8080/auth/signin";
+        $LINKEDIN_SCOPE = "openid profile email";
+
+        $code = $request->getParsedBody()['code'] ?? null;
+
+        try {
+            // Create Guzzle HTTP client
+            $client = new Client();
+
+            // Make POST request to LinkedIn
+            $responseGuzzle = $client->post($LINKEDIN_ACCESS_TOKEN_URL, [
+                'form_params' => [
+                    'grant_type' => 'authorization_code',
+                    'code' => $code,
+                    'client_id' => env('LINKEDIN_CLIENT_ID'),
+                    'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
+                    'redirect_uri' => $LINKEDIN_REDIRECTION_URI,
+                ],
+                'headers' => [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                ],
+            ]);
+
+            // Decode JSON response
+            $data = json_decode($responseGuzzle->getBody()->getContents(), true);
+
+            // Return the LinkedIn access token response
+            $response->getBody()->write(json_encode($data));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        } catch (\Exception $e) {
+            // Handle errors
+            $error = [
+                'error' => 'Failed to fetch LinkedIn access token',
+                'details' => $e->getMessage(),
+            ];
+            $response->getBody()->write(json_encode($error));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+        }
+
+    }
+
+    public function getLinkedInUserInfo(Request $request, Response $response)
+    {
+        $accessToken = $request->getParsedBody()['access_token'] ?? null;
+        $LINKEDIN_USERINFO = "https://api.linkedin.com/v2/userinfo";
+
+
+        try {
+            // Create Guzzle HTTP client
+            $client = new Client();
+
+            // Make POST request to LinkedIn
+            $responseGuzzle = $client->get($LINKEDIN_USERINFO, [
+                'headers' => [
+                    'Authorization' => "Bearer $accessToken", // Add the Bearer token
+                    'Accept' => 'application/json'
+                ],
+            ]);
+
+            // Decode JSON response
+            $data = json_decode($responseGuzzle->getBody()->getContents(), true);
+
+            // Return the LinkedIn access token response
+            $response->getBody()->write(json_encode($data));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        } catch (\Exception $e) {
+            // Handle errors
+            $error = [
+                'error' => 'Failed to fetch LinkedIn access token',
+                'details' => $e->getMessage(),
+            ];
+            $response->getBody()->write(json_encode($error));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+        }
     }
 
     public function getSignIn($request, $response)
