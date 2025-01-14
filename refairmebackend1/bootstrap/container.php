@@ -12,8 +12,15 @@
  */
 
 use App\Controllers\Auth\AuthController;
+use App\Services\EmailService;
+use App\Services\LinkedInService;
+use App\Services\UserService;
 use DI\ContainerBuilder;
+use GuzzleHttp\Client;
+use Nette\Mail\Mailer;
 use Slim\Csrf\Guard;
+use Slim\Http\Environment;
+use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Views\Twig;
 use Slim\Flash\Messages;
 use Nette\Mail\SmtpMailer;
@@ -24,6 +31,7 @@ use App\Validation\Validator;
 use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use SlimSession\Helper;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -66,10 +74,33 @@ return function (ContainerBuilder $containerBuilder) {
             return $log;
         },
         'csrf' => function($c) {
-            return new Guard;
+            return new Guard($c->get(ResponseFactory::class));
         },
         'session' => function ($c) {
-            return new \SlimSession\Helper;
+            return new Helper();
+        },
+        Client::class => function($c) {
+            return new Client();
+        },
+        'email.template.path' => 'resources/emails',
+        EmailService::class => function ($c) {
+            return new EmailService(
+                $c->get(Mailer::class),
+                $c->get(Environment::class),
+                $c->get('logger'),
+                $c->get('email.template.path'));
+        },
+        LinkedInService::class => function ($c) {
+            return new LinkedInService(
+                $c->get(Client::class),
+                $c->get('linkedin.client_id'),
+                $c->get('linkedin.client_secret')
+            );
+        },
+        UserService::class => function ($c) {
+            return new UserService(
+                $c->get(EmailService::class)
+            );
         },
         AuthController::class => function ($c) {
             return new AuthController(

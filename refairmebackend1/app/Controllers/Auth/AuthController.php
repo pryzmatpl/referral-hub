@@ -14,359 +14,199 @@ namespace App\Controllers\Auth;
 
 use App\Auth\Auth;
 use App\Http\HttpCodes;
+use App\Models\User;
+use App\Services\LinkedInService;
+use App\Services\UserService;
 use App\Validation\Validator;
 use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Litipk\Jiffy\UniversalTimestamp;
 use Monolog\Logger;
 use Nette\Mail\Mailer;
-use App\Models\User;
-use App\Controllers\Controller;
-use Litipk\Jiffy\UniversalTimestamp;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 
-
-class AuthController extends Controller
+final class AuthController
 {
-    protected Auth $auth;
-    protected Validator $validator;
-    protected Mailer $mailer;
-    protected Logger $logger;
+    private const LINKEDIN_SCOPE = 'openid profile email';
+    private const LINKEDIN_REDIRECTION_URI = 'http://localhost:8080/auth/signin';
+    private const LINKEDIN_ACCESS_TOKEN_URL = 'https://www.linkedin.com/oauth/v2/accessToken';
+    private const LINKEDIN_USERINFO_URL = 'https://api.linkedin.com/v2/userinfo';
 
     public function __construct(
-        Auth $auth,
-        Validator $validator,
-        Mailer $mailer,
-        Logger $logger,
-    )
-    {
-        $this->auth = $auth;
-        $this->validator = $validator;
-        $this->mailer = $mailer;
-        $this->logger =$logger;
-    }
+        private readonly Auth $auth,
+        private readonly Validator $validator,
+        private readonly Mailer $mailer,
+        private readonly Logger $logger,
+        private readonly UserService $userService,
+        private readonly LinkedInService $linkedInService,
+        private readonly Client $httpClient
+    ) {}
 
-    public function getSignOut(Request $request, Response $response)
+    public function signOut(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $this->auth->logout();
 
-        $response->getBody()->write(json_encode([
+        return $this->jsonResponse($response, [
             'state' => 'success',
             'message' => 'You have been logged out'
-        ]));
-        return $response
-            ->withHeader('Content-Type', 'application/json');
-    }
-
-    public function getLinkedInAccessToken(Request $request, Response $response)
-    {
-        $LINKEDIN_ACCESS_TOKEN_URL = "https://www.linkedin.com/oauth/v2/accessToken";
-        $LINKEDIN_REDIRECTION_URI = "http://localhost:8080/auth/signin";
-        $LINKEDIN_SCOPE = "openid profile email";
-
-        $code = $request->getParsedBody()['code'] ?? null;
-
-        try {
-            // Create Guzzle HTTP client
-            $client = new Client();
-
-            // Make POST request to LinkedIn
-            $responseGuzzle = $client->post($LINKEDIN_ACCESS_TOKEN_URL, [
-                'form_params' => [
-                    'grant_type' => 'authorization_code',
-                    'code' => $code,
-                    'client_id' => env('LINKEDIN_CLIENT_ID'),
-                    'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
-                    'redirect_uri' => $LINKEDIN_REDIRECTION_URI,
-                ],
-                'headers' => [
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                ],
-            ]);
-
-            // Decode JSON response
-            $data = json_decode($responseGuzzle->getBody()->getContents(), true);
-
-            // Return the LinkedIn access token response
-            $response->getBody()->write(json_encode($data));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-
-        } catch (\Exception $e) {
-            // Handle errors
-            $error = [
-                'error' => 'Failed to fetch LinkedIn access token',
-                'details' => $e->getMessage(),
-            ];
-            $response->getBody()->write(json_encode($error));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
-        }
-
-    }
-
-    public function getLinkedInUserInfo(Request $request, Response $response)
-    {
-        $accessToken = $request->getParsedBody()['access_token'] ?? null;
-        $LINKEDIN_USERINFO = "https://api.linkedin.com/v2/userinfo";
-
-
-        try {
-            // Create Guzzle HTTP client
-            $client = new Client();
-
-            // Make POST request to LinkedIn
-            $responseGuzzle = $client->get($LINKEDIN_USERINFO, [
-                'headers' => [
-                    'Authorization' => "Bearer $accessToken", // Add the Bearer token
-                    'Accept' => 'application/json'
-                ],
-            ]);
-
-            // Decode JSON response
-            $data = json_decode($responseGuzzle->getBody()->getContents(), true);
-
-            // Return the LinkedIn access token response
-            $response->getBody()->write(json_encode($data));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-
-        } catch (\Exception $e) {
-            // Handle errors
-            $error = [
-                'error' => 'Failed to fetch LinkedIn access token',
-                'details' => $e->getMessage(),
-            ];
-            $response->getBody()->write(json_encode($error));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
-        }
-    }
-
-    public function getSignIn($request, $response)
-    {
-        $this->flash->addMessage('messages', 'Hello, please login.');
-
-        return $this->view->render($response, 'app-boot.twig', [
-            'state' => json_encode('help'),
-            'messages' => json_encode($this->flash->getMessages(), true)
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return mixed
-     */
-    public function postSignIn(Request $request, Response $response): mixed
+    public function getLinkedInAccessToken(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         try {
-            $payload = json_decode($request->getBody(), true);
-            $params = (array)$payload['params'];
+            $code = $this->getRequiredParam($request, 'code');
+            $token = $this->linkedInService->getAccessToken(
+                $code,
+                self::LINKEDIN_ACCESS_TOKEN_URL,
+                self::LINKEDIN_REDIRECTION_URI
+            );
 
-            $user = User::where('unique_id', $params['uniqueId'])->first();
+            return $this->jsonResponse($response, $token);
+        } catch (Exception $e) {
+            return $this->errorResponse($response, 'Failed to fetch LinkedIn access token', $e);
+        }
+    }
 
-            if (!$user) {
-                $response->getBody()->write(json_encode([
-                    'state' => 'user not found',
-                    'auth' => false
-                ]));
-                return $response
-                    ->withHeader('Content-Type', 'application/json');
+    public function getLinkedInUserInfo(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        try {
+            $accessToken = $this->getRequiredParam($request, 'access_token');
+            $userInfo = $this->linkedInService->getUserInfo($accessToken, self::LINKEDIN_USERINFO_URL);
+
+            return $this->jsonResponse($response, $userInfo);
+        } catch (Exception $e) {
+            return $this->errorResponse($response, 'Failed to fetch LinkedIn user info', $e);
+        }
+    }
+
+    public function signIn(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        try {
+            $payload = $this->getJsonPayload($request);
+            $uniqueId = $payload['params']['uniqueId'] ?? null;
+
+            if (!$uniqueId) {
+                throw new RuntimeException('Unique ID is required');
             }
 
-            $roles = [
-                'developer' => $user->is_developer,
-                'admin' => $user->is_admin,
-                'recruiter' => $user->is_recruiter,
-                'candidate' => $user->is_candidate
-            ];
+            $user = User::where('unique_id', $uniqueId)->firstOrFail();
+            $roles = $this->userService->getUserRoles($user);
 
             $_SESSION['user'] = $user;
             $_SESSION['user_roles'] = $roles;
 
-            $response->getBody()->write(json_encode([
+            return $this->jsonResponse($response, [
                 'state' => 'success',
                 'auth' => true
-            ]));
-            return $response
-                ->withHeader('Content-Type', 'application/json');
+            ]);
         } catch (Exception $e) {
-            $response->getBody()->write(json_encode([
-                'message' => 'Internal server error',
-                'error' => $e->getMessage()
-            ]));
-
-            return $response
-                ->withHeader('Content-Type', 'application/json')
-                ->withStatus(HttpCodes::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse($response, 'Authentication failed', $e);
         }
     }
 
-    private function buildCornerstone(User $user, string $email, string $roles): string
-    {
-        $origin = env('HASH_BASE');
-        $now = UniversalTimestamp::now();
-
-        $cornerstone = $this->iwahash($origin, "TIMESTAMP", $now);
-        $cornerstone = $this->iwahash($cornerstone, "ORIGIN", $origin);
-        $cornerstone = $this->iwahash($cornerstone, "EMAIL", $email);
-        $cornerstone = $this->iwahash($cornerstone, "AUTH", "TRUE");
-        $cornerstone = $this->iwahash($cornerstone, "ROLES", $roles);
-        $cornerstone = $this->iwahash($cornerstone, "CURRENT_ROLE", $user->current_role);
-
-        return $cornerstone;
-    }
-
-    public function getSignUp($request, $response)
-    {
-        try {
-            $origin = env('HASH_BASE');
-            $now = UniversalTimestamp::now();
-
-            $cornerstone = $this->iwahash($origin, "TIMESTAMP", $now);
-            $cornerstone = $this->iwahash($cornerstone, "ORIGIN", $origin);
-            $cornerstone = $this->iwahash($cornerstone, "SESSION_AUTH", "false");
-
-            return $response->withJson([
-                'planck' => $cornerstone,
-                'dehashed' => $this->dehash($cornerstone)
-            ]);
-        } catch (Exception $e) {
-            return $response->withStatus(500)->withJson([
-                'message' => 'Internal server error',
-                'error' => $e->getMessage()
-            ]);
-        }
-    }
-
-    public function postSignUp($request, $response)
+    public function signUp(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         try {
             if (!$this->validateSignUpRequest($request)) {
-                $response->getBody()->write(json_encode([
+                return $this->jsonResponse($response, [
                     'state' => 'error',
                     'message' => 'Validation Failed - Email taken or in invalid format.'
-                    ]));
-
-                return $response
-                    ->withHeader('Content-Type', 'application/json');
+                ], HttpCodes::HTTP_BAD_REQUEST);
             }
 
-            $user = $this->createUser($request);
-            /* $this->sendConfirmationEmail($user, $request->$payload['role']); */
+            $user = $this->userService->createUser($this->getJsonPayload($request));
 
-            $response->getBody()->write(json_encode([
+            return $this->jsonResponse($response, [
                 'message' => 'Successful Registration!',
-                'state' => 'Success'
-                ]));
-            
-            return $response
-                ->withHeader('Content-Type', 'application/json');
+                'state' => 'success'
+            ]);
         } catch (Exception $e) {
-            $response->getBody()->write(json_encode([
-                'message' => 'Internal server error',
-                'error' => $e->getMessage()
-                ]));
-                
-            return $response
-                ->withHeader('Content-Type', 'application/json');
+            return $this->errorResponse($response, 'Registration failed', $e);
         }
     }
 
-    private function validateSignUpRequest($request): bool
-    {
-        $validation = $this->validator->validate($request, [
-            /* 'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
-            'password' => v::noWhitespace()->notEmpty(),
-            'role' => v::notEmpty()->in(['recruiter', 'candidate']) */
-        ]);
-
-        return !$validation->failed();
-    }
-
-    function uuidv4()
-    {
-        $data = random_bytes(16);
-
-        $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
-        $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
-
-        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-    }
-
-    private function createUser($request): User
-    {
-        $payload = json_decode($request->getBody(), true);
-        $email = $payload['email'];
-        $uniqueId = $this->uuidv4();
-        $accountName = $this->generateAccountName($email);
-        $role = $payload['role'];
-
-        $user = User::create([
-            'email' => $email,
-            'name' => $accountName,
-            'first_name' => $payload['firstname'],
-            'last_name' => $payload['lastname'],
-            'password' => password_hash($payload['password'], PASSWORD_DEFAULT),
-            'activ_code' => urlencode($uniqueId),
-            'group_id' => $payload['chosenGroup'],
-            'cvadded' => false,
-            'current_role' => $role,
-            'unique_id' => $payload['uniqueId']
-        ]);
-
-        $user->save();
-
-        return $user;
-    }
-
-    private function generateAccountName(string $email): string
-    {
-        $parts = explode('@', $email);
-        return $parts[0] . $parts[1] . md5(date('YMDS'));
-    }
-
-    private function sendConfirmationEmail(User $user, string $role): void
-    {
-       /*  $activationLink = env('FRONTEND_URL') . "auth/confirm?code=" . urlencode($user->activ_code);
-
-        $mail = new Message;
-        $mail->setFrom(env('MAIL_FROM'))
-            ->addTo($user->email)
-            ->setSubject('Please confirm your email from Refair.me')
-            ->setHTMLBody(renderEmailTemplate('signup', [
-                'role' => $role,
-                'link' => $activationLink
-            ]));
-
-        $this->mailer->send($mail); */
-    }
-
-    public function confirmEmail($request, $response)
+    public function confirmEmail(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         try {
-            if (!$request->getParam('code')) {
-                return $response->withJson([
-                    'message' => 'No activation code available!'
-                ]);
+            $code = $request->getQueryParams()['code'] ?? null;
+
+            if (!$code) {
+                throw new RuntimeException('No activation code provided');
             }
 
-            $user = User::where('activ_code', $request->getParam('code'))->first();
+            $this->userService->activateUser($code);
 
-            if ($user->activ == 1) {
-                $this->flash->addMessage('info', 'This user had already been activated.');
-                return $this->response->withRedirect($this->router->pathFor('auth.signin'));
-            }
-
-            $user->activ = 1;
-            $user->save();
-
-            return $response->withJson([
-                'message' => 'Your signup is a success. You can sign in now! Please return to your application window.'
+            return $this->jsonResponse($response, [
+                'message' => 'Your signup is successful. You can sign in now!'
             ]);
         } catch (Exception $e) {
-            return $response->withStatus(500)->withJson([
-                'message' => 'Internal server error',
-                'error' => $e->getMessage()
-            ]);
+            return $this->errorResponse($response, 'Email confirmation failed', $e);
         }
     }
 
+    private function validateSignUpRequest(ServerRequestInterface $request): bool
+    {
+        // Implement your validation logic here
+        return true;
+    }
+
+    private function getJsonPayload(ServerRequestInterface $request): array
+    {
+        $payload = json_decode((string) $request->getBody(), true);
+
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new RuntimeException('Invalid JSON payload');
+        }
+
+        return $payload;
+    }
+
+    private function getRequiredParam(ServerRequestInterface $request, string $param): string
+    {
+        $payload = $this->getJsonPayload($request);
+
+        if (!isset($payload[$param])) {
+            throw new RuntimeException("Missing required parameter: {$param}");
+        }
+
+        return $payload[$param];
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @param array $data
+     * @param int $status
+     * @return ResponseInterface
+     */
+    private function jsonResponse(
+        ResponseInterface $response,
+        array $data,
+        int $status = HttpCodes::HTTP_OK
+    ): ResponseInterface {
+        $response->getBody()->write(json_encode($data));
+
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus($status);
+    }
+
+    private function errorResponse(
+        ResponseInterface $response,
+        string $message,
+        Exception $exception
+    ): ResponseInterface {
+        $this->logger->error($message, [
+            'exception' => $exception->getMessage(),
+            'trace' => $exception->getTraceAsString()
+        ]);
+
+        return $this->jsonResponse($response, [
+            'message' => $message,
+            'error' => $exception->getMessage()
+        ], HttpCodes::HTTP_INTERNAL_SERVER_ERROR);
+    }
 }
