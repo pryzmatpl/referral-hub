@@ -32,6 +32,7 @@ use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use SlimSession\Helper;
+use Twig\Loader\FilesystemLoader;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -82,14 +83,17 @@ return function (ContainerBuilder $containerBuilder) {
         Client::class => function($c) {
             return new Client();
         },
-        Environment::class => function($c) {
-            return new Environment();
+        'email.template.path' => '/var/www/html/resources/emails',
+        'twigenv'=> function($c) {
+            $loader = new FilesystemLoader($c->get('email.template.path'));
+            return new \Twig\Environment($loader);
         },
-        'email.template.path' => 'resources/emails',
+        'linkedin.client_id' => $_ENV['LINKEDIN_CLIENT_ID'],
+        'linkedin.client_secret' => $_ENV['LINKEDIN_CLIENT_SECRET'],
         EmailService::class => function ($c) {
             return new EmailService(
                 $c->get('mailer'),
-                $c->get(Environment::class),
+                $c->get('twigenv'),
                 $c->get('logger'),
                 $c->get('email.template.path'));
         },
