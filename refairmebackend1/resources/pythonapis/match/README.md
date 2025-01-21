@@ -35,7 +35,26 @@ python ./runapi.py
 ```
 You should see the following classification result:
 
+```bash
+(venv) piotro@prizm -> python ./runapi.py 
+[nltk_data] Downloading package stopwords to /home/piotro/nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data] Downloading package wordnet to /home/piotro/nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
+[0.9999940165587826, 5.552445418656792e-10, 4.120680246924878e-08, 4.7035042733952515e-07, 3.1822735569030827e-09, 5.412041788350114e-06, 3.970142405950206e-08, 4.691059983196553e-10, 3.309946329860151e-09, 9.912943091384819e-09, 2.7112616687107234e-09]
+(venv) piotro@prizm -> 
+```
+This means that the classification API for keywords is working.
 
+To run it as an API, run
+```bash
+python ./server.py
+```
+
+To perform a singular classification, run:
+```bash
+python ./run.py 
+```
 ---
 
 ## Common Errors and Resolutions
