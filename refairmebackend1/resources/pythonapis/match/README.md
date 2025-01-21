@@ -26,6 +26,15 @@ Run the NLTK downloader to fetch resources like `wordnet`. Specify the custom di
 python -m nltk.downloader -d ./nltk_data
 ```
 Follow the on-screen instructions to select and download the required datasets.
+You need at least the stopwords and wordnet corpora for NL processing of tags.
+
+### 4. Running the api for testing first
+In order to run the API, perform:
+```bash
+python ./runapi.py
+```
+You should see the following classification result:
+
 
 ---
 
