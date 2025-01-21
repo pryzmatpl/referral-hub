@@ -22,7 +22,7 @@ class TextClassificationPipeline:
         self.classifier = MLPClassifier(
             solver='lbfgs',
             alpha=1e-5,
-            hidden_layer_sizes=(300,),
+            hidden_layer_sizes=(600,),
             random_state=0,
             early_stopping=True,  # Added early stopping
             validation_fraction=0.1,
