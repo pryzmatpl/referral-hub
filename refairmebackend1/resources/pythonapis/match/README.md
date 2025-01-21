@@ -1,10 +1,11 @@
 # README: Setting Up and Using NLTK in Your Project
-
+---
 This README provides step-by-step guidance for setting up the Natural Language Toolkit (NLTK) in a Python project, resolving common errors, and successfully downloading necessary resources.
 
----
 
-## Steps for Setting Up NLTK
+### [Source - the NLTK lib](https://www.nltk.org/howto/wordnet.html)
+
+## Prerequisites: Steps for Setting Up NLTK
 
 ### 1. Create a Virtual Environment
 It is recommended to use a virtual environment to isolate dependencies.
@@ -31,30 +32,90 @@ You need at least the stopwords and wordnet corpora for NL processing of tags.
 ### 4. Running the api for testing first
 In order to run the API, perform:
 ```bash
-python ./runapi.py
-```
-You should see the following classification result:
-
-```bash
-(venv) piotro@prizm -> python ./runapi.py 
-[nltk_data] Downloading package stopwords to /home/piotro/nltk_data...
-[nltk_data]   Package stopwords is already up-to-date!
-[nltk_data] Downloading package wordnet to /home/piotro/nltk_data...
-[nltk_data]   Package wordnet is already up-to-date!
-[0.9999940165587826, 5.552445418656792e-10, 4.120680246924878e-08, 4.7035042733952515e-07, 3.1822735569030827e-09, 5.412041788350114e-06, 3.970142405950206e-08, 4.691059983196553e-10, 3.309946329860151e-09, 9.912943091384819e-09, 2.7112616687107234e-09]
-(venv) piotro@prizm -> 
-```
-This means that the classification API for keywords is working.
-
-To run it as an API, run
-```bash
-python ./server.py
+python ./train.py # training the model for classifications based on the CSV
+python ./runapi.py # example run 
 ```
 
-To perform a singular classification, run:
-```bash
-python ./run.py 
+# Text Classification Pipeline - running it whole
+
+This project implements a machine learning pipeline for text classification using neural networks. It includes data preprocessing, model training, and a REST API for making predictions.
+
+## Project Structure
+
 ```
+.
+├── nofluff.csv         # Training data
+├── venv/               # Virtual environment
+├── classifier.pk       # Trained model
+├── run.py              # API server
+├── train.py            # Model training
+└── test_setup.py       # Setup verification
+```
+
+In this section, just verify the setup:
+
+```bash
+python test_setup.py
+```
+
+## Training the Model
+
+The model can be trained using the provided training script:
+
+```bash
+python train.py
+```
+
+This will:
+- Load and preprocess the training data
+- Train a neural network classifier
+- Save the model to `classifier.pk`
+
+## Using the API
+
+### Starting the Server
+
+```bash
+python run.py
+```
+
+### Making Predictions
+
+#### Via CLI
+```bash
+python run.py "photoshop,machine learning"
+```
+
+#### Via HTTP API
+```bash
+curl -X POST http://localhost:5000/predict \
+     -H "Content-Type: application/json" \
+     -d '{"description": "photoshop,machine learning"}'
+```
+
+## Model Details
+
+The pipeline includes:
+- Text preprocessing (cleaning, stemming, stop word removal)
+- Bag of Words vectorization (max 1500 features)
+- Neural Network classifier with early stopping
+
+## Error Handling
+
+The API includes comprehensive error handling and logging:
+- Input validation
+- Model loading verification
+- Preprocessing error handling
+- Detailed error messages
+
+## Performance
+
+The model includes several optimizations:
+- Cached text preprocessing
+- Efficient vectorization
+- Early stopping in neural network training
+- Batch prediction support
+
 ---
 
 ## Common Errors and Resolutions
