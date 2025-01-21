@@ -1,5 +1,4 @@
-# README: Setting Up and Using NLTK in Your Project
----
+# Referral Hub Natural Language Toolkit processor for job categories
 This README provides step-by-step guidance for setting up the Natural Language Toolkit (NLTK) in a Python project, resolving common errors, and successfully downloading necessary resources.
 
 
