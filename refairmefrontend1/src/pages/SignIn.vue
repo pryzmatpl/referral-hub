@@ -12,9 +12,19 @@
                   <p style="font-size: 18px; font-weight: 600">Every matching job, fast tracked and feedback to match
                     your skills to best roles</p>
                 </div>
-                <div class="d-flex justify-content-center">
-                  <GoogleLogin :callback="login" class="m-2"/>
-                  <div role="button" @click="linkedLogin" class="m-2"><img src="../assets/Sign-In-Small---Default.png"></div>
+                <!-- Login buttons -->
+                <div class="flex flex-col">
+                  <GoogleLogin
+                      :callback="handleGoogleLogin"
+                  />
+                  <button
+                      @click="handleLinkedInLogin"
+                  >
+                    <img
+                        src="../assets/Sign-In-Small---Default.png"
+                        alt="Sign in with LinkedIn"
+                    />
+                  </button>
                 </div>
               </div>
             </div>
@@ -27,159 +37,91 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, defineAsyncComponent } from 'vue'
-import { useStore } from 'vuex'
+import { onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { decodeCredential } from 'vue3-google-login'
+import { useStore } from 'vuex'
 import { openModal } from '@kolirt/vue-modal'
-
 import RoleModal from '@/components/RoleModal.vue'
-import { getCode, getAccessToken, getUserInfo } from '../utils/signWithLinkedIn'
+import { getCode, getUserInfo } from '../utils/signWithLinkedIn'
 
-const store = useStore()
 const router = useRouter()
 const route = useRoute()
+const store = useStore()
 
-// Reactive state
-const password = ref('')
-const email = ref('')
-const error = ref('')
-const recovery = ref(false)
-const recoveryResponse = ref('')
-const linkedCode = ref('')
-
-// Computed
-const isAuthenticated = computed(() => store.getters.isAuthenticated)
-
-// Lifecycle hooks
-onMounted(async() => {
-  error.value = route.params.info
-
-  //////// CHECK IF SIGN WITH LINKEDIN CODE IS PRESENT IN URL QUERY ///////////////////
-  linkedCode.value = route.query.code
-  if(linkedCode.value) {
-    const userInfo = await getAccessToken(linkedCode.value)
-
-    const ret = await store.dispatch('signin', {
-      uniqueId: userInfo.sub
-    })
-
-    const data = ret.data
-    console.log(data)
-    if (data.state === 'user not found') {
-      runModal(userInfo)
-      return
-    }
-
-    router.push('/')
+onMounted(() => {
+  // Handle LinkedIn OAuth redirect
+  const code = route.query.code
+  if (code) {
+    handleLinkedInCallback(code)
   }
 })
 
-// Methods
-const login = async (res) => {
-
-  ////// TODO - LOGIC TO CHECK IF USER ALREADY EXISTS IN DATABASE OR SHOULD MODAL BE RENDERED ////
-  const userData = decodeCredential(res.credential)
-  const uniqueId = userData.sub
-  const ret = await store.dispatch('signin', {
-      uniqueId: userData.sub
+const handleGoogleLogin = async (response) => {
+  try {
+    const userData = decodeCredential(response.credential)
+    await authenticateUser({
+      uniqueId: userData.sub,
+      email: userData.email,
+      firstName: userData.given_name,
+      lastName: userData.family_name,
+      provider: 'google'
     })
-
-    const data = ret.data
-    console.log(data)
-    if (data.state === 'user not found') {
-      runModal(userData)
-      return
-    }
-
-  router.push('/')
-  console.log(userData)
-  return
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-/*   try {
-    const ret = await store.dispatch('signin', {
-      email: email.value,
-      password: password.value
-    })
-
-    const data = ret.data
-    if (data.state === 'error') {
-      error.value = data.message
-    } else {
-      if (route.query.job) {
-        router.push(`/job/${route.query.job}`)
-      } else {
-        router.push({
-          name: 'Profile',
-          params: { tab: route.params.tab }
-        })
-      }
-      router.push('/')
-    }
-  } catch (err) {
-    console.log(err)
-  } finally {
-    password.value = ''
-  } */
+  } catch (error) {
+    console.error('Google login error:', error)
+  }
 }
 
-const linkedLogin = () => {
-  getCode()
-  getAccessToken()
-  getUserInfo()
+const handleLinkedInLogin = () => {
+  getCode() // Redirect to LinkedIn auth
 }
 
-function runModal(userData) {
-  openModal(RoleModal, {
-    test: 'some props'
+const handleLinkedInCallback = async (code) => {
+  try {
+    const userData = await getUserInfo(code)
+    await authenticateUser({
+      uniqueId: userData.sub,
+      email: userData.email,
+      firstName: userData.given_name,
+      lastName: userData.family_name,
+      provider: 'linkedin'
+    })
+  } catch (error) {
+    console.error('LinkedIn login error:', error)
+  }
+}
+
+const USER_DOES_NOT_EXIST = 'user does not exist';
+
+const authenticateUser = async (userData) => {
+  try {
+    // Try to sign in first
+    const signInResponse = await store.dispatch('signin', {
+      uniqueId: userData.uniqueId
+    })
+
+    if (signInResponse?.error === USER_DOES_NOT_EXIST) {
+      // If user doesn't exist, show role selection modal and sign up
+      const role = await showRoleSelectionModal()
+      await store.dispatch('signup', {
+        ...userData,
+        role,
+        password: '' // Empty password for social login
+      })
+    }
+
+    router.push('/')
+  } catch (error) {
+    console.error('Authentication error:', error)
+  }
+}
+
+const showRoleSelectionModal = () => {
+  return new Promise((resolve, reject) => {
+    openModal(RoleModal)
+        .then(response => resolve(response.value))
+        .catch(reject)
   })
-    // runs when modal is closed via confirmModal
-    .then((data) => {
-      console.log('success', data.value)
-
-      let headerRegister = {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': 'Basic REGISTER',
-      }
-
-      store.state.backend
-        .post('/auth/signup', {
-          firstname: userData['given_name'],
-          lastname: userData['family_name'],
-          email: userData.email,
-          uniqueId: userData.sub,
-          password: 'bla',
-          role: data.value,
-          headerRegister,
-          dehashed: {
-            SESSION_AUTH: false,
-            SESSION_STATE: 2,
-            SESSION_ID: '123ssdsdsd',
-            ORIGIN: 'prizm',
-            TIMESTAMP: '' //?
-          }
-        })
-        .then(ret => {
-          let data = ret.data;
-          store.commit('SET_AUTH', true)
-          router.push('/')
-          if (data.state === 'error') {
-            this.error = data.message
-          } else {
-          }
-        })
-        .catch(error => alert(error.message));
-
-      /* router.push('/') */
-    })
-    // runs when modal is closed via closeModal or esc
-    .catch(() => {
-      console.log('catch')
-    })
 }
 </script>
 

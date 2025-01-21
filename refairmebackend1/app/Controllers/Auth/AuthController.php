@@ -17,6 +17,7 @@ use App\Http\HttpCodes;
 use App\Models\User;
 use App\Services\LinkedInService;
 use App\Services\UserService;
+use App\Validation\Exceptions\UserDoesNotExistException;
 use App\Validation\Validator;
 use Exception;
 use GuzzleHttp\Client;
@@ -34,6 +35,8 @@ final class AuthController
     private const LINKEDIN_REDIRECTION_URI = 'http://localhost:8080/auth/signin';
     private const LINKEDIN_ACCESS_TOKEN_URL = 'https://www.linkedin.com/oauth/v2/accessToken';
     private const LINKEDIN_USERINFO_URL = 'https://api.linkedin.com/v2/userinfo';
+    const USER_DOES_NOT_EXIST = 'user does not exist';
+    const UNIQUE_ID_IS_REQUIRED = 'Unique ID is required';
 
     public function __construct(
         private readonly Auth $auth,
@@ -67,7 +70,7 @@ final class AuthController
 
             return $this->jsonResponse($response, $token);
         } catch (Exception $e) {
-            return $this->errorResponse($response, 'Failed to fetch LinkedIn access token', $e);
+            return $this->invalidLoginResponse($response, 'Failed to fetch LinkedIn access token', $e);
         }
     }
 
@@ -79,7 +82,7 @@ final class AuthController
 
             return $this->jsonResponse($response, $userInfo);
         } catch (Exception $e) {
-            return $this->errorResponse($response, 'Failed to fetch LinkedIn user info', $e);
+            return $this->invalidLoginResponse($response, 'Failed to fetch LinkedIn user info', $e);
         }
     }
 
@@ -90,10 +93,15 @@ final class AuthController
             $uniqueId = $payload['params']['uniqueId'] ?? null;
 
             if (!$uniqueId) {
-                throw new RuntimeException('Unique ID is required');
+                throw new RuntimeException(self::UNIQUE_ID_IS_REQUIRED);
             }
 
-            $user = User::where('unique_id', $uniqueId)->firstOrFail();
+            $user = User::where('unique_id', $uniqueId)->first();
+
+            if (empty($user)) {
+                throw new UserDoesNotExistException(self::USER_DOES_NOT_EXIST);
+            }
+
             $roles = $this->userService->getUserRoles($user);
 
             $_SESSION['user'] = $user;
@@ -104,7 +112,7 @@ final class AuthController
                 'auth' => true
             ]);
         } catch (Exception $e) {
-            return $this->errorResponse($response, 'Authentication failed', $e);
+            return $this->invalidLoginResponse($response, 'Authentication failed', $e);
         }
     }
 
@@ -125,7 +133,7 @@ final class AuthController
                 'state' => 'success'
             ]);
         } catch (Exception $e) {
-            return $this->errorResponse($response, 'Registration failed', $e);
+            return $this->invalidLoginResponse($response, 'Registration failed', $e);
         }
     }
 
@@ -144,7 +152,7 @@ final class AuthController
                 'message' => 'Your signup is successful. You can sign in now!'
             ]);
         } catch (Exception $e) {
-            return $this->errorResponse($response, 'Email confirmation failed', $e);
+            return $this->invalidLoginResponse($response, 'Email confirmation failed', $e);
         }
     }
 
@@ -194,7 +202,7 @@ final class AuthController
             ->withStatus($status);
     }
 
-    private function errorResponse(
+    private function invalidLoginResponse(
         ResponseInterface $response,
         string $message,
         Exception $exception
@@ -207,6 +215,6 @@ final class AuthController
         return $this->jsonResponse($response, [
             'message' => $message,
             'error' => $exception->getMessage()
-        ], HttpCodes::HTTP_INTERNAL_SERVER_ERROR);
+        ], HttpCodes::HTTP_FORBIDDEN);
     }
 }

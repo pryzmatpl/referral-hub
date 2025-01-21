@@ -87,6 +87,23 @@ export default createStore({
   actions: {
     setLoading: ({ commit }, value) => commit('SET_LOADING', value),
 
+    async signup({ commit }, { userData }) {
+      try {
+        const response = await backend.post("/auth/signup", {
+          params: { userData }
+        });
+
+        if (response.data.auth) {
+          commit('SET_AUTH', true);
+        }
+
+        return response;
+      } catch (error) {
+        console.error('Signup error:', error);
+        throw error;
+      }
+    },
+
     async signin({ commit }, { uniqueId }) {
       try {
         const response = await backend.post("/auth/signin", {
@@ -100,7 +117,7 @@ export default createStore({
         return response;
       } catch (error) {
         console.error('Signin error:', error);
-        throw error;
+        return error;
       }
     },
 
