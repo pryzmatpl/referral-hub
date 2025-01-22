@@ -35,7 +35,6 @@ final class UserService
             'first_name' => $payload['firstname'] ?? '',
             'last_name' => $payload['lastname'] ?? '',
             'password' => $this->hashPassword($password),
-            'activ_code' => $this->generateActivationCode(),
             'group_id' => $payload['chosenGroup'] ?? null,
             'cvadded' => false,
             'current_role' => $role,
