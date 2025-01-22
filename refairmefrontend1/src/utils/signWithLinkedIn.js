@@ -31,7 +31,7 @@ const getUserInfo = async (access_token) => {
         },
         body: JSON.stringify({"access_token": access_token})
     })
-    return await response.json();
+    return response.json();
 }
 
 const getAccessToken = async (code) => {
@@ -39,15 +39,11 @@ const getAccessToken = async (code) => {
     const response = await fetch(baseURL + '/auth/signin/linkedaccess', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
       },
-      body: new URLSearchParams({ code })
+      body: JSON.stringify({ "code": code })
     })
-    const data = await response.json();
-
-    return getUserInfo(data['access_token'])
+    return response.json();
 }
-
-
 
 export {getCode, getAccessToken, getUserInfo};

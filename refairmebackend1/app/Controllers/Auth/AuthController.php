@@ -58,10 +58,14 @@ final class AuthController
         ]);
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getLinkedInAccessToken(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $code = $this->getRequiredParam($request, 'code');
+
         try {
-            $code = $this->getRequiredParam($request, 'code');
             $token = $this->linkedInService->getAccessToken(
                 $code,
                 self::LINKEDIN_ACCESS_TOKEN_URL,

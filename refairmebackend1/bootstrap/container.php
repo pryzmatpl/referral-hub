@@ -88,8 +88,6 @@ return function (ContainerBuilder $containerBuilder) {
             $loader = new FilesystemLoader($c->get('email.template.path'));
             return new \Twig\Environment($loader);
         },
-        'linkedin.client_id' => $_ENV['LINKEDIN_CLIENT_ID'],
-        'linkedin.client_secret' => $_ENV['LINKEDIN_CLIENT_SECRET'],
         EmailService::class => function ($c) {
             return new EmailService(
                 $c->get('mailer'),
@@ -101,8 +99,8 @@ return function (ContainerBuilder $containerBuilder) {
             return new LinkedInService(
                 $c->get('logger'),
                 $c->get(Client::class),
-                $c->get('linkedin.client_id'),
-                $c->get('linkedin.client_secret')
+                $_ENV['LINKEDIN_CLIENT_ID'],
+                $_ENV['LINKEDIN_CLIENT_SECRET']
             );
         },
         UserService::class => function ($c) {

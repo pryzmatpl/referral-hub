@@ -43,7 +43,7 @@ import { decodeCredential } from 'vue3-google-login'
 import { useStore } from 'vuex'
 import { openModal } from '@kolirt/vue-modal'
 import RoleModal from '@/components/RoleModal.vue'
-import { getCode, getUserInfo } from '../utils/signWithLinkedIn'
+import { getCode, getUserInfo, getAccessToken } from '@/utils/signWithLinkedIn'
 
 const router = useRouter()
 const route = useRoute()
@@ -78,7 +78,10 @@ const handleLinkedInLogin = () => {
 
 const handleLinkedInCallback = async (code) => {
   try {
-    const userData = await getUserInfo(code)
+    const accessToken = await getAccessToken(code)
+
+    const userData = await getUserInfo(accessToken['access_token'])
+
     await authenticateUser({
       uniqueId: userData.sub,
       email: userData.email,

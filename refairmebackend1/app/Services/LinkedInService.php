@@ -34,6 +34,10 @@ final class LinkedInService
         string $tokenUrl,
         string $redirectUri
     ): array {
+
+        $this->logger->debug("CLIENTID: " . $this->clientId);
+        $this->logger->debug("SECRET: " . $this->clientSecret);
+
         $response = $this->httpClient->post($tokenUrl, [
             'form_params' => [
                 'grant_type' => 'authorization_code',
@@ -44,6 +48,7 @@ final class LinkedInService
             ],
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept' => 'application/json'
             ],
         ]);
 
