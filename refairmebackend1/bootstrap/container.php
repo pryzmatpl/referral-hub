@@ -99,6 +99,7 @@ return function (ContainerBuilder $containerBuilder) {
         },
         LinkedInService::class => function ($c) {
             return new LinkedInService(
+                $c->get('logger'),
                 $c->get(Client::class),
                 $c->get('linkedin.client_id'),
                 $c->get('linkedin.client_secret')

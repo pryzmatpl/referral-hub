@@ -14,11 +14,13 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Monolog\Logger;
 use RuntimeException;
 
 final class LinkedInService
 {
     public function __construct(
+        private readonly Logger $logger,
         private readonly Client $httpClient,
         private readonly string $clientId,
         private readonly string $clientSecret
@@ -59,6 +61,8 @@ final class LinkedInService
      */
     public function getUserInfo(string $accessToken, string $userInfoUrl): array
     {
+        $this->logger->debug($accessToken);
+
         $response = $this->httpClient->get($userInfoUrl, [
             'headers' => [
                 'Authorization' => "Bearer {$accessToken}",
@@ -66,7 +70,8 @@ final class LinkedInService
             ],
         ]);
 
-        $data = $this->decodeResponse($response->getBody()->getContents());
+        $resp = $response->getBody()->getContents();
+        $data = $this->decodeResponse($resp);
 
         if (!isset($data['sub'])) {
             throw new RuntimeException('Invalid LinkedIn response: user info not found');

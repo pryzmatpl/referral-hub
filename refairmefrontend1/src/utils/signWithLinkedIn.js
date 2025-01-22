@@ -1,4 +1,5 @@
-import { useRouter, useRoute } from 'vue-router'
+import {useRouter} from 'vue-router'
+
 const router = useRouter()
 
 const { protocol, hostname } = window.location;
@@ -23,17 +24,14 @@ const getCode = () => {
 
 const getUserInfo = async (access_token) => {
 
-  const response = await fetch(baseURL + '/auth/signin/linkedinfo', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-  },
-  body: new URLSearchParams({ access_token })
-})
-const data = await response.json();
-
-return data;
-
+    const response = await fetch(baseURL + '/auth/signin/linkedinfo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"access_token": access_token})
+    })
+    return await response.json();
 }
 
 const getAccessToken = async (code) => {
@@ -47,10 +45,7 @@ const getAccessToken = async (code) => {
     })
     const data = await response.json();
 
-    const userInfo = getUserInfo(data['access_token'])
-  
-    return userInfo
-
+    return getUserInfo(data['access_token'])
 }
 
 

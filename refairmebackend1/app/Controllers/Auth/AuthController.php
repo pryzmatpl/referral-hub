@@ -74,12 +74,14 @@ final class AuthController
         }
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getLinkedInUserInfo(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         try {
             $accessToken = $this->getRequiredParam($request, 'access_token');
             $userInfo = $this->linkedInService->getUserInfo($accessToken, self::LINKEDIN_USERINFO_URL);
-
             return $this->jsonResponse($response, $userInfo);
         } catch (Exception $e) {
             return $this->invalidLoginResponse($response, 'Failed to fetch LinkedIn user info', $e);
