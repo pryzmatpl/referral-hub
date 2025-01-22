@@ -28,8 +28,8 @@ RUN pacman -U --noconfirm /var/php83libs/*.pkg.tar.zst && \
 
 # Add user, create directories, and set permissions
 RUN useradd -m -s /bin/bash www-data && \
-    mkdir -p /var/www/html/storage /var/www/html/storage/app/public/files /var/www/html/storage/app/chunks /run/php  /var/www/html/storage/logs  && \
-    chmod -R 777 /var/www/html/storage /var/www/html/storage/app/public /var/www/html/storage/app/chunks /tmp /run/php && \
+    mkdir -p /var/www/html/storage /var/www/html/storage/app/public/files /var/www/html/storage/app/chunks /run/php  /var/www/html/storage/logs /var/lib/php83/sessions && \
+    chmod -R 777 /var/www/html/storage /var/www/html/storage/app/public /var/www/html/storage/app/chunks /tmp /run/php /var/lib/php83/sessions && \
     chown www-data:www-data /run/php && \
     ln -sf /usr/bin/php83 /usr/bin/php && \
     cp -r /usr/lib/php83/ /usr/lib/php && \

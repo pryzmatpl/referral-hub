@@ -65,7 +65,7 @@ final class LinkedInService
 
         $response = $this->httpClient->get($userInfoUrl, [
             'headers' => [
-                'Authorization' => "Bearer {$accessToken}",
+                'Authorization' => "Bearer $accessToken",
                 'Accept' => 'application/json',
             ],
         ]);

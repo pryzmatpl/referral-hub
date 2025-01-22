@@ -108,12 +108,12 @@ const authenticateUser = async (userData) => {
         role,
         password: '' // Empty password for social login
       })
-      store.dispatch('signin', {
-      uniqueId: userData.uniqueId
-    })
+      await store.dispatch('signin', {
+        uniqueId: userData.uniqueId
+      })
     }
 
-    router.push('/')
+    await router.push('/')
   } catch (error) {
     console.error('Authentication error:', error)
   }
