@@ -12,9 +12,14 @@
         },{
             "name":"Piotr Słupski",
             "email":"piotr.slupski@pryzmat.pl"
+        },{
+            "name":"Akash Kumar",
+            "email":"a_kumar@poczta.fm"
         }
     ],
     "require": {
+        "twig/twig": "^3.0",
+        "psr/log": "^3.0",
         "slim/slim": "*",
         "slim/twig-view": "*",
         "respect/validation": "*",
@@ -23,7 +28,6 @@
         "vlucas/phpdotenv": "*",
         "phpunit/phpunit": "*",
         "knplabs/knp-menu": "*",
-        "bryanjhv/slim-session": "*",
         "chadicus/slim-oauth2-middleware": "*",
         "davidepastore/slim-validation": "*",
         "nette/mail": "*",

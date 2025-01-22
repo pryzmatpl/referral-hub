@@ -30,14 +30,14 @@ class Router {
         $app->get('/jwt', [AuthController::class, 'jwttoken'])->setName('refair.jwttoken');
 
         $app->get('/auth/signup', [AuthController::class, 'getSignUp'])->setName('auth.signup');
-        $app->post('/auth/signup', [AuthController::class, 'postSignUp']);
+        $app->post('/auth/signup', [AuthController::class, 'signUp']);
         $app->get('/auth/confirm', [AuthController::class, 'confirmEmail'])->setName('auth.confirm');
-        $app->post('/auth/signin', [AuthController::class, 'postSignIn'])->setName('auth.signin');
+        $app->post('/auth/signin', [AuthController::class, 'signIn'])->setName('auth.signin');
         $app->get('/auth/recover', [AuthController::class, 'getChangePass'])->setName('auth.recover');
         $app->get('/auth/recover/{hash}', [AuthController::class, 'getChangePass']);
         $app->post('/auth/recover', [AuthController::class, 'postChangePass']);
         $app->post('/auth/change', [AuthController::class, 'changePass'])->setName('auth.pwdxchng');
-        $app->get('/api/auth/signout', [AuthController::class, 'getSignOut'])->setName('auth.signout');
+        $app->get('/api/auth/signout', [AuthController::class, 'signOut'])->setName('auth.signout');
         $app->post('/auth/signin/linkedaccess', [AuthController::class, 'getLinkedInAccessToken']);
         $app->post('/auth/signin/linkedinfo', [AuthController::class, 'getLinkedInUserInfo']);
 

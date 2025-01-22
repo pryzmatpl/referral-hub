@@ -401,7 +401,7 @@ $app->group('',function () {
 	$this->post('/auth/signup','AuthController:postSignUp');
 
 	$this->get('/auth/signin','AuthController:getSignIn')->setName('auth.signin');
-	$this->post('/auth/signin','AuthController:postSignIn');
+	$this->post('/auth/signin','AuthController:signIn');
 
 })->add(new GuestMiddleware($container));
 ```
