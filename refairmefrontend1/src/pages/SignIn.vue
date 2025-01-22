@@ -100,7 +100,7 @@ const authenticateUser = async (userData) => {
       uniqueId: userData.uniqueId
     })
 
-    if (signInResponse?.error === USER_DOES_NOT_EXIST) {
+    if (signInResponse.response?.data.error === USER_DOES_NOT_EXIST) {
       // If user doesn't exist, show role selection modal and sign up
       const role = await showRoleSelectionModal()
       await store.dispatch('signup', {
@@ -108,6 +108,9 @@ const authenticateUser = async (userData) => {
         role,
         password: '' // Empty password for social login
       })
+      store.dispatch('signin', {
+      uniqueId: userData.uniqueId
+    })
     }
 
     router.push('/')

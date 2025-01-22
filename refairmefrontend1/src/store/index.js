@@ -87,10 +87,10 @@ export default createStore({
   actions: {
     setLoading: ({ commit }, value) => commit('SET_LOADING', value),
 
-    async signup({ commit }, { userData }) {
+    async signup({ commit }, userData) {
       try {
         const response = await backend.post("/auth/signup", {
-          params: { userData }
+          ...userData
         });
 
         if (response.data.auth) {
