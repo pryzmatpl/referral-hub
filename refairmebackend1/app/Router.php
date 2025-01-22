@@ -37,7 +37,7 @@ class Router {
         $app->get('/auth/recover/{hash}', [AuthController::class, 'getChangePass']);
         $app->post('/auth/recover', [AuthController::class, 'postChangePass']);
         $app->post('/auth/change', [AuthController::class, 'changePass'])->setName('auth.pwdxchng');
-        $app->get('/api/auth/signout', [AuthController::class, 'getSignOut'])->setName('auth.signout');
+        $app->get('/api/auth/signout', [AuthController::class, 'signOut'])->setName('auth.signout');
         $app->post('/auth/signin/linkedaccess', [AuthController::class, 'getLinkedInAccessToken']);
         $app->post('/auth/signin/linkedinfo', [AuthController::class, 'getLinkedInUserInfo']);
 
