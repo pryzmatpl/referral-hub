@@ -16,3 +16,4 @@ yarn-error.log
 */storage/logs/*
 utils/php*
 refairmebackend1/resources/pythonapis/match/nltk_data/*
+*nltk_data*
