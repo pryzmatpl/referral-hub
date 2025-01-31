@@ -1,6 +1,7 @@
 <template>
   <ModalTarget />
   <div class="main">
+    <img class="position-fixed h-100 w-100 z-n1" src="./assets/background.png">
     <nav id="mainNav" class="navbar navbar-expand-lg navbar-light text-uppercase p-2 px-3 w-75">
       <router-link class="navbar-brand" to="/">
         <!-- <img src="./assets/refairme_logo.png" height="50"> -->
