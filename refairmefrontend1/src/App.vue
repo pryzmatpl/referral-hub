@@ -1,7 +1,7 @@
 <template>
   <ModalTarget />
-  <div>
-    <nav id="mainNav" class="navbar navbar-expand-lg navbar-light text-uppercase p-2 px-3">
+  <div class="main">
+    <nav id="mainNav" class="navbar navbar-expand-lg navbar-light text-uppercase p-2 px-3 w-75">
       <router-link class="navbar-brand" to="/">
         <!-- <img src="./assets/refairme_logo.png" height="50"> -->
         <img src="./assets/refair-me-logo.svg" height="70" class="ml-2">
@@ -99,13 +99,15 @@ body {
 }
 
 nav {
-  background-color: white;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
   margin: 0 auto;
 }
 
 .max-width {
   max-width: 100% !important;
+}
+
+.nav-link {
+  color: white;
 }
 
 h1, h2, a {
