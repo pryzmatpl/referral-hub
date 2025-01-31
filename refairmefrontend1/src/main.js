@@ -13,6 +13,11 @@ library.add(faMoneyBillAlt)
 
 import BootstrapVue3 from 'bootstrap-vue-3'
 
+// import function to register Swiper custom elements
+import { register } from 'swiper/element/bundle';
+// register Swiper custom elements
+register();
+
 
 // import VueAnalytics from 'vue-analytics'
 import App from "./App";
