@@ -1,30 +1,32 @@
 <template>
   <div>
-    <h2 class="mt-3 mb-4 text-center">Welcome back to Refair.me</h2>
+    <h2 class="mt-3 mb-5 text-center fs-1">Welcome to Refair.me</h2>
     <div class="container" style="margin-top:20px;margin-bottom:20px;">
-      <div class="shadow row">
-        <div class="col-12 inner-container">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <div class="row d-flex justify-content-center">
-                <div class="mb-5 col-6 d-none d-md-block">
-                  <h1 class="text-start" style="font-size: 60px;">Recruitment, with you in a driver seat</h1>
+      <div class="row">
+        <div class="inner-container">
+          <div class="panel panel-default d-flex justify-content-center">
+            <div class="panel-body w-75 position-relative p-2 border border-white rounded d-flex justify-content-center">
+              <div class="glass-overlay"></div>
+              <div class="h-100 w-100 row d-flex justify-content-center bg-light rounded text-dark">
+                
+                <div class="mb-5 col-12 d-none d-md-block text-center">
+                  <h1 style="font-size: 60px;">Recruitment, with you in a driver seat</h1>
                   <p style="font-size: 18px; font-weight: 600">Every matching job, fast tracked and feedback to match
                     your skills to best roles</p>
                 </div>
                 <!-- Login buttons -->
-                <div class="flex flex-col">
+                <div class="d-flex flex-column align-items-center mb-5">
                   <GoogleLogin
                       :callback="handleGoogleLogin"
+                      class="p-2"
                   />
-                  <button
-                      @click="handleLinkedInLogin"
-                  >
                     <img
+                        @click="handleLinkedInLogin"
+                        class="cursor-pointer p-2"
                         src="../assets/Sign-In-Small---Default.png"
                         alt="Sign in with LinkedIn"
                     />
-                  </button>
+                 
                 </div>
               </div>
             </div>
@@ -132,15 +134,8 @@ const showRoleSelectionModal = () => {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
 .inner-container {
-  background: white;
-  padding-bottom: 20px;
-  padding-top: 20px;
+  background: transparent;
   border-radius: 5px;
 }
 
@@ -158,12 +153,26 @@ h1 {
   margin-bottom: 10px;
 }
 
-button {
-  width: 100%;
+img {
+  cursor: pointer;
 }
 
-.shadow {
-  box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
-  border: 0;
+.glass-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  /* Semi-transparent */
+  filter: blur(6px);
+  backdrop-filter: blur(10px);
+  /* Glass effect */
+  -webkit-backdrop-filter: blur(10px);
+  /* Safari support */
+  border-radius: 10px;
+  z-index: -1;
+  /* Behind slide content, but inside the slide */
 }
+
 </style>

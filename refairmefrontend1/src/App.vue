@@ -97,6 +97,7 @@ export default {
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
+  color: white;
 }
 
 nav {
@@ -111,7 +112,5 @@ nav {
   color: white;
 }
 
-h1, h2, a {
-  color: $primaryColor;
-}
+
 </style>
