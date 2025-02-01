@@ -33,6 +33,7 @@
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
     "portfinder": "^1.0.32",
+    "swiper": "^11.2.1",
     "vue": "^3.4.35",
     "vue-axios": "^3.5.2",
     "vue-chartjs": "^5.2.0",

@@ -305,7 +305,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .card {
   box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1);
   border: 0;
