@@ -14,6 +14,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ref , defineProps} from 'vue'
 import { faEdit, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import {useStore} from "vuex";
 
 const props = defineProps({
   job: {
