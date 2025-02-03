@@ -112,5 +112,19 @@ nav {
   color: white;
 }
 
+.glass-effect {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 44.5px rgba(0, 0, 0, 0.25);
+  margin-bottom: 50px;
+  padding: 8px;
+  backdrop-filter: blur(20px);
+}
+
+.glass-effect > :first-child {
+  background-color: white;
+  border-radius: .375rem;
+}
+
 
 </style>

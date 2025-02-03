@@ -9,10 +9,10 @@
           <h2 class="mt-3 mb-4 text-center">Detail search</h2>
         </div>
         <div class="col-4 d-flex justify-content-end">
-          <a href="#" class="py-3 px-0" @click="clearAllFilters">Clear all filters</a>
+          <a href="#" class="py-3 px-0 text-white" @click="clearAllFilters">Clear all filters</a>
         </div>
       </div>
-      <div class="card shadow">
+      <div class="card glass-effect">
         <div class="card-body">
           <h5>Basic filter</h5>
           <div class="form-row mb-2 d-flex">
@@ -69,7 +69,7 @@
           </div>
         </div>
       </div>
-      <div class="card mt-3 shadow">
+      <div class="card mt-3 glass-effect">
         <div class="card-body">
           <h5>Contract type</h5>
           <div class="form-row d-flex flex-wrap">
@@ -183,7 +183,7 @@
           </div>
         </div>
       </div>
-      <div class="card mt-2 shadow">
+      <div class="card mt-2 glass-effect">
         <div class="card-body">
           <h5>Other perks</h5>
           <div class="row p-2">
@@ -204,7 +204,7 @@
           </div>
         </div>
       </div>
-      <div class="card mt-2 shadow">
+      <div class="card mt-2 glass-effect">
         <div class="card-body">
           <h5>Project</h5>
           <div class="row p-2">
@@ -226,7 +226,7 @@
         </div>
       </div>
       <div class="row justify-content-center pt-2 m-4">
-        <router-link class="btn btn-info w-50" to="/results" tag="button">
+        <router-link class="btn custom-btn mb-5 w-50" to="/results" tag="button">
           {{ jobListingLength }} Jobs You Can Start Today
         </router-link>
       </div>
@@ -324,6 +324,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '@/assets/settings.scss';
+
 .shadow {
   box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
   border: 0;
@@ -331,6 +333,12 @@ export default {
 
 #inlineRadio1 {
   border: 1px solid black;
+}
+
+.custom-btn {
+  background-color: $primaryColor;
+  backdrop-filter: blur(10px);
+  width: 10rem;
 }
 
 @import 'vue-multiselect/dist/vue-multiselect.css';
