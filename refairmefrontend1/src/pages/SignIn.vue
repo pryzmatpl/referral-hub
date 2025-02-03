@@ -5,9 +5,8 @@
       <div class="row">
         <div class="inner-container">
           <div class="panel panel-default d-flex justify-content-center">
-            <div class="panel-body w-75 position-relative p-2 border border-white rounded d-flex justify-content-center">
-              <div class="glass-overlay"></div>
-              <div class="h-100 w-100 row d-flex justify-content-center bg-light rounded text-dark">
+            <div class="panel-body w-75 position-relative p-2 d-flex justify-content-center">
+              <div class="h-100 w-100 row d-flex justify-content-center rounded">
                 
                 <div class="mb-5 col-12 d-none d-md-block text-center">
                   <h1 style="font-size: 60px;">Recruitment, with you in a driver seat</h1>
