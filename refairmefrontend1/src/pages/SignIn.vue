@@ -17,15 +17,14 @@
                 <div class="d-flex flex-column align-items-center mb-5">
                   <GoogleLogin
                       :callback="handleGoogleLogin"
-                      class="p-2"
-                  />
+                      class="p-4"
+                  />     
+                  <div @click="handleLinkedInLogin" class="linkedin-button cursor-pointer rounded-pill overflow-hidden p-1 d-flex justify-content-center align-items-center">
                     <img
-                        @click="handleLinkedInLogin"
-                        class="cursor-pointer p-2"
                         src="../assets/Sign-In-Small---Default.png"
                         alt="Sign in with LinkedIn"
                     />
-                 
+                  </div>
                 </div>
               </div>
             </div>
@@ -154,6 +153,7 @@ h1 {
 
 img {
   cursor: pointer;
+  width: 90%;
 }
 
 .glass-overlay {
@@ -173,5 +173,11 @@ img {
   z-index: -1;
   /* Behind slide content, but inside the slide */
 }
+
+.linkedin-button {
+  background-color: #0077b5;
+  width: 22rem;
+}
+
 
 </style>

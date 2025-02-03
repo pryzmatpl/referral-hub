@@ -30,7 +30,12 @@ app.use(BootstrapVue3);
 app.use(router);
 app.use(store);
 app.use(vue3GoogleLogin, {
-    clientId: '254777876915-4lgmqe9diaebsjchptmdrt2edlqo3tn8.apps.googleusercontent.com'
+    clientId: '254777876915-4lgmqe9diaebsjchptmdrt2edlqo3tn8.apps.googleusercontent.com',
+    buttonConfig: {
+      size: "large",
+      shape: "pill", 
+      width: "300px"
+    }
   })
   app.use(createModal({
     transitionTime: 200,
