@@ -13,8 +13,6 @@ use App\Models\Userweight;
 use App\Models\Linkedinimport;
 use App\Models\Signoff;
 use Psr\Log\LoggerInterface;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
