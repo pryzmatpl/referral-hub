@@ -140,12 +140,14 @@ export default {
     },
 
     'userInput.keywords': function(keywords) {
-      if(keywords.length != 0){
+      //TODO: EDIT when keywords supported
+
+      if(keywords?.length != 0){
         // On keywords updated, send it to backend for ai analysis
         this.$emit('loading', true)
 
         let params = {
-          'eval': keywords.join(),
+          'eval': keywords?.join(),
         }
 
         this.$store.getters.backend('/eval', {params})
@@ -169,10 +171,10 @@ export default {
   },
 
   mounted () {
-    const email = this.$store.state.dehashedData.EMAIL
+    const unique_id = this.$store.state.dehashedData.USER_ID
 
     this.$store.state.backend
-      .post('/api/user/getprofile/' + email)
+      .post('/api/user/getprofile/' + unique_id)
       .then(response => {
         console.log('getprofile')
         console.log(response)
@@ -242,13 +244,19 @@ export default {
     saveProfile () {
       console.log('Saving profile')
       let params = {
-        'email': this.$store.state.dehashedData.EMAIL,
+        'unique_id': this.$store.state.dehashedData.USER_ID,
         'weights': this.patterndatakw.datasets[0].data,
         ...this.userInput
       }
 
       this.$store.state.backend
-        .post('/api/user/storeprofile', {params})
+        .post('/api/user/storeprofile', { params }, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+
+        )
         .then(response => alert('Profile saved'))
         .catch(error => console.log(error))
     },

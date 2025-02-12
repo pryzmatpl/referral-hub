@@ -13,6 +13,8 @@ use App\Models\Userweight;
 use App\Models\Linkedinimport;
 use App\Models\Signoff;
 use Psr\Log\LoggerInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -105,41 +107,49 @@ class RefairController extends Controller {
         }
     }
 
-    public function storeprofile($request, $response, $args){
-        try{
+    public function storeprofile($request, $response, $args)
+    {
+        try {
             $getData = $request->getParsedBody();
             $weights = $getData['params']['weights'];
-            $amail = $getData['params']['email'];
-            $kws = $getData['params']['keywords'];
+            $uid = $getData['params']['unique_id'];
 
-            $usermail = urldecode($amail);
+            $auser = User::where('unique_id', $uid)->first();
+            $auser->first_name = $getData['params']['firstname'];
+            $auser->last_name = $getData['params']['lastname'];
+            $auser->save();
 
-            if( !strcmp($usermail, '') ){
-                return $response->withJson([
-                    'message'=>"Email is empty",
-                    'state'=>"error",
-                    'arr'=>$getData
-                ]);
-            }
+            //TODO: No keywords passed yet;
+            //$kws = $getData['params']['keywords'];
 
-            $auser = User::where('email',$usermail)->first();
-
-            $uweight=	Userweight::create(['aone'=>$weights[0],
-                'atwo'=>$weights[1],
-                'athree'=>$weights[2],
-                'afour'=>$weights[3],
-                'afive'=>$weights[4],
-                'asix'=>$weights[5],
-                'aseven'=>$weights[6],
-                'aeight'=>$weights[7],
-                'anine'=>$weights[8],
-                'aten'=>$weights[9],
-                'aeleven'=>$weights[10]
+            $uweight = Userweight::updateOrCreate(['user_id' => $auser->id], [
+                'weight_one' => $weights[0],
+                'weight_two' => $weights[1],
+                'weight_three' => $weights[2],
+                'weight_four' => $weights[3],
+                'weight_five' => $weights[4],
+                'weight_six' => $weights[5],
+                'weight_seven' => $weights[6],
+                'weight_eight' => $weights[7],
+                'weight_nine' => $weights[8],
+                'weight_ten' => $weights[9],
+                'weight_eleven' => $weights[10],
             ]);
-            $uweight->userid = $auser->id;
-            $uweight->keywords = $kws;
+            $uweight->user_id = $auser->id;
+
+            //TODO: No keywords passed yet;
+            //$uweight->keywords = $kws;
+
             $uweight->save();
 
+            $response->getBody()->write(json_encode(['status' => "success",
+                //'keywords' => join(',', $kws),
+                'message' => "Succesfully updated profile for user "]));
+
+            return $response->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+
+            //TODO: Returned function early - edit when table supports additional columns;
             $askills = $getData['params']['skills'];
             $auser->skills = $askills;
 
@@ -180,56 +190,66 @@ class RefairController extends Controller {
         }
     }
 
-    public function getprofile($request, $response, $args){
-        try{
-            //id is email
+    public function getprofile($request, $response, $args)
+    {
+        try {
+            //id is unique_id;
             $uid = $args['id'];
-            $auid = User::where('email', $uid)->first();
+            $auid = User::where('unique_id', $uid)->first();
 
-            $userweight = json_decode(Userweight::where('userid', $auid->id)->orderBy('created_at','desc')->get(),true)[0];
+            $userweight = Userweight::where('user_id', $auid->id)->orderBy('created_at', 'desc')->first();
 
-            $keywords = ( ! is_null($userweight['keywords']) ) ? $userweight['keywords'] : [];
-            $skills = ( ! is_null($auid->skills) ) ? $auid->skills : [];
+            //TODO: Edit when keywords are supported;
+            //$keywords = ( ! is_null($userweight['keywords']) ) ? $userweight['keywords'] : [];
+            $skills = (!is_null($auid->skills)) ? $auid->skills : [];
 
             $status = 'success';
 
-            if( !isset($userweight) ){
+            if (!$userweight) {
                 $weights = 11; //Amount of weights
-                for($idx = 0; $idx < $weights; $idx++) $retweight[] = 0;
+                for ($idx = 0; $idx < $weights; $idx++)
+                    $retweight[] = 0;
                 $status = 'error';
-            }else{
-                $retweight[] = $userweight['aone'];
-                $retweight[] = $userweight['atwo'];
-                $retweight[] = $userweight['athree'];
-                $retweight[] = $userweight['afour'];
-                $retweight[] = $userweight['afive'];
-                $retweight[] = $userweight['asix'];
-                $retweight[] = $userweight['aseven'];
-                $retweight[] = $userweight['aeight'];
-                $retweight[] = $userweight['anine'];
-                $retweight[] = $userweight['aten'];
-                $retweight[] = $userweight['aeleven'];
+            } else {
+                $retweight[] = $userweight['weight_one'];
+                $retweight[] = $userweight['weight_two'];
+                $retweight[] = $userweight['weight_three'];
+                $retweight[] = $userweight['weight_four'];
+                $retweight[] = $userweight['weight_five'];
+                $retweight[] = $userweight['weight_six'];
+                $retweight[] = $userweight['weight_seven'];
+                $retweight[] = $userweight['weight_eight'];
+                $retweight[] = $userweight['weight_nine'];
+                $retweight[] = $userweight['weight_ten'];
+                $retweight[] = $userweight['weight_eleven'];
+
             }
 
-            return $response->withJson( ['status' => "success",
-                'message' => "Returned weights for user ".$auid->id,
+            $response->getBody()->write(json_encode([
+                'success' => true,
+                'message' => "Returned weights for user " . $auid->id,
                 'firstname' => $auid->first_name,
                 'lastname' => $auid->last_name,
                 'weights' => $retweight,
                 'status' => $status,
-                'keywords' => $keywords,
-                'exp'=> $auid->exp,
+                // TODO: edit when keywords are supported
+                //'keywords' => $keywords,
+                'exp' => $auid->exp,
                 'availability' => $auid->scheduling,
                 'noticePeriod' => $auid->notice_period,
                 'expectedSalary' => $auid->salary_expectation,
                 'skills' => $skills,
+                'role' => $auid->current_role,
                 'skills_nice' => empty($auid->skills_nice) ? array() : $auid->skills_nice,
                 'frameworks_must' => empty($auid->frameworks_must) ? array() : $auid->frameworks_must,
                 'frameworks_nice' => empty($auid->frameworks_nice) ? array() : $auid->frameworks_nice,
                 'methodologies_must' => empty($auid->methodologies_must) ? array() : $auid->methodologies_must,
                 'methodologies_nice' => empty($auid->methodologies_nice) ? array() : $auid->methodologies_nice
-            ]);
-        }catch(Exception $e){
+            ]));
+            return $response->withHeader('Content-Type', 'application/json');
+
+
+        } catch (Exception $e) {
             print_r($e);
         }
     }
