@@ -235,20 +235,21 @@ class RefairController extends Controller {
 
             }
 
+            $userdesc = Userdesc::where('user_id', $auid->id)->orderBy('created_at', 'desc')->first();
+
             $response->getBody()->write(json_encode([
                 'success' => true,
                 'message' => "Returned weights for user " . $auid->id,
                 'firstname' => $auid->first_name,
                 'lastname' => $auid->last_name,
                 'weights' => $retweight,
-                'status' => $status,
-                // TODO: edit when keywords are supported
-                //'keywords' => $keywords,
+                'jobStatus' => $userdesc->job_status ?? 'not looking',
+                'keywords' => $userdesc->keywords ?? [],
                 'exp' => $auid->exp,
-                'availability' => $auid->scheduling,
-                'noticePeriod' => $auid->notice_period,
-                'expectedSalary' => $auid->salary_expectation,
-                'skills' => $skills,
+                'availability' => $userdesc->availability ?? '',
+                'noticePeriod' => $userdesc->notice_period ?? '',
+                'expectedSalary' => $userdesc->expected_salary ?? '',
+                'skills' => $userdesc->skills ?? [],
                 'role' => $auid->current_role,
                 'skills_nice' => empty($auid->skills_nice) ? array() : $auid->skills_nice,
                 'frameworks_must' => empty($auid->frameworks_must) ? array() : $auid->frameworks_must,
