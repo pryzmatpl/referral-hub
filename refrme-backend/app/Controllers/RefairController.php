@@ -147,7 +147,7 @@ class RefairController extends Controller {
                 'notice_period' => $getData['params']['noticePeriod'],
                 'availability' => $getData['params']['availability'],
                 'expected_salary' => $getData['params']['expectedSalary'],
-                'job_status' => $getData['params']['status'],
+                'job_status' => $getData['params']['jobStatus'],
             ]);
             $udesc->user_id = $auser->id;
             $udesc->save();
