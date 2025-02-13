@@ -3,6 +3,7 @@ namespace App\Controllers;
 use Exception;
 use Nette\Mail\Message;
 use App\Models\User;
+use App\Models\Userdesc;
 use App\Models\Company;
 use App\Models\Cart;
 use App\Models\File;
@@ -139,6 +140,17 @@ class RefairController extends Controller {
             //$uweight->keywords = $kws;
 
             $uweight->save();
+
+            $udesc = Userdesc::updateOrCreate(['user_id' => $auser->id], [
+                'keywords' => $getData['params']['keywords'],
+                'skills' => $getData['params']['skills'],
+                'notice_period' => $getData['params']['noticePeriod'],
+                'availability' => $getData['params']['availability'],
+                'expected_salary' => $getData['params']['expectedSalary'],
+                'job_status' => $getData['params']['status'],
+            ]);
+            $udesc->user_id = $auser->id;
+            $udesc->save();
 
             $response->getBody()->write(json_encode(['status' => "success",
                 //'keywords' => join(',', $kws),
