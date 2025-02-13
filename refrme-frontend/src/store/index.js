@@ -62,7 +62,8 @@ export default createStore({
       SESSION_AUTH: '',
       SESSION_STATE: '',
       SESSION_ID: '',
-      TIMESTAMP: ''
+      TIMESTAMP: '',
+      USER_ID: ''
     },
     filterDefaults: FILTER_DEFAULTS,
     filterSelections: { ...INITIAL_FILTER_SELECTIONS },
@@ -112,6 +113,9 @@ export default createStore({
 
         if (response.data.auth) {
           commit('SET_AUTH', true);
+          commit('SET_DEHASHED_DATA', {
+            USER_ID: uniqueId
+          })
         }
 
         return response;
@@ -136,7 +140,8 @@ export default createStore({
           SESSION_AUTH: '',
           SESSION_STATE: '',
           SESSION_ID: '',
-          TIMESTAMP: ''
+          TIMESTAMP: '',
+          USER_ID: ''
         });
         return response;
       } catch (error) {
