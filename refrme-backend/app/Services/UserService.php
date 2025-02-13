@@ -32,8 +32,8 @@ final class UserService
         $user = User::create([
             'email' => $email,
             'name' => $this->generateAccountName($email),
-            'first_name' => $payload['firstname'] ?? '',
-            'last_name' => $payload['lastname'] ?? '',
+            'first_name' => $payload['firstName'] ?? '',
+            'last_name' => $payload['lastName'] ?? '',
             'password' => $this->hashPassword($password),
             'group_id' => $payload['chosenGroup'] ?? null,
             'cvadded' => false,
