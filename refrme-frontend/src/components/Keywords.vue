@@ -129,6 +129,7 @@ export default {
             exp: 1,
             years: 1
           })
+          this.$emit('keywords', [this.newKeyword])
           this.$emit('skills', skillsArray)
           
           this.newKeyword = ''
