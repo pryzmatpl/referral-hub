@@ -46,6 +46,8 @@ class Router {
         $app->get('/matchjob/{id}', [RefairController::class, 'matchjob'])->setName('refair.matchjob');
         $app->post('/api/user/storeprofile', [RefairController::class, 'storeprofile'])->setName('refair.user.storeprofile');
         $app->post('/api/user/getprofile/{id}', [RefairController::class, 'getprofile'])->setName('refair.user.getprofile');
+        $app->post('/api/user/storeexp', [RefairController::class, 'storeexp'])->setName('refair.user.storeexp');
+        $app->post('/api/user/getexp/{id}', [RefairController::class, 'getexp'])->setName('refair.user.getexp');
 
         $app->post('/project/add', [ProjectController::class, 'add'])->setName('refair.add.project');
         $app->post('/project/update/{id}', [ProjectController::class, 'update'])->setName('refair.update.project');
