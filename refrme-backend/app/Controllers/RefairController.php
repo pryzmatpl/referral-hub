@@ -4,6 +4,7 @@ use Exception;
 use Nette\Mail\Message;
 use App\Models\User;
 use App\Models\Userdesc;
+use App\Models\Userexp;
 use App\Models\Company;
 use App\Models\Cart;
 use App\Models\File;
@@ -265,6 +266,62 @@ class RefairController extends Controller {
         }
     }
 
+    public function storeexp($request, $response, $args) {
+        try {
+            $getData = $request->getParsedBody();
+            $jobName = $getData['params']['name'];
+            $role = $getData['params']['role'];
+            $startDate = $getData['params']['start'];
+            $responsibilities = $getData['params']['responsibilities'];
+            $currentJob = $getData['params']['currentJob'];
+            $endDate = $getData['params']['end'] ?? null;
+            $years = $getData['params']['years'];
+            $uid = $getData['params']['unique_id'];
+            $salary = $getData['params']['salary'] ?? null;
+
+            $auser = User::where('unique_id', $uid)->first();
+
+            $userexp = Userexp::firstOrCreate(['user_id' => $auser->id,
+            'name' => $jobName,
+            'role' => $role,
+            'start' => $startDate], [
+            'responsibilities' => $responsibilities,
+            'current_job' => $currentJob,
+            'end' => $endDate ?? null,
+            'years' => $years,
+            'salary' => $salary
+            ]);
+
+            $userexp->save();
+
+            $response->getBody()->write(json_encode(['status' => "success",
+                'message' => 'Experienced saved succesfully']));
+
+            return $response->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+        } catch (Exception $e) {
+            print_r($e);   
+        }
+    }
+
+    public function getexp($request, $response, $args) {
+        try {
+            //id is unique_id;
+            $uid = $args['id'];
+            $auid = User::where('unique_id', $uid)->first();
+
+            $userexp = Userexp::where('user_id', $auid->id)->get()->toArray();
+
+            $response->getBody()->write(json_encode(['status' => "success",
+                'exp' => $userexp,
+                'message' => "Getting experience for user"]));
+
+            return $response->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+        } catch (Exception $e) {
+            print_r($e);   
+        }
+    }
 
     public function matchprofile($request, $response, $args){
         try{
