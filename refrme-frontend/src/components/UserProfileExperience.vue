@@ -28,7 +28,7 @@
           <input
               class="form-control"
               v-model="newExperience.salary"
-              type="text"
+              type="number"
               placeholder="fill in to compare to market"
           />
         </div>
@@ -68,6 +68,7 @@
           <input
               class="form-control"
               v-model="newExperience.end"
+              :disabled="newExperience.currentJob "
               type="date"
               required
           />
@@ -127,16 +128,28 @@
 </template>
 <script>
 export default {
+  mounted () {
+    const unique_id = this.$store.state.dehashedData.USER_ID
+
+    this.$store.state.backend
+      .post('/api/user/getexp/' + unique_id)
+      .then(response => {
+        console.log(response)
+        this.experience = response.data.exp
+      })
+  },
+
   data () {
     return {
       newExperience: {
         name: '',
         role: '',
-        responsibilites: '',
+        responsibilities: '',
         currentJob: false,
         start: '',
-        end: '',
-        years: ''
+        end: null,
+        years: '',
+        salary: null
       },
       experience: []
     }
@@ -146,6 +159,36 @@ export default {
     addExperience () {
       this.experience.push({...this.newExperience})
       this.$emit('exp', this.experience)
+
+      let params = {
+        'unique_id': this.$store.state.dehashedData.USER_ID,
+        ...this.newExperience,
+        'currentJob': this.newExperience.currentJob === true ? 1 : 0
+      }
+
+      this.$store.state.backend
+        .post('/api/user/storeexp', { params }, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+        )
+        .then(
+          response => {
+            alert('Experience saved')
+            this.newExperience = {
+              name: '',
+              role: '',
+              responsibilities: '',
+              currentJob: false,
+              start: '',
+              end: null,
+              years: '',
+              salary: null
+            }
+          }
+        )
+        .catch(error => console.log(error))
     },
 
     deleteExperience () {
