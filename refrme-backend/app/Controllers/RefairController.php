@@ -323,6 +323,26 @@ class RefairController extends Controller {
         }
     }
 
+    public function deleteexp($request, $response, $args)
+    {
+        try {
+            $getData = $request->getParsedBody();
+            $exp = $getData['params']['id'];
+
+            $expToDelete = Userexp::where('id', $exp)->delete();
+
+            $response->getBody()->write(json_encode(['status' => "success",
+                'message' => "Experience deleted successfully"]));
+
+            return $response->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+
+
+        } catch (Exception $e) {
+            print_r($e);
+        }
+    }
+
     public function matchprofile($request, $response, $args){
         try{
 
