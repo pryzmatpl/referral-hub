@@ -9,13 +9,13 @@ debug:
 	docker-compose -f docker-compose-debug.yml build && docker-compose -f docker-compose-debug.yml up -d
 
 cleandb:
-	docker exec -it refairmebackend1-aimatch-1 php ./cli.php cleandb
+	docker exec -it refrme-backend-aimatch-1 php ./cli.php cleandb
 
 migrate:
-	docker exec -it refairmebackend1-aimatch-1 php ./cli.php migrate
+	docker exec -it refrme-backend-aimatch-1 php ./cli.php migrate
 
 seed:
-	docker exec -it refairmebackend1-aimatch-1 php ./cli.php seed
+	docker exec -it refrme-backend-aimatch-1 php ./cli.php seed
 
 down:
 	docker-compose down --remove-orphans -v

@@ -8,7 +8,7 @@ environments:
 
     development:
         adapter: mysql
-        host: mysql
+        host: refrme-backend-mysql-1
         name: prism
         user: root
         pass: 1tJ3nBCxy
