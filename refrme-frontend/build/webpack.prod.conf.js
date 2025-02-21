@@ -67,7 +67,6 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       chunksSortMode: 'dependency'
     }),
-    new webpack.HashedModuleIdsPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new CopyWebpackPlugin({
       patterns: [
