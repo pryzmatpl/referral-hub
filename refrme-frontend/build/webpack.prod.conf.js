@@ -65,7 +65,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         collapseWhitespace: true,
         removeAttributeQuotes: true
       },
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'auto'
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new CopyWebpackPlugin({
