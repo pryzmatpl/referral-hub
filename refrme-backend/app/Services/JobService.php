@@ -6,7 +6,7 @@
 namespace App\Services;
 
 use App\Repositories\JobRepository;
-use App\Models\Jobdesc;
+use App\Models\Job;
 use App\Models\User;
 
 class JobService {
@@ -29,9 +29,9 @@ class JobService {
         return $this->jobRepository->findById($params["id"]);
     }
 
-    public function createJob(array $data, int $userId): Jobdesc {
+    public function createJob(array $data, int $userId): Job {
         // Validate data and create the job
-        $job = new Jobdesc();
+        $job = new Job();
         $job->user_id = $userId;
         // Set other properties...
         $job->save();
@@ -42,7 +42,7 @@ class JobService {
         return $job;
     }
 
-    public function updateJob(int $id, array $data, User $user): Jobdesc {
+    public function updateJob(int $id, array $data, User $user): Job {
         $job = $this->jobRepository->findById($id);
 
         if (!$job) {
@@ -61,7 +61,7 @@ class JobService {
         return $job;
     }
 
-    private function calculateWeight(Jobdesc $job) {
+    private function calculateWeight(Job $job) {
         // Implement your weight calculation logic here
     }
 }

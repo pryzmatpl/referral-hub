@@ -6,23 +6,23 @@
  */
 namespace App\Repositories;
 
-use App\Models\Jobdesc;
+use App\Models\Job;
 use Illuminate\Database\Eloquent\Collection;
 
 class JobRepository {
 
     public function all(): Collection|array
     {
-        return Jobdesc::all();
+        return Job::all();
     }
 
     public function search(array $params) {
         // Implement your search logic using Eloquent or Query Builder
-        $data = Jobdesc::where()->get($params);
+        $data = Job::where()->get($params);
         return $data;
     }
 
-    public function findById(int $id): ?Jobdesc {
-        return Jobdesc::find($id);
+    public function findById(int $id): ?Job {
+        return Job::find($id);
     }
 }
