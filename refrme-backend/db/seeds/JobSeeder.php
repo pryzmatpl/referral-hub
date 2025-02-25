@@ -24,6 +24,10 @@ class JobSeeder extends AbstractSeed
                 'remotePercentage' => 80,
                 'relocationPackage' => 'Yes',
                 'projectId' => 2, // Assuming this matches an existing project ID
+                'musthave' => 'Proficiency in PHP and Symfony, 3 years of experience',
+                'nicetohave' => 'Experience with Docker and AWS',
+                'essentials' => 'Strong problem-solving skills, team player',
+                'specs' => 'Backend development, database optimization',
                 'other' => 'Opportunity for growth and training.',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -48,6 +52,10 @@ class JobSeeder extends AbstractSeed
                 'remotePercentage' => 0,
                 'relocationPackage' => 'Yes',
                 'projectId' => 3, // Assuming this matches an existing project ID
+                'musthave' => 'Proficiency in PHP and Symfony, 3 years of experience',
+                'nicetohave' => 'Experience with Docker and AWS',
+                'essentials' => 'Strong problem-solving skills, team player',
+                'specs' => 'Backend development, database optimization',
                 'other' => 'Work with an innovative team focusing on AI-driven solutions.',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
