@@ -25,6 +25,10 @@ class JobService {
         return $this->jobRepository->search($params);
     }
 
+    public function findById(array $params) {
+        return $this->jobRepository->findById($params["id"]);
+    }
+
     public function createJob(array $data, int $userId): Jobdesc {
         // Validate data and create the job
         $job = new Jobdesc();
