@@ -23,6 +23,6 @@ class JobRepository {
     }
 
     public function findById(int $id): ?Job {
-        return Job::find($id);
+        return Job::with('company')->find($id);
     }
 }

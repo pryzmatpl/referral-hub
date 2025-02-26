@@ -42,7 +42,7 @@ class Job extends Model {
     }
 
     public function company() {
-        return $this->belongsTo('App\Models\Company');
+        return $this->belongsTo(Company::class, 'companyId');
     }
 
     public function user() {
