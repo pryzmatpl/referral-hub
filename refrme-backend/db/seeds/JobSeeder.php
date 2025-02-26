@@ -10,7 +10,7 @@ class JobSeeder extends AbstractSeed
             [
                 'title' => 'Software Engineer',
                 'exp' => '3+ years',
-                'fund' => 90000,
+                'fund' => json_encode([90000, 100000]),
                 'relocation' => 1,
                 'remote' => 1,
                 'regdate' => date('Y-m-d H:i:s'),
@@ -32,13 +32,13 @@ class JobSeeder extends AbstractSeed
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
                 'currency' => 'EUR',
-                'companyId' => 5, // Assuming this matches an existing company ID
+                'companyId' => 1, // Assuming this matches an existing company ID
                 'contractType' => 'Full-Time',
             ],
             [
                 'title' => 'Data Scientist',
                 'exp' => '5+ years',
-                'fund' => 110000,
+                'fund' => json_encode([100000, 110000]),
                 'relocation' => 1,
                 'remote' => 0,
                 'regdate' => date('Y-m-d H:i:s'),
@@ -60,13 +60,13 @@ class JobSeeder extends AbstractSeed
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
                 'currency' => 'USD',
-                'companyId' => 6, // Assuming this matches an existing company ID
+                'companyId' => 2, // Assuming this matches an existing company ID
                 'contractType' => 'Contract',
             ],
             [
                 'title' => 'Full Stack Developer',
                 'exp' => '4+ years',
-                'fund' => 85000,
+                'fund' => json_encode([85000, 95000]),
                 'relocation' => 0,
                 'remote' => 1,
                 'regdate' => date('Y-m-d H:i:s'),
@@ -84,7 +84,7 @@ class JobSeeder extends AbstractSeed
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
                 'currency' => 'GBP',
-                'companyId' => 7, // Assuming this matches an existing company ID
+                'companyId' => 3, // Assuming this matches an existing company ID
                 'contractType' => 'Full-Time',
             ],
         ];
