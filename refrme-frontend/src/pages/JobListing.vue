@@ -76,6 +76,7 @@ const updateCurrentPage = (page) => {
 
 <template>
   <div>
+    <div class="d-flex justify-content-end"><router-link to='/job/add'><button class="btn btn-primary">+ Create new job</button></router-link></div>
     <h2 class="mt-3 mb-4 text-center">My job listing</h2>
     <font-awesome-icon v-if="loading" :icon="loadingIcon" spin class="fa-3x center"></font-awesome-icon>
     <JobListItem
