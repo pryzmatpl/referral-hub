@@ -285,7 +285,7 @@ export default {
   },
 
   mounted () {
-    this.copyJobEditHere()
+    /* this.copyJobEditHere() */
     this.showSlider = true
   },
 
@@ -300,8 +300,8 @@ export default {
     },
 
     showSlider (val) {
-      if(val)
-        this.$nextTick(() => this.$refs.slider.refresh())
+    /*   if(val)
+        this.$nextTick(() => this.$refs.slider.refresh()) */
     }
   },
 
@@ -349,7 +349,7 @@ export default {
 
     copyJobEditHere (){
       Object.keys(this.jobToEdit).forEach((key,index) => {
-        if(key !== 'companyId' && key !== 'projectId')
+        if(key !== 'companyId')
           this[key] = this.jobToEdit[key]
       })
     },
