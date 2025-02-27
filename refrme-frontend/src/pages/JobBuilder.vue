@@ -54,10 +54,9 @@ export default{
     currentTab: function(newValue, oldValue) {
       const isNextTab = (tab, nextTab) => oldValue == tab && newValue >= nextTab
       const isCompanyIdEmpty = () => this.jobBuilder.company.id == ''
-      const isProjectIdEmpty = () => this.jobBuilder.project.id == ''
 
       if(isNextTab(0,1) && isCompanyIdEmpty()
-        || isNextTab(1,2) && isProjectIdEmpty()){
+        ){
         this.currentTab = oldValue
         alert('Please fill the form and click Next button')
       }
@@ -71,10 +70,6 @@ export default{
         {
           name: 'Create a company profile',
           comp: 'JobBuilderCompanyProfile',
-        },
-        {
-          name: 'Describe the project',
-          comp: 'JobBuilderAboutProject'
         },
         {
           name:'Present the job',
