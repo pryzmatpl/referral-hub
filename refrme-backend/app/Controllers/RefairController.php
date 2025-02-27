@@ -812,13 +812,12 @@ class RefairController extends Controller {
                 'posterId'=> $uid->id
             ]);
 
-            $response->getBody()->write(json_encode(['status' => "success",
-                'company' => $newCompany,
-                'message' => "Company successfully added"]));
+            $data = ['status' => "success",
+            'company' => $newCompany,
+            'message' => "Company successfully added"];
 
-            return $response->withHeader('Content-Type', 'application/json')
-                ->withStatus(200);
-
+            return $this->jsonResponse($response, $data);
+            
         }catch (Exception $e){
             return json_encode($e);
         }
@@ -932,12 +931,12 @@ class RefairController extends Controller {
                 //To obtain the companies that are required by only 'this' user
                 $companies = Company::all();
             }
-            $response->getBody()->write(json_encode(['status' => "success",
-                'companies' => $companies,
-                'message' => "Getting experience for user"]));
 
-            return $response->withHeader('Content-Type', 'application/json')
-                ->withStatus(200);
+            $data = ['status' => "success",
+            'companies' => $companies,
+            'message' => "Getting experience for user"];
+
+            return $this->jsonResponse($response, $data);
         }catch (Exception $e){
             return json_encode($e);
         }
