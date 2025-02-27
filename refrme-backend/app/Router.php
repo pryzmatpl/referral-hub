@@ -87,7 +87,7 @@ class Router {
         $app->get('/api/auth/password/recoverlink', [PasswordController::class, 'recoverLink']);
         $app->post('/api/auth/password/recover', [PasswordController::class, 'recover']);
 
-        $app->get('/company/get/all', [RefairController::class, 'getCompanies'])->setName('refair.get.companies');
+        $app->post('/company/get/all/{id}', [RefairController::class, 'getCompanies'])->setName('refair.get.companies');
         $app->get('/company/get/{id}', [RefairController::class, 'getCompany'])->setName('refair.get.company');
 
 

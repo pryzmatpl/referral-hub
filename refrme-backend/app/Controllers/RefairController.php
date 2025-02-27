@@ -805,14 +805,19 @@ class RefairController extends Controller {
 
             $this->throwIfNone($getData['data']['name']);
 
-            $newCompany = Company::create(['name'=> $getData['data']['name'] ,
+            $uid = User::where('unique_id',$getData['data']['id'])->first();
+
+            $newCompany = Company::firstOrCreate(['name'=> $getData['data']['name']],['name'=> $getData['data']['name'] ,
                 'description'=> $getData['data']['description'] ,
-                'posterId'=>urldecode($dlist[1]['EMAIL'])
+                'posterId'=> $uid->id
             ]);
 
-            return $response->withJson(array('message'=>"Successfully added company",
-                'status' => "success",
-                'company'=> $newCompany));
+            $response->getBody()->write(json_encode(['status' => "success",
+                'company' => $newCompany,
+                'message' => "Company successfully added"]));
+
+            return $response->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
 
         }catch (Exception $e){
             return json_encode($e);
@@ -916,15 +921,23 @@ class RefairController extends Controller {
 
     public function getCompanies($request, $response, $args){
         try{
-            $params = $request->getQueryParams();
-            if(isset($params['userId'])){
-                $companies = Company::where('posterId',urlencode($params['userId']))->get();
+            //id is unique_id;
+            $uid = $args['id'];
+            $auid = User::where('unique_id', $uid)->first();
+
+            if(isset($auid)){
+                $companies = Company::where('posterId', $auid->id)->get();
             }else{
                 //Need to inform Jan that he needs to add a param or argument
                 //To obtain the companies that are required by only 'this' user
                 $companies = Company::all();
             }
-            return $response->withJson($companies);
+            $response->getBody()->write(json_encode(['status' => "success",
+                'companies' => $companies,
+                'message' => "Getting experience for user"]));
+
+            return $response->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
         }catch (Exception $e){
             return json_encode($e);
         }
