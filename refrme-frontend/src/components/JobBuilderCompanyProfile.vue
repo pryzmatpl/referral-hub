@@ -5,7 +5,7 @@
     <form id="companyProfile" @submit.prevent="emitCompanyToParent">
       <div class="col-8">
         <multiselect v-model="selectedCompanyIndex" label="name" track-by="id"
-          :options="[{name: `ADD NEW COMPANY...`}, ...companies]" :searchable="false" :allow-empty="true"
+          :options="[{name: `ADD NEW COMPANY...`, id: '0'}, ...companies]" :searchable="false" :allow-empty="true"
           :close-on-select="true" :show-labels="true" placeholder="Choose company" />
         <div v-if="selectedCompanyIndex.name === `ADD NEW COMPANY...`">
           <div class="form-row">
@@ -27,7 +27,7 @@
               placeholder="Please describe what your company does"></textarea>
           </div>
         </div>
-        <button type="submit" class="btn btn-success float-right my-2">Next</button>
+        <button type="submit" class="btn btn-success float-right my-2" :disabled="!companyName || !aboutCompany">Next</button>
       </div>
     </form>
   </div>
@@ -56,10 +56,17 @@ export default {
       immediate: true
     },
     selectedCompanyIndex(newValue) {
-        if (newValue === null) {
-            this.selectedCompanyIndex = ""; // Convert null to empty string
-        }
-    }
+      if (newValue === null) {
+        this.selectedCompanyIndex = ""; // Convert null to empty string
+      }
+      if (this.selectedCompanyIndex.name !== "ADD NEW COMPANY...") {
+        this.companyName = this.selectedCompanyIndex.name
+        this.aboutCompany = this.selectedCompanyIndex.description
+      } else {
+        this.companyName = ""
+        this.aboutCompany = ""
+      }
+    },
   },
 
   mounted () {
@@ -71,6 +78,8 @@ export default {
       companyId: '',
       companies: [],
       name: '',
+      companyName: '',
+      aboutCompany: '',
       selectedCompanyIndex: '',
       description: '',
     }
