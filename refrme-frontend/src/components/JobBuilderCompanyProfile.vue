@@ -3,28 +3,31 @@
     <h1>Choose a company or create new</h1>
     <hr />
     <form id="companyProfile" @submit.prevent="emitCompanyToParent">
-      <div class="form-row">
-        <label>Company logo</label>
-        <img class="img-thumbnail" id="img-upload" :src="imageSrc" />
-        <div class="custom-file mt-2">
-          <input type="file" class="custom-file-input" id="customFile" @change="handleFileUpload" />
-          <label class="custom-file-label" for="customFile">Choose file</label>
+      <div class="col-8">
+        <multiselect v-model="selectedCompanyIndex" label="name" track-by="id"
+          :options="[{name: `ADD NEW COMPANY...`}, ...companies]" :searchable="false" :allow-empty="true"
+          :close-on-select="true" :show-labels="true" placeholder="Choose company" />
+        <div v-if="selectedCompanyIndex.name === `ADD NEW COMPANY...`">
+          <div class="form-row">
+            <label>Company logo</label>
+            <img class="img-thumbnail" id="img-upload" :src="imageSrc" />
+            <div class="custom-file mt-2">
+              <input type="file" class="custom-file-input" id="customFile" @change="handleFileUpload" />
+              <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+          </div>
+          <div class="form-group" >
+            <label for="companyName">Company name</label>
+            <input type="text" class="form-control" v-model="companyName" placeholder="Enter company name" />
+          </div>
+          <div class="form-group" v-if="selectedCompanyIndex.name === `ADD NEW COMPANY...`">
+            <label for="aboutCompany">About company <small style="color: gray">({{ aboutCompanyCharCount }} characters
+                left)</small></label>
+            <textarea class="form-control" v-model="aboutCompany" rows="3" maxlength="360"
+              placeholder="Please describe what your company does"></textarea>
+          </div>
         </div>
-      </div>
-      <div class="col-12">
-        <select v-model="selectedCompanyIndex">
-          <option value="" disabled>Choose company</option>
-          <option v-for="(value, index) in companies" :key="index" :value="index">{{ value.name }}</option>
-        </select>
-        <div class="form-group">
-          <label for="companyName">Company name</label>
-          <input type="text" class="form-control" v-model="companyName" placeholder="Enter company name" />
-        </div>
-        <div class="form-group">
-          <label for="aboutCompany">About company <small style="color: gray">({{ aboutCompanyCharCount }} characters left)</small></label>
-          <textarea class="form-control" v-model="aboutCompany" rows="3" maxlength="360" placeholder="Please describe what your company does"></textarea>
-        </div>
-        <button type="submit" class="btn btn-success float-right">Next</button>
+        <button type="submit" class="btn btn-success float-right my-2">Next</button>
       </div>
     </form>
   </div>
@@ -52,6 +55,11 @@ export default {
       },
       immediate: true
     },
+    selectedCompanyIndex(newValue) {
+        if (newValue === null) {
+            this.selectedCompanyIndex = ""; // Convert null to empty string
+        }
+    }
   },
 
   mounted () {
@@ -71,10 +79,10 @@ export default {
   methods: {
     emitCompanyToParent () {
       if(this.validateForm()){
-        if(this.selectedCompanyIndex === '') {
+        if(this.selectedCompanyIndex.name === `ADD NEW COMPANY...`) {
           this.saveCompany()
         } else {
-          this.$emit('job', {id: this.companies[this.selectedCompanyIndex].id}, 'company')
+          this.$emit('job', {id: this.selectedCompanyIndex.id}, 'company')
         }
       }
     },
