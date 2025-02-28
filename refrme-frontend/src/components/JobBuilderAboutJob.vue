@@ -247,7 +247,7 @@
       <button
           class="btn btn-info float-right"
           :type="jobToEdit ? 'button' : 'submit'"
-          @click="jobToEdit ? updateJob() : ''"
+          @click="jobToEdit ? updateJob() : updateJob()"
       >
         {{ !jobToEdit ? 'Next' : 'Update' }}
       </button>
@@ -359,7 +359,6 @@ export default {
 
         const params = {
           ...this.$data,
-          projectId: this.projectId,
           companyId: this.companyId
         }
 
@@ -397,7 +396,7 @@ export default {
           window.scroll(0,0)
         }
       })
-      return validated;
+      return true;
     }
   }
 }

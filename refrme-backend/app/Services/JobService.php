@@ -29,10 +29,14 @@ class JobService {
         return $this->jobRepository->findById($params["id"]);
     }
 
-    public function createJob(array $data, int $userId): Job {
+    public function createJob(array $data): Job {
+        // Get UserDB info
+        $uid = User::where('unique_id',$data['unique_id'])->first();
+
         // Validate data and create the job
         $job = new Job();
-        $job->user_id = $userId;
+        $job->posterId = $uid->id;
+        $job->fill($data);
         // Set other properties...
         $job->save();
 
