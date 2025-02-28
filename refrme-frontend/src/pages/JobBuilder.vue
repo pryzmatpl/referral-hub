@@ -108,7 +108,7 @@ export default{
       console.log('adding jobs')
 
       this.$store.state.backend
-      .post('/job/add', this.jobBuilder.job)
+      .post('/job/add', {...this.jobBuilder.job, unique_id: this.$store.state.dehashedData.USER_ID})
       .then(ret => {
         alert('Job added!');
         console.log(ret);

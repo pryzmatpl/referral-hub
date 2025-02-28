@@ -36,9 +36,14 @@ class JobController extends Controller {
     public function add(Request $request, Response $response, array $args): Response {
         try {
             $data = json_decode($request->getBody(), true);
-            $job = $this->jobService->createJob($data, $_SESSION['user']->id);
+            $job = $this->jobService->createJob($data);
 
-            return $response->withJson(['message' => 'Successfully added job', 'status' => 'success', 'job' => $job]);
+            $res = ['status' => "success",
+            'job' => $job,
+            'message' => "Successfully added job"];
+
+            return $this->jsonResponse($response, $res);
+
         } catch (\Exception $e) {
             return $response->withJson(['error' => $e->getMessage()], 500);
         }
