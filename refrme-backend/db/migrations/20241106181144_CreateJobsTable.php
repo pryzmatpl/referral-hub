@@ -20,6 +20,10 @@ class CreateJobsTable extends AbstractMigration
             ->addColumn('posterId', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('bounty', 'float', ['null' => true])
             ->addColumn('hash', 'binary', ['null' => true])
+            ->addColumn('musthave', 'text', ['null' => true])
+            ->addColumn('nicetohave', 'text', ['null' => true])
+            ->addColumn('essentials', 'text', ['null' => true])
+            ->addColumn('specs', 'text', ['null' => true])
             ->addColumn('travelPercentage', 'integer', ['null' => true])
             ->addColumn('remotePercentage', 'integer', ['null' => true])
             ->addColumn('relocationPackage', 'string', ['null' => true])
@@ -30,6 +34,7 @@ class CreateJobsTable extends AbstractMigration
             ->addColumn('currency', 'string', ['limit' => 50, 'null' => true])
             ->addColumn('companyId', 'integer', ['null' => true])
             ->addColumn('contractType', 'string', ['limit' => 255, 'null' => true])
+            ->addForeignKey('companyId', 'companies', 'id', ['delete'=> 'SET_NULL', 'update'=> 'NO_ACTION'])
             ->create();
     }
 

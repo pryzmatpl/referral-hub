@@ -4,7 +4,7 @@
       <div class="col-12 col-lg-6">
         <div class="row">
           <div class="col-4 col-sm-3">
-            <img :src="job.company.logo" style="max-width: 140px">
+            <!-- <img :src="job.company.logo" style="max-width: 140px"> -->
           </div>
           <div class="col-8 col-sm-9">
             <h4>{{ job.title }}</h4>
@@ -14,12 +14,12 @@
       </div>
       <div class="col-12 col-lg-6">
         <div class="row">
-          <div class="col-5">
-            <h4 v-if="job.fund">{{ job.fund[0] | groupZeros }} - {{ job.fund[1] | groupZeros }} PLN</h4>
+          <div class="col-8">
+            <h4 v-if="job.fund">{{ job.fund[0] | groupZeros }} - {{ job.fund[1] | groupZeros }} {{ job.currency }}</h4>
             <p>monthly / gross</p>
           </div>
-          <div class="col" style="color: #FF0000;text-align: right" v-b-tooltip title="Get a reward of up to this amount if your referral is hired">
-            <h4 v-if="job.fund">{{ job.fund[0] * 0.25 | groupZeros }} PLN</h4>
+          <div v-if="job.fund" class="col" style="color: #FF0000;text-align: right" v-b-tooltip title="Get a reward of up to this amount if your referral is hired">
+            <h4>{{ job.fund[0] * 0.25 | groupZeros }} {{ job.currency }}</h4>
             <p>REWARD</p>
           </div>
         </div>
@@ -35,51 +35,21 @@
     <div class="row">
       <div class="col-12 col-sm-6 d-flex pl-0">
         <div class="white shadow">
-          <h4 class="mb-3 blue-font">Project info</h4>
+          <h4 class="mb-3 blue-font">Company info</h4>
           <div class="row">
-            <div class="col-4">
-              <p>Project type:</p>
-            </div>
-            <div class="col-8">
-              <p></p>
+            <div class="col-12">
+              <p>{{ job.company.name }}</p>
             </div>
           </div>
           <div class="row">
-            <div class="col-4">
-              <p>Project team size:</p>
+            <div class="col-12">
+              <p>{{ job.company.description }}</p>
             </div>
             <div class="col-8">
-              <p>{{ job.project.staff }}</p>
+             <!--  <p>{{ job.project.staff }}</p> -->
             </div>
           </div>
-          <div class="row">
-            <div class="col-4">
-              <p>Stage:</p>
-            </div>
-            <div class="col-8">
-              <p>{{ job.project.stage }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <p>Travel involved:</p>
-            </div>
-            <div class="col-8">
-              <b-progress :max="100" show-value>
-                <b-progress-bar class="blue" :value="job.travelPercentage">{{ job.travelPercentage }}%</b-progress-bar>
-              </b-progress>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <p>Remote possible:</p>
-            </div>
-            <div class="col-8">
-              <b-progress :max="100" show-value>
-                <b-progress-bar class="blue" :value="job.remotePercentage">{{ job.remotePercentage }}%</b-progress-bar>
-              </b-progress>
-            </div>
-          </div>
+
         </div>
       </div>
       <div class="col-12 col-sm-6 d-flex pr-0">
@@ -98,15 +68,7 @@
               <p>Contract type:</p>
             </div>
             <div class="col-8">
-              <p>{{ formattedContractType }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <p>Workload:</p>
-            </div>
-            <div class="col-8">
-              <p>{{ job.project.workload }}</p>
+              <p>{{ job.contractType }}</p>
             </div>
           </div>
           <div class="row">
@@ -138,6 +100,17 @@
     </div>
 
     <div class="row mt-4 shadow" style="background: white">
+      <div class="col" style="padding: 24px">
+        <h4 class="blue-font">Description</h4>
+        <div class="row">
+          <div class="col-12">
+            <p>{{ job.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4 shadow" style="background: white">
       <div class="col" style="padding:24px">
         <h4 class="blue-font">Required skills</h4>
         <div class="row">
@@ -156,6 +129,50 @@
     </div>
 
     <div class="row mt-4 shadow" style="background: white">
+      <div class="col" style="padding: 24px">
+        <h4 class="blue-font">Must have</h4>
+        <div class="row">
+          <div class="col-12">
+            <p>{{ job.musthave }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4 shadow" style="background: white">
+      <div class="col" style="padding: 24px">
+        <h4 class="blue-font">Nice to have</h4>
+        <div class="row">
+          <div class="col-12">
+            <p>{{ job.nicetohave }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4 shadow" style="background: white">
+      <div class="col" style="padding: 24px">
+        <h4 class="blue-font">Essentials</h4>
+        <div class="row">
+          <div class="col-12">
+            <p>{{ job.essentials }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4 shadow" style="background: white">
+      <div class="col" style="padding: 24px">
+        <h4 class="blue-font">Specs</h4>
+        <div class="row">
+          <div class="col-12">
+            <p>{{ job.specs }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--     <div class="row mt-4 shadow" style="background: white">
       <div class="col" style="padding:24px">
         <h4 class="blue-font">Work time division</h4>
         <div class="row">
@@ -208,27 +225,17 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="row mt-4 shadow" style="background: white">
-      <div class="col" style="padding: 24px">
-        <h4 class="blue-font">Description</h4>
-        <div class="row">
-          <div class="col-12">
-            <p>{{ job.description }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="row mt-2">
       <div class="col">
         <button class="btn btn-lg btn-primary float-right w-100" @click="apply">Apply</button>
       </div>
       <div class="col">
-        <a :href="`mailto:recruit@techsorted.com?subject=Job nr: ${job.id}&body=Hello!%0A%0AYou are applying for postion: ${job.title}%0Ain company: ${job.company.name}%0A%0APlease attach CV and fill in details below:%0A-when best to call you:%0A-what's your notice period:%0A-what salary are you interested in:%0A-best method of contact: (email/sms)%0A%0AWe'll reply soon!%0A%0AThanks,%0ARefair.me team`">
+        <!-- <a :href="`mailto:recruit@techsorted.com?subject=Job nr: ${job.id}&body=Hello!%0A%0AYou are applying for postion: ${job.title}%0Ain company: ${job.company.name}%0A%0APlease attach CV and fill in details below:%0A-when best to call you:%0A-what's your notice period:%0A-what salary are you interested in:%0A-best method of contact: (email/sms)%0A%0AWe'll reply soon!%0A%0AThanks,%0ARefair.me team`">
           <button class="btn btn-lg btn-primary float-right w-100">Apply with CV</button>
-        </a>
+        </a> -->
       </div>
       <div class="col">
         <button class="btn btn-lg btn-primary w-100" @click="showReferralModal">Refer</button>
@@ -272,9 +279,9 @@ export default {
     let id = this.jobId > 0 ? this.jobId : this.$route.params.id
 
     this.$store.state.backend
-      .get(`/getjobs?id=${id}&with=company,project`)
+      .get(`/getjobs?id=${id}&with=company`)
       .then(ret => {
-        this.job = ret.data.data[0]
+        this.job = ret.data
         this.evenPercentagesOut()
         $(document).ready(function(){
           $(".GaugeMeter").gaugeMeter();
@@ -287,15 +294,15 @@ export default {
   computed: {
     yesIcon: () => faCheckCircle,
     noIcon: () => faTimesCircle,
-    formattedContractType: vm => vm.job.contractType.join(', '),
-    filteredPerks: function(){
+    /* formattedContractType: vm => vm.job.contractType.join(', '), */
+    /* filteredPerks: function(){
       let b = this.job.project.perks.map(obj => obj.name)
       return this.perks.map(
         item => b.includes(item.name) 
         ? {name: item.name, available: true} 
         : {name: item.name, available: false}
       )
-    },
+    }, */
     reward: vm => vm.job.salaryMin * 0.25
   },
 
@@ -310,7 +317,9 @@ export default {
       modalShow: false,
       referModalShow: false,
       referralEmail: '',
-      job: {},
+      job: {
+        company: {}
+      },
       project: {
         breakdown: [],
         perks:[],
@@ -350,9 +359,10 @@ export default {
 
   methods: {
     evenPercentagesOut () {
-      let total = this.job.project.breakdown.reduce((prevValue, currValue) => prevValue + currValue.value, 0)
+     /* let total = this.job.project.breakdown.reduce((prevValue, currValue) => prevValue + currValue.value, 0)
       this.job.project.breakdown.map(obj => obj.value = Math.round((obj.value / total) * 100 ))
-    },
+    */
+      },
 
     apply () {
       if(this.$store.state.isAuthenticated){
@@ -405,6 +415,10 @@ export default {
   background: white;
   padding: 30px;
   width: 100%;
+}
+
+* {
+  color: black;
 }
 
 .dot {
