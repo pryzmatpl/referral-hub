@@ -247,7 +247,7 @@
       <button
           class="btn btn-info float-right"
           :type="jobToEdit ? 'button' : 'submit'"
-          @click="jobToEdit ? updateJob() : updateJob()"
+          @click="jobToEdit ? updateJob() : ``"
       >
         {{ !jobToEdit ? 'Next' : 'Update' }}
       </button>
