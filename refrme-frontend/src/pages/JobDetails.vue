@@ -68,7 +68,7 @@
               <p>Contract type:</p>
             </div>
             <div class="col-8">
-              <p>{{ job.contractType }}</p>
+              <p>{{ formattedContractType }}</p>
             </div>
           </div>
           <div class="row">
@@ -262,6 +262,8 @@
 <script>
 import gauge from '../GaugeMeter.js'
 
+import { toRaw } from 'vue';
+
 import {
   faCheckCircle,
   faTimesCircle
@@ -294,7 +296,6 @@ export default {
   computed: {
     yesIcon: () => faCheckCircle,
     noIcon: () => faTimesCircle,
-    /* formattedContractType: vm => vm.job.contractType.join(', '), */
     /* filteredPerks: function(){
       let b = this.job.project.perks.map(obj => obj.name)
       return this.perks.map(
@@ -304,6 +305,13 @@ export default {
       )
     }, */
     reward: vm => vm.job.salaryMin * 0.25
+  },
+
+  watch: {
+    'job.contractType': function (newValue) {
+      const formatted = toRaw(newValue).join(', ')
+      this.formattedContractType = formatted
+    }
   },
 
   filters: {
