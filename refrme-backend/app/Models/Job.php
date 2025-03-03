@@ -35,6 +35,9 @@ class Job extends Model {
 
     protected $casts = [
         'fund' => 'array',
+        'keywords' => 'array',
+        'contractType' => 'array',
+
     ];
 
     public function project() {

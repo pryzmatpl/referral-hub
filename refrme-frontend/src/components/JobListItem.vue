@@ -62,6 +62,10 @@ const groupZeros = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, 
 const emit = defineEmits(['jobToEdit', 'fetchJobs'])
 
 const keywords = computed(() => {
+  if (Array.isArray(props.job.keywords)) {
+    return props.job.keywords.join(', '); // Convert array to a comma-separated string
+  }
+
   return (props.job != null) ? props.job?.keywords?.split(',') : "";
 });
 

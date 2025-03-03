@@ -37,6 +37,7 @@ import JobBuilderCompanyProfile from '@/components/JobBuilderCompanyProfile'
 import JobBuilderAboutProject from '@/components/JobBuilderAboutProject'
 import JobBuilderAboutJob from '@/components/JobBuilderAboutJob'
 import JobBuilderConfirmation from '@/components/JobBuilderConfirmation'
+import { toRaw } from 'vue';
 
 export default{
   components:{
@@ -106,9 +107,10 @@ export default{
 
     addJob (event) {
       console.log('adding jobs')
+      const jobData = JSON.parse(JSON.stringify(toRaw(this.jobBuilder.job)));
 
       this.$store.state.backend
-      .post('/job/add', {...this.jobBuilder.job, unique_id: this.$store.state.dehashedData.USER_ID})
+      .post('/job/add', {...jobData, unique_id: this.$store.state.dehashedData.USER_ID})
       .then(ret => {
         alert('Job added!');
         console.log(ret);
