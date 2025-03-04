@@ -1,7 +1,0 @@
-[Match]
-Name=eth*
-[Network]
-DHCP=both
-[DHCP]
-UseMTU=yes
-UseDNS=yes
