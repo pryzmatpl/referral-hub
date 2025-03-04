@@ -81,7 +81,7 @@
                 :keywords="this.keywords"
                 @keywords="keywordsChange"
                 :skills="skills"
-                @skills="skillsChange"
+                @skills="(e) => skillsChange(e, `skills`)"
                 placeholder="eg. PHP"
                 name="skillsMust"
             />
@@ -91,7 +91,7 @@
             <label id="kwErrMsg" for="skillsNice">Nice to have</label>
             <Keywords
                 :skills="skillsNice"
-                @skills="skillsNiceChange"
+                @skills="(e) => skillsChange(e, `skillsNice`)"
                 placeholder="eg. Javascript"
                 name="skillsNice"
             />
@@ -112,8 +112,8 @@
             <Keywords
                 :keywords="this.keywords"
                 @keywords="keywordsChange"
-                :skills="skills"
-                @skills="skillsChange"
+                :skills="frameworksMust"
+                @skills="(e) => skillsChange(e, `frameworksMust`)"
                 placeholder="eg. Angular"
                 name="mustHave"
             />
@@ -125,8 +125,8 @@
               <Keywords
                   :keywords="this.keywords"
                   @keywords="keywordsChange"
-                  :skills="skills"
-                  @skills="skillsChange"
+                  :skills="frameworksNice"
+                  @skills="(e) => skillsChange(e, `frameworksNice`)"
                   placeholder="eg. Vue.js"
                   name="mustHave"
               />
@@ -148,8 +148,8 @@
             <Keywords
                 :keywords="this.keywords"
                 @keywords="keywordsChange"
-                :skills="skills"
-                @skills="skillsChange"
+                :skills="methodologiesMust"
+                @skills="(e) => skillsChange(e, `methodologiesMust`)"
                 placeholder="eg. Agile"
                 name="skillsMust"
             />
@@ -161,8 +161,8 @@
               <Keywords
                   :keywords="this.keywords"
                   @keywords="keywordsChange"
-                  :skills="skills"
-                  @skills="skillsChange"
+                  :skills="methodologiesNice"
+                  @skills="(e) => skillsChange(e, `methodologiesNice`)"
                   placeholder="eg. Lean"
                   name="skillsNice"
               />
@@ -247,7 +247,7 @@
       <button
           class="btn btn-info float-right"
           :type="jobToEdit ? 'button' : 'submit'"
-          @click="jobToEdit ? updateJob() : ''"
+          @click="jobToEdit ? updateJob() : ``"
       >
         {{ !jobToEdit ? 'Next' : 'Update' }}
       </button>
@@ -285,7 +285,7 @@ export default {
   },
 
   mounted () {
-    this.copyJobEditHere()
+    /* this.copyJobEditHere() */
     this.showSlider = true
   },
 
@@ -300,8 +300,8 @@ export default {
     },
 
     showSlider (val) {
-      if(val)
-        this.$nextTick(() => this.$refs.slider.refresh())
+    /*   if(val)
+        this.$nextTick(() => this.$refs.slider.refresh()) */
     }
   },
 
@@ -337,8 +337,12 @@ export default {
       this.keywords = eventData
     },
 
-    skillsChange: (data) => this.skills = data,
-    skillsNiceChange: (data) => this.skillsNice = data,
+    skillsChange (data, type) {
+      this[type] = data
+    },
+    skillsNiceChange (data) {
+      this.skillsNice = data
+    },
 
     changeCurrency (event) {
       const currencies = ['$','€','PLN']
@@ -349,7 +353,7 @@ export default {
 
     copyJobEditHere (){
       Object.keys(this.jobToEdit).forEach((key,index) => {
-        if(key !== 'companyId' && key !== 'projectId')
+        if(key !== 'companyId')
           this[key] = this.jobToEdit[key]
       })
     },
@@ -359,7 +363,6 @@ export default {
 
         const params = {
           ...this.$data,
-          projectId: this.projectId,
           companyId: this.companyId
         }
 

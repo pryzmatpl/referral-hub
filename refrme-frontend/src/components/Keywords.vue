@@ -99,7 +99,9 @@ export default {
         3: 'EXPERT'
       },
       isParentProfile: this.$route.path == '/profile',
-      newKeyword: ''
+      newKeyword: '',
+      skills: [],
+      keywords: []
     }
   },
 
