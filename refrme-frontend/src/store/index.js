@@ -157,7 +157,6 @@ export default createStore({
     async getJobs({ commit, state, getters }) {
       try {
         const queryParams = new URLSearchParams({
-          logic: 'all',
           page: state.currentPage.toString()
         });
 

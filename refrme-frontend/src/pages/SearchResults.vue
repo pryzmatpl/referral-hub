@@ -94,22 +94,6 @@
                   </b-button-group>
                 </div>
                 <div class="form-group">
-                  <label>Project team size</label>
-                  <b-button-group class="w-100">
-                    <b-button
-                      v-for="teamSizeOption in ['<10', '<50', '100+']"
-                      :key="teamSizeOption"
-                      type="button"
-                      variant="outline-secondary"
-                      @click="$store.commit('filterChange', { arg: 'teamSize', value: teamSizeOption })"
-                      :class="{ active: $store.getters.filterSelections.teamSize === teamSizeOption }"
-                      class="w-100"
-                    >
-                      {{ teamSizeOption }}
-                    </b-button>
-                  </b-button-group>
-                </div>
-                <div class="form-group">
                   <label>Minimum salary (monthly/gross)</label>
                   <Slider
                     :min="0"
