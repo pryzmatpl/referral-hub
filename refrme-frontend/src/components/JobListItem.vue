@@ -63,7 +63,7 @@ const emit = defineEmits(['jobToEdit', 'fetchJobs'])
 
 const keywords = computed(() => {
   if (Array.isArray(props.job.keywords)) {
-    return props.job.keywords.join(', '); // Convert array to a comma-separated string
+    return props.job.keywords; 
   }
 
   return (props.job != null) ? props.job?.keywords?.split(',') : "";
@@ -93,10 +93,10 @@ const keywords = computed(() => {
             <div class="row">
               <div class="col">
                 <div>
-                  <!-- <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0]) }} - {{ groupZeros(job.fund[1]) }}</h4> -->
-                  <p class="float-right">PLN</p>
+                  <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0]) }} - {{ groupZeros(job.fund[1]) }}</h4>
+                  <p class="float-right">{{ job.currency }}</p>
                 </div>
-                <p>{{ formattedContractType }}</p>
+                <p>{{ job.contractType.join(', ') }}</p>
               </div>
             </div>
             <div class="row" style="color: #FF0000; text-align: right">
@@ -104,8 +104,8 @@ const keywords = computed(() => {
                 <div>
                   <font-awesome-icon :icon="infoIcon" style="color:black" class="mr-1" />
                   <p style="display: inline-block" class="mr-1">REWARD:</p>
-                  <!-- <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0] * 0.25) }}</h4> -->
-                  <p class="float-right">PLN</p>
+                  <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0] * 0.25) }}</h4>
+                  <p class="float-right">{{ job.currency }}</p>
                 </div>
               </div>
             </div>
