@@ -25,6 +25,10 @@ class JobRepository {
             $query->whereRaw("CAST(SUBSTRING_INDEX(fund, ',', 1) AS UNSIGNED) <= ?", [$salaryMin])
                   ->whereRaw("CAST(SUBSTRING_INDEX(fund, ',', -1) AS UNSIGNED) >= ?", [$salaryMin]);
         }
+
+        if (isset($params["relocation"])) {
+            $query->where("relocation", $params["relocation"]);
+        }
     
         return $query->get();
     }

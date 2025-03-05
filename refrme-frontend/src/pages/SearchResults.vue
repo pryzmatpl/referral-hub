@@ -117,7 +117,8 @@
                         type="radio"
                         name="inlineRadioOptions"
                         :value="option.value"
-                        v-model="relocation"
+                        v-model="filterSelections.relocation"
+                        @change="$store.commit('SET_FILTER', { arg: 'relocation', value: filterSelections.relocation })"
                       />
                       <label class="form-check-label">{{ option.name }}</label>
                     </div>
@@ -193,7 +194,6 @@ export default {
         return this.$store.state.filterSelections.relocation
       },
       set (value) {
-        this.$store.dispatch('updateFilterRelocation', value)
       }
     },
     languagesSelected: vm => vm.filterSelections.languages.map(obj => obj.language).join(', ')
