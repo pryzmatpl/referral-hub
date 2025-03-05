@@ -168,6 +168,7 @@ export default createStore({
           contractType: filterSelections.employment,
           salary_min: filterSelections.salary,
           relocation: filterSelections.relocation,
+          remote: filterSelections.remote,
           perks: filterSelections.perks.length ? filterSelections.perks.join(',') : null
         };
 

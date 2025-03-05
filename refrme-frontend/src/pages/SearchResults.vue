@@ -81,15 +81,18 @@
                   <label>Remote</label>
                   <b-button-group class="w-100">
                     <b-button
-                      v-for="remoteOption in ['Yes', 'Partially', 'No']"
-                      :key="remoteOption"
+                      v-for="remoteOption in  [{ name: 'Yes', value: 1 }, { name: 'Partially', value: 'part' }, { name: 'No', value: 0 }]"
+                      :key="remoteOption.value"
                       type="button"
                       variant="outline-secondary"
-                      @click="$store.commit('filterChange', { arg: 'remote', value: remoteOption })"
-                      :class="{ active: $store.getters.filterSelections.remote === remoteOption }"
+                      @click="() => {
+                        this.filterSelections.remote = remoteOption.value
+                        $store.commit('SET_FILTER', { arg: 'relocation', value: remoteOption.value })
+                      }"
+                      :class="{ active: $store.getters.filterSelections.remote === remoteOption.value }"
                       class="w-100"
                     >
-                      {{ remoteOption }}
+                      {{ remoteOption.name }}
                     </b-button>
                   </b-button-group>
                 </div>
@@ -205,6 +208,7 @@ export default {
     'filterSelections.employment' () {this.$store.dispatch('getJobs')},
     'filterSelections.salary' () {this.$store.dispatch('getJobs')},
     'filterSelections.relocation' () {this.$store.dispatch('getJobs')},
+    'filterSelections.remote' () {this.$store.dispatch('getJobs')},
     'currentPage' () {this.$store.dispatch('getJobs')}
   },
 

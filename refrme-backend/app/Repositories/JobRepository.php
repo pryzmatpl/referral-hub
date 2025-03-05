@@ -19,6 +19,10 @@ class JobRepository {
     public function search(array $params) {
         $query = Job::query();
 
+        if (isset($params["remote"])) {
+            $query->where("remote", $params["remote"]);
+        }
+
         if (isset($params['salary_min'])) {
             $salaryMin = (int) $params['salary_min'];
     
