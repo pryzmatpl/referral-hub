@@ -19,7 +19,6 @@ use App\Http\HttpCodes;
  */
 class Controller
 {
-
     protected function jsonResponse(
         ResponseInterface $response,
         array $data,
