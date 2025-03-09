@@ -24,7 +24,6 @@ services:
             - mysql
             - redis
             - meilisearch
-            - selenium
     aimatch_queue:
         build:
             context: ./docker/8.2-queue/
@@ -86,15 +85,6 @@ services:
             - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
         networks:
             - default
-    selenium:
-        image: 'selenium/standalone-chrome'
-        volumes:
-            - '/dev/shm:/dev/shm'
-        networks:
-            - default
-        ports:
-            - '4444:4444'
-            - '5900:5900'
     mockserver:
         image: 'node'
         ports:
