@@ -88,10 +88,15 @@ class JobClassificationService
             $result = $process->getOutput();
             $this->logger->debug("Output: " . $result);
 
-            // Decode JSON output from the Python script
-            $decoded = json_decode($result, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new \Exception("Invalid JSON response from classifier: " . json_last_error_msg());
+            // Use a regular expression to extract the JSON array (assuming it starts with '[' and ends with ']')
+            if (preg_match('/(\[.*\])\s*$/s', $result, $matches)) {
+                $json = $matches[1];
+                $decoded = json_decode($json, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    throw new \Exception("Invalid JSON: " . json_last_error_msg());
+                }
+            } else {
+                throw new \Exception("No valid JSON found in output.");
             }
 
             $this->logger->info('Job classified successfully', [

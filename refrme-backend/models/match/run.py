@@ -129,7 +129,7 @@ def cli_predict(input_text: str) -> None:
             })
 
         # Print results
-        print(json.dumps(results, indent=2))
+        print(json.dumps(results))
 
     except Exception as e:
         logger.error(f"CLI error: {str(e)}")
