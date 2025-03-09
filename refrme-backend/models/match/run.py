@@ -8,6 +8,7 @@ import dill as pickle
 from flask import Flask, jsonify, request, Response
 import numpy as np
 from sklearn.neural_network import MLPClassifier
+from typing import Optional
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
@@ -21,13 +22,17 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class TextClassificationAPI:
-    def __init__(self, model_path: str = './classifier.pk'):
+    def __init__(self, model_path: Optional[str] = None):
         """Initialize the Text Classification API.
 
         Args:
             model_path: Path to the pickled model file
         """
-        self.model_path = Path(model_path)
+        if model_path is None:
+            model_path = Path(__file__).resolve().parent / 'classifier.pk'
+        else:
+            model_path = Path(model_path)
+        self.model_path=model_path
         self.pipeline = None
         self.load_model()
 
