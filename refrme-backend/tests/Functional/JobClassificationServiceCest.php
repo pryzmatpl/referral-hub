@@ -10,7 +10,7 @@
  * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
-namespace App\Tests;
+namespace App\Tests\Functional;
 
 use App\Services\JobClassificationService;
 use PHPUnit\Framework\TestCase;

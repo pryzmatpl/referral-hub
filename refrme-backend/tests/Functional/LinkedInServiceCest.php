@@ -11,7 +11,7 @@
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
 
-namespace App\Services;
+namespace App\Tests\Functional;
 
 
 class LinkedInServiceCest
