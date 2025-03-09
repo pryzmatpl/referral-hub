@@ -10,6 +10,7 @@ use App\Services\JobClassificationService;
 use App\Services\JobService;
 use Codeception\Test\Unit;
 use PHPUnit\Framework\MockObject\Exception;
+use Psr\Log\LoggerInterface;
 
 final class JobServiceTest extends Unit
 {
@@ -24,8 +25,13 @@ final class JobServiceTest extends Unit
         $mockJobClassificationService = $this->createMock(JobClassificationService::class);
         $mockJobClassificationService->method('classifyJob')->willReturn(["backend"=>0.95, "frontend"=>0.05]);
 
+        $loggerMock = $this->createMock(LoggerInterface::class);
+
+        $jobRepo = new JobRepository($loggerMock, $mockJobClassificationService);
+        $jobRepo->createJob(["type"=>"amazing"]);
+
         $service = new JobService($mockRepo, $mockJobClassificationService);
-        $job = $service->createJob(['title' => 'Test Job'], 1);
+        $job = $service->findById(["id"=>1]);
 
         $this->assertEquals(["backend"=>0.95, "frontend"=>0.05], $mockJobClassificationService->classifyJob($job->weights));
 

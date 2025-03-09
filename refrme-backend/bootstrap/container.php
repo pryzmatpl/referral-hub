@@ -136,7 +136,10 @@ return function (ContainerBuilder $containerBuilder) {
             );
         },
         JobRepository::class => function($c) {
-            return new JobRepository();
+            return new JobRepository(
+                $c->get('logger'),
+                $c->get(JobClassificationService::class)
+            );
         },
         JobClassificationService::class => function($c) {
             return new JobClassificationService(
