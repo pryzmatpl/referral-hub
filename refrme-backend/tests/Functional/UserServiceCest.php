@@ -16,13 +16,13 @@ namespace Tests\Functional;
 use App\Models\User;
 use App\Services\EmailService;
 use App\Services\UserService;
-use Codeception\Test\Unit;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Mockery;
 use Mockery\MockInterface;
 use Tests\Support\FunctionalTester;
 
-class UserServiceTest extends Unit
+class UserServiceCest extends TestCase
 {
     protected FunctionalTester $tester;
 

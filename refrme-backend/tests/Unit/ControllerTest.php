@@ -2,10 +2,11 @@
 declare(strict_types=1);
 
 namespace Tests\Unit;
+use Codeception\Test\Unit;
 use PHPUnit\Framework\TestCase;
 use App\Controllers\Controller;
 
-final class ControllerTest extends TestCase
+final class ControllerTest extends Unit
 {
   //Testing the hashing scheme for iwahash with base64_encode
   public function testIwahash()

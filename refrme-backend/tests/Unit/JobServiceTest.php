@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use Codeception\Test\Unit;
 use PHPUnit\Framework\TestCase;
 
-final class JobServiceTest extends TestCase
+final class JobServiceTest extends Unit
 {
     public function testCreateJob() {
         $mockRepo = $this->createMock(JobRepository::class);
