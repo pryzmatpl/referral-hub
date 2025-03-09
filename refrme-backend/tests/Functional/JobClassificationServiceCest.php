@@ -13,11 +13,12 @@
 namespace Tests\Functional;
 
 use App\Services\JobClassificationService;
+use Functional\FunctionalBaseCest;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class JobClassificationServiceCest extends TestCase
+class JobClassificationServiceCest extends FunctionalBaseCest
 {
     /**
      * @var string

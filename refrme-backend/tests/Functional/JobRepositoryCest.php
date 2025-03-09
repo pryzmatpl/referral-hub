@@ -13,11 +13,13 @@
 namespace Tests\Functional;
 
 use App\Repositories\JobRepository;
+use Codeception\Test\Cest;
+use Functional\FunctionalBaseCest;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\FunctionalTester;
 use Illuminate\Database\Eloquent\Collection;
 
-class JobRepositoryCest extends TestCase
+class JobRepositoryCest extends FunctionalBaseCest
 {
     /**
      * Clean up the database before each test.

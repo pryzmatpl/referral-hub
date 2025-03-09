@@ -17,6 +17,10 @@ migrate:
 seed:
 	docker exec -it refrme-backend-aimatch-1 php ./cli.php seed
 
+test:
+	docker exec -it refrme-backend-aimatch-1 php ./vendor/bin/codecept build && \
+	docker exec -it refrme-backend-aimatch-1 php ./vendor/bin/codecept run
+
 down:
 	docker-compose down --remove-orphans -v
 
