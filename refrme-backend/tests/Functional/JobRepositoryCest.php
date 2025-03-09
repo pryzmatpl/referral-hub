@@ -10,14 +10,14 @@
  * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
-namespace App\Tests\Functional;
+namespace Tests\Functional;
 
 use App\Repositories\JobRepository;
-use Codeception\Example;
+use PHPUnit\Framework\TestCase;
+use Tests\Support\FunctionalTester;
 use Illuminate\Database\Eloquent\Collection;
-use FunctionalTester;
 
-class JobRepositoryCest
+class JobRepositoryCest extends TestCase
 {
     /**
      * Clean up the database before each test.

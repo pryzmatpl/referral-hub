@@ -10,8 +10,9 @@
  * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
-namespace App\Tests\Acceptance;
 
+namespace Tests\Acceptance;
+use Tests\Support\AcceptanceTester;
 use Codeception\Util\HttpCode;
 
 class ReferralControllerAcceptanceCest
@@ -24,7 +25,7 @@ class ReferralControllerAcceptanceCest
      *
      * @param \AcceptanceTester $I
      */
-    public function testGetReferral(\AcceptanceTester $I)
+    public function testGetReferral(AcceptanceTester $I)
     {
         $I->amOnPage('/referral');
         $I->seeResponseCodeIs(HttpCode::OK);
@@ -42,7 +43,7 @@ class ReferralControllerAcceptanceCest
      *
      * @param \AcceptanceTester $I
      */
-    public function testGetReferralSend(\AcceptanceTester $I)
+    public function testGetReferralSend(AcceptanceTester $I)
     {
         // Insert a test user
         $I->haveInDatabase('users', [
@@ -83,7 +84,7 @@ class ReferralControllerAcceptanceCest
      *
      * @param \AcceptanceTester $I
      */
-    public function testGetReferralReceived(\AcceptanceTester $I)
+    public function testGetReferralReceived(AcceptanceTester $I)
     {
         // Insert a referral with a known email
         $I->haveInDatabase('jobs_referral', [
@@ -118,7 +119,7 @@ class ReferralControllerAcceptanceCest
      *
      * @param \AcceptanceTester $I
      */
-    public function testAddReferral(\AcceptanceTester $I)
+    public function testAddReferral(AcceptanceTester $I)
     {
         // Prepare test data in the database.
         // Create a test user.

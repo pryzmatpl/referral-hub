@@ -2,33 +2,22 @@
 /*
  * Copyright (c) 2025 Pryzmat sp. z o.o. (Pryzmat LLC)
  * All rights reserved.
- * 22.01.2025, 20:09
- * LinkedInServiceCest.php
+ * 09.03.2025, 17:58
+ * MatchesPasswordTest.php
  * referral-hub
  *
  * This software and its accompanying documentation are protected by copyright law and international treaties.
  * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
+namespace Tests\Unit;
+use App\Validation\Rules\MatchesPassword;
+use PHPUnit\Framework\TestCase;
 
-namespace App\Tests\Functional;
-
-
-class LinkedInServiceCest
+class MatchesPasswordTest extends TestCase
 {
 
-    public function testGetAccessToken(FunctionalTester $I)
+    public function testValidate()
     {
-
-    }
-
-    public function test__construct(FunctionalTester $I)
-    {
-
-    }
-
-    public function testGetUserInfo(FunctionalTester $I)
-    {
-
     }
 }

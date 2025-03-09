@@ -10,14 +10,14 @@
  * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
-namespace App\Tests\Functional;
+namespace Tests\Functional;
 
 use App\Services\JobClassificationService;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class JobClassificationServiceTest extends TestCase
+class JobClassificationServiceCest extends TestCase
 {
     /**
      * @var string

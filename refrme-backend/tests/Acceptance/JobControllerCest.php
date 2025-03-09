@@ -10,13 +10,13 @@
  * Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
-namespace App\Tests\Acceptance;
-
+namespace Tests\Acceptance;
+use Tests\Support\AcceptanceTester;
 use Codeception\Util\HttpCode;
 
 class JobControllerCest
 {
-    public function _before(\AcceptanceTester $I)
+    public function _before(AcceptanceTester $I)
     {
         // Ensure a clean state for jobs and users.
         $I->truncateTable('jobs');
@@ -28,7 +28,7 @@ class JobControllerCest
      *
      * This test seeds two jobs and then calls GET /jobs?logic=all.
      */
-    public function testGetAllJobs(\AcceptanceTester $I)
+    public function testGetAllJobs(AcceptanceTester $I)
     {
         // Seed sample jobs.
         $I->haveInDatabase('jobs', [
@@ -56,7 +56,7 @@ class JobControllerCest
      *
      * This test seeds one job and then calls GET /jobs?id=1.
      */
-    public function testGetJobById(\AcceptanceTester $I)
+    public function testGetJobById(AcceptanceTester $I)
     {
         // Seed a job.
         $I->haveInDatabase('jobs', [
@@ -76,7 +76,7 @@ class JobControllerCest
      *
      * Here we pass a search parameter (e.g. title) that triggers the searchJobs method.
      */
-    public function testSearchJobs(\AcceptanceTester $I)
+    public function testSearchJobs(AcceptanceTester $I)
     {
         // Seed sample jobs.
         $I->haveInDatabase('jobs', [
@@ -101,7 +101,7 @@ class JobControllerCest
      *
      * This test sends a JSON payload to POST /jobs/add and expects a success response.
      */
-    public function testAddJob(\AcceptanceTester $I)
+    public function testAddJob(AcceptanceTester $I)
     {
         // Ensure the jobs table is empty.
         $I->truncateTable('jobs');
@@ -131,7 +131,7 @@ class JobControllerCest
      *
      * This test simulates a logged-in user, seeds a job, and then sends a PUT request to update it.
      */
-    public function testUpdateJob(\AcceptanceTester $I)
+    public function testUpdateJob(AcceptanceTester $I)
     {
         // Seed a job record.
         $I->haveInDatabase('jobs', [
