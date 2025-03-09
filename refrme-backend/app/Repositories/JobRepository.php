@@ -65,7 +65,7 @@ class JobRepository {
         $job->save();
 
         // Call the method to calculate the weight
-        $jsonWeights = $this->jobClassificationService->classifyJob(json_decode($job->keywords,true));
+        $jsonWeights = $this->jobClassificationService->classifyJob($job->keywords);
         $jobWeight = new JobWeight(
             [
                 'jobid' => $job->id,

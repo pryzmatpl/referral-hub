@@ -45,7 +45,7 @@ class JobController extends Controller {
     public function add(Request $request, Response $response, array $args): Response {
         try {
             $data = json_decode($request->getBody(), true);
-            $job = $this->jobService->createJob($data);
+            $job = $this->jobRepository->createJob($data);
 
             $res = [
                 'status' => "success",
@@ -63,7 +63,7 @@ class JobController extends Controller {
     public function update(Request $request, Response $response, array $args): Response {
         try {
             $data = $request->getParsedBody();
-            $job = $this->jobService->updateJob($args['id'], $data, $_SESSION['user']);
+            $job = $this->jobRepository->updateJobWeights($args['id'], $data, $_SESSION['user']);
 
             return $response->withJson(['message' => 'Successfully updated job', 'status' => 'success', 'job' => $job]);
         } catch (\Exception $e) {
