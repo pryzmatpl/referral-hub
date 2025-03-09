@@ -3,7 +3,7 @@
 namespace App\Commands;
 
 use App\Controllers\ProjectController;
-use App\Models\Jobdesc;
+use App\Models\JobDesc;
 use App\Models\Project;
 use App\Models\Tag;
 use App\Models\User;

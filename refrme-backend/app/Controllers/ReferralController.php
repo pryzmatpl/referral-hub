@@ -13,7 +13,7 @@ use Slim\Http\Response;
 use Slim\Http\UploadedFile;
 use Illuminate\Database\Capsule\Manager as DB;
 use SlimSession\Helper as Session;
-use App\Models\Jobdesc;
+use App\Models\JobDesc;
 use App\Models\Company;
 
 class ReferralController extends Controller
@@ -85,7 +85,7 @@ class ReferralController extends Controller
                 $user = User::where('id', $userId)->first();
                 $referral->user = $user;
 
-                $job = Jobdesc::where('id', $data['job_id'])->first();
+                $job = JobDesc::where('id', $data['job_id'])->first();
                 $referral->job = $job;
 
                 $company = Company::where('id', $job->companyId)->first();

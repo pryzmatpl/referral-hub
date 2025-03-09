@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Models\Jobdesc;
+use App\Models\JobDesc;
 use App\Models\User;
 use App\Models\Files;
 use App\Models\Companies;

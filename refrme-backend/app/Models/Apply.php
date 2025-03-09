@@ -35,7 +35,7 @@ class Apply extends Model
     }
 
     public function job() {
-        return $this->hasOne('App\Models\Jobdesc', 'id', 'jobs_id')->with('Company');
+        return $this->hasOne('App\Models\JobDesc', 'id', 'jobs_id')->with('Company');
     }
 
     public function user() {

@@ -12,7 +12,7 @@ use App\Models\OA2Clients;
 use App\Models\Cart;
 use App\Models\Location;
 use App\Models\Referral;
-use App\Models\Jobdesc;
+use App\Models\JobDesc;
 use App\Models\JobWeight;
 use App\Models\Linkedinimport;
 use Requests;
@@ -97,7 +97,7 @@ class CrawlerController extends Controller {
         try{
             $session = new Session;
             $menus = $this->buildmenu();
-            $data = Jobdesc::all();
+            $data = JobDesc::all();
             $view = 'jobs.vue';
 
             return $this->view->render($response,
@@ -114,7 +114,7 @@ class CrawlerController extends Controller {
         try{
             $session = new Session;
             $menus = $this->buildmenu();
-            $data = Jobdesc::where('id',$args['id'])->get();
+            $data = JobDesc::where('id',$args['id'])->get();
             $singlejob = json_decode($data, true)[0];
             $locationdata = Location::where('id', $singlejob['location'])->get();
             $singleloc = json_decode($locationdata, true)[0];
@@ -202,7 +202,7 @@ class CrawlerController extends Controller {
     public function getjobs($request, $response, $args){
         try{
             $session = new Session;
-            $data = json_decode(Jobdesc::orderBy('created_at','DESC')->get(),true);
+            $data = json_decode(JobDesc::orderBy('created_at','DESC')->get(),true);
             $session['refair-jobs'] = $data;
             $newjobs = [];
             foreach($data as $jobdesc){
@@ -253,7 +253,7 @@ class CrawlerController extends Controller {
     public function getjob($request, $response, $args){
         try{
             $session = new Session;
-            $data = json_decode(Jobdesc::where('id',$args['id'])->get(),true);
+            $data = json_decode(JobDesc::where('id',$args['id'])->get(),true);
             $locdata = json_decode(Location::where('id',$data[0]['location'])->get(),true);
             $session['refair-currjob'] = $data[0];
             $retarray = array('jobdata'=>$data[0],
@@ -267,7 +267,7 @@ class CrawlerController extends Controller {
 
     public function getjobkeywords($request, $response, $args){
         try{
-            $data = json_decode(Jobdesc::where('id',$args['id'])->get(),true);
+            $data = json_decode(JobDesc::where('id',$args['id'])->get(),true);
             $keywords = explode(',',$data[0]['keywords']); //Strong supposition - only one leme
             return json_encode($keywords);
         }catch(Exception $e){
@@ -328,7 +328,7 @@ class CrawlerController extends Controller {
         try{
             $session = new Session;
             $menus = $this->buildmenu();
-            $rec = Jobdesc::where("hash",$hash)->get();
+            $rec = JobDesc::where("hash",$hash)->get();
             $job = json_decode($rec,true)[0];
 
             $keywords = explode(',',$job['keywords']);
@@ -352,7 +352,7 @@ class CrawlerController extends Controller {
         try{
             //TODO : TEST THIS
             if($request->isXhr()){
-                $ajob = json_decode(Jobdesc::where('hash',$jobhash)->get(),true)[0];
+                $ajob = json_decode(JobDesc::where('hash',$jobhash)->get(),true)[0];
 
                 $currentRoute = $request->getAttribute('route');
                 $reqIp = $request->getAttribute('ip_address');
@@ -416,7 +416,7 @@ class CrawlerController extends Controller {
             $referral = json_decode($data, true)[0];
 
             $jbid = $referral['jobid'];
-            $rec = Jobdesc::where("id",$jbid)->get();
+            $rec = JobDesc::where("id",$jbid)->get();
 
             $job = json_decode($rec,true)[0];
             $locid = $job['location'];
@@ -450,7 +450,7 @@ class CrawlerController extends Controller {
             $signoffhash = urlencode($args['signoffhash']);
 
             $modref = json_decode(Signoff::where('statehash', $signoffhash)->get(),true)[0];
-            $jobe = json_decode(Jobdesc::where('hash',$jobhash)->get(),true)[0];
+            $jobe = json_decode(JobDesc::where('hash',$jobhash)->get(),true)[0];
 
             $validation = $this->validator->validate($request,[
                 'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
@@ -516,7 +516,7 @@ class CrawlerController extends Controller {
     public function optindata($request, $response, $args){
         $hash = $args['hash'];
         try{
-            $rec = Jobdesc::where('hash', urlencode($hash))->get() or die('failed');
+            $rec = JobDesc::where('hash', urlencode($hash))->get() or die('failed');
             //TODO: REMEMBER TO URLENCODE BEFORE PASSSING HASH SEARCHES!!!!!!
             $job = json_decode($rec,true)[0];
             $locid = $job['location'];
@@ -546,7 +546,7 @@ class CrawlerController extends Controller {
         $jobhash = $args['hash'];
         $signoffhash = $args['signoffhash'];
         try{
-            $rec = Jobdesc::where('hash', urlencode($jobhash))->get();
+            $rec = JobDesc::where('hash', urlencode($jobhash))->get();
             //TODO: REMEMBER TO URLENCODE BEFORE PASSSING HASH SEARCHES!!!!!!
             $job = json_decode($rec,true)[0];
             $locid = $job['location'];
@@ -576,7 +576,7 @@ class CrawlerController extends Controller {
         $menus = $this->buildmenu();
 
         try{
-            $rec = Jobdesc::where('hash', urlencode($hash))->get() or die('failed');
+            $rec = JobDesc::where('hash', urlencode($hash))->get() or die('failed');
             //TODO: REMEMBER TO URLENCODE BEFORE PASSSING HASH SEARCHES!!!!!!
             $job = json_decode($rec,true)[0];
             $locid = $job['location'];
@@ -655,7 +655,7 @@ class CrawlerController extends Controller {
                             $session['booted_signoff'])->get(), true)[0];
 
                         $jobhash = $request->getParam('secureHash');
-                        $jobe = json_decode(Jobdesc::where('hash', $jobhash)->get(),true)[0];
+                        $jobe = json_decode(JobDesc::where('hash', $jobhash)->get(),true)[0];
 
                         $poster_id = $jobe['poster_id'];
                         $poster = $request->getParam('poster_id');
@@ -832,7 +832,7 @@ class CrawlerController extends Controller {
             $postData = $request->getParsedBody();
             $candidate = $postData['candidate'];
 
-            $job = json_decode(Jobdesc::where('hash',$jobhash)->get(),true)[0];
+            $job = json_decode(JobDesc::where('hash',$jobhash)->get(),true)[0];
             $jobid = $job['id'];
             $poster = $job['poster_id'];
             $signoffhash = urlencode($request->getParam('signoffhash'));
@@ -910,7 +910,7 @@ class CrawlerController extends Controller {
                 'referrer_id'=>'OPTED-IN'
             ]);
 
-            $jobref = Jobdesc::where('hash', $hash);
+            $jobref = JobDesc::where('hash', $hash);
             $signoffhash = $postData['cvfilehash'];
             $jobHash = $hash;
 
@@ -1123,7 +1123,7 @@ class CrawlerController extends Controller {
 
                 if($points >= 3){
                     $jobid = $job['jobid'];
-                    $loadjob = json_decode(Jobdesc::where('id',$jobid)->get(),true)[0];
+                    $loadjob = json_decode(JobDesc::where('id',$jobid)->get(),true)[0];
                     if($loadjob['jobtitle']==''){
                         $retarr["results"][] = ['name'=>"Hello",
                             'text' => "Weight exists, but the job does probably not. DB Integrity errors. Points:".$points];
@@ -1191,7 +1191,7 @@ class CrawlerController extends Controller {
         try{
             $session = new Session;
             $menus = $this->buildmenu();
-            $data = Jobdesc::where('id',$args['id'])->get();
+            $data = JobDesc::where('id',$args['id'])->get();
             $jobdesc = json_decode($data,true)[0];
 
             $view = 'job-add-boot.vue';
@@ -1322,7 +1322,7 @@ class CrawlerController extends Controller {
 
             $ref->save();
 
-            $job = json_decode(Jobdesc::where('id',$ref['jobid'])->get(), true)[0];
+            $job = json_decode(JobDesc::where('id',$ref['jobid'])->get(), true)[0];
             $senthash = $job['hash'];
 
             $burl = env('BASE_URL');
@@ -1391,7 +1391,7 @@ class CrawlerController extends Controller {
         try{
             $nudata = $request->getParsedBody();
 
-            $ref = new Jobdesc;
+            $ref = new JobDesc;
 
             $ref['jobtitle'] = strip_tags($nudata['jobtitle']);
             $ref['required_exp'] = strip_tags($nudata['requiredexp']);

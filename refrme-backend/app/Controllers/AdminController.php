@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Cart;
 use App\Models\Location;
 use App\Models\Referral;
-use App\Models\Jobdesc;
+use App\Models\JobDesc;
 use App\Models\JobWeight;
 use App\Models\Linkedinimport;
 use App\Models\Signoff;
@@ -65,7 +65,7 @@ class AdminController extends Controller{
 
 
     public function jobs($request, $response, $args){
-        $jobs = Jobdesc::all();
+        $jobs = JobDesc::all();
         $burl=env("base_url");
         $returnee = [];
         $asss = 1;

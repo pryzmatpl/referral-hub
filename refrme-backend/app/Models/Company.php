@@ -20,7 +20,7 @@ class Company extends Model
 			 ];
 
   public function jobs() {
-      return $this->hasMany('App\Models\Jobdesc');
+      return $this->hasMany('App\Models\JobDesc');
   }
 
 }

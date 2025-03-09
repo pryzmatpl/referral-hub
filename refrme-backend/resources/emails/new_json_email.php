@@ -163,7 +163,7 @@
 		<tr>
 		  <table width="100%" style="border-collapse: collapse; color: #787878; font-size: 18px;">
 		    <?php
-		     use App\Models\Jobdesc;
+		     use App\Models\JobDesc;
 		     foreach ($matched_jobs as $job) {
 		    ?>
 		    <tr style="background-color: #fff; cursor: pointer; border-bottom: 5px solid #dae3f3;">

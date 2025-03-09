@@ -17,7 +17,7 @@ class Tag extends Model {
     }
 
     public function jobs() {
-        return $this->belongsToMany('App\Models\Jobdesc');
+        return $this->belongsToMany('App\Models\JobDesc');
     }
 
     public static function set($entity, $type, $tags) {

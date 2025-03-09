@@ -2,7 +2,7 @@
 namespace App\Commands;
 
 use App\Models\Company;
-use App\Models\Jobdesc;
+use App\Models\JobDesc;
 use App\Models\User;
 use Exception;
 use Nette\Mail\Message;

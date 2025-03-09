@@ -2,8 +2,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Jobdesc extends Model {
+class JobDesc extends Model {
     protected $table = 'jobdescs';
 
     protected $fillable = [
@@ -47,19 +48,23 @@ class Jobdesc extends Model {
         'methodologies_nice' => 'array'
     ];
 
-    public function project() {
+    public function project(): BelongsTo
+    {
         return $this->belongsTo('App\Models\Project');
     }
 
-    public function company() {
+    public function company(): BelongsTo
+    {
         return $this->belongsTo('App\Models\Company');
     }
 
-    public function user() {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo('App\Models\User');
     }
 
-    public function referral() {
+    public function referral(): BelongsTo
+    {
         return $this->belongsTo('App\Models\Referral');
     }
 

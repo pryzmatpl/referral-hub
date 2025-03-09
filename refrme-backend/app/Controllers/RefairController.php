@@ -9,7 +9,7 @@ use App\Models\Company;
 use App\Models\Cart;
 use App\Models\File;
 use App\Models\Referral;
-use App\Models\Jobdesc;
+use App\Models\JobDesc;
 use App\Models\JobWeight;
 use App\Models\Userweight;
 use App\Models\Linkedinimport;
@@ -371,7 +371,7 @@ class RefairController extends Controller {
 
                 processAI:
                 $job_id = $jobweight['job_id'];
-                $jobdsc = Jobdesc::where('id', $job_id)->orderBy('created_at','desc')->with('company')->first();
+                $jobdsc = JobDesc::where('id', $job_id)->orderBy('created_at','desc')->with('company')->first();
                 if (!is_null($jobdsc)) {
                     $jobdsc = cc($jobdsc->toArray());
                     $jobdsc['keywords'] = explode(',', $jobdsc['keywords']);
@@ -553,7 +553,7 @@ class RefairController extends Controller {
 
             $ref->save();
 
-            $job = json_decode(Jobdesc::where('id',$ref['jobid'])->get(), true)[0];
+            $job = json_decode(JobDesc::where('id',$ref['jobid'])->get(), true)[0];
             $senthash = $job['hash'];
 
             $burl = env('BASE_URL');

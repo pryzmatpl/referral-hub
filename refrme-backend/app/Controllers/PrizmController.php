@@ -12,7 +12,7 @@ use App\Models\OA2Clients;
 use App\Models\Cart;
 use App\Models\Location;
 use App\Models\Referral;
-use App\Models\Jobdesc;
+use App\Models\JobDesc;
 use App\Models\JobWeight;
 use App\Models\Linkedinimport;
 use Requests;
@@ -69,7 +69,7 @@ class PrizmController extends Controller {
         try{
             //TODO : TEST THIS
             if($request->isXhr()){
-                $ajob = json_decode(Jobdesc::where('hash',$jobhash)->get(),true)[0];
+                $ajob = json_decode(JobDesc::where('hash',$jobhash)->get(),true)[0];
 
                 $currentRoute = $request->getAttribute('route');
                 $reqIp = $request->getAttribute('ip_address');
@@ -133,7 +133,7 @@ class PrizmController extends Controller {
             $referral = json_decode($data, true)[0];
 
             $jbid = $referral['jobid'];
-            $rec = Jobdesc::where("id",$jbid)->get();
+            $rec = JobDesc::where("id",$jbid)->get();
 
             $job = json_decode($rec,true)[0];
             $locid = $job['location'];
@@ -214,7 +214,7 @@ class PrizmController extends Controller {
                             $session['booted_signoff'])->get(), true)[0];
 
                         $jobhash = $request->getParam('secureHash');
-                        $jobe = json_decode(Jobdesc::where('hash', $jobhash)->get(),true)[0];
+                        $jobe = json_decode(JobDesc::where('hash', $jobhash)->get(),true)[0];
 
                         $poster_id = $jobe['poster_id'];
                         $poster = $request->getParam('poster_id');
@@ -308,7 +308,7 @@ class PrizmController extends Controller {
         try{
             $session = new Session;
             $menus = $this->buildmenu();
-            $data = Jobdesc::where('id',$args['id'])->get();
+            $data = JobDesc::where('id',$args['id'])->get();
             $jobdesc = json_decode($data,true)[0];
 
             $view = 'job-add-boot.vue';
@@ -439,7 +439,7 @@ class PrizmController extends Controller {
 
             $ref->save();
 
-            $job = json_decode(Jobdesc::where('id',$ref['jobid'])->get(), true)[0];
+            $job = json_decode(JobDesc::where('id',$ref['jobid'])->get(), true)[0];
             $senthash = $job['hash'];
 
             $burl = env('BASE_URL');
@@ -508,7 +508,7 @@ class PrizmController extends Controller {
         try{
             $nudata = $request->getParsedBody();
 
-            $ref = new Jobdesc;
+            $ref = new JobDesc;
 
             $ref['jobtitle'] = strip_tags($nudata['jobtitle']);
             $ref['required_exp'] = strip_tags($nudata['requiredexp']);
