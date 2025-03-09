@@ -5,33 +5,47 @@
  */
 namespace App\Services;
 
+use App\Models\JobWeight;
 use App\Repositories\JobRepository;
 use App\Models\Job;
 use App\Models\User;
+use \Exception;
+use Illuminate\Database\Eloquent\Collection;
 
 class JobService {
-    private $jobRepository;
+    private JobRepository $jobRepository;
+    private JobClassificationService $jobClassificationService;
 
-    public function __construct(JobRepository $jobRepository) {
+    public function __construct(
+        JobRepository $jobRepository,
+        JobClassificationService $jobClassificationService
+    ) {
         $this->jobRepository = $jobRepository;
+        $this->jobClassificationService = $jobClassificationService;
     }
 
-    public function all() {
+    public function all(): Collection|array
+    {
         return $this->jobRepository->all();
     }
 
-    public function searchJobs(array $params) {
+    public function searchJobs(array $params): Collection|array
+    {
         // Handle searching logic and any complex operations
         return $this->jobRepository->search($params);
     }
 
-    public function findById(array $params) {
+    public function findById(array $params): ?Job
+    {
         return $this->jobRepository->findById($params["id"]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function createJob(array $data): Job {
         // Get UserDB info
-        $uid = User::where('unique_id',$data['unique_id'])->first();
+        $uid = User::query()->where('unique_id',$data['unique_id'])->first();
 
         // Validate data and create the job
         $job = new Job();
@@ -41,11 +55,23 @@ class JobService {
         $job->save();
 
         // Call the method to calculate the weight
-        $this->calculateWeight($job);
+        $jsonWeights = $this->calculateWeight($job);
+        $jobWeight = new JobWeight(
+            [
+                'jobid' => $job->id,
+                'keywords' => $job->keywords,
+                'weights' => $jsonWeights
+            ]
+        );
+        $jobWeight->save();
+
 
         return $job;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function updateJob(int $id, array $data, User $user): Job {
         $job = $this->jobRepository->findById($id);
 
@@ -58,14 +84,24 @@ class JobService {
         }
 
         // Update the job details...
+        // @TODO
         $job->save();
 
-        $this->calculateWeight($job);
+        $jsonWeights = $this->calculateWeight($job);
+        $jobWeight = JobWeight::query()->get(["jobid" => $job->id]);
+        $jobWeight->weights = $jsonWeights;
+        $jobWeight->save();
+
 
         return $job;
     }
 
-    private function calculateWeight(Job $job) {
-        // Implement your weight calculation logic here
+    /**
+     * @throws \Exception
+     */
+    private function calculateWeight(Job $job): array
+    {
+        $keywords = explode(",", $job->keywords);
+        return $this->jobClassificationService->classifyJob($keywords);
     }
 }

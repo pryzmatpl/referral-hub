@@ -1,18 +1,25 @@
 <?php
 namespace App\Controllers;
 
+use App\Services\JobClassificationService;
 use App\Services\JobService;
 use App\Repositories\JobRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class JobController extends Controller {
-    private $jobService;
-    private $jobRepository;
+    private JobService $jobService;
+    private JobRepository $jobRepository;
+    private JobClassificationService $jobClassificationService;
 
-    public function __construct(JobService $jobService, JobRepository $jobRepository) {
+    public function __construct(
+        JobService $jobService,
+        JobRepository $jobRepository,
+        JobClassificationService $jobClassificationService
+    ) {
         $this->jobService = $jobService;
         $this->jobRepository = $jobRepository;
+        $this->jobClassificationService=$jobClassificationService;
     }
 
     public function get(Request $request, Response $response, array $args): Response {
@@ -40,9 +47,11 @@ class JobController extends Controller {
             $data = json_decode($request->getBody(), true);
             $job = $this->jobService->createJob($data);
 
-            $res = ['status' => "success",
-            'job' => $job,
-            'message' => "Successfully added job"];
+            $res = [
+                'status' => "success",
+                'job' => $job,
+                'message' => "Successfully added job"
+            ];
 
             return $this->jsonResponse($response, $res);
 

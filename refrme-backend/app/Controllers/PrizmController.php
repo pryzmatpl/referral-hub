@@ -13,7 +13,7 @@ use App\Models\Cart;
 use App\Models\Location;
 use App\Models\Referral;
 use App\Models\Jobdesc;
-use App\Models\Jobweight;
+use App\Models\JobWeight;
 use App\Models\Linkedinimport;
 use Requests;
 use App\Models\Signoff;
@@ -543,7 +543,7 @@ class PrizmController extends Controller {
 
             //Add new job weight
             //TODO: Refator this into function {
-            $weight = new Jobweight;
+            $weight = new JobWeight;
             $weighingKeywords = $ref['essentials']; //take the must have keywords
             $command = 'sudo /usr/share/nginx/refair/resources/pythonapis/match/API/run.py '.$weighingKeywords;
             $returned = $this->my_shell_exec($command,$retun,$rettwo);

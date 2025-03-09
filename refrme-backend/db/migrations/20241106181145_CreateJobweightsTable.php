@@ -7,21 +7,12 @@ class CreateJobweightsTable extends AbstractMigration
 {
     /**
      * Do the migration
+     * Weights NEED TO BE THE RETURN JSON FROM THE CLASSIFIER
      */
     public function change(): void
     {
         $this->table('jobweights')
-            ->addColumn('aone', 'double')
-            ->addColumn('atwo', 'double')
-            ->addColumn('athree', 'double')
-            ->addColumn('afour', 'double')
-            ->addColumn('afive', 'double')
-            ->addColumn('asix', 'double')
-            ->addColumn('aseven', 'double')
-            ->addColumn('aeight', 'double')
-            ->addColumn('anine', 'double')
-            ->addColumn('aten', 'double')
-            ->addColumn('aeleven', 'double')
+            ->addColumn('weights', 'text')
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
             ->addColumn('jobid', 'integer', ['null' => true])

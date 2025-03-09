@@ -11,7 +11,7 @@ use App\Models\Cart;
 use App\Models\Location;
 use App\Models\Referral;
 use App\Models\Jobdesc;
-use App\Models\Jobweight;
+use App\Models\JobWeight;
 use App\Models\Linkedinimport;
 use App\Models\Signoff;
 use App\Classes\Fitnesscalc;

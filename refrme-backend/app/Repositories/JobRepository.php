@@ -16,10 +16,9 @@ class JobRepository {
         return Job::all();
     }
 
-    public function search(array $params) {
-        // Implement your search logic using Eloquent or Query Builder
-        $data = Job::where()->get($params);
-        return $data;
+    public function search(array $params): Collection|array
+    {
+        return Job::query()->get($params);
     }
 
     public function findById(int $id): ?Job {

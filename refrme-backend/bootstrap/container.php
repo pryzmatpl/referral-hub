@@ -12,7 +12,11 @@
  */
 
 use App\Controllers\Auth\AuthController;
+use App\Controllers\JobController;
+use App\Repositories\JobRepository;
 use App\Services\EmailService;
+use App\Services\JobClassificationService;
+use App\Services\JobService;
 use App\Services\LinkedInService;
 use App\Services\UserService;
 use DI\ContainerBuilder;
@@ -117,6 +121,23 @@ return function (ContainerBuilder $containerBuilder) {
                 $c->get(UserService::class),
                 $c->get(LinkedInService::class),
                 $c->get(Client::class),
+            );
+        },
+        JobRepository::class => function($c) {
+            return new JobRepository();
+        },
+        JobClassificationService::class => function($c) {
+            return new JobClassificationService(
+                $c->get('logger'),
+                'python',
+                '../models/match'
+            );
+        },
+        JobController::class => function ($c) {
+            return new JobController(
+                $c->get(JobService::class),
+                $c->get(JobRepository::class),
+                $c->get(JobClassificationService::class)
             );
         }
     ]);

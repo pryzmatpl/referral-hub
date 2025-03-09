@@ -2,11 +2,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property mixed $keywords
+ */
 class Job extends Model {
     protected $table = 'jobs';
 
-    
     protected $fillable = [
         'id',
         'title',
@@ -40,19 +43,23 @@ class Job extends Model {
 
     ];
 
-    public function project() {
+    public function project(): BelongsTo
+    {
         return $this->belongsTo('App\Models\Project');
     }
 
-    public function company() {
+    public function company(): BelongsTo
+    {
         return $this->belongsTo(Company::class, 'companyId');
     }
 
-    public function user() {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo('App\Models\User');
     }
 
-    public function referral() {
+    public function referral(): BelongsTo
+    {
         return $this->belongsTo('App\Models\Referral');
     }
 

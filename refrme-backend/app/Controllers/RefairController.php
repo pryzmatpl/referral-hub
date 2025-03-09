@@ -10,7 +10,7 @@ use App\Models\Cart;
 use App\Models\File;
 use App\Models\Referral;
 use App\Models\Jobdesc;
-use App\Models\Jobweight;
+use App\Models\JobWeight;
 use App\Models\Userweight;
 use App\Models\Linkedinimport;
 use App\Models\Signoff;
@@ -349,7 +349,7 @@ class RefairController extends Controller {
             //Expected is JSON
             $getVars =  $request->getParams();
             $weights = json_decode($getVars['passedWeights'],true);
-            $jobweights = json_decode(Jobweight::orderBy('created_at')->get(),true);
+            $jobweights = json_decode(JobWeight::orderBy('created_at')->get(),true);
             $retarr = [];
             $threshold = 0.1;
 
@@ -417,7 +417,7 @@ class RefairController extends Controller {
 
             $jobid = $args['id'];
 
-            $weights = json_decode(Jobweight::where('jobid',$jobid)->get(),true)[0];
+            $weights = json_decode(JobWeight::where('jobid',$jobid)->get(),true)[0];
 
             $userweights = json_decode(Userweight::all(),true);
             $retarr = [];
@@ -474,7 +474,7 @@ class RefairController extends Controller {
     public function evaljob($request, $response,$args){
         try{
             $jobid = $args['jobid'];
-            $jobweights = json_decode(Jobweight::where('jobid',$jobid)->get(),true)[0];
+            $jobweights = json_decode(JobWeight::where('jobid',$jobid)->get(),true)[0];
             $retarr = ["results"=>["Result from job eval during job posting"]];
             $retarr["weights"][] = $jobweights['aone'];
             $retarr["weights"][] = $jobweights['atwo'];

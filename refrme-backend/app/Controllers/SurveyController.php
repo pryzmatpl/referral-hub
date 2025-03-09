@@ -11,7 +11,7 @@ use App\Models\Cart;
 use App\Models\Location;
 use App\Models\Referral;
 use App\Models\Jobdesc;
-use App\Models\Jobweight;
+use App\Models\JobWeight;
 use App\Models\Linkedinimport;
 use Requests;
 use App\Models\Signoff;
@@ -1086,7 +1086,7 @@ class SurveyController extends Controller {
         try{
             $queryAll = $request->getQueryParams();
 
-            $allJobs = json_decode(Jobweight::all(),true);
+            $allJobs = json_decode(JobWeight::all(),true);
 
             $retarr = ["results"=>[]];
 
@@ -1153,7 +1153,7 @@ class SurveyController extends Controller {
     public function evaljob($request, $response,$args){
         try{
             $jobid = $args['jobid'];
-            $jobweights = json_decode(Jobweight::where('jobid',$jobid)->get(),true)[0];
+            $jobweights = json_decode(JobWeight::where('jobid',$jobid)->get(),true)[0];
             $retarr = ["results"=>["Result from job eval during job posting"]];
             $retarr["weights"][] = $jobweights['aone'];
             $retarr["weights"][] = $jobweights['atwo'];
@@ -1417,7 +1417,7 @@ class SurveyController extends Controller {
 
             //Add new job weight
             //TODO: Refator this into function {
-            $weight = new Jobweight;
+            $weight = new JobWeight;
             $weighingKeywords = $ref['essentials']; //take the must have keywords
             $command = 'sudo /usr/share/nginx/refair/resources/pythonapis/match/API/run.py '.$weighingKeywords;
             $returned = $this->my_shell_exec($command,$retun,$rettwo);
