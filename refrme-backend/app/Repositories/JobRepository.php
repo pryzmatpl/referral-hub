@@ -64,8 +64,21 @@ class JobRepository {
         // Set other properties...
         $job->save();
 
-        // Call the method to calculate the weight
-        $jsonWeights = $this->jobClassificationService->classifyJob($job->keywords);
+        $this->logger->debug(json_encode($data));
+
+        $arrOfSkills = [];
+
+        if (isset($data['skills']) && is_array($data['skills'])) {
+            foreach ($data['skills'] as $skill) {
+                // Access each skill's details; here, we print the name, experience, and years
+                $arrOfSkills[] = $skill["name"];
+            }
+        } else {
+            echo "No skills found.";
+        }
+
+        $jsonWeights = $this->jobClassificationService->classifyJob($arrOfSkills);
+
         $jobWeight = new JobWeight(
             [
                 'jobid' => $job->id,

@@ -54,21 +54,24 @@ class JobClassificationService
     /**
      * Classify a job description
      *
-     * @param array $description Job keywords array
+     * @param array $skills Job keywords array
      * @return array Classification results with category and confidence scores
      * @throws \Exception If classification fails
      */
-    public function classifyJob(array $description): array
+    public function classifyJob(array $skills): array
     {
         try {
-            // Run Python classification script
-
+            // Run Python classification script for skill combo
+            $skillsStr = implode(' ', $skills);
             $process = new Process([
+                $this->scriptPath . "/.venv/bin/activate",
+                "&&",
                 $this->pythonPath,
-                $this->scriptPath . '/run.py',
-                implode(',', $description)
+                $this->scriptPath . "/run.py",
+                "\"$skillsStr\""
             ]);
 
+            $this->logger->debug($process->getCommandLine());
             $process->run();
 
             if (!$process->isSuccessful()) {
@@ -76,7 +79,8 @@ class JobClassificationService
             }
 
             // Parse classification results
-            $result = json_decode($process->getOutput(), true);
+            $result = $process->getOutput();
+            $this->logger->debug($result);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new \Exception('Invalid JSON response from classifier: ' . json_last_error_msg());
