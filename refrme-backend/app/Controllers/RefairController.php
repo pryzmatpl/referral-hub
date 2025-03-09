@@ -3,8 +3,8 @@ namespace App\Controllers;
 use Exception;
 use Nette\Mail\Message;
 use App\Models\User;
-use App\Models\Userdesc;
-use App\Models\Userexp;
+use App\Models\UserDescription;
+use App\Models\UserExperience;
 use App\Models\Company;
 use App\Models\Cart;
 use App\Models\File;
@@ -142,7 +142,7 @@ class RefairController extends Controller {
 
             $uweight->save();
 
-            $udesc = Userdesc::updateOrCreate(['user_id' => $auser->id], [
+            $udesc = UserDescription::updateOrCreate(['user_id' => $auser->id], [
                 'keywords' => $getData['params']['keywords'],
                 'skills' => $getData['params']['skills'],
                 'notice_period' => $getData['params']['noticePeriod'],
@@ -236,7 +236,7 @@ class RefairController extends Controller {
 
             }
 
-            $userdesc = Userdesc::where('user_id', $auid->id)->orderBy('created_at', 'desc')->first();
+            $userdesc = UserDescription::where('user_id', $auid->id)->orderBy('created_at', 'desc')->first();
 
             $response->getBody()->write(json_encode([
                 'success' => true,
@@ -281,7 +281,7 @@ class RefairController extends Controller {
 
             $auser = User::where('unique_id', $uid)->first();
 
-            $userexp = Userexp::firstOrCreate(['user_id' => $auser->id,
+            $userexp = UserExperience::firstOrCreate(['user_id' => $auser->id,
             'name' => $jobName,
             'role' => $role,
             'start' => $startDate], [
@@ -310,7 +310,7 @@ class RefairController extends Controller {
             $uid = $args['id'];
             $auid = User::where('unique_id', $uid)->first();
 
-            $userexp = Userexp::where('user_id', $auid->id)->get()->toArray();
+            $userexp = UserExperience::where('user_id', $auid->id)->get()->toArray();
 
             $response->getBody()->write(json_encode(['status' => "success",
                 'exp' => $userexp,
@@ -329,7 +329,7 @@ class RefairController extends Controller {
             $getData = $request->getParsedBody();
             $exp = $getData['params']['id'];
 
-            $expToDelete = Userexp::where('id', $exp)->delete();
+            $expToDelete = UserExperience::where('id', $exp)->delete();
 
             $response->getBody()->write(json_encode(['status' => "success",
                 'message' => "Experience deleted successfully"]));

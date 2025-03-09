@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Apply extends Model
+class JobApplication extends Model
 {
     protected $table = 'jobs_apply';
 
