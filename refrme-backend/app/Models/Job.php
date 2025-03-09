@@ -63,4 +63,8 @@ class Job extends Model {
         return $this->belongsTo('App\Models\Referral');
     }
 
+    public static function InvalidJob(): Job
+    {
+        return new Job(['type'=>'empty']);
+    }
 }
