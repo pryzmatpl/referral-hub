@@ -1,22 +1,40 @@
 <?php
-
 namespace App\Middleware;
 
+use App\Http\HttpCodes;
+use App\Services\Auth\AuthService;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+
 /**
- *
+ * Auth middleware
  */
 class AuthMiddleware extends Middleware
 {
+    private AuthService $authService;
+    private ResponseFactoryInterface $responseFactory;
 
-    public function __invoke($request,$response,$next)
+    public function __construct(AuthService $authService, ResponseFactoryInterface $responseFactory)
     {
-        if(!$this->container->auth->check()) {
-            return $response->withJson(['message'=>"Please Sign In Before Doing That",
-                'status'=>"error"])->withStatus(401);
+        $this->authService = $authService;
+        $this->responseFactory=$responseFactory;
+    }
+
+    public function process($request, $handler): ResponseInterface
+    {
+        if(!$this->authService->check()) {
+            $response = $this->responseFactory->createResponse(HttpCodes::HTTP_FORBIDDEN);
+
+            $response->getBody()->write(json_encode(
+                [
+                    'message'=>"Please Sign In",
+                    'status'=>"error"
+                ])
+            );
+
+            return $response;
         }
 
-        $response = $next($request,$response);
-        return $response;
-
+        return $handler->handle($request);
     }
 }

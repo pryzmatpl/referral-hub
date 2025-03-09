@@ -13,7 +13,10 @@
 
 use App\Controllers\Auth\AuthController;
 use App\Controllers\JobController;
+use App\Middleware\AuthMiddleware;
+use App\Middleware\CsrfViewMiddleware;
 use App\Repositories\JobRepository;
+use App\Services\Auth\AuthService;
 use App\Services\EmailService;
 use App\Services\JobClassificationService;
 use App\Services\JobService;
@@ -21,30 +24,39 @@ use App\Services\LinkedInService;
 use App\Services\UserService;
 use DI\ContainerBuilder;
 use GuzzleHttp\Client;
-use Nette\Mail\Mailer;
-use Slim\Csrf\Guard;
-use Slim\Psr7\Environment;
-use Slim\Psr7\Factory\ResponseFactory;
-use Slim\Views\Twig;
-use Slim\Flash\Messages;
-use Nette\Mail\SmtpMailer;
-use App\Auth\Auth;
-use App\Validation\Validator;
-
-
+use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Slim\Csrf\Guard;
+use Slim\Psr7\Factory\ResponseFactory;
 use SlimSession\Helper;
+use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Psr\Container\ContainerInterface;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
+        ResponseFactoryInterface::class => function (ContainerInterface $container) {
+            return $container->get(ResponseFactory::class);
+        },
         'auth' => function ($c) {
-            return new App\Auth\Auth(
+            return new AuthService(
                 $c->get('db'),
                 $c->get('session'),
                 $c->get('logger')
+            );
+        },
+        AuthMiddleware::class => function (ContainerInterface $c) {
+            return new AuthMiddleware(
+                $c->get('auth'),
+                $c->get(ResponseFactoryInterface::class)
+            );
+        },
+        CsrfViewMiddleware::class => function (ContainerInterface $c) {
+            return new CsrfViewMiddleware(
+                $c,
+                $c->get(ResponseFactoryInterface::class)
             );
         },
         'flash' => function () {
@@ -90,7 +102,7 @@ return function (ContainerBuilder $containerBuilder) {
         'email.template.path' => '/var/www/html/resources/emails',
         'twigenv'=> function($c) {
             $loader = new FilesystemLoader($c->get('email.template.path'));
-            return new \Twig\Environment($loader);
+            return new Environment($loader);
         },
         EmailService::class => function ($c) {
             return new EmailService(

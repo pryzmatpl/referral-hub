@@ -12,9 +12,9 @@
  */
 namespace App\Controllers\Auth;
 
-use App\Auth\Auth;
 use App\Http\HttpCodes;
 use App\Models\User;
+use App\Services\Auth\AuthService;
 use App\Services\LinkedInService;
 use App\Services\UserService;
 use App\Validation\Exceptions\UserDoesNotExistException;
@@ -22,7 +22,6 @@ use App\Validation\Validator;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Litipk\Jiffy\UniversalTimestamp;
 use Monolog\Logger;
 use Nette\Mail\Mailer;
 use Psr\Http\Message\ResponseInterface;
@@ -39,13 +38,13 @@ final class AuthController
     const UNIQUE_ID_IS_REQUIRED = 'Unique ID is required';
 
     public function __construct(
-        private readonly Auth $auth,
-        private readonly Validator $validator,
-        private readonly Mailer $mailer,
-        private readonly Logger $logger,
-        private readonly UserService $userService,
+        private readonly AuthService     $auth,
+        private readonly Validator       $validator,
+        private readonly Mailer          $mailer,
+        private readonly Logger          $logger,
+        private readonly UserService     $userService,
         private readonly LinkedInService $linkedInService,
-        private readonly Client $httpClient
+        private readonly Client          $httpClient
     ) {}
 
     public function signOut(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface

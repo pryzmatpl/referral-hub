@@ -2,25 +2,42 @@
 
 namespace App\Middleware;
 
-/**
- *
- */
-class CsrfViewMiddleware extends Middleware
+use Cake\Core\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
+
+class CsrfViewMiddleware implements MiddlewareInterface
 {
+    protected ContainerInterface $container;
+    private ResponseFactoryInterface $responseFactory;
 
-    public function __invoke($request,$response,$next)
+    public function __construct($container, ResponseFactoryInterface $responseFactory)
     {
-        $this->container->view->getEnvironment()->addGlobal('csrf',[
-            'field' => '
-				<input type="hidden" name="'. $this->container->csrf->getTokenNameKey() .'"
-				 value="'. $this->container->csrf->getTokenName() .'">
-				<input type="hidden" name="'. $this->container->csrf->getTokenValueKey() .'"
-				 value="'. $this->container->csrf->getTokenValue() .'">
-			',
-        ]);
+        $this->container = $container;
+        $this->responseFactory = $responseFactory;
+    }
 
-        $response = $next($request,$response);
-        return $response;
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $csrf = $this->container->csrf;
+        $view = $this->container->view;
 
+        $view->getEnvironment()->addGlobal(
+            'csrf',
+            [
+                'field' => sprintf(
+                '<input type="hidden" name="%s" value="%s">' .
+                '<input type="hidden" name="%s" value="%s">',
+                $csrf->getTokenNameKey(),
+                $csrf->getTokenName(),
+                $csrf->getTokenValueKey(),
+                $csrf->getTokenValue()),
+            ]
+        );
+
+        return $handler->handle($request);
     }
 }

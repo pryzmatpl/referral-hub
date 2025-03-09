@@ -2,8 +2,8 @@
 /*
  * Copyright (c) 2025 Pryzmat sp. z o.o. (Pryzmat LLC)
  * All rights reserved.
- * 07.01.2025, 21:07
- * container.php
+ * 09.03.2025, 18:27
+ * Auth.php
  * referral-hub
  *
  * This software and its accompanying documentation are protected by copyright law and international treaties.
@@ -11,14 +11,14 @@
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
 
-namespace App\Auth;
+namespace App\Services\Auth;
 
+use App\Models\User;
 use Monolog\Logger;
 use PDO;
-use App\Models\User;
 use SlimSession\Helper as Session;
 
-class Auth
+class AuthService
 {
     protected $db;
     protected $session;

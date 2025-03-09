@@ -11,6 +11,8 @@
  * is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
  */
 
+use App\Middleware\AuthMiddleware;
+use App\Middleware\CsrfViewMiddleware;
 use App\Router;
 use DavidePastore\Slim\Validation\Validation;
 use DI\ContainerBuilder;
@@ -19,12 +21,9 @@ use Dotenv\Exception\InvalidPathException;
 use Slim\Factory\AppFactory;
 use Respect\Validation\Validator as v;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Aurmil\Slim\CsrfTokenToView;
-use Aurmil\Slim\CsrfTokenToHeaders;
 use Slim\Http\Request;
 use Slim\Csrf\Guard;
 use Slim\Http\Response;
-use App\Middleware\PrizmMiddleware;
 use Slim\Middleware\Session;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -51,7 +50,7 @@ try {
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
 } catch (InvalidPathException $e) {
-    throw new Exception("Failed initialize");
+    throw new \Exception("Init failed");
 }
 
 // Create Container Builder
@@ -63,20 +62,27 @@ $definitions($containerBuilder);
 $container = $containerBuilder->build();
 
 AppFactory::setContainer(container: $container);
+
 $app = AppFactory::create();
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
+$app->add(AuthMiddleware::class);
+// $app->add(CsrfViewMiddleware::class); @todo: ignore for now!
 
 // Validators
 $usernameValidator = v::alnum()->noWhitespace()->length(1, 15);
 $ageValidator = v::numeric()->positive()->between(1, 20);
 
-$app->add(new Session([
-    'name' => 'prizm_session',
-    'autorefresh' => true,
-    'lifetime' => '1 hour',
-]));
+$app->add(
+    new Session(
+        [
+            'name' => 'prizm_session',
+            'autorefresh' => true,
+            'lifetime' => '1 hour',
+        ]
+    )
+);
 
 require_once __DIR__ . '/oauth2.php';
 
