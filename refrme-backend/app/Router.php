@@ -14,6 +14,7 @@ use App\Controllers\ProjectController;
 use App\Controllers\RefairController;
 use App\Controllers\ReferralController;
 use App\Controllers\UserController;
+use App\Middleware\AuthMiddleware;
 use Slim\App;
 
 class Router {
@@ -58,15 +59,17 @@ class Router {
         $app->get('/project/get/all/{company}', [ProjectController::class, 'getCompanyProjects'])->setName('refair.get.company.project');
         $app->get('/project/get/{id}', [ProjectController::class, 'getProject'])->setName('refair.get.project');
 
-        $app->post('/api/apply', [JobController::class, 'apply'])->setName('refair.apply');
-        $app->get('/getapply/{user}', [JobController::class, 'getApply'])->setName('refair.apply.user');
-        $app->get('/getjobs', [JobController::class, 'get'])->setName('refair.getjobs');
-        $app->get('/getjobs/{page}', [JobController::class, 'get'])->setName('refair.getjobs');
-        $app->post('/getjobs', [JobController::class, 'get'])->setName('refair.getjobs');
-        $app->post('/job/add', [JobController::class, 'add'])->setName('refair.add.job');
-        $app->post('/api/job/new', [JobController::class, 'add'])->setName('refair.add.new.job');
-        $app->post('/job/update/{id}', [JobController::class, 'update'])->setName('refair.update.job');
-        $app->get('/job/delete/{id}', [JobController::class, 'delete'])->setName('refair.delete.job');
+        $app->group('', function () use ($app)  {
+            $app->post('/api/apply', [JobController::class, 'apply'])->setName('refair.apply');
+            $app->get('/getapply/{user}', [JobController::class, 'getApply'])->setName('refair.apply.user');
+            $app->get('/getjobs', [JobController::class, 'get'])->setName('refair.getjobs');
+            $app->get('/getjobs/{page}', [JobController::class, 'get'])->setName('refair.getjobs');
+            $app->post('/getjobs', [JobController::class, 'get'])->setName('refair.getjobs');
+            $app->post('/job/add', [JobController::class, 'add'])->setName('refair.add.job');
+            $app->post('/api/job/new', [JobController::class, 'add'])->setName('refair.add.new.job');
+            $app->post('/job/update/{id}', [JobController::class, 'update'])->setName('refair.update.job');
+            $app->get('/job/delete/{id}', [JobController::class, 'delete'])->setName('refair.delete.job');
+        })->add(AuthMiddleware::class);
 
         $app->post('/referral/add', [ReferralController::class, 'add'])->setName('refair.add.referral');
         $app->get('/referral/all', [ReferralController::class, 'getall'])->setName('refair.all.referral');

@@ -22,7 +22,7 @@ class AuthMiddleware extends Middleware
 
     public function process($request, $handler): ResponseInterface
     {
-        if(!$this->authService->check()) {
+        if(!$this->authService->check() && false) { // @todo: DISABLE THIS FOR NOW! NEED TO REDESIGN PUBLIC/PRIVATE PAGES
             $response = $this->responseFactory->createResponse(HttpCodes::HTTP_FORBIDDEN);
 
             $response->getBody()->write(json_encode(

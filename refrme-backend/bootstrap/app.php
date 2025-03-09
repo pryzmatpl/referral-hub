@@ -67,7 +67,6 @@ $app = AppFactory::create();
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
-$app->add(AuthMiddleware::class);
 // $app->add(CsrfViewMiddleware::class); @todo: ignore for now!
 
 // Validators
