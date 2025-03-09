@@ -15,6 +15,6 @@ namespace Functional;
 
 use Codeception\Test\Cest;
 
-class FunctionalBaseCest extends Cest
+class FunctionalBaseCest
 {
 }
