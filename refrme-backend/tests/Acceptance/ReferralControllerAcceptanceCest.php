@@ -23,7 +23,7 @@ class ReferralControllerAcceptanceCest
      * This method calls the controller's get() method, which returns
      * a JSON response with the value of cc(array('1')).
      *
-     * @param \AcceptanceTester $I
+     * @param AcceptanceTester $I
      */
     public function testGetReferral(AcceptanceTester $I)
     {
@@ -41,7 +41,7 @@ class ReferralControllerAcceptanceCest
      * This test creates a user and an associated referral record,
      * then calls the endpoint using the user's email.
      *
-     * @param \AcceptanceTester $I
+     * @param AcceptanceTester $I
      */
     public function testGetReferralSend(AcceptanceTester $I)
     {
@@ -82,7 +82,7 @@ class ReferralControllerAcceptanceCest
      * This test inserts a referral record using a specific email,
      * then calls the endpoint and verifies the returned JSON.
      *
-     * @param \AcceptanceTester $I
+     * @param AcceptanceTester $I
      */
     public function testGetReferralReceived(AcceptanceTester $I)
     {
@@ -117,7 +117,7 @@ class ReferralControllerAcceptanceCest
      * It first creates the necessary user, job, and company records,
      * then simulates a login and sends a POST request.
      *
-     * @param \AcceptanceTester $I
+     * @param AcceptanceTester $I
      */
     public function testAddReferral(AcceptanceTester $I)
     {
