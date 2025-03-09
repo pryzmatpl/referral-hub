@@ -124,6 +124,7 @@ export default{
             id: ''
           }
         }
+        this.$router.push('/jobs')
       })
       .catch(error => alert(error.message))
     }
