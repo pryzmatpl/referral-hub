@@ -21,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class TextClassificationAPI:
-    def __init__(self, model_path: str = 'classifier.pk'):
+    def __init__(self, model_path: str = './classifier.pk'):
         """Initialize the Text Classification API.
 
         Args:

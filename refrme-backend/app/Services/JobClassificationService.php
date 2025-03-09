@@ -61,40 +61,50 @@ class JobClassificationService
     public function classifyJob(array $skills): array
     {
         try {
-            // Run Python classification script for skill combo
+            // Prepare the skills string (space-separated if that's what your script expects)
             $skillsStr = implode(' ', $skills);
-            $process = new Process([
-                $this->scriptPath . "/.venv/bin/activate",
-                "&&",
-                $this->pythonPath,
-                $this->scriptPath . "/run.py",
-                "\"$skillsStr\""
-            ]);
 
-            $this->logger->debug($process->getCommandLine());
+            // Use the Python interpreter directly from the virtual environment
+            $pythonExecutable = $this->scriptPath . "/.venv/bin/python";
+
+            // Build the command as an array: no need for "activate" or shell operators
+            $command = [
+                $pythonExecutable,
+                $this->scriptPath . "/run.py",
+                $skillsStr
+            ];
+
+            // Create and run the process
+            $process = new Process($command);
+            $this->logger->debug("Running command: " . $process->getCommandLine());
             $process->run();
 
+            // Check if the process ran successfully
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }
 
-            // Parse classification results
+            // Get and log the output
             $result = $process->getOutput();
-            $this->logger->debug($result);
+            $this->logger->debug("Output: " . $result);
 
+            // Decode JSON output from the Python script
+            $decoded = json_decode($result, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new \Exception('Invalid JSON response from classifier: ' . json_last_error_msg());
+                throw new \Exception("Invalid JSON response from classifier: " . json_last_error_msg());
             }
 
             $this->logger->info('Job classified successfully', [
-                'category' => $result['category'] ?? 'unknown'
+                'category' => $decoded['category'] ?? 'unknown'
             ]);
 
-            return $result;
+            return $decoded;
         } catch (\Exception $e) {
-            $this->logger->error('Job classification failed: ' . $e->getMessage());
+            // Handle the exception as needed
+            $this->logger->error('Error running classification script: ' . $e->getMessage());
             throw $e;
         }
+
     }
 
 }
