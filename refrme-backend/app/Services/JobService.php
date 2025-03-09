@@ -60,7 +60,7 @@ class JobService {
             [
                 'jobid' => $job->id,
                 'keywords' => $job->keywords,
-                'weights' => $jsonWeights
+                'weights' => json_encode($jsonWeights)
             ]
         );
         $jobWeight->save();
@@ -89,7 +89,7 @@ class JobService {
 
         $jsonWeights = $this->calculateWeight($job);
         $jobWeight = JobWeight::query()->get(["jobid" => $job->id]);
-        $jobWeight->weights = $jsonWeights;
+        $jobWeight->weights = json_encode($jsonWeights);
         $jobWeight->save();
 
 
