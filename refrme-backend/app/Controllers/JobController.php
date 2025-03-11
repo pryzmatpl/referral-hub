@@ -72,13 +72,42 @@ class JobController extends Controller {
         }
     }
 
+    public function apply(Request $request, Response $response): Response {
+        try {
+            $req = json_decode($request->getBody(), true);
+            $user = User::where('unique_id', $req['unique_id'])->first();
+
+            $appliedJobs = isset($user->jobs_applied) ? $user->jobs_applied : [];
+
+            $jobObject = [
+                'job_id' => $req['job_id'],
+                'created_at' => date('Y-m-d H:i:s')  // Current date and time
+            ];
+
+            $appliedJobs[] = $jobObject;
+            $user->jobs_applied = $appliedJobs;
+            $user->save();
+
+            $response->getBody()->write(json_encode($user));
+            return $response;
+        }
+        catch (\Exception $e) {
+
+        }
+    }
+
     public function getApply(Request $request, Response $response, array $args): Response {
         try {
             $uid = $args['user'];
             $userJobs = User::where('unique_id', $uid)->value('jobs_applied');
 
-            if(isset($userJobs)) {
-                $jobs = $this->jobService->findById($userJobs);
+
+
+            if (isset($userJobs)) {
+                $userJobsIds = array_map(function ($job) {
+                    return $job['job_id'];
+                }, $userJobs);
+                $jobs = $this->jobService->findById($userJobsIds);
                 $response->getBody()->write(json_encode($jobs));
             } else {
                 $response->getBody()->write(json_encode([]));

@@ -378,7 +378,7 @@ export default {
         const id = this.$route.params.id;
         this.$store.state.backend.post('/api/apply', {
           job_id: id,
-          email: this.$store.state.dehashedData.EMAIL
+          unique_id: this.$store.state.dehashedData.USER_ID
         })
         .then(ret => this.applyResponse = ret.data)
         .then(ret => console.log('applied'))
