@@ -36,6 +36,8 @@ class Job extends Model {
         'specs',
     ];
 
+    protected $with = ['company']; 
+
     protected $casts = [
         'fund' => 'array',
         'keywords' => 'array',
