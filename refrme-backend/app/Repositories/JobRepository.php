@@ -34,8 +34,8 @@ class JobRepository {
         return Job::query()->get($params);
     }
 
-    public function findById(int $id): ?Job {
-        return Job::with('company')->find($id);
+    public function findById(array $ids): ?Collection {
+        return Job::wherein("id", $ids)->get();
     }
 
     public function save(array $params): Job

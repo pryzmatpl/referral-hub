@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Services\JobClassificationService;
 use App\Services\JobService;
 use App\Repositories\JobRepository;
+use App\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -28,7 +29,7 @@ class JobController extends Controller {
             if (isset($params['logic']) && $params['logic'] == 'all') {
                 $jobs = $this->jobService->all();
             } else if(isset($params['id'])) {
-                $jobs = $this->jobService->findById($params);
+                $jobs = $this->jobService->findById([$params['id']]);
             } else  {
                 $jobs = $this->jobService->searchJobs($params);
             } 
@@ -56,7 +57,7 @@ class JobController extends Controller {
             return $this->jsonResponse($response, $res);
 
         } catch (\Exception $e) {
-            return $response->withJson(['error' => $e->getMessage()], 500);
+            return $this->jsonResponse($response, data: ['error' => $e->getMessage()]);
         }
     }
 
@@ -68,6 +69,22 @@ class JobController extends Controller {
             return $response->withJson(['message' => 'Successfully updated job', 'status' => 'success', 'job' => $job]);
         } catch (\Exception $e) {
             return $response->withJson(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getApply(Request $request, Response $response, array $args): Response {
+        try {
+            $uid = $args['user'];
+            $userJobs = User::where('unique_id', $uid)->value('jobs_applied');
+
+            $jobs = $this->jobService->findById($userJobs);
+
+            $response->getBody()->write(json_encode($jobs));
+
+            return $response;
+        }
+        catch (\Exception $e) {
+            return $response->withJson(['error'=> $e->getMessage()], 500);
         }
     }
 }
