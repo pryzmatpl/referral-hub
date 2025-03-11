@@ -283,7 +283,7 @@ export default {
     this.$store.state.backend
       .get(`/getjobs?id=${id}&with=company`)
       .then(ret => {
-        this.job = ret.data
+        this.job = ret.data[0]
         this.evenPercentagesOut()
         $(document).ready(function(){
           $(".GaugeMeter").gaugeMeter();
