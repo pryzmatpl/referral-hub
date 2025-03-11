@@ -33,7 +33,7 @@ class JobSeeder extends AbstractSeed
                 'updated_at' => date('Y-m-d H:i:s'),
                 'currency' => 'EUR',
                 'companyId' => 1, // Assuming this matches an existing company ID
-                'contractType' => 'Full-Time',
+                'contractType' => '["Full-Time"]',
             ],
             [
                 'title' => 'Data Scientist',
@@ -61,7 +61,7 @@ class JobSeeder extends AbstractSeed
                 'updated_at' => date('Y-m-d H:i:s'),
                 'currency' => 'USD',
                 'companyId' => 2, // Assuming this matches an existing company ID
-                'contractType' => 'Contract',
+                'contractType' => '["Contract"]',
             ],
             [
                 'title' => 'Full Stack Developer',
@@ -85,7 +85,7 @@ class JobSeeder extends AbstractSeed
                 'updated_at' => date('Y-m-d H:i:s'),
                 'currency' => 'GBP',
                 'companyId' => 3, // Assuming this matches an existing company ID
-                'contractType' => 'Full-Time',
+                'contractType' => '["Full-Time"]',
             ],
         ];
 
