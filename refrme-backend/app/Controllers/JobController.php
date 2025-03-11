@@ -77,9 +77,12 @@ class JobController extends Controller {
             $uid = $args['user'];
             $userJobs = User::where('unique_id', $uid)->value('jobs_applied');
 
-            $jobs = $this->jobService->findById($userJobs);
-
-            $response->getBody()->write(json_encode($jobs));
+            if(isset($userJobs)) {
+                $jobs = $this->jobService->findById($userJobs);
+                $response->getBody()->write(json_encode($jobs));
+            } else {
+                $response->getBody()->write(json_encode([]));
+            }
 
             return $response;
         }
