@@ -7,6 +7,21 @@
 
 actor: FunctionalTester
 modules:
-    enabled:
-        # add a framework module here
-step_decorators: ~
+  enabled:
+    - REST:
+        depends: PhpBrowser
+        url: 'http://localhost'  # Adjust to your base URL
+        shortDebugResponse: 300
+    - PhpBrowser:
+        url: 'http://localhost'  # Adjust to your actual URL
+    - Db
+    - Asserts
+  config:
+    Db:
+      dsn: 'mysql:host=127.0.0.1;dbname=%DB_DATABASE%'
+      user: '%DB_USERNAME%'
+      password: '%DB_PASSWORD%'
+      cleanup: true 
+      initial_queries: 
+        - 'TRUNCATE TABLE `jobs`;'
+
