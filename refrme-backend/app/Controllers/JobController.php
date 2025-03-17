@@ -29,7 +29,7 @@ class JobController extends Controller {
             if (isset($params['logic']) && $params['logic'] == 'all') {
                 $jobs = $this->jobService->all();
             } else if(isset($params['id'])) {
-                $jobs = $this->jobService->findById([$params['id']]);
+                $jobs = $this->jobService->findById($params['id']);
             } else  {
                 $jobs = $this->jobService->searchJobs($params);
             } 

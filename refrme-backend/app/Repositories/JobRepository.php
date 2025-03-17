@@ -34,7 +34,10 @@ class JobRepository {
         return Job::query()->get($params);
     }
 
-    public function findById(array $ids): ?Collection {
+    public function findById(array|int $ids): ?Collection {
+        if (!is_array($ids)) {
+            $ids = [$ids];
+        }
         return Job::wherein("id", $ids)->get();
     }
 
