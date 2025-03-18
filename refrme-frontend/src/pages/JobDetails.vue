@@ -18,8 +18,9 @@
             <h4 v-if="job.fund">{{ job.fund[0] | groupZeros }} - {{ job.fund[1] | groupZeros }} {{ job.currency }}</h4>
             <p>monthly / gross</p>
           </div>
-          <div v-if="job.fund" class="col" style="color: #FF0000;text-align: right" v-b-tooltip title="Get a reward of up to this amount if your referral is hired">
-            <h4>{{ job.fund[0] * 0.25 | groupZeros }} {{ job.currency }}</h4>
+          <div v-if="job.fund" class="col" style="color: #FF0000;text-align: right" v-b-tooltip
+            title="Get a reward of up to this amount if your referral is hired">
+            <h4>{{ reward }} {{ job.currency }}</h4>
             <p>REWARD</p>
           </div>
         </div>
@@ -238,7 +239,28 @@
         </a> -->
       </div>
       <div class="col">
-        <button class="btn btn-lg btn-primary w-100" @click="showReferralModal">Refer</button>
+        <button type="button" class="btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#referModal">
+          Refer a Friend
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="referModal" tabindex="-1" aria-labelledby="referModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="referModalLabel">Refer a Friend</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>For this referral you can earn at least {{ reward }} {{ job?.currency }}</p>
+                <input type="email" @input="updateReferralEmail" placeholder="Your friend's email">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success float-right" @click="sendReferral">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row mt-1 mb-5">
@@ -247,7 +269,7 @@
       </div>
     </div>
 
-    <b-modal id="editModal" v-model="modalShow" title="Send your CV" size="lg" hide-footer>
+    <b-modal id="editModal" v-if="modalShow" title="Send your CV" size="lg" hide-footer>
       <p>Please send your CV to: <a href="mailto: w@refair.me">refair@refair.me</a></p>
     </b-modal>
 
@@ -304,7 +326,7 @@ export default {
         : {name: item.name, available: false}
       )
     }, */
-    reward: vm => vm.job.salaryMin * 0.25
+    reward: vm => vm.job.fund?.[0] * 0.25
   },
 
   watch: {
@@ -391,6 +413,10 @@ export default {
       }
     },
 
+    updateReferralEmail(event) {
+      this.referralEmail = event.target.value;
+    },
+
     showReferralModal () {
       if(this.$store.state.isAuthenticated){
         this.referModalShow = true
@@ -402,7 +428,7 @@ export default {
     sendReferral () {
       this.$store.state.backend.post('/referral/add',{
         name: '', //not required
-        email: this.refferalEmail,
+        email: this.referralEmail,
         job_id: this.job.id
       })
       .then(ret => alert('Referral sent! Thanks!'))
