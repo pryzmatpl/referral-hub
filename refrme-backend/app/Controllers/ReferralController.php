@@ -65,11 +65,16 @@ class ReferralController extends Controller
             $data['email'] = !empty($data['email']) ? strip_tags($data['email']) : null;
             $data['name'] = !empty($data['name']) ? strip_tags($data['name']) : null;
 
-            $referral = new Referral();
-            $referral->jobid = $data['job_id'];
-            $referral->referrer_id = $userId;
-            $referral->email = $data['email'];
-            $referral->name = $data['name'];
+            $referral = Referral::firstOrCreate(
+                [
+                    'jobid' => $data['job_id'],
+                    'email' => $data['email']
+                ],
+                [
+                    'referrer_id' => $userId,
+                    'name' => $data['name']
+                ]
+            );
 
             $referral->save();
 
