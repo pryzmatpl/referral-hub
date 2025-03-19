@@ -57,28 +57,43 @@ class ReferralController extends Controller
 
     public function add($request, $response, $args){
         try {
-            $data = $request->getParsedBody();
-            $userId = $_SESSION['user']->id;
+            $data = json_decode($request->getBody(), true);
+            $userId = $_SESSION['user']->id ?? null;
 
             $data['job_id'] = !empty($data['job_id']) ? intval($data['job_id']) : null;
             $data['user_id'] = !empty($data['user_id']) ? intval($data['user_id']) : null;
             $data['email'] = !empty($data['email']) ? strip_tags($data['email']) : null;
             $data['name'] = !empty($data['name']) ? strip_tags($data['name']) : null;
 
-            if($this->isProposalRejected($data)) {
-                return $response->withJson([
-                    'message'=> "The person has already rejected this job",
-                    'status' => "failed",
-                    'data'=> cc($data)
-                ]);
-            }
-
             $referral = new Referral();
-            $referral->jobs_id = $data['job_id'];
-            $referral->users_id = $userId;
+            $referral->jobid = $data['job_id'];
+            $referral->referrer_id = $userId;
             $referral->email = $data['email'];
             $referral->name = $data['name'];
 
+            $referral->save();
+
+            $res = [
+                'status' => "success",
+                'job' => $referral,
+                'message' => "Successfully referred"
+            ];
+
+            return $this->jsonResponse($response, $res);
+            
+            ////////////// TODO //////////////////////////
+
+            /* if($this->isProposalRejected($data)) {
+                $res = [
+                    'message'=> "The person has already rejected this job",
+                    'status' => "failed",
+                    'data'=> cc($data)
+                ];
+                return $this->jsonResponse($response, $res);
+            } */
+
+
+/*
             if($referral->save()) {
                 $referral->update(['hash' => $this->iwahash($referral->id, "TOKEN", env('TOKEN'))]);
 
@@ -112,10 +127,11 @@ class ReferralController extends Controller
                 'message'=> "There was an error sending your referral",
                 'status' => "error",
                 'referral'=> cc($referral->toArray())
-            ]);
+            ]); */
 
         } catch (Exception $e) {
-            return json_encode($e);
+            $error = ['error' => $e->getMessage()];
+            return $this->jsonResponse($response, $error, 500);
         }
     }
 

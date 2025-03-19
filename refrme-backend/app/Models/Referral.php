@@ -17,14 +17,14 @@ final class Referral extends Model
     /**
      * The table associated with the model.
      */
-    protected $table = 'jobs_referral';
+    protected $table = 'jobrefs';
 
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
         'id',
-        'jobs_id',
+        'jobid',
         'users_id',
         'email',
         'name',

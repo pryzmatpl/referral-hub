@@ -11,6 +11,7 @@ class CreateJobrefsTable extends AbstractMigration
         $table->addColumn('referred_id', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('location_id', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('name', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('email', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('keywords', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('regdate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
             ->addColumn('hash', 'binary', ['null' => true])
