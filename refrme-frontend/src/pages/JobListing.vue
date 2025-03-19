@@ -25,6 +25,7 @@ const store = useStore()
 const jobListing = computed(() => store.getters.jobListing)
 const resultPages = computed(() => store.getters.resultPages)
 const currentPage = computed(() => store.state.currentPage)
+const appliedJobs = computed(() => store.getters.jobApplied)
 
 // Icons
 const checkIcon = faCheck
@@ -44,6 +45,7 @@ const modalShow = ref(false)
 // Lifecycle hooks
 onMounted(() => {
   getJobs()
+  appliedJobs.value = store.getters.jobApplied || [];
 })
 
 // Watchers
@@ -85,6 +87,7 @@ const updateCurrentPage = (page) => {
         :key="job.id"
         @jobToEdit="selectJob"
         @fetchJobs="getJobs"
+        :applied="appliedJobs.some(appliedJob => appliedJob.id === job.id)"
     />
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">

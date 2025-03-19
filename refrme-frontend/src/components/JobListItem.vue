@@ -20,7 +20,8 @@ const props = defineProps({
   job: {
     type: Object,
     default: null
-  }
+  },
+  applied: Boolean
 })
 
 const route = useRoute()
@@ -63,7 +64,7 @@ const emit = defineEmits(['jobToEdit', 'fetchJobs'])
 
 const keywords = computed(() => {
   if (Array.isArray(props.job.keywords)) {
-    return props.job.keywords.join(', '); // Convert array to a comma-separated string
+    return props.job.keywords; 
   }
 
   return (props.job != null) ? props.job?.keywords?.split(',') : "";
@@ -82,21 +83,24 @@ const keywords = computed(() => {
       <div class="card-body" @click="onRowClick">
         <div class="row">
           <div class="col-12 col-sm-2">
+            <div v-if="props.applied">
+              <button class="btn btn-success">Applied</button>
+            </div>
             <!-- <img :src="job.company.logo" width="120px" /> -->
           </div>
           <div class="col-12 col-sm-6">
-            <h4>{{ job.jobtitle }}</h4>
+            <h4>{{ job.title }}</h4>
             <p v-html="job.description"></p>
-            <!-- <p>{{ job.company.name }}</p> -->
+            <p>{{ job.company.name }}</p>
           </div>
           <div class="col-12 col-sm-4" style="text-align: right" v-b-tooltip.html.bottom="'Get a reward of up to this amount if your referral is hired'">
             <div class="row">
               <div class="col">
                 <div>
-                  <!-- <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0]) }} - {{ groupZeros(job.fund[1]) }}</h4> -->
-                  <p class="float-right">PLN</p>
+                  <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0]) }} - {{ groupZeros(job.fund[1]) }}</h4>
+                  <p class="float-right">{{ job.currency }}</p>
                 </div>
-                <p>{{ formattedContractType }}</p>
+                <p>{{ job.contractType.join(', ') }}</p>
               </div>
             </div>
             <div class="row" style="color: #FF0000; text-align: right">
@@ -104,8 +108,8 @@ const keywords = computed(() => {
                 <div>
                   <font-awesome-icon :icon="infoIcon" style="color:black" class="mr-1" />
                   <p style="display: inline-block" class="mr-1">REWARD:</p>
-                  <!-- <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0] * 0.25) }}</h4> -->
-                  <p class="float-right">PLN</p>
+                  <h4 style="display: inline-block; text-align: right">{{ groupZeros(job.fund[0] * 0.25) }}</h4>
+                  <p class="float-right">{{ job.currency }}</p>
                 </div>
               </div>
             </div>
