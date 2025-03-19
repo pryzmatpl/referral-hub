@@ -80,8 +80,8 @@ final class EmailService
             }
 
             // Render both HTML and text versions
-            $htmlContent = $this->renderTemplate($template . '.html.twig', $data);
-            $textContent = $this->renderTemplate($template . '.text.twig', $data);
+            $htmlContent = $this->renderTemplate($template, $data);
+            $textContent = $this->renderTemplate($template, $data);
 
             $message->setHtmlBody($htmlContent);
             $message->setBody($textContent);
@@ -166,22 +166,18 @@ final class EmailService
      * @throws RuntimeException
      */
     private function renderTemplate(string $template, array $data): string
-    {
-        try {
-            return $this->twig->render(
-                $this->templatePath . '/' . $template,
-                $data
-            );
-        } catch (Throwable $e) {
-            $this->logger->error('Failed to render email template', [
-                'error' => $e->getMessage(),
-                'template' => $template
-            ]);
+{
+    $templateFile = "{$this->templatePath}/{$template}.php";
 
-            throw new RuntimeException(
-                'Failed to render email template: ' . $e->getMessage(),
-                previous: $e
-            );
-        }
+    if (!file_exists($templateFile)) {
+        throw new RuntimeException("Template not found: $templateFile");
     }
+
+    // Extract data to variables
+    extract($data);
+    ob_start();
+    include $templateFile;
+    return ob_get_clean();
+}
+
 }

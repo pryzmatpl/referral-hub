@@ -15,9 +15,15 @@ use Illuminate\Database\Capsule\Manager as DB;
 use SlimSession\Helper as Session;
 use App\Models\JobDesc;
 use App\Models\Company;
+use App\Services\EmailService;
 
 class ReferralController extends Controller
 {
+    private EmailService $emailService;
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
     public function get($request, $response, $args){
         return $response->withJson(cc(array('1')));
     }
@@ -93,6 +99,8 @@ class ReferralController extends Controller
                 return $this->jsonResponse($response, $res);
             }
 
+            $this->sendEmailAction();
+
             return $this->jsonResponse($response, $res);
             
             ////////////// TODO //////////////////////////
@@ -157,6 +165,26 @@ class ReferralController extends Controller
         }
 
         return $isRejected;
+    }
+
+    /////////////// TODO ////////////////////////
+    public function sendEmailAction(): bool
+    {
+        $to = '208brassband@gmail.com';
+        $subject = 'Test Email';
+        $template = 'referral_confirmation';
+        $data = ['name' => 'John Doe'];
+        $attachments = [];
+        $cc = ['cc@example.com'];
+        $bcc = ['bcc@example.com'];
+
+        try {
+            $this->emailService->sendEmail($to, $subject, $template, $data, $attachments, $cc, $bcc);
+            return true;
+        } catch (\RuntimeException $e) {
+            // Log the error or handle the exception as needed
+            return false;
+        }
     }
 
     private function sendMailJob($params) {
