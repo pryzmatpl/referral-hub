@@ -84,19 +84,18 @@ class ReferralController extends Controller
                 'message' => "Successfully referred"
             ];
 
-            return $this->jsonResponse($response, $res);
-            
-            ////////////// TODO //////////////////////////
-
-            /* if($this->isProposalRejected($data)) {
+            if($this->isProposalRejected($data)) {
                 $res = [
                     'message'=> "The person has already rejected this job",
                     'status' => "failed",
-                    'data'=> cc($data)
+                    'data'=> $data
                 ];
                 return $this->jsonResponse($response, $res);
-            } */
+            }
 
+            return $this->jsonResponse($response, $res);
+            
+            ////////////// TODO //////////////////////////
 
 /*
             if($referral->save()) {
@@ -148,12 +147,12 @@ class ReferralController extends Controller
         $isRejected = false;
 
         $arrReferral = Referral::where([
-            ['jobs_id', '=', $data['job_id']],
+            ['jobid', '=', $data['job_id']],
             ['email', '=', $data['email']],
         ])->get();
 
         foreach($arrReferral as $referral) {
-            if($referral->status == Referral::VALUE_STATUS_REJECTED)
+            if($referral->state == Referral::STATUS_REJECTED)
                 $isRejected = true;
         }
 

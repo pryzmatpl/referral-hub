@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 final class Referral extends Model
 {
+    const STATUS_PENDING = 'pending';
+    const STATUS_ACCEPTED = 'accepted';
+    const STATUS_REJECTED = 'rejected';
     /**
      * The table associated with the model.
      */

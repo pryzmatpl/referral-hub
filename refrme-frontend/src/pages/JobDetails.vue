@@ -431,7 +431,7 @@ export default {
         email: this.referralEmail,
         job_id: this.job.id
       })
-      .then(ret => alert('Referral sent! Thanks!'))
+      .then(ret => alert(ret.data.message))
       .then(ret => this.referModalShow = false)
       .catch(err => alert('Something went wrong :/'))
     },
