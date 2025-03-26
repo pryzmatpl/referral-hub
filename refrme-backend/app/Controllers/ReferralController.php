@@ -99,7 +99,7 @@ class ReferralController extends Controller
                 return $this->jsonResponse($response, $res);
             }
 
-            $this->sendEmailAction();
+            $this->sendEmailAction($data);
 
             return $this->jsonResponse($response, $res);
             
@@ -168,12 +168,18 @@ class ReferralController extends Controller
     }
 
     /////////////// TODO ////////////////////////
-    public function sendEmailAction(): bool
+    public function sendEmailAction($data): bool
     {
-        $to = '208brassband@gmail.com';
-        $subject = 'Test Email';
-        $template = 'referral_confirmation';
-        $data = ['name' => 'John Doe'];
+        $to = $data['email'];
+        $subject = 'New job proposal from ' . $data['user_email'];
+        $template = 'referral_job';
+        /* $data = [
+            'user_email' => 'user@example.com',
+            'email' => 'referred@example.com',
+            'company' => 'Awesome Inc.',
+            'job' => 'Software Engineer'
+        ]; */
+        
         $attachments = [];
         $cc = ['cc@example.com'];
         $bcc = ['bcc@example.com'];

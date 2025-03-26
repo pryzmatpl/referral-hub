@@ -16,7 +16,7 @@
                 <tbody>
                     <tr>
                         <td style="width:80px; font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;">
-                            <a href="<?php echo env('FRONTEND_URL') ?>" target="_blank" style="display:block; width:80px; color: #ffffff; background-color: #3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 0; text-transform: capitalize; border-color: #3498db;">
+                            <a href="http://<?php echo env('FRONTEND_URL') ?>:8080/job/<?php echo $id; ?>" target="_blank" style="display:block; width:80px; color: #ffffff; background-color: #3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 0; text-transform: capitalize; border-color: #3498db;">
                                 Yes
                             </a>
                         </td>

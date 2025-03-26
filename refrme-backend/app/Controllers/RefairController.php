@@ -243,6 +243,7 @@ class RefairController extends Controller {
                 'message' => "Returned weights for user " . $auid->id,
                 'firstname' => $auid->first_name,
                 'lastname' => $auid->last_name,
+                'email' => $auid->email,
                 'weights' => $retweight,
                 'jobStatus' => $userdesc->job_status ?? 'not looking',
                 'keywords' => $userdesc->keywords ?? [],

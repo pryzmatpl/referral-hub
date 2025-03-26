@@ -302,6 +302,9 @@ export default {
     // https://github.com/Mictronics/GaugeMeter
     let id = this.jobId > 0 ? this.jobId : this.$route.params.id
 
+    const modal = document.getElementById('referModal');
+    modal.addEventListener('show.bs.modal', this.handleModalShow);
+
     this.$store.state.backend
       .get(`/getjobs?id=${id}&with=company`)
       .then(ret => {
@@ -313,6 +316,11 @@ export default {
         console.log(ret)
       })
       .catch(error => console.log("Error (mounted):",error))
+  },
+
+  beforeUnmount() {
+    const modal = document.getElementById('referModal');
+    modal.removeEventListener('show.bs.modal', this.handleModalShow);
   },
 
   computed: {
@@ -425,15 +433,74 @@ export default {
       }
     },
 
-    sendReferral () {
-      this.$store.state.backend.post('/referral/add',{
-        name: '', //not required
+    handleModalShow(event) {
+      // Add your condition here
+      if(this.$store.state.isAuthenticated){
+        return
+      } else {
+        event.preventDefault();
+        alert('Please sign in to refer')
+        this.$router.push({path: '/auth/signin', query: {job: this.job.id}})
+      }
+    },
+
+    async sendReferral() {
+
+      if (!this.$store.state.isAuthenticated) {
+        alert('Please sign in to apply');
+        this.$router.push({ path: '/auth/signin', query: { job: this.job.id } });
+        return;
+      }
+
+      try {
+        const unique_id = this.$store.state.dehashedData.USER_ID;
+
+        // First call - get profile
+        const profileResponse = await this.$store.state.backend.post('/api/user/getprofile/' + unique_id);
+        console.log('getprofile', profileResponse);
+
+        // Second call - add referral
+        const referralResponse = await this.$store.state.backend.post('/referral/add', {
+          user_email: profileResponse.data.email,
+          email: this.referralEmail,
+          job: this.job.title,
+          id: this.job.id,
+          company: this.job.company.name
+        });
+
+        alert(referralResponse.data.message);
+        this.referModalShow = false;
+
+      } catch (err) {
+        alert('Something went wrong :/');
+        console.error(err);
+      }
+
+      /* if (this.$store.state.isAuthenticated) {
+        const unique_id = this.$store.state.dehashedData.USER_ID
+
+        this.$store.state.backend
+          .post('/api/user/getprofile/' + unique_id)
+          .then(response => {
+            console.log('getprofile')
+            console.log(response)
+          })
+
+
+        this.$store.state.backend.post('/referral/add',{
+        user_email: 'a_kumar@poczta.fm', //not required
         email: this.referralEmail,
-        job_id: this.job.id
+        job: this.job.title,
+        id: this.job.id,
+        company: this.job.company.name
       })
       .then(ret => alert(ret.data.message))
       .then(ret => this.referModalShow = false)
       .catch(err => alert('Something went wrong :/'))
+      } else {
+        alert('Please sign in to apply')
+        this.$router.push({path: '/auth/signin', query: {job: this.job.id}})
+      } */
     },
 
     back () {
