@@ -11,15 +11,11 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
-function resolve(dir) {
-  return path.join(__dirname, "../", dir);
-}
-
 module.exports = {
   mode: "production",
-  context: path.resolve(__dirname, "."),
+  context: path.resolve(__dirname, "../"),
   entry: {
-    app: path.resolve(__dirname, "./src/main.js")
+    app: path.resolve(__dirname, "../src/main.js")
   },
   output: {
     path: config.build.assetsRoot,
@@ -34,7 +30,7 @@ module.exports = {
     extensions: [".js", ".vue", ".json"],
     alias: {
       "vue$": "vue/dist/vue.esm-bundler.js",
-      "@": resolve("src"),
+      "@": path.resolve(__dirname, "../src")
     },
   },
   optimization: {
@@ -57,7 +53,7 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        include: [resolve("src"), resolve("test")],
+        include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../test')],
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -104,7 +100,8 @@ module.exports = {
             loader: "sass-loader",
             options: {
               sassOptions: {
-                indentedSyntax: false
+                indentedSyntax: false,
+                includePaths: [path.resolve(__dirname, "../src/assets")] // 👈 useful for deep imports
               }
             }
           }
@@ -129,8 +126,7 @@ module.exports = {
       safe: false,
     }),
     new HtmlWebpackPlugin({
-      filename: "../static/index.html",
-      template: "../static/index.html",
+      template: path.resolve(__dirname, '../static/index.html'),
       inject: true,
     }),
     new MiniCssExtractPlugin({
@@ -142,7 +138,7 @@ module.exports = {
   devServer: {
     hot: true,
     static: {
-      directory: path.join(__dirname, 'public'),
+      directory: path.join(__dirname, '../static'),
     },
     compress: true,
     port: 9000,

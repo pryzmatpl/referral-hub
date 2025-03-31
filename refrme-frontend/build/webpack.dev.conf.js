@@ -40,10 +40,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     proxy: config.dev.proxyTable,
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    }),
-
     // Inject .env from root or config dir
     new Dotenv({
       path: path.resolve(__dirname, '../config/.env'), // correct path
