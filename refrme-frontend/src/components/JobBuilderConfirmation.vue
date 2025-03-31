@@ -48,7 +48,7 @@ onMounted(async () => {
 
   try {
     const { data } = await store.state.backend.post('/create-payment-intent', {
-      amount: 9.99, // Should be dynamic if needed
+      amount: 999, // Should be dynamic if needed
       currency: 'usd',
       email: store.state.user_email,
       name: store.state.user_name,

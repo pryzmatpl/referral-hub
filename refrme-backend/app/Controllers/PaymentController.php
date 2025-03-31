@@ -12,6 +12,7 @@
  */
 namespace App\Controllers;
 
+use SlimSession\Helper as Session;
 use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -20,7 +21,7 @@ use Stripe\StripeClient;
 
 class PaymentController
 {
-    public function __construct(private readonly Logger $logger)
+    public function __construct(private readonly Logger $logger, private Session $session)
     {}
 
     public function createPaymentIntent(Request $request, Response $response): Response
@@ -49,7 +50,6 @@ class PaymentController
             $paymentIntent = $stripe->paymentIntents->create([
                 'amount' => $amount,
                 'currency' => $currency,
-                'customer' => $_SESSION['user'],
                 'automatic_payment_methods' => ['enabled' => true],
             ]);
 

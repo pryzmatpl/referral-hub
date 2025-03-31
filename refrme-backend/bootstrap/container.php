@@ -157,7 +157,7 @@ return function (ContainerBuilder $containerBuilder) {
             );
         },
         PaymentController::class => function($c) {
-            return new PaymentController($c->get('logger'));
+            return new PaymentController($c->get('logger'), $c->get('session'));
         }
     ]);
 };
