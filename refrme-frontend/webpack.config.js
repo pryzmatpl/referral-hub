@@ -128,11 +128,6 @@ module.exports = {
       path: "./config/.env",
       safe: false,
     }),
-    new webpack.DefinePlugin({
-      __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: false,
-      "process.env": require("./config/dev.env"),
-    }),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "index.html",

@@ -44,16 +44,20 @@ const isAuthenticated = computed(() => store.getters.isAuthenticated)
 
 // Initialize Stripe and create payment intent
 onMounted(async () => {
-  stripe.value = await loadStripe(`${process.env.PUBLISHABLE_KEY}`)
+  console.log('--- ENV CHECK ---');
+  console.log('process.env:', process.env);
+  console.log('STRIPE_PUBLISHABLE_KEY:', process.env.STRIPE_PUBLISHABLE_KEY);
+
+  console.log(process.env.STRIPE_PUBLISHABLE_KEY);
+  stripe.value = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
   try {
     const { data } = await store.state.backend.post('/create-payment-intent', {
       amount: 999, // Should be dynamic if needed
-      currency: 'usd',
-      email: store.state.user_email,
-      name: store.state.user_name,
+      currency: 'usd'
     })
 
+    console.log(data);
     const clientSecret = data.clientSecret
 
     elements.value = stripe.value.elements({ clientSecret })
@@ -62,7 +66,7 @@ onMounted(async () => {
   } catch (error) {
     console.error('Failed to initialize Stripe:', error.message)
   }
-})
+});
 
 // Submit payment
 const handleSubmit = async () => {
