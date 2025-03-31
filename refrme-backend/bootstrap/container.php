@@ -13,6 +13,7 @@
 
 use App\Controllers\Auth\AuthController;
 use App\Controllers\JobController;
+use App\Controllers\PaymentController;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfViewMiddleware;
 use App\Repositories\JobRepository;
@@ -154,6 +155,9 @@ return function (ContainerBuilder $containerBuilder) {
                 $c->get(JobRepository::class),
                 $c->get(JobClassificationService::class)
             );
+        },
+        PaymentController::class => function($c) {
+            return new PaymentController($c->get('logger'));
         }
     ]);
 };

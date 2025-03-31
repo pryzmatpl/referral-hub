@@ -12,13 +12,17 @@
  */
 namespace App\Controllers;
 
+use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Stripe\Exception\ApiErrorException;
-use Stripe\PaymentIntent;
+use Stripe\StripeClient;
 
 class PaymentController
 {
+    public function __construct(private readonly Logger $logger)
+    {}
+
     public function createPaymentIntent(Request $request, Response $response): Response
     {
         // Parse the incoming request body
@@ -34,17 +38,18 @@ class PaymentController
         }
 
         try {
-            // Create a new Customer
-            $customer = \Stripe\Customer::create([
-                'email' => $body['email'],
-                'name' => $body['name'],
+            $this->logger->debug(json_encode($_ENV));
+            $this->logger->debug(json_encode($_SESSION));
+
+            $stripe = new StripeClient([
+                'api_key' => $_ENV['STRIPE_SECRET_KEY'],
+                'stripe_version' => '2020-08-27',
             ]);
 
-            // Create a PaymentIntent with the customer ID
-            $paymentIntent = \Stripe\PaymentIntent::create([
+            $paymentIntent = $stripe->paymentIntents->create([
                 'amount' => $amount,
                 'currency' => $currency,
-                'customer' => $customer->id,
+                'customer' => $_SESSION['user'],
                 'automatic_payment_methods' => ['enabled' => true],
             ]);
 

@@ -2,6 +2,7 @@
   <div style="text-align: center">
     <h1>Confirm Adding Job</h1>
     <p>Looks like all is good and you are ready to submit your job proposal. Click the button below to submit!</p>
+    <p>Adding a job to refrme costs <b>9.99$.</b></p>
 
     <div v-if="!paymentCompleted">
       <div id="payment-element" class="mb-4"></div>
@@ -43,11 +44,11 @@ const isAuthenticated = computed(() => store.getters.isAuthenticated)
 
 // Initialize Stripe and create payment intent
 onMounted(async () => {
-  stripe.value = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY)
+  stripe.value = await loadStripe(`${process.env.PUBLISHABLE_KEY}`)
 
   try {
     const { data } = await store.state.backend.post('/create-payment-intent', {
-      amount: 1000, // Should be dynamic if needed
+      amount: 9.99, // Should be dynamic if needed
       currency: 'usd',
       email: store.state.user_email,
       name: store.state.user_name,
@@ -58,7 +59,6 @@ onMounted(async () => {
     elements.value = stripe.value.elements({ clientSecret })
     const paymentElement = elements.value.create('payment')
     paymentElement.mount('#payment-element')
-
   } catch (error) {
     console.error('Failed to initialize Stripe:', error.message)
   }
