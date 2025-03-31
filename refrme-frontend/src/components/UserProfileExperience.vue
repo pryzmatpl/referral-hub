@@ -15,8 +15,9 @@
         </div>
         <div class="form-group col-4">
           <label>Salary</label>
+         <!--  TODO: Add currency select -->
           <input class="form-control" v-model="newExperience.salary" type="number"
-            placeholder="fill in to compare to market" />
+            placeholder="" />
         </div>
       </div>
       <div class="form-row">
@@ -48,8 +49,6 @@
       <div class="form-row">
         <div class="col-12">
           <button class="btn btn-success float-right" type="submit">Add experience</button>
-          <button class="btn btn-success float-right mr-2" @click="addAndCompareSalary" type="button">Add and compare
-            salary</button>
         </div>
       </div>
     </form>
