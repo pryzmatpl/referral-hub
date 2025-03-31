@@ -3,7 +3,6 @@ const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const portfinder = require('portfinder');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin;
@@ -49,12 +48,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new Dotenv({
       path: path.resolve(__dirname, '../config/.env'), // correct path
       safe: false,
-    }),
-
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
-      inject: true,
     }),
 
     new CopyWebpackPlugin({

@@ -17,9 +17,9 @@ function resolve(dir) {
 
 module.exports = {
   mode: "production",
-  context: path.resolve(__dirname, "../"),
+  context: path.resolve(__dirname, "."),
   entry: {
-    app: path.resolve(__dirname, "../src/main.js")
+    app: path.resolve(__dirname, "./src/main.js")
   },
   output: {
     path: config.build.assetsRoot,
