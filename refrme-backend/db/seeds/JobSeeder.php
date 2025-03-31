@@ -4,7 +4,7 @@ use Phinx\Seed\AbstractSeed;
 
 class JobSeeder extends AbstractSeed
 {
-    public function run()
+    public function run():void
     {
         $data = [
             [

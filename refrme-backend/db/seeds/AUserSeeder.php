@@ -4,7 +4,7 @@ use Phinx\Seed\AbstractSeed;
 
 class AUserSeeder extends AbstractSeed
 {
-    public function run()
+    public function run(): void
     {
         // Example user data
         $data = [

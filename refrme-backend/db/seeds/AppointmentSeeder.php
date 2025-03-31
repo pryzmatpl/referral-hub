@@ -4,7 +4,7 @@ use Phinx\Seed\AbstractSeed;
 
 class AppointmentSeeder extends AbstractSeed
 {
-    public function run()
+    public function run(): void
     {
         // Example appointment data
         $data = [
