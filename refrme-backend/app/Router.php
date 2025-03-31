@@ -9,6 +9,7 @@ use App\Controllers\Auth\AuthController;
 use App\Controllers\Auth\PasswordController;
 use App\Controllers\ConsoleController;
 use App\Controllers\JobController;
+use App\Controllers\PaymentController;
 use App\Controllers\ProfileController;
 use App\Controllers\ProjectController;
 use App\Controllers\RefairController;
@@ -26,6 +27,8 @@ class Router {
     static public function registerRoutes(App &$app) : void {
         $app->get('/', [RefairController::class, 'index'])->setName('home');
         $app->get('/eval', [RefairController::class, 'evalkeywords'])->setName('refair.eval');
+
+        $app->post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent'])->setName('payment.intent');
 
         $app->get('/csrftoken', [AuthController::class, 'csrftoken'])->setName('refair.token');
         $app->get('/jwt', [AuthController::class, 'jwttoken'])->setName('refair.jwttoken');
