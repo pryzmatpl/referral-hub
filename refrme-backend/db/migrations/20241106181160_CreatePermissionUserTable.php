@@ -10,8 +10,8 @@ class CreatePermissionUserTable extends AbstractMigration
     public function change(): void
     {
         $this->table('permission_user')
-            ->addColumn('permission_id', 'integer')
-            ->addColumn('user_id', 'integer')
+            ->addColumn('permission_id', 'biginteger', ['signed' => false])
+            ->addColumn('user_id', 'biginteger', ['signed' => false])
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
             ->addForeignKey('permission_id', 'permissions', 'id', ['delete'=> 'CASCADE'])

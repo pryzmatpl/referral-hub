@@ -10,8 +10,8 @@ class CreatePermissionRoleTable extends AbstractMigration
     public function change(): void
     {
         $this->table('permission_role')
-            ->addColumn('permission_id', 'integer', ['limit' => 10])
-            ->addColumn('role_id', 'integer', ['limit' => 10])
+            ->addColumn('permission_id', 'biginteger', ['signed' => false])
+            ->addColumn('role_id', 'biginteger', ['signed' => false])
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
             ->addIndex(['permission_id'], ['name' => 'permission_role_permission_id_index'])

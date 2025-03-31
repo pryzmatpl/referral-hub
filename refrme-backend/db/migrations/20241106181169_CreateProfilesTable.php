@@ -10,7 +10,7 @@ class CreateProfilesTable extends AbstractMigration
     public function change(): void
     {
         $this->table('profiles')
-            ->addColumn('user_id', 'integer')
+            ->addColumn('user_id', 'biginteger', ['signed' => false])
             ->addColumn('theme_id', 'integer', ['default' => 1])
             ->addColumn('location', 'string', ['limit' => 191, 'null' => true])
             ->addColumn('bio', 'text', ['null' => true])

@@ -8,7 +8,7 @@ class CreateUserexpTable extends AbstractMigration
     public function change()
     {
         $this->table("userexp")
-        ->addColumn('user_id', 'integer', ['null' => false])
+        ->addColumn('user_id', 'biginteger', ['signed' => false])
         ->addColumn('name', 'string', ['limit' => 255])
         ->addColumn('role', 'string', ['limit' => 255])
         ->addColumn('responsibilities', 'text') // Assuming long text is needed

@@ -32,8 +32,8 @@ class CreateJobsTable extends AbstractMigration
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
             ->addColumn('currency', 'string', ['limit' => 50, 'null' => true])
-            ->addColumn('companyId', 'integer', ['null' => true])
             ->addColumn('contractType', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('companyId', 'biginteger', ['null' => true, 'signed'=> false])
             ->addForeignKey('companyId', 'companies', 'id', ['delete'=> 'SET_NULL', 'update'=> 'NO_ACTION'])
             ->create();
     }

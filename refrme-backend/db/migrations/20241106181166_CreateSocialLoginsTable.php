@@ -7,7 +7,7 @@ class CreateSocialLoginsTable extends AbstractMigration
     public function change(): void
     {
         $this->table('social_logins')
-            ->addColumn('user_id', 'integer')
+            ->addColumn('user_id', 'biginteger', ['signed' => false])
             ->addColumn('provider', 'string', ['limit' => 50, 'null' => false])
             ->addColumn('social_id', 'text', ['null' => false])
             ->addColumn('created_at', 'timestamp', ['null' => true])
