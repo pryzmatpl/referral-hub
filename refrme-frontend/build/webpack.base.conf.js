@@ -24,8 +24,8 @@ module.exports = {
     path: buildAssetsRoot,
     filename: utils.assetsPath("js/[name].[contenthash].js"),
     chunkFilename: utils.assetsPath("js/[name].[contenthash].js"),
-    publicPath: buildAssetsRoot,
-    clean: true, // Replaces CleanWebpackPlugin
+    publicPath: "/",  // Use '/' or another valid URL path
+    clean: true,
   },
   resolve: {
     extensions: [".js", ".vue", ".json"],
@@ -143,9 +143,13 @@ module.exports = {
   devServer: {
     hot: true,
     static: {
-      directory: path.join(__dirname, '../static'),
+      directory: path.join(__dirname, "../static"),
+      publicPath: "/", // or remove publicPath if not needed
     },
     compress: true,
-    port: 9000,
+    host: process.env.HOST,
+    port: process.env.PORT,
+    open: false,
+    proxy: {},
   },
 };
