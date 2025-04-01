@@ -36,7 +36,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     host: HOST,
     port: PORT,
     open: false,
-    proxy: {},
+    proxy: [],
   },
   plugins: [
     new CopyWebpackPlugin({
