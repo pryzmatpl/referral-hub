@@ -106,10 +106,10 @@ module.exports = {
             options: {
               sassOptions: {
                 indentedSyntax: false,
-                includePaths: ["../src/assets"],
-              },
-            },
-          },
+                includePaths: [path.resolve(__dirname, "../src/assets")]
+              }
+            }
+          }
         ]
       },
       {
