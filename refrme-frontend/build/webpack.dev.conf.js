@@ -8,49 +8,42 @@ const Dotenv = require('dotenv-webpack');
 const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin;
 
 const baseWebpackConfig = require('./webpack.base.conf');
-const config = require('../config');
 const utils = require('./utils');
 
-const HOST = process.env.HOST || config.dev.host;
-const PORT = process.env.PORT || config.dev.port;
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
   devtool: 'eval-cheap-module-source-map',
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true }),
+    rules: utils.styleLoaders({ sourceMap: true, usePostCSS: true }),
   },
   devServer: {
     client: {
       logging: 'info',
-      overlay: config.dev.errorOverlay ? { warnings: false, errors: true } : false,
+      overlay: { warnings: false, errors: true },
     },
     historyApiFallback: {
-      rewrites: [{ from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') }],
+      rewrites: [{ from: /.*/, to: path.posix.join(path.resolve(__dirname, "../static"), "index.html") }],
     },
     hot: true,
     static: {
-      directory: path.join(__dirname, '../static'),
-      publicPath: config.dev.assetsPublicPath,
+      directory: path.join(__dirname, "../static"),
+      publicPath:path.resolve(__dirname, "../static"),
     },
     compress: true,
     host: HOST,
     port: PORT,
-    open: config.dev.autoOpenBrowser,
-    proxy: config.dev.proxyTable,
+    open: false,
+    proxy: {},
   },
   plugins: [
-    // Inject .env from root or config dir
-    new Dotenv({
-      path: path.resolve(__dirname, '../config/.env'), // correct path
-      safe: false,
-    }),
-
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, '../static'),
-          to: config.dev.assetsSubDirectory,
+          from: path.resolve(__dirname, "../src/assets"),
+          to: path.resolve(__dirname, "../dist"),
           globOptions: {
             ignore: ['.*'],
           },

@@ -1,7 +1,7 @@
 const path = require("path");
 const utils = require("./utils");
-const config = require("../config");
 const webpack = require("webpack");
+const vueLoaderConfig = require('./vue-loader.conf')
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -11,6 +11,8 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
+const buildAssetsRoot = path.resolve(__dirname, "../dist");
+
 module.exports = {
   mode: "production",
   context: path.resolve(__dirname, "../"),
@@ -18,12 +20,10 @@ module.exports = {
     app: path.resolve(__dirname, "../src/main.js")
   },
   output: {
-    path: config.build.assetsRoot,
+    path: buildAssetsRoot,
     filename: utils.assetsPath("js/[name].[contenthash].js"),
     chunkFilename: utils.assetsPath("js/[name].[contenthash].js"),
-    publicPath: process.env.NODE_ENV === "production"
-        ? config.build.assetsPublicPath
-        : config.dev.assetsPublicPath,
+    publicPath: buildAssetsRoot,
     clean: true, // Replaces CleanWebpackPlugin
   },
   resolve: {
@@ -48,6 +48,10 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: "vue-loader",
+        options: {
+          vueLoaderConfig,
+          extractCSS: true
+        }
       },
       {
         test: /\.js$/,
@@ -101,7 +105,7 @@ module.exports = {
             options: {
               sassOptions: {
                 indentedSyntax: false,
-                includePaths: [path.resolve(__dirname, "../src/assets")] // 👈 useful for deep imports
+                includePaths: ["../src/assets"] // 👈 useful for deep imports
               }
             }
           }
@@ -122,8 +126,8 @@ module.exports = {
       jQuery: "jquery",
     }),
     new Dotenv({
-      path: "../config/.env",
-      safe: false,
+      path: "../.env",
+      safe: true,
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../static/index.html'),
