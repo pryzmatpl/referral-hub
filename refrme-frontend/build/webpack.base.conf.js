@@ -10,6 +10,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const buildAssetsRoot = path.resolve(__dirname, "../dist");
 
@@ -49,8 +50,7 @@ module.exports = {
         test: /\.vue$/,
         loader: "vue-loader",
         options: {
-          vueLoaderConfig,
-          extractCSS: true
+          vueLoaderConfig
         }
       },
       {
@@ -97,6 +97,7 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
+        exclude: /\.vue$/,
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
@@ -105,10 +106,10 @@ module.exports = {
             options: {
               sassOptions: {
                 indentedSyntax: false,
-                includePaths: ["../src/assets"] // 👈 useful for deep imports
-              }
-            }
-          }
+                includePaths: ["../src/assets"],
+              },
+            },
+          },
         ]
       },
       {
