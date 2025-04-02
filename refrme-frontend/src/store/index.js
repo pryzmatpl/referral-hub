@@ -68,6 +68,7 @@ export default createStore({
     filterDefaults: FILTER_DEFAULTS,
     filterSelections: { ...INITIAL_FILTER_SELECTIONS },
     jobListing: [],
+    jobApplied: [],
     jobsCount: '',
     resultPages: 0,
     currentPage: 0
@@ -80,6 +81,7 @@ export default createStore({
     SET_FILTER: (state, { key, value }) => state.filterSelections[key] = value,
     SET_JOBS: (state, jobs) => state.jobListing = jobs,
     SET_JOBS_COUNT: (state, count) => state.jobsCount = count,
+    SET_JOBS_APPLIED: (state, jobApplied) => state.jobApplied = jobApplied,
     SET_RESULT_PAGES: (state, pages) => state.resultPages = pages,
     SET_CURRENT_PAGE: (state, page) => state.currentPage = page,
     RESET_FILTERS: (state) => state.filterSelections = { ...INITIAL_FILTER_SELECTIONS }
@@ -118,6 +120,12 @@ export default createStore({
           })
         }
 
+        const jobApplied = await backend.get(`/getapply/${uniqueId}`)
+
+        if(jobApplied.data) {
+          commit('SET_JOBS_APPLIED', jobApplied.data)
+        }
+
         return response;
       } catch (error) {
         console.error('Signin error:', error);
@@ -153,6 +161,7 @@ export default createStore({
     // Filter actions
     updateFilter: ({ commit }, { key, value }) => commit('SET_FILTER', { key, value }),
     updateCurrentPage: ({ commit }, page) => commit('SET_CURRENT_PAGE', page),
+    updateJobApplied: ({commit, state}, job) => commit('SET_JOBS_APPLIED', [...state.jobApplied, job]),
 
     async getJobs({ commit, state, getters }) {
       try {
@@ -214,6 +223,7 @@ export default createStore({
         .map(({ language }) => language)
         .join(','),
 
+    jobApplied: state => state.jobApplied,
     jobListing: state => state.jobListing,
     jobListingLength: state => state.jobsCount,
     resultPages: state => state.resultPages,

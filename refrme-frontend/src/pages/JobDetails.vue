@@ -231,7 +231,7 @@
 
     <div class="row mt-2">
       <div class="col">
-        <button class="btn btn-lg btn-primary float-right w-100" @click="apply">Apply</button>
+        <button class="btn btn-lg float-right w-100" :class="didApply ? 'btn-success' : 'btn-primary'" @click="apply" :disabled="didApply">{{!didApply ? 'Apply' : 'Application sent'}}</button>
       </div>
       <div class="col">
         <!-- <a :href="`mailto:recruit@techsorted.com?subject=Job nr: ${job.id}&body=Hello!%0A%0AYou are applying for postion: ${job.title}%0Ain company: ${job.company.name}%0A%0APlease attach CV and fill in details below:%0A-when best to call you:%0A-what's your notice period:%0A-what salary are you interested in:%0A-best method of contact: (email/sms)%0A%0AWe'll reply soon!%0A%0AThanks,%0ARefair.me team`">
@@ -308,11 +308,13 @@ export default {
     this.$store.state.backend
       .get(`/getjobs?id=${id}&with=company`)
       .then(ret => {
-        this.job = ret.data
+        this.job = ret.data[0]
         this.evenPercentagesOut()
         $(document).ready(function(){
           $(".GaugeMeter").gaugeMeter();
         })
+        this.didApply = this.$store.getters.jobApplied.some(appliedJob => appliedJob.id === this.job.id);
+
         console.log(ret)
       })
       .catch(error => console.log("Error (mounted):",error))
@@ -358,6 +360,7 @@ export default {
       job: {
         company: {}
       },
+      didApply: false,
       project: {
         breakdown: [],
         perks:[],
@@ -408,11 +411,12 @@ export default {
         const id = this.$route.params.id;
         this.$store.state.backend.post('/api/apply', {
           job_id: id,
-          email: this.$store.state.dehashedData.EMAIL
+          unique_id: this.$store.state.dehashedData.USER_ID
         })
         .then(ret => this.applyResponse = ret.data)
-        .then(ret => console.log('applied'))
+        .then(ret => this.$store.dispatch('updateJobApplied', this.job))
         .then(ret => alert('Successfully applied! Please wait for email from us.'))
+        .then(ret => this.$router.push('/jobs'))
         .catch(err => alert('Something went wrong. Please contact with us directly'))
         .finally(() => this.loading = false)
       } else {

@@ -35,8 +35,8 @@ class JobService {
         return $this->jobRepository->search($params);
     }
 
-    public function findById(array $params): ?Job
+    public function findById(array|int $ids): ?Collection
     {
-        return $this->jobRepository->findById($params["id"]);
+        return $this->jobRepository->findById($ids);
     }
 }

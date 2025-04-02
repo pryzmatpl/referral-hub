@@ -27,12 +27,14 @@ class User extends Model
 			 'expected_salary',
 			 'notice_period',
        'current_role',
-       'unique_id'
+       'unique_id',
+       'jobs_applied'
 			 ];
 
   protected $casts = [
 		      'skills' => 'array',
-		      'exp' => 'array'
+		      'exp' => 'array',
+          'jobs_applied' => 'array',
 		      ];
 	
   public function jobs() {
