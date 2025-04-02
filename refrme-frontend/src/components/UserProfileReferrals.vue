@@ -1,5 +1,16 @@
 <template>
   <div>
+    <h2>Referrals received</h2>
+    <b-table
+        :items="processedReferrals"
+        @row-clicked="onRowClicked"
+        :fields="[
+        { key: 'jobTitle', label: 'Job Title'},
+        { key: 'email', label: 'Company'},
+        { key: 'created_at', label: 'Created At' }
+        ]"
+    ></b-table>
+    <h2>TODO: Referrals sent</h2>
     <b-table
         :items="processedReferrals"
         @row-clicked="onRowClicked"
