@@ -6,8 +6,10 @@ const portfinder = require('portfinder');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin;
-
 const baseWebpackConfig = require('./webpack.base.conf');
+
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+
 const utils = require('./utils');
 
 const HOST = process.env.HOST;

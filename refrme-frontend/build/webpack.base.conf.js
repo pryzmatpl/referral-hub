@@ -10,8 +10,6 @@ const TerserPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-
 const buildAssetsRoot = path.resolve(__dirname, "../dist");
 
 module.exports = {
@@ -119,16 +117,16 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv({
+      path: ".env",
+      safe: true,
+    }),
     new VueLoaderPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jquery: "jquery",
       "window.jQuery": "jquery",
       jQuery: "jquery",
-    }),
-    new Dotenv({
-      path: "../.env",
-      safe: true,
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../static/index.html'),
@@ -140,16 +138,4 @@ module.exports = {
     }),
     new BundleAnalyzerPlugin(),
   ],
-  devServer: {
-    hot: true,
-    static: {
-      directory: path.join(__dirname, "../static"),
-      publicPath: "/", // or remove publicPath if not needed
-    },
-    compress: true,
-    host: process.env.HOST,
-    port: process.env.PORT,
-    open: false,
-    proxy: {},
-  },
 };
