@@ -3,8 +3,8 @@ import {useRouter} from 'vue-router'
 const router = useRouter()
 
 const { protocol, hostname } = window.location;
-const baseURL = protocol + '//' + hostname
-const LINKEDIN_REDIRECTION_URI = "http://localhost:8080/auth/signin";
+const baseURL = process.env.VUE_APP_DOMAIN
+const LINKEDIN_REDIRECTION_URI = process.env.VUE_APP_DOMAIN+"/auth/signin";
 const LINKEDIN_SCOPE = "openid profile email"
 
 
@@ -12,7 +12,7 @@ const getCode = () => {
     const linkedInAuthUrl = new URL("https://www.linkedin.com/oauth/v2/authorization");
 
     /** @todo: remove the const in the end */
-    const linkedInClientId = process.env.LINKEDIN_CLIENT_ID ?? "77rjui4xjnl5or";
+    const linkedInClientId = process.env.VUE_APP_LINKEDIN_CLIENT_ID
 
     linkedInAuthUrl.searchParams.append("response_type", "code");
     linkedInAuthUrl.searchParams.append("client_id", linkedInClientId);
