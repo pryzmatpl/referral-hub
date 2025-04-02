@@ -76,8 +76,8 @@ class Router {
         $app->get('/referral/get/{id}', [ReferralController::class, 'get'])->setName('refair.get.referral');
         $app->get('/referral/delete/{id}', [ReferralController::class, 'delete'])->setName('refair.delete.referral');
         $app->post('/referral/update/{id}', [ReferralController::class, 'update'])->setName('refair.update.referral');
-        $app->get('/getreferral/send/{user}', [ReferralController::class, 'getReferralSend'])->setName('refair.getreferral.send');
-        $app->get('/getreferral/received/{email}', [ReferralController::class, 'getReferralReceived'])->setName('refair.getreferral.received');
+        $app->get('/getreferral/send/{id}', [ReferralController::class, 'getReferralSend'])->setName('refair.getreferral.send');
+        $app->get('/getreferral/received/{id}', [ReferralController::class, 'getReferralReceived'])->setName('refair.getreferral.received');
         $app->post('/upload', [RefairController::class, 'uploadFile']);
         $app->get('/matchjobs/strong/{uid}', [RefairController::class, 'jobsToStrongUid'])->setName('refair.match.job.strong');
         $app->get('/matchprofiles/strong/{jid}', [RefairController::class, 'profilesToStrongJid'])->setName('refair.match.profile.strong');

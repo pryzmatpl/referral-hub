@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ReferralStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -47,9 +48,9 @@ final class Referral extends Model
     /**
      * Get the associated job description.
      */
-    public function job(): HasOne
+    public function job(): BelongsTo
     {
-        return $this->hasOne(JobDesc::class, 'id', 'jobs_id')
+        return $this->belongsTo(Job::class, 'jobid', 'id')
             ->with('Company');
     }
 

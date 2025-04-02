@@ -41,7 +41,12 @@ class ReferralController extends Controller
                 ->with('Job')
                 ->get();
 
-            return $response->withJson(cc($referrals->toArray()));
+                $data = ['status' => "success",
+                'company' => 'company',
+                'message' => "Company successfully added"];
+    
+                return $this->jsonResponse($response, $data);
+
         } catch (Exception $e) {
             return json_encode($e);
         }
@@ -49,15 +54,29 @@ class ReferralController extends Controller
 
     public function getReferralReceived($request, $response, $args) {
         try {
-            $email = strip_tags($args['email']);
+            $uid = $args['id'];
+
+            $user = User::where('unique_id', $uid)->first();
+            $email = $user['email'];
+
             $referrals = Referral::where('email', $email)
-                ->with('User')
-                ->with('Job')
+                /* ->with('User') */
+                ->with('job')
                 ->get();
 
-            return $response->withJson(cc($referrals->toArray()));
+            $data = [
+                'status' => "success",
+                'referrals' => $referrals,
+                'message' => "Referrals successfully received"
+            ];
+
+            return $this->jsonResponse($response, $data);
         } catch (Exception $e) {
-            return json_encode($e);
+            $data = [
+                'status' => "error",
+                'company' => $e,
+            ];
+            return $this->jsonResponse($response, $data);
         }
     }
 
@@ -66,14 +85,14 @@ class ReferralController extends Controller
             $data = json_decode($request->getBody(), true);
             $userId = $_SESSION['user']->id ?? null;
 
-            $data['job_id'] = !empty($data['job_id']) ? intval($data['job_id']) : null;
+            $data['job_id'] = !empty($data['jobid']) ? intval($data['jobid']) : null;
             $data['user_id'] = !empty($data['user_id']) ? intval($data['user_id']) : null;
             $data['email'] = !empty($data['email']) ? strip_tags($data['email']) : null;
             $data['name'] = !empty($data['name']) ? strip_tags($data['name']) : null;
 
             $referral = Referral::firstOrCreate(
                 [
-                    'jobid' => $data['job_id'],
+                    'jobid' => $data['id'],
                     'email' => $data['email']
                 ],
                 [

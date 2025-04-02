@@ -23,6 +23,8 @@ class CreateJobrefsTable extends AbstractMigration
             ->addColumn('interview_begin_hour', 'text', ['null' => true])
             ->addColumn('interview_end_hour', 'text', ['null' => true])
             ->addColumn('interview_date', 'text', ['null' => true])
+            ->addForeignKey('jobid', 'jobs', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'
+            ])
             ->create();
     }
 

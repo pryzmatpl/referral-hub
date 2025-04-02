@@ -1,9 +1,13 @@
 <template>
   <div>
     <b-table
-        :items="referrals"
+        :items="processedReferrals"
         @row-clicked="onRowClicked"
-        :fields="['jobsId', 'email', 'status', 'createdAt']"
+        :fields="[
+        { key: 'jobTitle', label: 'Job Title'},
+        { key: 'email', label: 'Company'},
+        { key: 'created_at', label: 'Created At' }
+        ]"
     ></b-table>
     <b-modal v-model="modalShow" size="lg" hide-footer>
       <JobDetails v-if="modalShow" :jobId="jobId" />
@@ -20,8 +24,17 @@ export default {
 
   mounted () {
     this.$store.getters.backend
-      .get(`/getreferral/received/${this.$store.getters.dehashedData.EMAIL}`)
-      .then(ret => this.referrals = ret.data)
+      .get(`/getreferral/received/${this.$store.getters.dehashedData.USER_ID}`)
+      .then(ret => this.referrals = ret.data.referrals)
+  },
+
+  computed: {
+    processedReferrals() {
+        return this.referrals.map(referral => ({
+            ...referral,
+            jobTitle: referral.job.title
+        }));
+    }
   },
 
   data () {
