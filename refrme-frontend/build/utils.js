@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const packageConfig = require("../package.json")
 
 exports.assetsPath = function(_path) {
-  const assetsSubDirectory = "../src/assets";
+  const assetsSubDirectory = "assets";
   return path.posix.join(assetsSubDirectory, _path);
 }
 
