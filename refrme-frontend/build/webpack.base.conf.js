@@ -12,8 +12,18 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const buildAssetsRoot = path.resolve(__dirname, "../dist");
 
+
+const { definitions } = new Dotenv({
+  path: path.resolve(__dirname, '.env'), // load this now instead of the ones in '.env'
+  safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
+  allowEmptyValues: false, // allow empty variables (e.g. `FOO=`) (treat it as empty string, rather than missing)
+  systemvars: false, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
+  silent: false, // hide any errors
+  defaults: false, // load '.env.defaults' as the default values if empty.
+  prefix: 'VUE_APP_', // Only include environment variables that start with VUE_APP_
+});
+
 module.exports = {
-  mode: "production",
   context: path.resolve(__dirname, "../"),
   entry: {
     app: path.resolve(__dirname, "../src/main.js")
@@ -117,10 +127,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new Dotenv({
-      path: "../.env",
-      safe: true,
-    }),
+    new webpack.DefinePlugin({ ...definitions }),
     new VueLoaderPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",

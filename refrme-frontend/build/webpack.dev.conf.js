@@ -4,16 +4,21 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const portfinder = require('portfinder');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin;
+const Dotenv = require("dotenv-webpack");
 const baseWebpackConfig = require('./webpack.base.conf');
-
-require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const utils = require('./utils');
 
-const HOST = process.env.HOST;
-const PORT = process.env.PORT;
+const { definitions } = new Dotenv({
+      path: path.resolve(__dirname, '.env'), // load this now instead of the ones in '.env'
+      safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
+      allowEmptyValues: false, // allow empty variables (e.g. `FOO=`) (treat it as empty string, rather than missing)
+      systemvars: false, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
+      silent: false, // hide any errors
+      defaults: false, // load '.env.defaults' as the default values if empty.
+      prefix: 'VUE_APP_', // Only include environment variables that start with VUE_APP_
+});
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
@@ -35,12 +40,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       publicPath:path.resolve(__dirname, "../static"),
     },
     compress: true,
-    host: HOST,
-    port: PORT,
+    host: process.env.VUE_APP_HOST,
+    port: process.env.VUE_APP_PORT,
     open: false,
     proxy: [],
   },
   plugins: [
+    new webpack.DefinePlugin({ ...definitions }),
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -59,7 +65,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
 // 👇 Wrap with portfinder if needed (for dynamic dev port)
 module.exports = new Promise((resolve, reject) => {
-  portfinder.basePort = PORT;
+  portfinder.basePort = process.env.VUE_APP_PORT;
   portfinder.getPort((err, port) => {
     if (err) {
       reject(err);
@@ -67,7 +73,7 @@ module.exports = new Promise((resolve, reject) => {
       process.env.PORT = port;
       devWebpackConfig.devServer.port = port;
 
-      console.log(`🚀 Dev server running: http://${HOST}:${port}`);
+      console.log(`🚀 Dev server running: http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}`);
       resolve(devWebpackConfig);
     }
   });

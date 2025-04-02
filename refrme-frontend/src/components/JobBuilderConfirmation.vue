@@ -46,10 +46,10 @@ const isAuthenticated = computed(() => store.getters.isAuthenticated)
 onMounted(async () => {
   console.log('--- ENV CHECK ---');
   console.log('process.env:', process.env);
-  console.log('STRIPE_PUBLISHABLE_KEY:', process.env.STRIPE_PUBLISHABLE_KEY);
+  console.log('STRIPE_PUBLISHABLE_KEY:', process.env.VUE_STRIPE_PUBLISHABLE_KEY);
 
-  console.log(process.env.STRIPE_PUBLISHABLE_KEY);
-  stripe.value = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+  console.log(process.env.VUE_APP_STRIPE_PUBLISHABLE_KEY);
+  stripe.value = await loadStripe(process.env.VUE_APP_STRIPE_PUBLISHABLE_KEY);
 
   try {
     const { data } = await store.state.backend.post('/create-payment-intent', {
