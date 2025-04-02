@@ -41,7 +41,6 @@
 <script>
 import store from '@/store/index.js'
 import cookieconsent from 'cookieconsent'
-
 export default {
   computed: {
     isAuthenticated: vm => vm.$store.getters.isAuthenticated,

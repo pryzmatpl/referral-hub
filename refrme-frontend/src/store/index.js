@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
-console.log("Backend URL:", process.env.BACKEND_URL);
 
+console.log("Backend URL:", process.env.BACKEND_URL);
 
 // Create axios instance
 const backend = axios.create({

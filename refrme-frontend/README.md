@@ -18,11 +18,7 @@ This repository contains the frontend application for the PRIZM project. Built w
    ```bash
    npm install
    ```
-3. Create a `.env` file in the root directory and populate it with:
-   ```env
-   VUE_APP_API_URL=http://localhost:80
-   VUE_APP_DEBUG=true
-   ```
+3. Create an  `.env` file in the ./build directory and investigate the .env.example to set your environment
 
 ## Scripts
 The following npm scripts are available:
