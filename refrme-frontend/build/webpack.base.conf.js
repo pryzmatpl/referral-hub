@@ -11,6 +11,9 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const buildAssetsRoot = path.resolve(__dirname, "../dist");
+const dotenv = require('dotenv').config();
+
+console.log(process.env)
 
 
 const { definitions } = new Dotenv({
