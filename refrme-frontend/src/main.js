@@ -21,7 +21,6 @@ register();
 
 // import VueAnalytics from 'vue-analytics'
 import App from "./App";
-
 const isProd = process.env.NODE_ENV === "production";
 
 const app = createApp(App);

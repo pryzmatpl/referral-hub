@@ -1,6 +1,5 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
-import helper from '@/helpers.js';
 
 // Create axios instance
 const backend = axios.create({
