@@ -131,6 +131,9 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({ ...definitions }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env), // or a filtered set
+    }),
     new VueLoaderPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
