@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
-import router from "./router";
+import router from "@/router/index.js";
 import store from "@/store/index.js";
 
 import vue3GoogleLogin from 'vue3-google-login'
@@ -21,7 +21,6 @@ register();
 
 // import VueAnalytics from 'vue-analytics'
 import App from "./App";
-
 const isProd = process.env.NODE_ENV === "production";
 
 const app = createApp(App);
