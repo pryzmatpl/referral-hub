@@ -75,7 +75,7 @@ export default {
   methods: {
     onRowClicked (record, index) {
       this.modalShow = true
-      this.jobId = record.jobsId
+      this.jobId = record.jobid
       //this.$router.push(`/job/${record.job_id}`)
     }
   }
