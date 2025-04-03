@@ -36,6 +36,7 @@ final class Referral extends Model
         'hash',
         'created_at',
         'updated_at',
+        'referrer_id'
     ];
 
     /**
@@ -57,8 +58,8 @@ final class Referral extends Model
     /**
      * Get the associated user.
      */
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'users_id');
+        return $this->belongsTo(User::class, 'referrer_id', 'id');
     }
 }

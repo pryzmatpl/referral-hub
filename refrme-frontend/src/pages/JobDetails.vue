@@ -466,6 +466,7 @@ export default {
         // Second call - add referral
         const referralResponse = await this.$store.state.backend.post('/referral/add', {
           user_email: profileResponse.data.email,
+          user_id: profileResponse.data.id,
           email: this.referralEmail,
           job: this.job.title,
           id: this.job.id,

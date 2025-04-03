@@ -244,6 +244,7 @@ class RefairController extends Controller {
                 'firstname' => $auid->first_name,
                 'lastname' => $auid->last_name,
                 'email' => $auid->email,
+                'id' => $auid->id,
                 'weights' => $retweight,
                 'jobStatus' => $userdesc->job_status ?? 'not looking',
                 'keywords' => $userdesc->keywords ?? [],

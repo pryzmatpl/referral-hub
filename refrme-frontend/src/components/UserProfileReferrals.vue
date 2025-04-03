@@ -6,17 +6,19 @@
         @row-clicked="onRowClicked"
         :fields="[
         { key: 'jobTitle', label: 'Job Title'},
-        { key: 'email', label: 'Company'},
+        { key: 'companyName', label: 'Company'},
+        { key: 'referrerEmail', label: 'Referred by'},
         { key: 'created_at', label: 'Created At' }
         ]"
     ></b-table>
-    <h2>TODO: Referrals sent</h2>
+    <h2>Referrals sent</h2>
     <b-table
-        :items="processedReferrals"
+        :items="processedReferralsSend"
         @row-clicked="onRowClicked"
         :fields="[
         { key: 'jobTitle', label: 'Job Title'},
-        { key: 'email', label: 'Company'},
+        { key: 'companyName', label: 'Company'},
+        { key: 'email', label: 'Referred to'},
         { key: 'created_at', label: 'Created At' }
         ]"
     ></b-table>
@@ -37,13 +39,26 @@ export default {
     this.$store.getters.backend
       .get(`/getreferral/received/${this.$store.getters.dehashedData.USER_ID}`)
       .then(ret => this.referrals = ret.data.referrals)
+
+    this.$store.getters.backend
+      .get(`/getreferral/send/${this.$store.getters.dehashedData.USER_ID}`)
+      .then(ret => this.referralsSend = ret.data.referrals)
   },
 
   computed: {
     processedReferrals() {
         return this.referrals.map(referral => ({
             ...referral,
-            jobTitle: referral.job.title
+            jobTitle: referral.job.title,
+            companyName: referral.job.company.name,
+            referrerEmail: referral.user.email
+        }));
+    },
+    processedReferralsSend() {
+        return this.referralsSend.map(referral => ({
+            ...referral,
+            jobTitle: referral.job.title,
+            companyName: referral.job.company.name
         }));
     }
   },
@@ -52,7 +67,8 @@ export default {
     return {
       modalShow: false,
       jobId: 0,
-      referrals: []
+      referrals: [],
+      referralsSend: []
     }
   },
 

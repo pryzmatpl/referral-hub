@@ -30,25 +30,29 @@ class ReferralController extends Controller
 
     public function getReferralSend($request, $response, $args) {
         try {
-            $email = strip_tags($args['user']);
-            $user = User::where('email', $email)->first();
+            $uid = $args['id'];
 
-            if(empty($user))
-                throw new Exception('User not found.');
+            $user = User::where('unique_id', $uid)->first();
+            $id = $user['id'];
 
-            $referrals = Referral::where('users_id', $user->id)
-                ->with('User')
-                ->with('Job')
+            $referrals = Referral::where('referrer_id', $id)
+                ->with('user')
+                ->with('job')
                 ->get();
 
-                $data = ['status' => "success",
-                'company' => 'company',
-                'message' => "Company successfully added"];
-    
-                return $this->jsonResponse($response, $data);
+            $data = [
+                'status' => "success",
+                'referrals' => $referrals,
+                'message' => "Referrals successfully received"
+            ];
 
+            return $this->jsonResponse($response, $data);
         } catch (Exception $e) {
-            return json_encode($e);
+            $data = [
+                'status' => "error",
+                'company' => $e,
+            ];
+            return $this->jsonResponse($response, $data);
         }
     }
 
@@ -60,7 +64,7 @@ class ReferralController extends Controller
             $email = $user['email'];
 
             $referrals = Referral::where('email', $email)
-                /* ->with('User') */
+                ->with('user')
                 ->with('job')
                 ->get();
 
@@ -96,7 +100,7 @@ class ReferralController extends Controller
                     'email' => $data['email']
                 ],
                 [
-                    'referrer_id' => $userId,
+                    'referrer_id' => $data['user_id'],
                     'name' => $data['name']
                 ]
             );

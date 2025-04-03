@@ -17,13 +17,15 @@ class CreateJobrefsTable extends AbstractMigration
             ->addColumn('hash', 'binary', ['null' => true])
             ->addColumn('state', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('jobid', 'integer', ['null' => true])
-            ->addColumn('referrer_id', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('referrer_id', 'integer', ['null' => true])
             ->addColumn('created_at', 'text', ['null' => true])
             ->addColumn('updated_at', 'text', ['null' => true])
             ->addColumn('interview_begin_hour', 'text', ['null' => true])
             ->addColumn('interview_end_hour', 'text', ['null' => true])
             ->addColumn('interview_date', 'text', ['null' => true])
             ->addForeignKey('jobid', 'jobs', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'
+            ])
+            ->addForeignKey('referrer_id', 'users', 'id', ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION'
             ])
             ->create();
     }
