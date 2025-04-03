@@ -22,7 +22,7 @@
         { key: 'created_at', label: 'Created At' }
         ]"
     ></b-table>
-    <b-modal v-model="modalShow" size="lg" hide-footer>
+    <b-modal v-model="modalShow" size="lg" hide-footer scrollable>
       <JobDetails v-if="modalShow" :jobId="jobId" />
     </b-modal>
   </div>
@@ -43,6 +43,11 @@ export default {
     this.$store.getters.backend
       .get(`/getreferral/send/${this.$store.getters.dehashedData.USER_ID}`)
       .then(ret => this.referralsSend = ret.data.referrals)
+
+    this.$nextTick(() => {
+      document.querySelector('.modal-dialog').style.zIndex = '1055';
+      document.querySelector('.modal-backdrop').style.zIndex = '1045';
+    });
   },
 
   computed: {
