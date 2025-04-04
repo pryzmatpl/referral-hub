@@ -32,7 +32,7 @@ final class Referral extends Model
         'users_id',
         'email',
         'name',
-        'status',
+        'state',
         'hash',
         'created_at',
         'updated_at',
@@ -43,7 +43,7 @@ final class Referral extends Model
      * The attributes that should be cast.
      */
     protected $casts = [
-        'status' => ReferralStatus::class,
+        'state' => ReferralStatus::class,
     ];
 
     /**

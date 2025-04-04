@@ -8,6 +8,7 @@
         { key: 'jobTitle', label: 'Job Title'},
         { key: 'companyName', label: 'Company'},
         { key: 'referrerEmail', label: 'Referred by'},
+        { key: 'state', label: 'Status'},
         { key: 'created_at', label: 'Created At' }
         ]"
     ></b-table>
@@ -19,7 +20,8 @@
         { key: 'jobTitle', label: 'Job Title'},
         { key: 'companyName', label: 'Company'},
         { key: 'email', label: 'Referred to'},
-        { key: 'created_at', label: 'Created At' }
+        { key: 'state', label: 'Status'},
+        { key: 'created_at', label: 'Created At', formatter: formatter }
         ]"
     ></b-table>
     <b-modal v-model="modalShow" size="lg" hide-footer scrollable>
@@ -54,6 +56,15 @@ export default {
     processedReferrals() {
         return this.referrals.map(referral => ({
             ...referral,
+            created_at: new Date(referral.created_at).toLocaleString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+            timeZone: 'UTC' // Optional: use if you want consistent UTC times
+        }),
             jobTitle: referral.job.title,
             companyName: referral.job.company.name,
             referrerEmail: referral.user.email
@@ -62,6 +73,15 @@ export default {
     processedReferralsSend() {
         return this.referralsSend.map(referral => ({
             ...referral,
+            created_at: new Date(referral.created_at).toLocaleString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+            timeZone: 'UTC' // Optional: use if you want consistent UTC times
+        }),
             jobTitle: referral.job.title,
             companyName: referral.job.company.name
         }));

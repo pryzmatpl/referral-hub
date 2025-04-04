@@ -101,7 +101,8 @@ class ReferralController extends Controller
                 ],
                 [
                     'referrer_id' => $data['user_id'],
-                    'name' => $data['name']
+                    'name' => $data['name'],
+                    'state' => "new"
                 ]
             );
 
