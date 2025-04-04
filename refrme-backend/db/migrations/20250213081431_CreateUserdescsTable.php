@@ -7,7 +7,7 @@ class CreateUserdescsTable extends AbstractMigration
     public function change()
     {
         $this->table('userdescs')
-              ->addColumn('user_id', 'integer', ['null' => false])
+              ->addColumn('user_id', 'biginteger', ['signed' => false])
               ->addColumn('keywords', 'json', ['null' => true])
               ->addColumn('skills', 'json', ['null' => true])
               ->addColumn('notice_period', 'string', ['limit' => 255, 'null' => true])

@@ -9,7 +9,9 @@ class CreateUsersTable extends AbstractMigration
      */
     public function change(): void
     {
-        $this->table('users')
+        $table = $this->table('users', ['id' => false, 'primary_key' => ['id']]);
+
+        $table->addColumn('id', 'biginteger', ['signed' => false, 'identity' => true])
             ->addColumn('first_name', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
             ->addColumn('last_name', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci', 'null' => true])
             ->addColumn('password', 'string', ['limit' => 191, 'collation' => 'utf8mb4_unicode_ci'])

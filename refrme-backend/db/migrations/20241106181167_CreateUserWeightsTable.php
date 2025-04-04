@@ -23,7 +23,7 @@ class CreateUserWeightsTable extends AbstractMigration
             ->addColumn('weight_eleven', 'float')
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
-            ->addColumn('user_id', 'integer', ['null' => true]) // Rename to user_id for clarity
+            ->addColumn('user_id', 'biginteger', ['signed' => false]) // Rename to user_id for clarity
             ->addColumn('keywords', 'text', ['collation' => 'utf8mb4_unicode_ci', 'null' => true])
             ->addIndex(['user_id'], ['name' => 'user_weights_user_id_index'])
             ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])

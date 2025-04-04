@@ -10,7 +10,7 @@ class CreatePerksTable extends AbstractMigration
     public function change(): void
     {
         $this->table('perks')
-            ->addColumn('jobid', 'integer')
+            ->addColumn('jobid', 'biginteger', ['signed' => false])
             ->addColumn('name', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('uid', 'integer')
             ->addColumn('agreed_employer', 'integer', ['null' => true])

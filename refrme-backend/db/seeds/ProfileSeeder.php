@@ -4,7 +4,7 @@ use Phinx\Seed\AbstractSeed;
 
 class ProfileSeeder extends AbstractSeed
 {
-    public function run()
+    public function run():void
     {
         // Example profile data
         $data = [

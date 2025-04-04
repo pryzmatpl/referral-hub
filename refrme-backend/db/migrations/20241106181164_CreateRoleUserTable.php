@@ -10,10 +10,11 @@ class CreateRoleUserTable extends AbstractMigration
     public function change(): void
     {
         // Create the role_user table
-        $table = $this->table('role_user');
+        $table = $this->table('role_user', ['id' => false, 'primary_key' => ['id']]);
 
-        $table->addColumn('role_id', 'integer')
-            ->addColumn('user_id', 'integer')
+        $table->addColumn('id', 'biginteger', ['signed' => false, 'identity' => true])
+            ->addColumn('role_id', 'biginteger', ['signed' => false])
+            ->addColumn('user_id', 'biginteger', ['signed' => false])
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
 

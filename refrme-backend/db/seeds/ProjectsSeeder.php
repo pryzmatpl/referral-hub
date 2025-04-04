@@ -4,7 +4,7 @@ use Phinx\Seed\AbstractSeed;
 
 class ProjectsSeeder extends AbstractSeed
 {
-    public function run()
+    public function run():void
     {
         // Example project data
         $data = [
