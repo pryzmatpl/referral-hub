@@ -21,7 +21,7 @@
         { key: 'companyName', label: 'Company'},
         { key: 'email', label: 'Referred to'},
         { key: 'state', label: 'Status'},
-        { key: 'created_at', label: 'Created At', formatter: formatter }
+        { key: 'created_at', label: 'Created At' }
         ]"
     ></b-table>
     <b-modal v-model="modalShow" size="lg" hide-footer scrollable>
