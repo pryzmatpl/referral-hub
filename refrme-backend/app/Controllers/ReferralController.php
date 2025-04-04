@@ -124,6 +124,7 @@ class ReferralController extends Controller
             }
 
             $this->sendEmailAction($data);
+            $this->sendMailConfirmation($data);
 
             return $this->jsonResponse($response, $res);
             
@@ -197,12 +198,6 @@ class ReferralController extends Controller
         $to = $data['email'];
         $subject = 'New job proposal from ' . $data['user_email'];
         $template = 'referral_job';
-        /* $data = [
-            'user_email' => 'user@example.com',
-            'email' => 'referred@example.com',
-            'company' => 'Awesome Inc.',
-            'job' => 'Software Engineer'
-        ]; */
         
         $attachments = [];
         $cc = ['cc@example.com'];
@@ -235,21 +230,25 @@ class ReferralController extends Controller
         return !$this->mailer->send($mail);
     }
 
-    private function sendMailConfirmation($params) {
-        $mail = new Message;
+    private function sendMailConfirmation($data) {
 
-        $mail
-            ->setFrom(env('MAIL_USERNAME'))
-            ->addTo($params->email)
-            ->setSubject('You referred a person to work as '.$params->job->title)
-            ->setHTMLBody(renderEmailTemplate('referral_confirmation', array(
-                'user_email' => $params->user->email,
-                'user_name' => $params->user->name,
-                'email' => $params->email,
-                'company' => $params->company->name,
-                'job' => $params->job->title,
-            )));
+        $user = User::where('id', $data['user_id'])->first();
+        $email = $user['email'];
 
-        return !$this->mailer->send($mail);
+        $to = $email;
+        $subject = 'You referred a person to work as ' . $data['job'];
+        $template = 'referral_confirmation';
+        
+        $attachments = [];
+        $cc = ['cc@example.com'];
+        $bcc = ['bcc@example.com'];
+
+        try {
+            $this->emailService->sendEmail($to, $subject, $template, $data, $attachments, $cc, $bcc);
+            return true;
+        } catch (\RuntimeException $e) {
+            // Log the error or handle the exception as needed
+            return false;
+        }
     }
 }
