@@ -9,7 +9,6 @@
   - Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
   - is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
   -->
-
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ref , defineProps} from 'vue'

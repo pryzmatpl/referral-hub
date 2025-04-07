@@ -129,7 +129,7 @@ export default createStore({
 
         return response;
       } catch (error) {
-        console.error('Signin error:', error);
+        console.error('Signin error:', error.response.data.message);
         return error;
       }
     },

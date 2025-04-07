@@ -1,6 +1,17 @@
+<!--
+  - Copyright (c) 2025 Pryzmat sp. z o.o. (Pryzmat LLC)
+  - All rights reserved.
+  - 15.12.2024, 14:18
+  - JobListItem.vue
+  - referral-hub
+  -
+  - This software and its accompanying documentation are protected by copyright law and international treaties.
+  - Unauthorized reproduction, distribution, or modification of this software, in whole or in part,
+  - is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
+  -->
 <script setup>
-import { closeModal, confirmModal } from '@kolirt/vue-modal'
-import {SimpleModal} from "@kolirt/vue-modal";
+import { SimpleModal, closeModal, confirmModal } from '@kolirt/vue-modal'
+const name = "RoleModal";
 
 const props = defineProps({
   test: {}
