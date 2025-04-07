@@ -158,7 +158,7 @@ export default {
                 datasets: [{
                   label: 'Your Personal Profile ',
                   backgroundColor: '#a84979',
-                  data: ret.data.weightsA.predictions
+                  data: ret.data.predictions
                 }]
               };
             this.patterndatakw = dataUpd

@@ -95,8 +95,8 @@ class RefairController extends Controller {
                 $command = "source /var/www/html/models/match/venv/bin/activate && /var/www/html/models/match/venv/bin/python /var/www/html/models/match/run.py \"{$query}\"";
                 $returned = shell_exec($command) or die("Evaluation not operational");
                 $weights = json_decode($returned,true); //get array of predictions
-                $retarr['weightsA']=$weights;
-                $response->getBody()->write(json_encode($retarr));
+
+                $response->getBody()->write(json_encode($weights));
                 return $response;
             }
         }catch(\Exception $e){
@@ -344,11 +344,11 @@ class RefairController extends Controller {
         }
     }
 
-    public function matchprofile($request, $response, $args){
+    public function matchprofile(Request $request,Response $response, $args): Response{
         try{
 
             //Expected is JSON
-            $getVars =  $request->getParams();
+            $getVars =  $request->getParsedBody();
             $weights = json_decode($getVars['passedWeights'],true);
             $jobweights = json_decode(JobWeight::orderBy('created_at')->get(),true);
             $retarr = [];

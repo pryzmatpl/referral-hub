@@ -36,7 +36,7 @@ import ProfileApplied from '@/components/UserProfileJobsApplied'
 
 export default {
   components: {
-    
+
     JobListItem,
     ProfileBuilder,
     ProfileExperience,
