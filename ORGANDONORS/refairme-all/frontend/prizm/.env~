@@ -1,4 +1,0 @@
-BACKEND_URL='localhost'
-BASE_URL='localhost:8080'
-HASH_BASE='prizm'
-HASH_SEPARATOR='~'
