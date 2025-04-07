@@ -106,9 +106,8 @@ const authenticateUser = async (userData) => {
     console.log(errorMessage)
 
     if ( errorMessage.localeCompare("user does not exist")===0 ) {
-      console.log("CHECK")
       // If user doesn't exist, show role selection modal and sign up
-      const role = showRoleSelectionModal()
+      const role = await showRoleSelectionModal()
       const signUpResponse = await store.dispatch('signup', {
         ...userData,
         role,
@@ -126,12 +125,8 @@ const authenticateUser = async (userData) => {
 
     await router.push('/')
   } catch (error) {
-
-    console.log("CHECK2")
     console.error('Authentication error:', error)
   }
-
-  console.log("CHECK3")
 }
 
 const showRoleSelectionModal = () => {
