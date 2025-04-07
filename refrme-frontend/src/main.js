@@ -2,6 +2,9 @@ import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import router from "@/router/index.js";
 import store from "@/store/index.js";
+import process from 'process';
+
+window.process = process;
 
 import vue3GoogleLogin from 'vue3-google-login'
 import { createModal } from '@kolirt/vue-modal'

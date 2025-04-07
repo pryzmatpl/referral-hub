@@ -44,6 +44,9 @@ module.exports = {
       "vue$": "vue/dist/vue.esm-bundler.js",
       "@": path.resolve(__dirname, "../src"),
     },
+    fallback: {
+      process: require.resolve("process/browser")
+    }
   },
   optimization: {
     splitChunks: {
