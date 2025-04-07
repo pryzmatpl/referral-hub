@@ -42,7 +42,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { decodeCredential } from 'vue3-google-login'
 import { useStore } from 'vuex'
 import { openModal } from '@kolirt/vue-modal'
-import RoleModal from '@/components/RoleModal'
+import RoleModal from '@/components/RoleModal.vue'
 import { getCode, getUserInfo, getAccessToken } from '@/utils/signWithLinkedIn'
 
 const router = useRouter()

@@ -27,6 +27,7 @@ const { definitions } = new Dotenv({
 });
 
 module.exports = {
+  cache: false,
   context: path.resolve(__dirname, "../"),
   entry: {
     app: path.resolve(__dirname, "../src/main.js")
@@ -133,6 +134,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerPort: 8089
+    }),
     new webpack.DefinePlugin({ ...definitions }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(dotenv.parsed), // or a filtered set
