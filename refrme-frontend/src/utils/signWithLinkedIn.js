@@ -4,7 +4,7 @@ const router = useRouter()
 
 const { protocol, hostname } = window.location;
 const baseURL = process.env.VUE_APP_DOMAIN
-const LINKEDIN_REDIRECTION_URI = process.env.VUE_APP_DOMAIN+"/auth/signin";
+const LINKEDIN_REDIRECTION_URI = baseURL+"/auth/signin";
 const LINKEDIN_SCOPE = "openid profile email"
 
 
@@ -13,13 +13,14 @@ const getCode = () => {
 
     /** @todo: remove the const in the end */
     const linkedInClientId = process.env.VUE_APP_LINKEDIN_CLIENT_ID
+    console.log(LINKEDIN_REDIRECTION_URI)
 
     linkedInAuthUrl.searchParams.append("response_type", "code");
     linkedInAuthUrl.searchParams.append("client_id", linkedInClientId);
     linkedInAuthUrl.searchParams.append("redirect_uri", LINKEDIN_REDIRECTION_URI);
     linkedInAuthUrl.searchParams.append("scope", LINKEDIN_SCOPE);
 
-    window.location.href = linkedInAuthUrl.toString()
+    window.history.replaceState(null, null, linkedInAuthUrl.toString());
 }
 
 const getUserInfo = async (access_token) => {
