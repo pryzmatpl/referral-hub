@@ -20,7 +20,8 @@ const getCode = () => {
     linkedInAuthUrl.searchParams.append("redirect_uri", LINKEDIN_REDIRECTION_URI);
     linkedInAuthUrl.searchParams.append("scope", LINKEDIN_SCOPE);
 
-    window.history.replaceState(null, null, linkedInAuthUrl.toString());
+    window.location.assign(linkedInAuthUrl.toString());
+
 }
 
 const getUserInfo = async (access_token) => {

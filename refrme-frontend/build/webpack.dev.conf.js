@@ -33,9 +33,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       logging: 'info',
       overlay: { warnings: false, errors: true },
     },
-    historyApiFallback: {
-      rewrites: [{ from: /.*/, to: path.posix.join(path.resolve(__dirname, "../static"), "index.html") }],
-    },
+    historyApiFallback: true,
     hot: true,
     static: {
       directory: path.join(__dirname, "../static"),
