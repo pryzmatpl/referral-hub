@@ -82,7 +82,7 @@ class RefairController extends Controller {
         }
     }
 
-    public function evalkeywords($request, $response,$args){
+    public function evalkeywords(Request $request, Response $response, array $args): Response{
         try{
             $queryAll = $request->getQueryParams();
             $query = urldecode($queryAll['eval']);
@@ -90,20 +90,19 @@ class RefairController extends Controller {
             $retarr = ["results"=>[json_encode($query,true)]];
 
             if(strlen($query) < 3){
-                throw new Exception("The input array cannot be empty");
-            }else
-            {
-                //TODO:Replace pristine with proper base_url
-                $command = 'sudo /usr/share/nginx/'.env('AI_PATH').'/resources/pythonapis/match/API/run.py '.$query;
-                //TODO: For fuck sake please redo this line
-                $returned = shell_exec($command) ;
+                throw new \Exception("The input array cannot be empty");
+            } else {
+                $command = "source /var/www/html/models/match/venv/bin/activate && /var/www/html/models/match/venv/bin/python /var/www/html/models/match/run.py \"{$query}\"";
+                $returned = shell_exec($command) or die("Evaluation not operational");
                 $weights = json_decode($returned,true); //get array of predictions
                 $retarr['weightsA']=$weights;
-                return $response->withJson($retarr);
+                $response->getBody()->write(json_encode($retarr));
+                return $response;
             }
-        }catch(Exception $e){
-            return $response->withJson(["status"=>"error",
-                "message"=>"Input array cannot be empty"]);
+        }catch(\Exception $e){
+            $response->withStatus(422)->getBody()->write(json_encode(["status"=>"error",
+                "message"=>"Input array cannot be empty, {$e->getMessage()}"]));
+            return $response;
         }
     }
 
