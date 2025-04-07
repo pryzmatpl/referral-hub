@@ -42,7 +42,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { decodeCredential } from 'vue3-google-login'
 import { useStore } from 'vuex'
 import { openModal } from '@kolirt/vue-modal'
-import RoleModal from '@/components/RoleModal.vue'
+import { RoleModal } from '@/components/RoleModal.vue'
 import { getCode, getUserInfo, getAccessToken } from '@/utils/signWithLinkedIn'
 
 const router = useRouter()
@@ -52,7 +52,7 @@ const store = useStore()
 onMounted(() => {
   // Handle LinkedIn OAuth redirect
   const code = route.query.code
-  console.log(code)
+
   if (code) {
     handleLinkedInCallback(code)
   }
@@ -95,35 +95,43 @@ const handleLinkedInCallback = async (code) => {
   }
 }
 
-const USER_DOES_NOT_EXIST = 'user does not exist';
-
 const authenticateUser = async (userData) => {
   try {
     // Try to sign in first
     const signInResponse = await store.dispatch('signin', {
       uniqueId: userData.uniqueId
     })
-    const errorMessage = signInResponse.response?.error;
-    console.log(errorMessage)
-    console.log(signInResponse)
-    if ( errorMessage === USER_DOES_NOT_EXIST) {
 
+    const errorMessage = signInResponse.response.data?.error;
+    console.log(errorMessage)
+
+    if ( errorMessage.localeCompare("user does not exist")===0 ) {
+      console.log("CHECK")
       // If user doesn't exist, show role selection modal and sign up
-      const role = await showRoleSelectionModal()
-      await store.dispatch('signup', {
+      const role = showRoleSelectionModal()
+      const signUpResponse = await store.dispatch('signup', {
         ...userData,
         role,
         password: '' // Empty password for social login
       })
-      await store.dispatch('signin', {
+
+      console.log(signUpResponse)
+      const signInResponse = await store.dispatch('signin', {
         uniqueId: userData.uniqueId
       })
+
+
+      console.log(signInResponse)
     }
 
     await router.push('/')
   } catch (error) {
+
+    console.log("CHECK2")
     console.error('Authentication error:', error)
   }
+
+  console.log("CHECK3")
 }
 
 const showRoleSelectionModal = () => {
