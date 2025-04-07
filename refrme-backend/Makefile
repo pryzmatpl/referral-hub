@@ -8,7 +8,7 @@ prod:
 debug:
 	docker-compose -f docker-compose-debug.yml build && docker-compose -f docker-compose-debug.yml up -d
 
-cleandb:
+clean-db:
 	docker exec -it refrme-backend-aimatch-1 php ./cli.php cleandb
 
 migrate:

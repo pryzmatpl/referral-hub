@@ -6,9 +6,10 @@ class CreateJobsTable extends AbstractMigration
 {
     public function change(): void
     {
-        $table = $this->table('jobs');
+        $table = $this->table('jobs', ['id' => false, 'primary_key' => ['id']]);
 
-        $table->addColumn('title', 'text', ['null' => true])
+        $table->addColumn('id', 'biginteger', ['signed' => false, 'identity' => true])
+            ->addColumn('title', 'text', ['null' => true])
             ->addColumn('exp', 'text', ['null' => true])
             ->addColumn('fund', 'text', ['null' => true])
             ->addColumn('relocation', 'integer', ['null' => true])
