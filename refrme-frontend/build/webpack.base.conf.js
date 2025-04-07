@@ -42,7 +42,7 @@ module.exports = {
     extensions: [".js", ".vue", ".json"],
     alias: {
       "vue$": "vue/dist/vue.esm-bundler.js",
-      "@": path.resolve(__dirname, "../src")
+      "@": path.resolve(__dirname, "../src"),
     },
   },
   optimization: {
@@ -132,7 +132,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({ ...definitions }),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env), // or a filtered set
+      'process.env': JSON.stringify(dotenv.parsed), // or a filtered set
     }),
     new VueLoaderPlugin(),
     new webpack.ProvidePlugin({

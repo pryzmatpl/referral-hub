@@ -103,8 +103,11 @@ const authenticateUser = async (userData) => {
     const signInResponse = await store.dispatch('signin', {
       uniqueId: userData.uniqueId
     })
+    const errorMessage = signInResponse.response?.error;
+    console.log(errorMessage)
+    console.log(signInResponse)
+    if ( errorMessage === USER_DOES_NOT_EXIST) {
 
-    if (signInResponse.response?.data.error === USER_DOES_NOT_EXIST) {
       // If user doesn't exist, show role selection modal and sign up
       const role = await showRoleSelectionModal()
       await store.dispatch('signup', {

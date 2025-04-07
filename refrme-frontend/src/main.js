@@ -54,6 +54,4 @@ app.config.devtools = true;
 app.config.performance = true;
 app.config.productionTip = false;
 
-
-
 app.component('font-awesome-icon', FontAwesomeIcon).mount("#app");
