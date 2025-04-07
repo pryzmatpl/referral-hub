@@ -3,8 +3,6 @@ import {useRouter} from 'vue-router'
 const router = useRouter()
 
 const { protocol, hostname } = window.location;
-const baseURL = process.env.VUE_APP_DOMAIN
-const LINKEDIN_REDIRECTION_URI = baseURL+"/auth/signin";
 const LINKEDIN_SCOPE = "openid profile email"
 
 
@@ -13,11 +11,11 @@ const getCode = () => {
 
     /** @todo: remove the const in the end */
     const linkedInClientId = process.env.VUE_APP_LINKEDIN_CLIENT_ID
-    console.log(LINKEDIN_REDIRECTION_URI)
+    const linkedInRedirect = process.env.VUE_APP_DOMAIN + "/auth/signin";
 
     linkedInAuthUrl.searchParams.append("response_type", "code");
     linkedInAuthUrl.searchParams.append("client_id", linkedInClientId);
-    linkedInAuthUrl.searchParams.append("redirect_uri", LINKEDIN_REDIRECTION_URI);
+    linkedInAuthUrl.searchParams.append("redirect_uri", linkedInRedirect);
     linkedInAuthUrl.searchParams.append("scope", LINKEDIN_SCOPE);
 
     window.location.assign(linkedInAuthUrl.toString());
@@ -26,7 +24,7 @@ const getCode = () => {
 
 const getUserInfo = async (access_token) => {
 
-    const response = await fetch(baseURL + '/auth/signin/linkedinfo', {
+    const response = await fetch(process.env.VUE_APP_BACKEND_URL + '/auth/signin/linkedinfo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +36,7 @@ const getUserInfo = async (access_token) => {
 
 const getAccessToken = async (code) => {
 
-    const response = await fetch(baseURL + '/auth/signin/linkedaccess', {
+    const response = await fetch(process.env.VUE_APP_BACKEND_URL + '/auth/signin/linkedaccess', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

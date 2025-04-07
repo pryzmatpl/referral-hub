@@ -52,6 +52,7 @@ const store = useStore()
 onMounted(() => {
   // Handle LinkedIn OAuth redirect
   const code = route.query.code
+  console.log(code)
   if (code) {
     handleLinkedInCallback(code)
   }
