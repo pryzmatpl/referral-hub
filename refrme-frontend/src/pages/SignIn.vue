@@ -102,28 +102,18 @@ const authenticateUser = async (userData) => {
       const signInResponse = await store.dispatch('signin', {
         uniqueId: userData.uniqueId
       });
-
       // If signin succeeds, redirect
       await router.push('/');
     } catch (error) {
       console.log("Signin response error:", error);
 
-      // Check for "user does not exist" in the error message
-      // This checks various possible locations for the error message
-      const errorMessage = error?.response?.data?.error ||
-          error?.message ||
-          (typeof error === 'string' ? error : '');
+      // If user doesn't exist, show role selection modal and sign up
+      console.log("Showing role selection modal");
+      try {
+        const role = await showRoleSelectionModal();
+        console.log("Selected role:", role);
 
-      console.log("Error message:", errorMessage);
-
-      // Check if user doesn't exist using includes instead of localeCompare
-      if (errorMessage.includes("user does not exist")) {
-        console.log("Showing role selection modal");
-        // If user doesn't exist, show role selection modal and sign up
-        try {
-          const role = await showRoleSelectionModal();
-          console.log("Selected role:", role);
-
+        if (role) {
           const signUpResponse = await store.dispatch('signup', {
             ...userData,
             role,
@@ -138,11 +128,11 @@ const authenticateUser = async (userData) => {
           });
 
           await router.push('/');
-        } catch (modalError) {
-          console.error("Modal or signup error:", modalError);
+        } else {
+          console.log("User cancelled role selection");
         }
-      } else {
-        console.error("Unknown authentication error");
+      } catch (modalError) {
+        console.error("Modal or signup error:", modalError);
       }
     }
   } catch (outerError) {

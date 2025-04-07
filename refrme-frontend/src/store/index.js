@@ -113,24 +113,21 @@ export default createStore({
         const response = await backend.post("/auth/signin", {
           params: { uniqueId }
         });
-
         if (response.data.auth) {
           commit('SET_AUTH', true);
           commit('SET_DEHASHED_DATA', {
             USER_ID: uniqueId
           })
         }
-
         const jobApplied = await backend.get(`/getapply/${uniqueId}`)
-
         if(jobApplied.data) {
           commit('SET_JOBS_APPLIED', jobApplied.data)
         }
-
         return response;
       } catch (error) {
-        console.error('Signin error:', error.response.data.message);
-        return error;
+        console.error('Signin error:', error.response?.data?.message || error.message);
+        // Rethrow the error so it can be caught by the calling function
+        throw error;
       }
     },
 
