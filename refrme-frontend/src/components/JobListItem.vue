@@ -15,6 +15,8 @@ import { computed, ref , defineProps} from 'vue'
 import { faEdit, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import {useStore} from "vuex";
 
+const store = useStore()
+
 const props = defineProps({
   job: {
     type: Object,
