@@ -53,9 +53,9 @@
                     v-model="filterSelections.city"
                     @input="updateFilterCity"
                     :options="filterDefaults.cities"
-                    searchable="false"
+                    searchable=false
                     close-on-select
-                    show-labels="false"
+                    show-labels=false
                     placeholder="Pick a city"
                   ></multiselect>
                 </div>

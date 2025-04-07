@@ -41,7 +41,10 @@
 <script>
 import store from '@/store/index.js'
 import cookieconsent from 'cookieconsent'
+import {ModalTarget} from "@kolirt/vue-modal";
+
 export default {
+  components: {ModalTarget},
   computed: {
     isAuthenticated: vm => vm.$store.getters.isAuthenticated,
     path: vm => vm.$route.path,

@@ -38,8 +38,8 @@ app.use(vue3GoogleLogin, {
       shape: "pill", 
       width: "300px"
     }
-  })
-  app.use(createModal({
+  });
+app.use(createModal({
     transitionTime: 200,
     animationType: 'slideDown',
     modalStyle: {
@@ -52,7 +52,7 @@ app.use(vue3GoogleLogin, {
       'backdrop-filter': 'blur(5px)',
       'z-index': 200
     }
-  }))
+}));
 app.config.devtools = true;
 app.config.performance = true;
 app.config.productionTip = false;

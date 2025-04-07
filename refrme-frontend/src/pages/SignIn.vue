@@ -98,36 +98,57 @@ const handleLinkedInCallback = async (code) => {
 const authenticateUser = async (userData) => {
   try {
     // Try to sign in first
-    const signInResponse = await store.dispatch('signin', {
-      uniqueId: userData.uniqueId
-    })
-
-    const errorMessage = signInResponse.response.data?.error;
-    console.log(errorMessage)
-
-    if ( errorMessage.localeCompare("user does not exist")===0 ) {
-      // If user doesn't exist, show role selection modal and sign up
-      const role = await showRoleSelectionModal()
-      const signUpResponse = await store.dispatch('signup', {
-        ...userData,
-        role,
-        password: '' // Empty password for social login
-      })
-
-      console.log(signUpResponse)
+    try {
       const signInResponse = await store.dispatch('signin', {
         uniqueId: userData.uniqueId
-      })
+      });
 
+      // If signin succeeds, redirect
+      await router.push('/');
+    } catch (error) {
+      console.log("Signin response error:", error);
 
-      console.log(signInResponse)
+      // Check for "user does not exist" in the error message
+      // This checks various possible locations for the error message
+      const errorMessage = error?.response?.data?.error ||
+          error?.message ||
+          (typeof error === 'string' ? error : '');
+
+      console.log("Error message:", errorMessage);
+
+      // Check if user doesn't exist using includes instead of localeCompare
+      if (errorMessage.includes("user does not exist")) {
+        console.log("Showing role selection modal");
+        // If user doesn't exist, show role selection modal and sign up
+        try {
+          const role = await showRoleSelectionModal();
+          console.log("Selected role:", role);
+
+          const signUpResponse = await store.dispatch('signup', {
+            ...userData,
+            role,
+            password: '' // Empty password for social login
+          });
+
+          console.log("Signup response:", signUpResponse);
+
+          // Try signing in again after successful signup
+          await store.dispatch('signin', {
+            uniqueId: userData.uniqueId
+          });
+
+          await router.push('/');
+        } catch (modalError) {
+          console.error("Modal or signup error:", modalError);
+        }
+      } else {
+        console.error("Unknown authentication error");
+      }
     }
-
-    await router.push('/')
-  } catch (error) {
-    console.error('Authentication error:', error)
+  } catch (outerError) {
+    console.error('Authentication outer error:', outerError);
   }
-}
+};
 
 const showRoleSelectionModal = () => {
   return new Promise((resolve, reject) => {
