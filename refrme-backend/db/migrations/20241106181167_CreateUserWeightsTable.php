@@ -11,7 +11,7 @@ class CreateUserWeightsTable extends AbstractMigration
     {
         $this->table('user_weights')
             ->addColumn('weights', 'text') // Store the classifier's JSON output here.
-            ->addColumn('userid', 'biginteger', ['signed' => false]) // Renamed for clarity.
+            ->addColumn('user_id', 'biginteger', ['signed' => false]) // Renamed for clarity.
             ->addColumn('keywords', 'text', [
                 'collation' => 'utf8mb4_unicode_ci',
                 'null' => true
@@ -19,7 +19,7 @@ class CreateUserWeightsTable extends AbstractMigration
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
             ->addIndex(['userid'], ['name' => 'userweights_userid_index'])
-            ->addForeignKey('userid', 'users', 'id', [
+            ->addForeignKey('user_id', 'users', 'id', [
                 'delete' => 'CASCADE',
                 'update' => 'NO_ACTION'
             ])
