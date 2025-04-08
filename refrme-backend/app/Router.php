@@ -46,13 +46,13 @@ class Router {
         $app->post('/auth/signin/linkedinfo', [AuthController::class, 'getLinkedInUserInfo']);
 
         $app->get('/api/job/{id}', [RefairController::class, 'getjob'])->setName('refair.job.get');
-        $app->get('/matchprofile', [RefairController::class, 'matchprofile'])->setName('refair.matchprofile');
+        $app->get('/matchprofile', [RefairController::class, 'matchProfile'])->setName('refair.matchprofile');
         $app->get('/matchjob/{id}', [RefairController::class, 'matchjob'])->setName('refair.matchjob');
         $app->post('/api/user/storeprofile', [RefairController::class, 'storeprofile'])->setName('refair.user.storeprofile');
-        $app->post('/api/user/getprofile/{id}', [RefairController::class, 'getprofile'])->setName('refair.user.getprofile');
-        $app->post('/api/user/storeexp', [RefairController::class, 'storeexp'])->setName('refair.user.storeexp');
-        $app->post('/api/user/getexp/{id}', [RefairController::class, 'getexp'])->setName('refair.user.getexp');
-        $app->post('/api/user/deleteexp', [RefairController::class, 'deleteexp'])->setName('refair.user.deleteexp');
+        $app->post('/api/user/getprofile/{id}', [RefairController::class, 'getProfile'])->setName('refair.user.getprofile');
+        $app->post('/api/user/storeexp', [RefairController::class, 'storeExperience'])->setName('refair.user.storeexp');
+        $app->post('/api/user/getexp/{id}', [RefairController::class, 'getExperience'])->setName('refair.user.getexp');
+        $app->post('/api/user/deleteexp', [RefairController::class, 'deleteExperience'])->setName('refair.user.deleteexp');
 
 
         $app->post('/project/add', [ProjectController::class, 'add'])->setName('refair.add.project');

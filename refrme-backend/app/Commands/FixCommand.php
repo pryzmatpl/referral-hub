@@ -7,7 +7,7 @@ use App\Models\JobDesc;
 use App\Models\Project;
 use App\Models\Tag;
 use App\Models\User;
-use App\Models\Userweight;
+use App\Models\UserWeight;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class FixCommand {

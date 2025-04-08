@@ -10,24 +10,19 @@ class CreateUserWeightsTable extends AbstractMigration
     public function change(): void
     {
         $this->table('user_weights')
-            ->addColumn('weight_one', 'float') // More descriptive column names
-            ->addColumn('weight_two', 'float')
-            ->addColumn('weight_three', 'float')
-            ->addColumn('weight_four', 'float')
-            ->addColumn('weight_five', 'float')
-            ->addColumn('weight_six', 'float')
-            ->addColumn('weight_seven', 'float')
-            ->addColumn('weight_eight', 'float')
-            ->addColumn('weight_nine', 'float')
-            ->addColumn('weight_ten', 'float')
-            ->addColumn('weight_eleven', 'float')
+            ->addColumn('weights', 'text') // Store the classifier's JSON output here.
+            ->addColumn('userid', 'biginteger', ['signed' => false]) // Renamed for clarity.
+            ->addColumn('keywords', 'text', [
+                'collation' => 'utf8mb4_unicode_ci',
+                'null' => true
+            ])
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
-            ->addColumn('user_id', 'biginteger', ['signed' => false]) // Rename to user_id for clarity
-            ->addColumn('keywords', 'text', ['collation' => 'utf8mb4_unicode_ci', 'null' => true])
-            ->addIndex(['user_id'], ['name' => 'user_weights_user_id_index'])
-            ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+            ->addIndex(['userid'], ['name' => 'userweights_userid_index'])
+            ->addForeignKey('userid', 'users', 'id', [
+                'delete' => 'CASCADE',
+                'update' => 'NO_ACTION'
+            ])
             ->create();
     }
-
 }

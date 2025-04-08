@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Tag;
 use App\Models\User;
-use App\Models\Userweight;
+use App\Models\UserWeight;
 use Exception;
 
 class UserController extends Controller {
@@ -44,7 +44,7 @@ class UserController extends Controller {
                 Tag::set($user, 'skills', $data['skills']);
             }
             if (isset($data['weights'])) {
-                $weight = new Userweight();
+                $weight = new UserWeight();
                 $weight->aone = $data['weights'][0];
                 $weight->atwo = $data['weights'][1];
                 $weight->athree = $data['weights'][2];

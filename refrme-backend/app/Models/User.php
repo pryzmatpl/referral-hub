@@ -50,7 +50,7 @@ class User extends Model
   }
 
   public function weights() {
-    return $this->hasOne('App\Models\Userweight', 'userid')->orderBy('id', 'DESC');
+    return $this->hasOne('App\Models\UserWeight', 'userid')->orderBy('id', 'DESC');
   }
 
   public function getRolesAttribute() {

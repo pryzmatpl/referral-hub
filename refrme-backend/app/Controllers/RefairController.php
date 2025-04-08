@@ -11,7 +11,7 @@ use App\Models\File;
 use App\Models\Referral;
 use App\Models\JobDesc;
 use App\Models\JobWeight;
-use App\Models\Userweight;
+use App\Models\UserWeight;
 use App\Models\Linkedinimport;
 use App\Models\Signoff;
 use Psr\Log\LoggerInterface;
@@ -121,7 +121,7 @@ class RefairController extends Controller {
             //TODO: No keywords passed yet;
             //$kws = $getData['params']['keywords'];
 
-            $uweight = Userweight::updateOrCreate(['user_id' => $auser->id], [
+            $uweight = UserWeight::updateOrCreate(['user_id' => $auser->id], [
                 'weight_one' => $weights[0],
                 'weight_two' => $weights[1],
                 'weight_three' => $weights[2],
@@ -200,74 +200,131 @@ class RefairController extends Controller {
         }
     }
 
-    public function getprofile($request, $response, $args)
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return mixed
+     */
+    public function getProfile(Request $request,Response $response, $args): Response
     {
         try {
-            //id is unique_id;
+            // Use the unique id passed via the URL to get the user.
             $uid = $args['id'];
-            $auid = User::where('unique_id', $uid)->first();
-
-            $userweight = Userweight::where('user_id', $auid->id)->orderBy('created_at', 'desc')->first();
-
-            //TODO: Edit when keywords are supported;
-            //$keywords = ( ! is_null($userweight['keywords']) ) ? $userweight['keywords'] : [];
-            $skills = (!is_null($auid->skills)) ? $auid->skills : [];
-
-            $status = 'success';
-
-            if (!$userweight) {
-                $weights = 11; //Amount of weights
-                for ($idx = 0; $idx < $weights; $idx++)
-                    $retweight[] = 0;
-                $status = 'error';
-            } else {
-                $retweight[] = $userweight['weight_one'];
-                $retweight[] = $userweight['weight_two'];
-                $retweight[] = $userweight['weight_three'];
-                $retweight[] = $userweight['weight_four'];
-                $retweight[] = $userweight['weight_five'];
-                $retweight[] = $userweight['weight_six'];
-                $retweight[] = $userweight['weight_seven'];
-                $retweight[] = $userweight['weight_eight'];
-                $retweight[] = $userweight['weight_nine'];
-                $retweight[] = $userweight['weight_ten'];
-                $retweight[] = $userweight['weight_eleven'];
-
+            $user = User::where('unique_id', $uid)->first();
+            if (!$user) {
+                throw new \Exception("User not found");
             }
 
-            $userdesc = UserDescription::where('user_id', $auid->id)->orderBy('created_at', 'desc')->first();
+            // Retrieve the most recent userweight record for this user.
+            $userweight = UserWeight::where('user_id', $user->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
 
-            $response->getBody()->write(json_encode([
-                'success' => true,
-                'message' => "Returned weights for user " . $auid->id,
-                'firstname' => $auid->first_name,
-                'lastname' => $auid->last_name,
-                'email' => $auid->email,
-                'id' => $auid->id,
-                'weights' => $retweight,
-                'jobStatus' => $userdesc->job_status ?? 'not looking',
-                'keywords' => $userdesc->keywords ?? [],
-                'exp' => $auid->exp,
-                'availability' => $userdesc->availability ?? '',
-                'noticePeriod' => $userdesc->notice_period ?? '',
-                'expectedSalary' => $userdesc->expected_salary ?? '',
-                'skills' => $userdesc->skills ?? [],
-                'role' => $auid->current_role,
-                'skills_nice' => empty($auid->skills_nice) ? array() : $auid->skills_nice,
-                'frameworks_must' => empty($auid->frameworks_must) ? array() : $auid->frameworks_must,
-                'frameworks_nice' => empty($auid->frameworks_nice) ? array() : $auid->frameworks_nice,
-                'methodologies_must' => empty($auid->methodologies_must) ? array() : $auid->methodologies_must,
-                'methodologies_nice' => empty($auid->methodologies_nice) ? array() : $auid->methodologies_nice
-            ]));
+            // Define our canonical ordering of the canonicalCategories.
+            $canonicalCategories = [
+                'Backend',
+                'Full Stack',
+                'Devops',
+                'Project Manager',
+                'Business Analyst',
+                'Business Intelligence',
+                'Frontend',
+                'Mobile & Embedded',
+                'HR',
+                'Marketing',
+                'Other'
+            ];
+
+            // If no record is found, return an array of zeros.
+            if (!$userweight) {
+                $returnedWeights = array_fill(0, count($canonicalCategories), 0);
+            } else {
+                // Assume that the "weights" column now stores the classifier's JSON output.
+                $rawWeights = $userweight['weights'];
+                $decodedWeights = json_decode($rawWeights, true);
+                if ($decodedWeights === null) {
+                    // Fallback to zeros if JSON decoding fails.
+                    $returnedWeights = array_fill(0, count($canonicalCategories), 0);
+                } else {
+                    // Check whether the decoded JSON is in classifier style
+                    // (i.e. an array of objects where each has a 'predictions' key).
+                    if (isset($decodedWeights[0]) && isset($decodedWeights[0]['predictions'])) {
+                        $aggregated = [];
+                        foreach ($decodedWeights as $result) {
+                            if (isset($result['predictions']['predictions']) && is_array($result['predictions']['predictions'])) {
+                                foreach ($result['predictions']['predictions'] as $cat => $score) {
+                                    // Keep the highest score seen per category.
+                                    if (!isset($aggregated[$cat]) || $score > $aggregated[$cat]) {
+                                        $aggregated[$cat] = $score;
+                                    }
+                                }
+                            }
+                        }
+                        // Build an ordered array based on our canonical category list.
+                        $returnedWeights = [];
+                        foreach ($canonicalCategories as $cat) {
+                            $returnedWeights[] = $aggregated[$cat] ?? 0;
+                        }
+                    } else {
+                        // Fallback if the JSON structure is already aggregated (associative keyed by category).
+                        $returnedWeights = [];
+                        foreach ($canonicalCategories as $cat) {
+                            $returnedWeights[] = $decodedWeights[$cat] ?? 0;
+                        }
+                    }
+                }
+            }
+
+            // Retrieve the latest user description for extra profile details.
+            $userDescription = UserDescription::where('user_id', $user->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            // Build the response data.
+            $responseData = [
+                'success'         => true,
+                'message'         => "Returned profile for user " . $user->id,
+                'firstname'       => $user->first_name,
+                'lastname'        => $user->last_name,
+                'email'           => $user->email,
+                'id'              => $user->id,
+                'weights'         => $returnedWeights,
+                'jobStatus'       => $userDescription->job_status ?? 'not looking',
+                'keywords'        => $userDescription->keywords ?? [],
+                'exp'             => $user->exp,
+                'availability'    => $userDescription->availability ?? '',
+                'noticePeriod'    => $userDescription->notice_period ?? '',
+                'expectedSalary'  => $userDescription->expected_salary ?? '',
+                'skills'          => $userDescription->skills ?? [],
+                'role'            => $user->current_role,
+                'skills_nice'     => empty($user->skills_nice) ? [] : $user->skills_nice,
+                'frameworks_must' => empty($user->frameworks_must) ? [] : $user->frameworks_must,
+                'frameworks_nice' => empty($user->frameworks_nice) ? [] : $user->frameworks_nice,
+                'methodologies_must' => empty($user->methodologies_must) ? [] : $user->methodologies_must,
+                'methodologies_nice' => empty($user->methodologies_nice) ? [] : $user->methodologies_nice
+            ];
+
+            $response->getBody()->write(json_encode($responseData));
             return $response->withHeader('Content-Type', 'application/json');
-
-
-        } catch (Exception $e) {
-            print_r($e);
+        } catch (\Exception $e) {
+            $response->getBody()->write(json_encode([
+                'success' => false,
+                'message' => "An error occurred: " . $e->getMessage()
+            ]));
+            return $response;
         }
     }
 
-    public function storeexp($request, $response, $args) {
+
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return void
+     */
+    public function storeExperience(Request $request,Response $response, $args) : Response
+    {
         try {
             $getData = $request->getParsedBody();
             $jobName = $getData['params']['name'];
@@ -305,7 +362,14 @@ class RefairController extends Controller {
         }
     }
 
-    public function getexp($request, $response, $args) {
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return void
+     */
+    public function getExperience(Request $request, Response $response, $args): Response
+    {
         try {
             //id is unique_id;
             $uid = $args['id'];
@@ -324,7 +388,13 @@ class RefairController extends Controller {
         }
     }
 
-    public function deleteexp($request, $response, $args)
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return void
+     */
+    public function deleteExperience(Request $request,Response $response, $args): Response
     {
         try {
             $getData = $request->getParsedBody();
@@ -339,76 +409,147 @@ class RefairController extends Controller {
                 ->withStatus(200);
 
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             print_r($e);
         }
     }
 
-    public function matchprofile(Request $request,Response $response, $args): Response{
-        try{
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function matchProfile(Request $request, Response $response, $args): Response {
+        try {
+            // Retrieve and decode the input JSON from the request body.
+            $getVars = $request->getParsedBody();
+            $passedWeightsDecoded = json_decode($getVars['passedWeights'], true);
+            if ($passedWeightsDecoded === null) {
+                throw new Exception("Invalid JSON input");
+            }
 
-            //Expected is JSON
-            $getVars =  $request->getParsedBody();
-            $weights = json_decode($getVars['passedWeights'],true);
-            $jobweights = json_decode(JobWeight::orderBy('created_at')->get(),true);
+            // Define the canonical order of categories.
+            $categories = [
+                'Backend', 'Full Stack', 'Devops', 'Project Manager',
+                'Business Analyst', 'Business Intelligence', 'Frontend',
+                'Mobile & Embedded', 'HR', 'Marketing', 'Other'
+            ];
+
+            // Process candidate input.
+            // If the input has classifier style results (an array of objects with a predictions key),
+            // aggregate them into a simple array keyed by category.
+            if (isset($passedWeightsDecoded[0]) && isset($passedWeightsDecoded[0]['predictions'])) {
+                $aggregatedCandidate = [];
+                foreach ($passedWeightsDecoded as $result) {
+                    if (isset($result['predictions']['predictions']) && is_array($result['predictions']['predictions'])) {
+                        foreach ($result['predictions']['predictions'] as $cat => $score) {
+                            // Keep the highest score seen for each category.
+                            if (!isset($aggregatedCandidate[$cat]) || $score > $aggregatedCandidate[$cat]) {
+                                $aggregatedCandidate[$cat] = $score;
+                            }
+                        }
+                    }
+                }
+                $candidateWeights = [];
+                foreach ($categories as $cat) {
+                    $candidateWeights[] = isset($aggregatedCandidate[$cat]) ? $aggregatedCandidate[$cat] : 0;
+                }
+            } else {
+                // If already aggregated, assume it's an array of length 11 corresponding to the defined categories.
+                $candidateWeights = $passedWeightsDecoded;
+            }
+
+            // Retrieve job weight records from the database.
+            $jobweights = JobWeight::orderBy('created_at')->get()->toArray();
             $retarr = [];
             $threshold = 0.1;
 
-            foreach($jobweights as $jobweight){
+            foreach ($jobweights as $jobweight) {
+                // Decode the JSON stored in the new "weights" column.
+                $jobClassifierResults = json_decode($jobweight['weights'], true);
+                $aggregatedJobWeights = [];
 
-                if( (($jobweight['aone']-$threshold) <= $weights[0]) && ($weights[0] <= ($jobweight['aone']+$threshold)) && ( $weights[0] >= $threshold ) ){ goto processAI;}
-                if( (($jobweight['atwo']-$threshold) <= $weights[1]) && ($weights[1] <= ($jobweight['atwo']+$threshold)) && ( $weights[1] >= $threshold )  ){ goto processAI;}
-                if( (($jobweight['athree']-$threshold) <= $weights[2]) && ($weights[2] <= ($jobweight['athree']+$threshold)) && ( $weights[2] >= $threshold ) ){ goto processAI;}
-                if( (($jobweight['afour']-$threshold) <= $weights[3]) && ($weights[3] <= ($jobweight['afour']+$threshold)) && ( $weights[3] >= $threshold ) ){ goto processAI;}
-                if( (($jobweight['afive']-$threshold) <= $weights[4]) && ($weights[4] <= ($jobweight['afive']+$threshold)) && ( $weights[4] >= $threshold ) ){ goto processAI;}
-                if( (($jobweight['asix']-$threshold) <= $weights[5]) && ($weights[5] <= ($jobweight['asix']+$threshold)) && ( $weights[5] >= $threshold ) ){ goto processAI;}
-                if( (($jobweight['aseven']-$threshold) <= $weights[6]) && ($weights[6] <= ($jobweight['aseven']+$threshold)) && ( $weights[6] >= $threshold ) ){ goto processAI;}
-                if( (($jobweight['aeight']-$threshold) <= $weights[7]) && ($weights[7] <= ($jobweight['aeight']+$threshold)) && ( $weights[7] >= $threshold ) ){ goto processAI;}
-                if( (($jobweight['anine']-$threshold) <= $weights[8]) && ($weights[8] <= ($jobweight['anine']+$threshold)) && ( $weights[8] >= $threshold ) ){ goto processAI;}
-                if( (($jobweight['aten']-$threshold) <= $weights[9]) && ($weights[9] <= ($jobweight['aten']+$threshold)) && ( $weights[9] >= $threshold )  ){ goto processAI;}
-                if( (($jobweight['aeleven']-$threshold) <= $weights[10]) && ($weights[10] <= ($jobweight['aeleven']+$threshold)) && ( $weights[10] >= $threshold ) ){ goto processAI;}
+                if (is_array($jobClassifierResults)) {
+                    foreach ($jobClassifierResults as $result) {
+                        if (isset($result['predictions']['predictions']) && is_array($result['predictions']['predictions'])) {
+                            foreach ($result['predictions']['predictions'] as $cat => $score) {
+                                if (!isset($aggregatedJobWeights[$cat]) || $score > $aggregatedJobWeights[$cat]) {
+                                    $aggregatedJobWeights[$cat] = $score;
+                                }
+                            }
+                        }
+                    }
+                }
 
-                goto finished;
+                // Build an ordered array of job weights using the canonical category list.
+                $jobWeightsArray = [];
+                foreach ($categories as $cat) {
+                    $jobWeightsArray[] = $aggregatedJobWeights[$cat] ?? 0;
+                }
 
-                processAI:
-                $job_id = $jobweight['job_id'];
-                $jobdsc = JobDesc::where('id', $job_id)->orderBy('created_at','desc')->with('company')->first();
+                // Check if at least one category meets the threshold condition.
+                $matchFound = false;
+                foreach ($jobWeightsArray as $index => $jobScore) {
+                    if ($candidateWeights[$index] >= $threshold && abs($candidateWeights[$index] - $jobScore) <= $threshold) {
+                        $matchFound = true;
+                        break;
+                    }
+                }
+                if (!$matchFound) {
+                    continue; // Skip this job record if no match exists.
+                }
+
+                // Retrieve the corresponding job description using the jobid column.
+                $jobid = $jobweight['jobid'];
+                $jobdsc = JobDesc::where('id', $jobid)
+                    ->orderBy('created_at', 'desc')
+                    ->with('company')
+                    ->first();
+
                 if (!is_null($jobdsc)) {
+                    // Assuming cc() is a custom conversion function.
                     $jobdsc = cc($jobdsc->toArray());
                     $jobdsc['keywords'] = explode(',', $jobdsc['keywords']);
                 }
 
-                foreach($retarr as $jobw){
-                    if($jobw['id'] === $job_id) goto finished; //Save latest result only
+                // Prevent duplicate entries.
+                $duplicate = false;
+                foreach ($retarr as $existingJob) {
+                    if ($existingJob['id'] === $jobid) {
+                        $duplicate = true;
+                        break;
+                    }
+                }
+                if ($duplicate) {
+                    continue;
                 }
 
-                $jobdsc['weights'][] = $jobweight['aone'];
-                $jobdsc['weights'][] = $jobweight['atwo'];
-                $jobdsc['weights'][] = $jobweight['athree'];
-                $jobdsc['weights'][] = $jobweight['afour'];
-                $jobdsc['weights'][] = $jobweight['afive'];
-                $jobdsc['weights'][] = $jobweight['asix'];
-                $jobdsc['weights'][] = $jobweight['aseven'];
-                $jobdsc['weights'][] = $jobweight['aeight'];
-                $jobdsc['weights'][] = $jobweight['anine'];
-                $jobdsc['weights'][] = $jobweight['aten'];
-                $jobdsc['weights'][] = $jobweight['aeleven'];
+                // Append the aggregated job weights.
+                $jobdsc['weights'] = $jobWeightsArray;
                 $retarr[] = $jobdsc;
-
-                finished:
             }
 
-            if(count($retarr) == 0){
-                $retarr['state']="error";
-                $retarr['message']="There are no jobs in the system that fit your criteria";
+            // If no jobs were matched, return an error message.
+            if (empty($retarr)) {
+                $retarr = [
+                    "state"   => "error",
+                    "message" => "There are no jobs in the system that fit your criteria"
+                ];
             }
 
-            return $response->withJson($retarr);
+            $response->getBody()->write(json_encode($retarr));
+            return $response;
+        } catch (Exception $e) {
+            $response->withStatus(500)->getBody()->write(json_encode([
+                "state"   => "error",
+                "message" => "An error occurred: " . $e->getMessage()
+            ]));
 
-        }catch(Exception $e){
-            print_r($e);
+            return $response;
         }
     }
+
 
     public function matchjob($request, $response, $args){
         try{
@@ -420,7 +561,7 @@ class RefairController extends Controller {
 
             $weights = json_decode(JobWeight::where('jobid',$jobid)->get(),true)[0];
 
-            $userweights = json_decode(Userweight::all(),true);
+            $userweights = json_decode(UserWeight::all(),true);
             $retarr = [];
 
             $threshold = 0.1;
@@ -1063,7 +1204,7 @@ class RefairController extends Controller {
 
     public function jobsToStrongUid($request,$resonse,$args){
         $uid = $args['uid'];
-        $userweight = json_decode(Userweight::where('userid', $uid)->orderBy('created_at','desc')->get(),true)[0];
+        $userweight = json_decode(UserWeight::where('userid', $uid)->orderBy('created_at','desc')->get(),true)[0];
 
         $matchedJobs = $this->matchjob($request, $resonse, $args);
 
