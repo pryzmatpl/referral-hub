@@ -131,7 +131,6 @@ export default {
   computed: {
     cogIcon: () => faCog,
     email: vm => decodeURIComponent(vm.$store.state.dehashedData.EMAIL),
-    filteredJobs: vm => vm.jobs.filter(job => job.salaryMin >= vm.userInput.expectedSalary)
   },
 
   watch: {
@@ -142,8 +141,7 @@ export default {
     'userInput.keywords': function(keywords) {
       //TODO: EDIT when keywords supported
 
-      if(keywords?.length != 0){
-        // On keywords updated, send it to backend for ai analysis
+      if(keywords?.length !== 0){
         this.$emit('loading', true)
 
         let params = {
