@@ -58,6 +58,7 @@ export default createStore({
   state: () => ({
     showloading: false,
     isAuthenticated: false,
+    role: '',
     backend,
     dehashedData: {
       SESSION_AUTH: '',
@@ -78,6 +79,7 @@ export default createStore({
   mutations: {
     SET_LOADING: (state, value) => state.showloading = value,
     SET_AUTH: (state, value) => state.isAuthenticated = value,
+    SET_ROLE: (state, value) => state.role = value,
     SET_DEHASHED_DATA: (state, data) => state.dehashedData = data,
     SET_FILTER: (state, { key, value }) => state.filterSelections[key] = value,
     SET_JOBS: (state, jobs) => state.jobListing = jobs,
@@ -118,6 +120,7 @@ export default createStore({
           commit('SET_DEHASHED_DATA', {
             USER_ID: uniqueId
           })
+          commit('SET_ROLE', response.data.role)
         }
         const jobApplied = await backend.get(`/getapply/${uniqueId}`)
         if(jobApplied.data) {

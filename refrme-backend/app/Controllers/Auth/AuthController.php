@@ -114,7 +114,8 @@ final class AuthController
 
             return $this->jsonResponse($response, [
                 'state' => 'success',
-                'auth' => true
+                'auth' => true,
+                'role' => $user['current_role']
             ]);
         } catch (Exception $e) {
             return $this->invalidLoginResponse($response, 'Authentication failed', $e);
