@@ -18,7 +18,7 @@ class CreateUserWeightsTable extends AbstractMigration
             ])
             ->addColumn('created_at', 'timestamp', ['null' => true])
             ->addColumn('updated_at', 'timestamp', ['null' => true])
-            ->addIndex(['userid'], ['name' => 'userweights_userid_index'])
+            ->addIndex(['user_id'], ['name' => 'userweights_userid_index'])
             ->addForeignKey('user_id', 'users', 'id', [
                 'delete' => 'CASCADE',
                 'update' => 'NO_ACTION'
