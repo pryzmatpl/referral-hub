@@ -12,6 +12,7 @@
  */
 
 use App\Middleware\AuthMiddleware;
+use App\Middleware\CorsMiddleware;
 use App\Middleware\CsrfViewMiddleware;
 use App\Router;
 use DavidePastore\Slim\Validation\Validation;
@@ -50,7 +51,7 @@ try {
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
 } catch (InvalidPathException $e) {
-    throw new \Exception("Init failed");
+    throw new Exception("Init failed");
 }
 
 // Create Container Builder
@@ -66,7 +67,7 @@ AppFactory::setContainer(container: $container);
 $app = AppFactory::create();
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
-
+$corsMiddleware = $app->add(CorsMiddleware::class);
 // $app->add(CsrfViewMiddleware::class); @todo: ignore for now!
 
 // Validators

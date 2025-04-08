@@ -15,6 +15,7 @@ use App\Controllers\Auth\AuthController;
 use App\Controllers\JobController;
 use App\Controllers\PaymentController;
 use App\Middleware\AuthMiddleware;
+use App\Middleware\CorsMiddleware;
 use App\Middleware\CsrfViewMiddleware;
 use App\Repositories\JobRepository;
 use App\Services\Auth\AuthService;
@@ -57,6 +58,11 @@ return function (ContainerBuilder $containerBuilder) {
         CsrfViewMiddleware::class => function (ContainerInterface $c) {
             return new CsrfViewMiddleware(
                 $c,
+                $c->get(ResponseFactoryInterface::class)
+            );
+        },
+        CorsMiddleware::class => function (ContainerInterface $c) {
+            return new CorsMiddleware(
                 $c->get(ResponseFactoryInterface::class)
             );
         },

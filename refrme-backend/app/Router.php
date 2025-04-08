@@ -25,8 +25,13 @@ class Router {
      * Register all routes in app instance
      */
     static public function registerRoutes(App &$app) : void {
+        $app->options('/{routes:.+}', function ($request, $response, $args) {
+            return $response;
+        });
+
+
         $app->get('/', [RefairController::class, 'index'])->setName('home');
-        $app->get('/eval', [RefairController::class, 'evalkeywords'])->setName('refair.eval');
+        $app->get('/eval', [RefairController::class, 'classify'])->setName('refair.eval');
 
         $app->post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent'])->setName('payment.intent');
 

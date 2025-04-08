@@ -82,12 +82,10 @@ class RefairController extends Controller {
         }
     }
 
-    public function evalkeywords(Request $request, Response $response, array $args): Response{
+    public function classify(Request $request, Response $response, array $args): Response{
         try{
             $queryAll = $request->getQueryParams();
             $query = urldecode($queryAll['eval']);
-
-            $retarr = ["results"=>[json_encode($query,true)]];
 
             if(strlen($query) < 3){
                 throw new \Exception("The input array cannot be empty");
