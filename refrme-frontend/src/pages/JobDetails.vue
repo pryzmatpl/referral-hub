@@ -244,7 +244,7 @@
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="referModal" tabindex="-1" aria-labelledby="referModalLabel" aria-hidden="true">
+        <div class="modal fade" id="referModal" tabindex="-1" aria-labelledby="referModalLabel" ref="referModal" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
@@ -273,11 +273,6 @@
       <p>Please send your CV to: <a href="mailto: w@refair.me">refair@refair.me</a></p>
     </b-modal>
 
-    <b-modal id="referModal" v-model="referModalShow" title="Refer a friend" size="lg" hide-footer>
-      <p>For this referral you can earn at least {{ reward }} PLN</p>
-      <input class="form-control" v-model="referralEmail" type="email" placeholder="your friend's email">
-      <b-btn class="btn-success float-right mt-2" @click="sendReferral">Send</b-btn>
-    </b-modal>
   </div>
 </template>
 
@@ -429,14 +424,6 @@ export default {
       this.referralEmail = event.target.value;
     },
 
-    showReferralModal () {
-      if(this.$store.state.isAuthenticated){
-        this.referModalShow = true
-      } else {
-        this.$router.push({path: '/auth/signin', query: {job: this.job.id}})
-      }
-    },
-
     handleModalShow(event) {
       // Add your condition here
       if(this.$store.state.isAuthenticated){
@@ -473,7 +460,22 @@ export default {
           company: this.job.company.name
         });
 
+        console.log(referralResponse)
+
+        if(referralResponse.data.status === "success") {
+          const modalElement = this.$refs.referModal; // Using the ref you added to the modal
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        
+        // Hide the modal
+        modalInstance.hide();
+        $('.modal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+
         alert(referralResponse.data.message);
+        }
+
+ 
         this.referModalShow = false;
 
       } catch (err) {
