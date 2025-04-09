@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/landingpage.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/components</a> landingpage.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/46</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/9</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;<span class="cstat-no" title="statement not covered" >t<span class="fstat-no" title="function not covered" >em</span>plate&gt;</span>
+&lt;div&gt;
+  &lt;div class="row" style="background:url('assets/images/first-photo.jpg') no-repeat 50% 30% !important; padding:50px !important; padding-top:100px !important; "&gt;
+<span class="cstat-no" title="statement not covered" >    &lt;div class="col-sm-8 col-sm-offset-2 text"&gt;</span>
+      &lt;h1 class="wow fadeInLeftBig"&gt; &lt;strong&gt;Jobs Near Me?&lt;/strong&gt;&lt;/h1&gt;
+      &lt;div class="description wow fadeInLeftBig"&gt;
+        &lt;p&gt;
+          Jobseekers and recruiters around the world have never had it so easy: tailored job offers, one-click application and AI-powered hiring.
+        &lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="top-big-link wow fadeInUp"&gt;
+        &lt;a class="btn btn-link-1" href="/convert"&gt;Join Beta&lt;/a&gt;
+        &lt;a class="btn btn-link-2 scroll-link" href="#howworks"&gt;What Is This?&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&nbsp;
+  &lt;!-- Features --&gt;
+  &lt;div class="features-container section-container"&gt;
+    &lt;div class="container"&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-12 features section-description wow fadeIn"&gt;
+          &lt;h2&gt;&lt;strong&gt;Refair:me&lt;/strong&gt; Simplifies The Hiring Process&lt;/h2&gt;
+          &lt;div class="divider-1 wow fadeInUp"&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-4 features-box wow fadeInUp"&gt;
+          &lt;div class="features-box-icon"&gt;
+            &lt;i class="fa fa-magic"&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;h3&gt;Find Job&lt;/h3&gt;
+          &lt;p&gt;One-click application, job offers evaluated and tailored for you&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-4 features-box wow fadeInDown"&gt;
+          &lt;div class="features-box-icon"&gt;
+            &lt;i class="fa fa-thumbs-o-up"&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;h3&gt;Refer Friends&lt;/h3&gt;
+          &lt;p&gt;Fastest way to refer friends for jobs that you think are right for them&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-4 features-box wow fadeInUp"&gt;
+          &lt;div class="features-box-icon"&gt;
+            &lt;i class="fa fa-cog"&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;h3&gt;Match Talent&lt;/h3&gt;
+          &lt;p&gt;Source candidates, let AI select the best ones for your position&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-12 section-bottom-button wow fadeInUp"&gt;
+          &lt;a class="btn btn-link-1 scroll-link" href="#more-features"&gt;Is That All?&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&nbsp;
+&nbsp;
+  &lt;!-- Great support --&gt;
+  &lt;div class="great-support-container section-container" style="background:url('assets/images/second-background.jpg')  no-repeat 100% 100% !important; padding:50px !important;"&gt;
+    &lt;div class="container"&gt;
+      &lt;div class="row" id="howworks"&gt;
+        &lt;div class="col-sm-12 great-support section-description wow fadeIn"&gt;
+          &lt;h2&gt;&lt;strong&gt;Built For Talented Candidates And Busy HR Professionals&lt;/strong&gt;&lt;/h2&gt;
+          &lt;div class="divider-1 wow fadeInUp"&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-7 great-support-box wow fadeInLeft"&gt;
+          &lt;div class="great-support-box-text great-support-box-text-left"&gt;
+            &lt;h3&gt;Apply For Jobs With One Click&lt;/h3&gt;
+            &lt;p class="medium-paragraph"&gt;
+              Are You looking for a job that offers the best money? &lt;span class="colored-text"&gt;&lt;br/&gt;Maybe a job that's near you&lt;/span&gt;, or one with great benefits?
+            &lt;/p&gt;
+            &lt;p&gt;
+              With Refair:Me, recruiters post precise job offers that are AI-matched with existing candidates. Sign-up to help them contact you, apply for your favorite jobs quickly or refer friends.
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-5 great-support-box wow fadeInUp"&gt;
+          &lt;img src="assets/images/devices/pc.png" alt=""&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&nbsp;
+  &lt;!-- How it works --&gt;
+  &lt;div class="how-it-works-container section-container section-container-image-bg"&gt;
+    &lt;div class="container"&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-12 how-it-works section-description wow fadeIn"&gt;
+          &lt;h2&gt;&lt;strong&gt;How&lt;/strong&gt; Do You Use It&lt;/h2&gt;
+          &lt;div class="divider-1 wow fadeInUp"&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-4 col-sm-offset-1 how-it-works-box wow fadeInUp"&gt;
+          &lt;div class="how-it-works-box-icon"&gt;1&lt;/div&gt;
+          &lt;h3&gt;Create Your Refair.me Profile&lt;/h3&gt;
+          &lt;p&gt;Login with e-mail or LinkedIn, and set-up your profile as a candidate, or a recruiter.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-4 col-sm-offset-2 how-it-works-box wow fadeInDown"&gt;
+          &lt;div class="how-it-works-box-icon"&gt;2&lt;/div&gt;
+          &lt;h3&gt;Describe Your Needs&lt;/h3&gt;
+          &lt;p&gt;Tell us what you can do, or whom you need to hire.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-4 col-sm-offset-1 how-it-works-box wow fadeInUp"&gt;
+          &lt;div class="how-it-works-box-icon"&gt;3&lt;/div&gt;
+          &lt;h3&gt;Get Tailored Offers&lt;/h3&gt;
+          &lt;p&gt;AI analyzes your needs all the time, and suggests the best job offers or candidates.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-4 col-sm-offset-2 how-it-works-box wow fadeInDown"&gt;
+          &lt;div class="how-it-works-box-icon"&gt;4&lt;/div&gt;
+          &lt;h3&gt;Let It Do The Work For You&lt;/h3&gt;
+          &lt;p&gt;Refair.Me minimizes the work required to apply for a job, as well as find candidates.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-12 section-bottom-button wow fadeInUp"&gt;
+          &lt;a class="btn btn-link-1 scroll-link" @click="aconvert"&gt;Join Beta&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&nbsp;
+  &lt;!-- Call to action --&gt;
+  &lt;div class="call-to-action-container section-container section-container-image-bg section-container-image-bg-last"&gt;
+    &lt;div class="container"&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-12 call-to-action section-description wow fadeInLeftBig"&gt;
+          &lt;h2&gt;&lt;strong&gt;Join The Beta&lt;/strong&gt;&lt;/h2&gt;
+          &lt;div class="divider-1 wow fadeInUp"&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+          &lt;p&gt;
+            Sign-up now and start using Refair:Me to help us develop the best tool for your needs, whether you’re a talented candidate on a job hunt or a recruiter looking for the right match.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-12 section-bottom-button wow fadeInUp"&gt;
+          &lt;a class="btn btn-link-1 scroll-link" @click="aconvert"&gt;Join Beta&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&nbsp;
+  &lt;!-- About us --&gt;
+  &lt;div class="about-us-container section-container"&gt;
+    &lt;div class="container"&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-12 about-us section-description wow fadeIn"&gt;
+          &lt;h2&gt;&lt;strong&gt;About&lt;/strong&gt; us&lt;/h2&gt;
+          &lt;div class="divider-1 wow fadeInUp"&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-sm-4 about-us-box wow fadeInDown"&gt;
+          &lt;div class="about-us-photo"&gt;
+            &lt;img src="assets/images/dermot.jpg" alt="" data-at2x="assets/images/dermot.jpg" style="height:150px;"&gt;
+          &lt;/div&gt;
+          &lt;h3&gt;Dermot Corr &lt;/h3&gt;
+          &lt;p&gt;Founder of TechSorted, organiser of TechSaturdays, networking and hiring expert&lt;/p&gt;
+          &lt;div class="about-us-social"&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-facebook"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-dribbble"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-twitter"&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-4 about-us-box wow fadeInUp"&gt;
+          &lt;div class="about-us-photo"&gt;
+            &lt;img src="assets/images/piotr.jpg" alt="" data-at2x="assets/images/piotr.jpg" style="height:150px;"&gt;
+          &lt;/div&gt;
+          &lt;h3&gt;Piotr Słupski&lt;/h3&gt;
+          &lt;p&gt;Scientist, developer, inventor, all-star bleeding-edge technology expert, entrepreneur&lt;/p&gt;
+          &lt;div class="about-us-social"&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-facebook"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-dribbble"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-twitter"&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-4 about-us-box wow fadeInUp"&gt;
+          &lt;div class="about-us-photo"&gt;
+            &lt;img src="assets/images/michal.jpg" alt="" data-at2x="assets/images/michal.jpg" style="height:150px;"&gt;
+          &lt;/div&gt;
+          &lt;h3&gt;Michał Słupski &lt;/h3&gt;
+          &lt;p&gt;Online marketer specialising in SEO, content marketing, and web conversion optimization.&lt;/p&gt;
+          &lt;div class="about-us-social"&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-facebook"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-dribbble"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-twitter"&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-4 about-us-box wow fadeInUp"&gt;
+          &lt;div class="about-us-photo"&gt;
+            &lt;img src="assets/images/halupka.jpg" alt="" data-at2x="assets/images/halupka.jpg" style="height:150px;"&gt;
+          &lt;/div&gt;
+          &lt;h3&gt;Marcin Hałupka&lt;/h3&gt;
+          &lt;p&gt;AI and Big Data developer. Has a nice fb profile pic&lt;/p&gt;
+          &lt;div class="about-us-social"&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-facebook"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-dribbble"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-twitter"&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="col-sm-4 about-us-box wow fadeInUp"&gt;
+          &lt;div class="about-us-photo"&gt;
+            &lt;img src="assets/images/stephen.jpg" alt="" data-at2x="assets/images/stephen.jpg"&gt;
+          &lt;/div&gt;
+          &lt;h3&gt;Stephen Wetherall&lt;/h3&gt;
+          &lt;p&gt;HR Specialist, start-up expert&lt;/p&gt;
+          &lt;div class="about-us-social"&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-facebook"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-dribbble"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a href="#"&gt;&lt;i class="fa fa-twitter"&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+  data: function() {
+    return {}
+  },
+  name: 'landingpage',
+  methods: {
+<span class="cstat-no" title="statement not covered" >    aconvert: function($args) {</span>
+      window.loca<span class="fstat-no" title="function not covered" >tion.</span>replace(process.env.BASE_URL + '/convert');
+<span class="cstat-no" title="statement not covered" >    }</span>
+  }
+}
+&lt;/script&gt;
+<span class="fstat-no" title="function not covered" ></span></pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Apr 08 2018 13:53:53 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{
+    "name": "prizm/pristine",
+    "description": "Slim Framework 3 + Vue.js",
+    "type": "project",
+    "keywords": ["slim", "slim 3", "vue", "bootloader"],
+    "homepage": "https://github.com/piotroxp/pristine",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HavenShen",
+            "email": "havenshen@gmail.com"
+        },{
+            "name":"Piotr Słupski",
+            "email":"piotr.slupski@pryzmat.pl"
+        },{
+            "name":"Akash Kumar",
+            "email":"a_kumar@poczta.fm"
+        }
+    ],
+    "require": {
+        "stripe/stripe-php": "*",
+        "twig/twig": "^3.0",
+        "psr/log": "^3.0",
+        "slim/slim": "*",
+        "slim/twig-view": "*",
+        "respect/validation": "*",
+        "slim/csrf": "*",
+        "slim/flash": "*",
+        "vlucas/phpdotenv": "*",
+        "phpunit/phpunit": "*",
+        "knplabs/knp-menu": "*",
+        "chadicus/slim-oauth2-middleware": "*",
+        "davidepastore/slim-validation": "*",
+        "nette/mail": "*",
+        "rmccue/requests": "*",
+        "chadicus/slim-oauth2": "*",
+        "chadicus/slim-oauth2-http": "*",
+        "guzzlehttp/guzzle": "*",
+        "illuminate/events": "*",
+        "carlosocarvalho/simple-input": "*",
+        "symfony/process": "*",
+        "monolog/monolog":"^3.8",
+        "phpmailer/phpmailer": "*",
+        "league/oauth2-client": "*",
+        "league/oauth2-linkedin": "*",
+        "league/oauth2-github": "*",
+        "tuupola/slim-jwt-auth": "*",
+        "litipk/php-jiffy": "*",
+        "adrianfalleiro/slim-cli-runner": "*",
+        "illuminate/pagination": "*",
+        "illuminate/database": "*",
+        "bryanjhv/slim-session": "*",
+        "ext-pdo": "*",
+        "pimple/pimple": "^3.5",
+        "codeception/codeception": "^5.1",
+        "codeception/module-db": "^3.1",
+        "codeception/module-rest": "^3.4",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-symfony": "^3.4",
+        "codeception/phpunit-wrapper": "*",
+        "codeception/module-webdriver": "^4.0",
+        "codeception/module-phpbrowser": "^3.0",
+        "codeception/module-filesystem": "^3.0",
+        "captbaritone/mailcatcher-codeception-module": "^3.0",
+        "robmorgan/phinx": "^0.16",
+        "symfony/dotenv": "^6.4"
+    },
+    "scripts": {
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.6"
+    }
+}

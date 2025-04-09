@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/job-builder/JobBuilderAboutJob.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/components/job-builder</a> JobBuilderAboutJob.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/114</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/80</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/29</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/32</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;<span class="cstat-no" title="statement not covered" >t<span class="fstat-no" title="function not covered" >em</span>plate lang="pug"&gt;</span>
+div
+  form#aboutJob(@submit.prevent="validateForm")
+<span class="cstat-no" title="statement not covered" >    h1 About the job</span>
+    hr
+    .form-group
+      label(for='jobTitle') Job title
+      input.form-<span class="cstat-no" title="statement not covered" >control(name='jobTitle', type='text</span>', v-model='title', placeholder='ex. Chief Data Analyst, Technical Support Engineer')
+      small.invalid-feedback.help-block
+    .form-group<span class="cstat-no" title="statement not covered" ></span>
+      label(for='jobDescription') Job description
+      textarea.f<span class="cstat-no" title="statement not covered" >orm-control(name='jobDescri</span>ption', rows='4', v-model='jobdesc', placeholder='Describe the work to be the done')
+      small.invalid-feedback.help-block
+    .form-group<span class="cstat-no" title="statement not covered" ></span>
+      label(for='jobLocation') Location
+      input.form-control(n<span class="cstat-no" title="statement not covered" >ame='jobLocation' type='text' v-</span>model='location' placeholder='Enter work location')
+      small.invalid-feedback.help-block
+    .form-group<span class="cstat-no" title="statement not covered" ></span>
+      label(for='contractType') Contract type
+      input.form-c<span class="cstat-no" title="statement not covered" >ontrol(name="contractType" type</span>='text' v-model='contractType' placeholder="Specify contract type")
+      small.invalid-feedback.help-block
+    br<span class="cstat-no" title="statement not covered" ></span>
+    h5 WHAT ARE THE SKILL REQUIREMENTS?
+    hr<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    .form-group
+      label#kwErrMsg(for='mustHave') Must have
+      refairkeywords(:keywords='this.keywords', @keywords='keywordsChange' name="mustHave")
+      small.invalid-feedback.help-block sds
+    .form-row.mt-2
+      .col-12.col-lg-6
+        label(for='travel') % Travel of role
+        .form-row
+          .form-group.col-9
+            slider(name='travel', :min='0', :max='100', tooltip='hover', :interval='5', v-model='travel')
+          .input-group.col-3
+            input.form-control(type='text', v-model='travel')
+            .input-group-append
+              span.input-group-text %
+    .form-row.mt-2
+      .col-12.col-lg-6
+        label(for='remoteWork') % Remote work possible
+        .form-row
+          .form-group.col-9
+            slider(name='remoteWork', :min='0', :max='100', tooltip='hover', :interval='5', v-model='remoteWork')
+          .input-group.col-3
+            input.form-control(type='text', v-model='remoteWork')
+            .input-group-append
+              span.input-group-text %
+    .form-row
+      .col-12.col-lg-6
+        .form-group.col-12.p-0
+          label.col-form-label(for='salary') Salary
+          slider(:min='0', :max='50000', :interval='500', tooltip='hover', :tooltip-dir="['left','right']", v-model='salary')
+        .form-row
+          .input-group.col-6
+            .input-group-prepend.clickable(@click="changeCurrency")
+              span.input-group-text.curr {{currency}}
+            input.form-control(type='text', v-model='salary[0]')
+          .input-group.col-6
+            .input-group-prepend.clickable(@click='changeCurrency')
+              span.input-group-text.curr {{currency}}
+            input.form-control(type='text', v-model='salary[1]')
+    .form-row.mt-2
+      .col-12.col-lg-6
+        .form-row
+          label.col-form-label(for='experienceRequired') Experience required
+          .form-group.col-9
+            slider(name='expslider', :min='0', :max='20', tooltip='hover', :interval='0.5', v-model='requiredexp')
+          .input-group.col-3
+            input.form-control(type='text', v-model='requiredexp')
+            .input-group-append
+              span.input-group-text yrs
+    .form-group.col-12.col-lg-6.mt-2.pl-0
+      label
+        input(type='checkbox', v-model='requiredremote')
+        |  This position requires remote
+    .form-group.col-12.col-lg-6.pl-0
+      label
+        input(type='checkbox', v-model='requiredrelocation')
+        |  This position requires relocation
+    .form-group.col-12.col-lg-6.pl-0
+      label
+        input(type='checkbox', v-model='relocationPackage')
+        |  Relocation package offered
+    button.btn.btn-success.float-right(type='submit') Next
+&lt;/template&gt;
+&lt;script&gt;
+import store from '.../../../prizm-vuex.js'
+import refairkeywords from '../keywords.vue'
+import slider from 'vue-slider-component'
+import validation from '../../validation.js'
+&nbsp;
+export default {
+  data: function() {
+    return {
+      keywords: [],
+      title: '',
+      jobdesc: '',
+      location: '',
+      contractType: '',
+      travel: 20,
+      remoteWork: 20,
+      currency: '$',
+      salary: [3000, 15000],
+      requiredexp: 3,
+      requiredremote: false,
+      requiredrelocation: false,
+      relocationPackage: false,
+      posterid: this.$store.getters.dehashedData.EMAIL,
+      isAuthenticated: this.$store.getters.isAuthenticated
+    }
+  },
+<span class="cstat-no" title="statement not covered" >  watch: {</span>
+    keywords: fun<span class="fstat-no" title="function not covered" >ction</span>(){
+<span class="cstat-no" title="statement not covered" >      if(this.keywords.length &gt; 0)</span>
+        validation.removeError($('#kwErrMsg'))
+    }
+  },
+  methods: {
+    keywordsChange(eventData) {
+      this.keywords = eventData
+    },
+    changeCurrency: function(event){
+      var currencies = ['$','€','PLN']
+      var index = currencies.indexOf(this.currency) + 1
+      if(index == 3) index = 0
+      this.currency = currencies[index]
+    },
+    validateForm: function(){
+      var validated = true;
+      var self = this;
+      $("form#aboutJob label:not(.form-check-label)").each(function(){
+        if(validation.validateField($(this)) == false
+          || validation<span class="fstat-no" title="function not covered" >.validate</span>Keywords(self.keywords, $('#kwErrMsg')) == false){
+<span class="cstat-no" title="statement not covered" >          validated = false<span class="cstat-no" title="statement not covered" ></span></span>
+          window.scroll(0,0)
+        };
+      })
+<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      if(!validated){ //TODO chan</span>ge to normal
+        this.$emit('job',{
+          title: this.title,
+          jobdesc: this.jobde<span class="fstat-no" title="function not covered" >sc,</span>
+          location: thi<span class="cstat-no" title="statement not covered" >s.location,</span>
+          contract<span class="cstat-no" title="statement not covered" >Type: this.contractType,</span>
+<span class="cstat-no" title="statement not covered" >          travel: this<span class="cstat-no" title="statement not covered" >.travel,</span></span>
+<span class="cstat-no" title="statement not covered" >          remoteWork: this.remoteWork,</span>
+          salary: this.salary,
+          requiredexp: this<span class="fstat-no" title="function not covered" >.requiredexp,</span>
+          requiredremo<span class="cstat-no" title="statement not covered" >te: t</span>his.requiredremote,
+          require<span class="cstat-no" title="statement not covered" >drelo</span>cation: this.requiredrelocation,
+<span class="cstat-no" title="statement not covered" >          relocationPackage: this.relocationPackage<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >        }, 'aboutJob')</span>
+      }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+      return validated;
+    }
+  },
+  comp<span class="cstat-no" title="statement not covered" >onents: {</span>
+    refairkeywords,
+    slid<span class="cstat-no" title="statement not covered" >er</span>
+  }
+}
+&lt;/script&gt;
+&lt;style lang="sass" scoped&gt;
+  .card
+    box-shadow: 0 2px 6px 0 hsla(0,0%,0%,0.1)
+    border: 0
+  .clickable
+    cursor: pointer
+&lt;/style&gt;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Apr 22 2018 08:46:55 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

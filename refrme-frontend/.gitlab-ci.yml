@@ -1,0 +1,21 @@
+variables:
+  S3_BUCKET_PROD: "refairme"
+  S3_BUCKET_STAGE: "refairme-stage"
+
+deploy-refairme-stage:
+  image: python:3.5
+  environment: stage
+  script:
+  - pip install awscli
+  - aws s3 cp dist s3://$S3_BUCKET_STAGE/ --recursive
+  only:
+    - stage
+
+deploy-refairme-production:
+  image: python:3.5
+  environment: production
+  script:
+  - pip install awscli
+  - aws s3 cp dist s3://$S3_BUCKET_PROD/ --recursive
+  only:
+    - master

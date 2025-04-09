@@ -1,0 +1,55 @@
+# Copyright: PRIZM Piotr Słupski 2023
+
+FROM archlinux:base-devel
+
+LABEL maintainer="Piotr Słupski"
+ARG WWWGROUP
+ARG NODE_VERSION=18
+ARG POSTGRES_VERSION=14
+
+WORKDIR /var/www/html
+
+ENV TZ=UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Install packages
+RUN pacman -Syuu --noconfirm --needed \
+      curl nginx redis mariadb ffmpeg shadow supervisor git dma \
+      libxslt unixodbc freetds tidy aspell enchant libvoikko hspell \
+      hunspell nuspell net-snmp libsodium expac jq ninja python-tqdm \
+      fakechroot gtest meson python-pip capstone  composer && \
+    pacman -Scc --noconfirm && rm -rf /var/cache/pacman/pkg/*
+
+# Create directory for PHP packages
+RUN mkdir -p /var/php83libs
+
+COPY ./php83 /var/php83libs
+
+# Install PHP packages from local files
+RUN pacman -U --noconfirm /var/php83libs/c-client*.zst
+RUN find /var/php83libs -name "*.pkg.tar.zst" -exec pacman -U --noconfirm {} +
+
+# Setup user and directories
+RUN useradd -m -s /bin/bash www-data && \
+    mkdir -p /var/www/html/storage /var/www/html/storage/app/public/files /var/www/html/storage/app/chunks /run/php /var/www/html/storage/logs && \
+    chown -R www-data:www-data /var/www/html
+
+# Configure PHP-FPM and Supervisor
+COPY ./config/fpm-pool.conf /etc/php/php-fpm.d/www.conf
+COPY ./config/php.ini /etc/php82/conf.d/custom.ini
+COPY ./config/redis.ini /etc/php82/conf.d/redis.ini
+COPY ./config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./start-container /usr/local/bin/start-container
+COPY ./*.ini /etc/php/conf.d/
+
+# Link PHP and PHP-FPM binaries
+RUN ln -sf /usr/bin/php83 /usr/bin/php && \
+    cp -r /usr/lib/php83/ /usr/lib/php && \
+    ln -sf /usr/bin/php-fpm82 /usr/bin/php-fpm
+
+# Set permissions
+RUN chmod -R 777 /run/php /run/php83-fpm /var/www/html/storage/app/public /var/www/html/storage/app/chunks && \
+    chown -R www-data:www-data /run/php && \
+    chmod +x /usr/local/bin/start-container
+
+ENTRYPOINT ["start-container"]

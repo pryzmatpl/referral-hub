@@ -1,0 +1,57 @@
+# Copyright: PRIZM Piotr Słupski 2023
+
+FROM archlinux:base-devel
+
+LABEL maintainer="Piotr Słupski"
+ARG WWWGROUP
+ARG NODE_VERSION=18
+ARG POSTGRES_VERSION=14
+
+WORKDIR /var/www/html
+
+ENV TZ=UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN pacman -Syuu --noconfirm \
+      curl nginx redis mariadb ffmpeg shadow supervisor git dma libxslt unixodbc \
+      freetds tidy aspell enchant libvoikko hspell hunspell nuspell net-snmp \
+      libsodium expac jq ninja python-tqdm fakechroot gtest meson python-pip xdebug capstone composer
+
+# Create a directory for custom PHP packages
+RUN mkdir /var/php83libs
+COPY ./php83 /var/php83libs
+
+# Install PHP packages in one go
+RUN pacman -U --noconfirm /var/php83libs/c-client*.zst
+RUN pacman -U --noconfirm /var/php83libs/*.pkg.tar.zst
+
+# Create a system user for the web server
+USER root
+RUN useradd -m -s /bin/bash www-data
+
+# Create necessary directories
+RUN mkdir -p /var/www/html/storage /var/www/html/storage/app/public/files /var/www/html/storage/app/chunks /run/php /var/www/html/storage/logs
+
+# Configure PHP-FPM
+COPY ./config/fpm-pool.conf /etc/php/php-fpm.d/www.conf
+COPY ./config/php.ini /etc/php82/conf.d/custom.ini
+COPY ./config/redis.ini /etc/php82/conf.d/redis.ini
+COPY ./config/xdebug.ini /etc/php82/conf.d/xdebug.ini
+
+# Configure supervisord
+COPY ./config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy and configure startup script
+COPY ./start-container /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/start-container
+
+# Link PHP binaries for system-wide usage
+RUN ln -sf /usr/bin/php83 /usr/bin/php \
+    && cp -r /usr/lib/php83/ /usr/lib/php \
+    && ln -sf /usr/bin/php-fpm82 /usr/bin/php-fpm
+
+# Set permissions for necessary directories
+RUN chmod -R 777 /run/php /run/php83-fpm /var/www/html/storage/app/public /var/www/html/storage/app/chunks \
+    && chown -R www-data:www-data /run/php
+
+ENTRYPOINT ["start-container"]

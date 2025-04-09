@@ -1,0 +1,3 @@
+[submodule "refairmebackend1/models/prizm-phi4"]
+	path = refairmebackend1/models/prizm-phi4
+	url = https://github.com/pryzmatpl/prizm-phi4

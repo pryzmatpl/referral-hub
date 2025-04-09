@@ -1,0 +1,162 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.4 Chrome/128.0.6613.186 Electron/32.2.8 Safari/537.36" version="26.0.4">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="1595" dy="708" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="XcHoRtImn4EsZSdR97ge-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-39" target="XcHoRtImn4EsZSdR97ge-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-39" value="User Referral" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="230" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-48" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-45" target="XcHoRtImn4EsZSdR97ge-53">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="150" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="135" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-51" value="Job 2 User" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XcHoRtImn4EsZSdR97ge-48">
+          <mxGeometry x="-0.1261" y="2" relative="1" as="geometry">
+            <mxPoint x="3" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-45" target="XcHoRtImn4EsZSdR97ge-54">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="150" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="465" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-52" value="User 2 Job" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XcHoRtImn4EsZSdR97ge-50">
+          <mxGeometry x="-0.0375" y="2" relative="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-45" value="Refer Job To User?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="225" y="120" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-53" target="XcHoRtImn4EsZSdR97ge-58">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-59" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XcHoRtImn4EsZSdR97ge-57">
+          <mxGeometry x="-0.2751" relative="1" as="geometry">
+            <mxPoint x="-13" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-53" target="XcHoRtImn4EsZSdR97ge-63">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-65" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XcHoRtImn4EsZSdR97ge-64">
+          <mxGeometry x="-0.1019" y="-1" relative="1" as="geometry">
+            <mxPoint x="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-53" value="User exists" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="70" y="180" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-54" target="XcHoRtImn4EsZSdR97ge-58">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="210" />
+              <mxPoint x="340" y="350" />
+              <mxPoint x="426" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.625;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-54" target="XcHoRtImn4EsZSdR97ge-63">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="460" y="350" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="465" y="320" />
+              <mxPoint x="150" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-68" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XcHoRtImn4EsZSdR97ge-67">
+          <mxGeometry x="-0.2383" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-54" value="User exists" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="400" y="180" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-58" target="XcHoRtImn4EsZSdR97ge-85">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="382" y="475" />
+              <mxPoint x="370" y="475" />
+              <mxPoint x="370" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-58" value="Compare Job Weights and Profile Weights, generate score (sqrt(delta1+delta2...))" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="294" y="390" width="176" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-61" value="Yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="350" y="185" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-63" target="XcHoRtImn4EsZSdR97ge-72">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-63" value="User registration" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="75" y="340" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-80" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-70" target="XcHoRtImn4EsZSdR97ge-79">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-70" value="Prompt Keywords of skills" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="160" y="470" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-72" target="XcHoRtImn4EsZSdR97ge-74">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-76" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="XcHoRtImn4EsZSdR97ge-75">
+          <mxGeometry x="-0.5875" y="3" relative="1" as="geometry">
+            <mxPoint x="-13" y="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-72" target="XcHoRtImn4EsZSdR97ge-70">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="460" />
+              <mxPoint x="220" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-72" value="User Reigsters?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="70" y="390" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-88" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-74" target="XcHoRtImn4EsZSdR97ge-87">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-74" value="Inform on 1)referrer does not get bounty&lt;br&gt;2)you wont get a cool job" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-20" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-79" value="AIMatch of Created Profile" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="160" y="520" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-81" value="Allow user to 1-click apply to job from referral" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="560" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-90" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-85" target="XcHoRtImn4EsZSdR97ge-81">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-85" value="Calculate bounty for the refererring person based on AIMatch weights fit" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="400" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-86" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.209;entryY=0.984;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="XcHoRtImn4EsZSdR97ge-79" target="XcHoRtImn4EsZSdR97ge-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XcHoRtImn4EsZSdR97ge-87" value="Redirect to /home, send email to referrer" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-20" y="520" width="120" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
