@@ -1,7 +1,6 @@
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
-const config = require('../config')
 const { merge } = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -10,9 +9,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
-const env = process.env.NODE_ENV === 'testing'
-  ? require('../config/test.env')
-  : require('../config/prod.env')
+const env = 'prod';
 
 const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
@@ -29,9 +26,9 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
     ]
   },
-  devtool: config.build.productionSourceMap ? config.build.devtool : false,
+  devtool: false,
   output: {
-    path: config.build.assetsRoot,
+    path: path.resolve(__dirname, "../dist"),
     filename: utils.assetsPath('js/[name].[contenthash].js'),
     chunkFilename: utils.assetsPath('js/[id].[contenthash].js')
   },
@@ -72,7 +69,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       patterns: [
         {
           from: path.resolve(__dirname, '../static'),
-          to: config.build.assetsSubDirectory,
+          to: "./dist",
           globOptions: {
             ignore: ['.*']
           }
@@ -82,10 +79,5 @@ const webpackConfig = merge(baseWebpackConfig, {
     new VueLoaderPlugin()
   ]
 })
-
-if (config.build.bundleAnalyzerReport) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
-}
 
 module.exports = webpackConfig
