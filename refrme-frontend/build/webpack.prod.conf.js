@@ -54,7 +54,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: utils.assetsPath('css/[name].[contenthash].css'),
     }),
     new HtmlWebpackPlugin({
-      filename: 'index.html',
+      filename: './static/index.html',
       template: 'index.html',
       inject: true,
       minify: {
