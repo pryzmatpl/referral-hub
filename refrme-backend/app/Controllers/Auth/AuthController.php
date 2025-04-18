@@ -31,7 +31,6 @@ use RuntimeException;
 final class AuthController
 {
     private const LINKEDIN_SCOPE = 'openid profile email';
-    private const LINKEDIN_REDIRECTION_URI = 'http://localhost:8080/auth/signin';
     private const LINKEDIN_ACCESS_TOKEN_URL = 'https://www.linkedin.com/oauth/v2/accessToken';
     private const LINKEDIN_USERINFO_URL = 'https://api.linkedin.com/v2/userinfo';
     const USER_DOES_NOT_EXIST = 'user does not exist';
@@ -63,12 +62,12 @@ final class AuthController
     public function getLinkedInAccessToken(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $code = $this->getRequiredParam($request, 'code');
-
+        $redirectUrl = sprintf("%s/%s", getenv("FRONTEND_URL"), "auth/signin");
         try {
             $token = $this->linkedInService->getAccessToken(
                 $code,
                 self::LINKEDIN_ACCESS_TOKEN_URL,
-                self::LINKEDIN_REDIRECTION_URI
+                $redirectUrl
             );
 
             return $this->jsonResponse($response, $token);
