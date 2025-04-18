@@ -155,6 +155,5 @@ module.exports = {
       filename: utils.assetsPath("css/[name].[contenthash].css"),
       chunkFilename: utils.assetsPath("css/[id].[contenthash].css"),
     }),
-    new BundleAnalyzerPlugin(),
   ],
 };

@@ -60,6 +60,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     }),
 
     new VueLoaderPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
 });
 
