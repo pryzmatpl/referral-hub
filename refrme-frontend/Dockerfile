@@ -1,5 +1,3 @@
-LABEL authors="piotro"
-
 FROM nginx:alpine
 
 # Copy the built frontend assets to the nginx html directory
