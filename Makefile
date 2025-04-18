@@ -8,3 +8,7 @@ debug:
 prod:
 	ENV=prod $(MAKE) -C refrme-frontend prod
 	ENV=prod $(MAKE) -C refrme-backend prod
+
+down:
+	ENV=prod $(MAKE) -C refrme-frontend down
+	ENV=prod $(MAKE) -C refrme-backend down
