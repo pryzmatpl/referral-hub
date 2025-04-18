@@ -15,7 +15,6 @@ const dotenv = require('dotenv').config();
 
 console.log(process.env)
 
-
 const { definitions } = new Dotenv({
   path: path.resolve(__dirname, '.env'), // load this now instead of the ones in '.env'
   safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
@@ -30,7 +29,7 @@ module.exports = {
   cache: false,
   context: path.resolve(__dirname, "../"),
   entry: {
-    app: path.resolve(__dirname, "../src/main.js")
+    app: path.resolve(__dirname, "../src/index.js")
   },
   output: {
     path: buildAssetsRoot,

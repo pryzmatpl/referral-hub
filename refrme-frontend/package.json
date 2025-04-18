@@ -3,8 +3,8 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --config build/webpack.dev.conf.js --host 0.0.0.0 --port 8080",
     "devno": "webpack-dev-server --mode development --open",
-    "prod": "webpack --progress --config build/webpack.prod.conf.js",
-    "build": "webpack --progress --mode production",
+    "build": "webpack --config build/webpack.prod.conf.js --progress --mode production",
+    "prod": "webpack --config build/webpack.prod.conf.js --progress --mode production",
     "start": "node server.js",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit",

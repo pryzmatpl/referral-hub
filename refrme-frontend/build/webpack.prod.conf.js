@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -8,6 +9,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+
+fs.writeFileSync(
+    path.resolve(__dirname, '../alias-log.json'),
+    JSON.stringify(baseWebpackConfig.resolve?.alias, null, 2)
+);
+
 
 const env = 'prod';
 
@@ -79,5 +86,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new VueLoaderPlugin()
   ]
 })
+
+console.log('💡 Alias @ resolves to:', webpackConfig.resolve?.alias?.['@']);
 
 module.exports = webpackConfig

@@ -2,6 +2,7 @@
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
+process.env.ENV = 'prod'
 
 const ora = require('ora')
 const rm = require('rimraf')
@@ -10,6 +11,7 @@ const chalk = require('chalk')
 const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')
+console.log('Resolved Webpack Config Aliases:', webpackConfig.resolve?.alias)
 
 const spinner = ora('building for production...')
 spinner.start()
