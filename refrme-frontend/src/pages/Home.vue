@@ -123,7 +123,7 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-@import '@/assets/settings.scss';
+@use '@/assets/settings.scss' as settings;
 
 .container { 
   background-size: 100% 100%;

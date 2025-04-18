@@ -282,7 +282,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/settings.scss';
+@use '@/assets/settings.scss' as settings;
 
 .h1 {
   margin-bottom: 100px;

@@ -28,7 +28,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/settings.scss';
+@use '@/assets/settings.scss' as settings;
 
 
 swiper-container {

@@ -324,7 +324,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/settings.scss';
+@use '@/assets/settings.scss' as settings;
 
 .shadow {
   box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
