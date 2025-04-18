@@ -1,5 +1,6 @@
-import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
-import store from '@/store/index.js'
+import { createRouter, createWebHistory } from 'vue-router'
+// Remove direct import to avoid circular dependency
+// import store from '@/store/index.js'
 
 import Home from '@/pages/Home.vue'
 import UserProfile from '@/pages/UserProfile'
@@ -31,13 +32,31 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: routes // Make sure to pass the routes array here
+  routes: routes
 })
+
+// Use improved approach to access authentication state
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.state.isAuthenticated) {
-    next({ name: 'SignIn' })
+  // Get the store directly from window.__INITIAL_STATE__
+  let isAuthenticated = false;
+  
+  try {
+    // Check multiple potential sources for authentication state
+    isAuthenticated = window.__INITIAL_STATE__?.isAuthenticated ||
+                     window.__INITIAL_STATE__?.store?.state?.isAuthenticated ||
+                     false;
+    
+    console.log('[DEBUG:Router] Authentication check:', isAuthenticated);
+  } catch (error) {
+    console.error('[DEBUG:Router] Error checking authentication:', error);
+    isAuthenticated = false;
+  }
+  
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    console.log('[DEBUG:Router] Redirecting to SignIn from:', to.path);
+    next({ name: 'SignIn' });
   } else {
-    next()
+    next();
   }
 })
 

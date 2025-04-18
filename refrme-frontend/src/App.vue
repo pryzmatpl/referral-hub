@@ -43,7 +43,7 @@
 // import store from '@/store/index.js'
 import cookieconsent from 'cookieconsent'
 import {ModalTarget} from "@kolirt/vue-modal";
-import { computed, onMounted, reactive, toRefs, inject } from 'vue'
+import { computed, onMounted, reactive, toRefs, inject, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -52,11 +52,26 @@ export default {
   setup() {
     console.log('[DEBUG:App] Starting App component setup');
     
-    let router, route, store;
+    // Initialize reactive references
+    const router = ref(null);
+    const route = ref(null);
+    const store = ref(null);
+    
+    // Setup function to safely get store
+    const getStore = () => {
+      console.log('[DEBUG:App] Getting store');
+      try {
+        // Try all possible ways to get the store
+        return useStore() || inject('store') || window.__INITIAL_STATE__?.store;
+      } catch (error) {
+        console.error('[DEBUG:App] Error getting store:', error);
+        return null;
+      }
+    };
     
     try {
       console.log('[DEBUG:App] Initializing router');
-      router = useRouter();
+      router.value = useRouter();
       console.log('[DEBUG:App] Router initialized successfully');
     } catch (error) {
       console.error('[DEBUG:App] Error initializing router:', error);
@@ -64,32 +79,19 @@ export default {
     
     try {
       console.log('[DEBUG:App] Initializing route');
-      route = useRoute();
+      route.value = useRoute();
       console.log('[DEBUG:App] Route initialized successfully');
     } catch (error) {
       console.error('[DEBUG:App] Error initializing route:', error);
     }
     
+    // Initialize store using a safer approach with fallbacks
     try {
       console.log('[DEBUG:App] Initializing store with useStore()');
-      store = useStore();
-      console.log('[DEBUG:App] Store initialized successfully:', store ? 'store exists' : 'store is undefined');
-      
-      // Try to get store from inject as fallback
-      if (!store) {
-        console.log('[DEBUG:App] Store not found with useStore(), trying inject()');
-        store = inject('store');
-        console.log('[DEBUG:App] Store from inject:', store ? 'exists' : 'undefined');
-      }
+      store.value = getStore();
+      console.log('[DEBUG:App] Store initialized successfully:', store.value ? 'store exists' : 'store is undefined');
     } catch (error) {
-      console.error('[DEBUG:App] Error initializing store with useStore():', error);
-      try {
-        console.log('[DEBUG:App] Trying to get store via inject()');
-        store = inject('store');
-        console.log('[DEBUG:App] Store from inject:', store ? 'exists' : 'undefined');
-      } catch (injectError) {
-        console.error('[DEBUG:App] Error getting store via inject():', injectError);
-      }
+      console.error('[DEBUG:App] Error initializing store:', error);
     }
     
     console.log('[DEBUG:App] Creating reactive state');
@@ -99,46 +101,68 @@ export default {
       refkeywords: []
     })
     
-    // Computed properties
+    // Computed properties with safer access patterns
     console.log('[DEBUG:App] Setting up computed properties');
     
     const isAuthenticated = computed(() => {
-      console.log('[DEBUG:App] Computing isAuthenticated, store:', store ? 'exists' : 'undefined');
-      console.log('[DEBUG:App] Store getters:', store?.getters ? 'exist' : 'undefined');
-      return store?.getters?.isAuthenticated || false;
+      console.log('[DEBUG:App] Computing isAuthenticated');
+      // Check the store first, then fall back to other methods
+      let authStatus = false;
+      
+      try {
+        // First try to get it directly from our store
+        if (store.value && typeof store.value.getters?.isAuthenticated !== 'undefined') {
+          authStatus = store.value.getters.isAuthenticated;
+        } 
+        // Then try window.__INITIAL_STATE__
+        else if (window.__INITIAL_STATE__?.isAuthenticated) {
+          authStatus = window.__INITIAL_STATE__.isAuthenticated;
+        }
+        
+        console.log('[DEBUG:App] Authentication status:', authStatus);
+        return authStatus;
+      } catch (error) {
+        console.error('[DEBUG:App] Error getting authentication status:', error);
+        return false;
+      }
     });
     
     const path = computed(() => {
-      console.log('[DEBUG:App] Computing path, route:', route ? 'exists' : 'undefined');
-      return route?.path || '/';
+      console.log('[DEBUG:App] Computing path');
+      return route.value?.path || '/';
     });
     
     const isPathHome = computed(() => {
       console.log('[DEBUG:App] Computing isPathHome');
-      return path.value == '/';
+      return path.value === '/';
     });
     
     const currentRole = computed(() => {
-      console.log('[DEBUG:App] Computing currentRole, store state:', store?.state ? 'exists' : 'undefined');
-      console.log('[DEBUG:App] dehashedData:', store?.state?.dehashedData ? 'exists' : 'undefined');
-      return store?.state?.dehashedData?.CURRENT_ROLE || '';
+      console.log('[DEBUG:App] Computing currentRole');
+      return store.value?.state?.dehashedData?.CURRENT_ROLE || '';
     });
     
     const isUserAllowed = computed(() => {
-      console.log('[DEBUG:App] Computing isUserAllowed, currentRole:', currentRole.value);
-      return currentRole.value === 'admin' || currentRole.value === 'recruiter';
+      console.log('[DEBUG:App] Computing isUserAllowed');
+      const role = currentRole.value;
+      return role === 'admin' || role === 'recruiter';
     });
     
-    // Methods
+    // Methods with safer patterns
     console.log('[DEBUG:App] Setting up methods');
     const logout = () => {
       console.log('[DEBUG:App] Logging out');
       try {
-        if (store && store.dispatch) {
-          store.dispatch('signout')
-            .then(ret => router.push('/'))
+        // Get a fresh reference to the store
+        const currentStore = getStore();
+        if (currentStore && typeof currentStore.dispatch === 'function') {
+          currentStore.dispatch('signout')
+            .then(() => {
+              if (router.value) {
+                router.value.push('/');
+              }
+            })
             .catch(err => console.error('[DEBUG:App] Logout error:', err));
-          console.log('[DEBUG:App] Logout dispatch successful');
         } else {
           console.error('[DEBUG:App] Cannot logout: store or dispatch not available');
         }
@@ -151,23 +175,34 @@ export default {
     console.log('[DEBUG:App] Setting up lifecycle hooks');
     onMounted(() => {
       console.log('[DEBUG:App] Component mounted');
+      
+      // Retry store initialization if needed
+      if (!store.value) {
+        console.log('[DEBUG:App] Retrying store initialization on mount');
+        store.value = getStore();
+      }
+      
       window.addEventListener("load", function(){
         console.log('[DEBUG:App] Window loaded, initializing cookieconsent');
-        window.cookieconsent.initialise({
-          "palette": {
-            "popup": {
-              "background": "#eaf7f7",
-              "text": "#5c7291"
+        try {
+          window.cookieconsent.initialise({
+            "palette": {
+              "popup": {
+                "background": "#eaf7f7",
+                "text": "#5c7291"
+              },
+              "button": {
+                "background": "transparent",
+                "text": "#56cbdb",
+                "border": "#56cbdb"
+              }
             },
-            "button": {
-              "background": "transparent",
-              "text": "#56cbdb",
-              "border": "#56cbdb"
-            }
-          },
-          "position": "bottom-left"
-        });
-        console.log('[DEBUG:App] Cookieconsent initialized');
+            "position": "bottom-left"
+          });
+          console.log('[DEBUG:App] Cookieconsent initialized');
+        } catch (error) {
+          console.error('[DEBUG:App] Error initializing cookieconsent:', error);
+        }
       });
     })
     

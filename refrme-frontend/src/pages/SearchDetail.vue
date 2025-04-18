@@ -105,8 +105,8 @@
                   :key="remoteOption"
                   type="button"
                   variant="outline-secondary"
-                  @click="$store.commit('filterChange', { arg: 'remote', value: remoteOption })"
-                  :class="{ active: $store.getters.filterSelections.remote === remoteOption }"
+                  @click="updateFilterRemote(remoteOption)"
+                  :class="{ active: filterSelections.remote === remoteOption }"
                   class="w-100"
                 >{{ remoteOption }}</b-button>
               </b-button-group>
@@ -134,17 +134,16 @@
             <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Minimum salary (monthly/gross)</label>
               <Slider
-                v-model="filterSelections.salary"
+                v-model="localSalary"
                 :min="0"
                 :max="20000"
                 tooltip="hover"
                 :interval="1000"
-                :value="filterSelections.salary"
-                @callback="$store.commit('filterChange', { arg: 'salary', value: $refs.sal.getValue() })"
+                @change="handleSalaryChange"
                 ref="sal"
               />
               <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
-              <p>{{ filterSelections.salary }} PLN</p>
+              <p>{{ localSalary }} PLN</p>
             </div>
             <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Project team size</label>
@@ -154,8 +153,8 @@
                   :key="teamSizeOption"
                   type="button"
                   variant="outline-secondary"
-                  @click="$store.commit('filterChange', { arg: 'teamSize', value: teamSizeOption })"
-                  :class="{ active: $store.getters.filterSelections.teamSize === teamSizeOption }"
+                  @click="updateFilterTeamSize(teamSizeOption)"
+                  :class="{ active: filterSelections.teamSize === teamSizeOption }"
                   class="w-100"
                 >{{ teamSizeOption }}</b-button>
               </b-button-group>
@@ -271,13 +270,19 @@ export default {
 
   mounted () {
     this.$store.dispatch('getJobs')
+    // Initialize local salary from store
+    this.localSalary = this.$store.state.filterSelections.salary
   },
 
   watch: {
     'filterSelections.languages' () {this.$store.dispatch('getJobs')},
     'filterSelections.city' () {this.$store.dispatch('getJobs')},
     'filterSelections.employment' () {this.$store.dispatch('getJobs')},
-    'filterSelections.salary' () {this.$store.dispatch('getJobs')},
+    'filterSelections.salary' () {
+      // Update local salary when store changes
+      this.localSalary = this.$store.state.filterSelections.salary
+      this.$store.dispatch('getJobs')
+    },
     //'filterSelections.perks' () {this.$store.dispatch('getJobs')},
     'filterSelections.relocation' () {this.$store.dispatch('getJobs')}
   },
@@ -289,12 +294,23 @@ export default {
       'updateFilterCity',
       'updateFilterEmployment',
       'updateFilterWorkload',
+      'updateFilterRelocation',
+      'updateFilterPerks',
+      'updateFilterTeamSize',
+      'updateFilterRemote',
+      'updateFilterSalary',
       'clearAllFilters'
-    ])
+    ]),
+    
+    // New method to handle salary changes
+    handleSalaryChange(value) {
+      this.updateFilterSalary(value)
+    }
   },
 
   data () {
     return {
+      localSalary: 1000, // Default value
       //remotePossible: '',
       formResources: {
         methodologies: [
@@ -316,7 +332,7 @@ export default {
           'Commit on the first day?'
         ]
       },
-      //selectedMethodologies: [],
+      selectedMethodologies: [],
       //value: []
     }
   }

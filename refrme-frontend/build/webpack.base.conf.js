@@ -43,9 +43,14 @@ module.exports = {
     alias: {
       "vue$": "vue/dist/vue.esm-bundler.js",
       "@": path.resolve(__dirname, "../src"),
+      "process": require.resolve("process")
     },
     fallback: {
-      process: require.resolve("process/browser")
+      process: require.resolve("process"),
+      path: require.resolve("path-browserify"),
+      stream: require.resolve("stream-browserify"),
+      util: require.resolve("util/"),
+      buffer: require.resolve("buffer/")
     }
   },
   optimization: {
@@ -64,7 +69,10 @@ module.exports = {
         test: /\.vue$/,
         loader: "vue-loader",
         options: {
-          vueLoaderConfig
+          ...vueLoaderConfig,
+          compilerOptions: {
+            isCustomElement: tag => tag.startsWith('swiper-')
+          }
         }
       },
       {
@@ -133,13 +141,21 @@ module.exports = {
     ],
   },
   plugins: [
+    // Ensure process is provided first, before any other plugins run
+    new webpack.ProvidePlugin({
+      process: 'process',
+      Buffer: ['buffer', 'Buffer']
+    }),
+    
     new webpack.DefinePlugin({ ...definitions }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(dotenv.parsed),
       '__VUE_OPTIONS_API__': JSON.stringify(true),
       '__VUE_PROD_DEVTOOLS__': JSON.stringify(false),
+      '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': JSON.stringify(false),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
+    
     new VueLoaderPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",

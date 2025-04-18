@@ -35,6 +35,21 @@ if (!hasVueLoaderPlugin) {
   newBaseConfig.plugins.push(new VueLoaderPlugin());
 }
 
+// Ensure ProvidePlugin for process is included
+const hasProvidePlugin = newBaseConfig.plugins.some(
+  plugin => plugin instanceof webpack.ProvidePlugin && 
+            plugin.definitions && 
+            plugin.definitions.process
+);
+if (!hasProvidePlugin) {
+  newBaseConfig.plugins.push(
+    new webpack.ProvidePlugin({
+      process: 'process',
+      Buffer: ['buffer', 'Buffer']
+    })
+  );
+}
+
 const { definitions } = new Dotenv({
   path: path.resolve(__dirname, '../.env'),
   safe: true,
@@ -104,6 +119,12 @@ const webpackConfig = merge(newBaseConfig, {
     ],
   },
   plugins: [
+    // Explicitly add ProvidePlugin for production first
+    new webpack.ProvidePlugin({
+      process: 'process',
+      Buffer: ['buffer', 'Buffer']
+    }),
+    
     // Single DefinePlugin with all definitions
     new webpack.DefinePlugin({
       ...definitions,
