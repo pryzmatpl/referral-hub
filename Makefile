@@ -28,7 +28,6 @@ prod:
 	else \
 		NODE_ENV=prod $(MAKE) -C refrme-backend prod; \
 	fi
-	fi
 
 prodmap:
 	@if docker ps --format '{{.Names}}' | grep -q 'frontend'; then \
