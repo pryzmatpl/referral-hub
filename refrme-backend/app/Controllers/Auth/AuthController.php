@@ -62,7 +62,9 @@ final class AuthController
     public function getLinkedInAccessToken(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $code = $this->getRequiredParam($request, 'code');
-        $redirectUrl = sprintf("%s/%s", getenv("FRONTEND_URL"), "auth/signin");
+        $redirectUrl = $_ENV["FRONTEND_URL"] . "auth/signin";
+
+        $this->logger->debug($redirectUrl);
         try {
             $token = $this->linkedInService->getAccessToken(
                 $code,
