@@ -17,16 +17,23 @@ fs.writeFileSync(
     JSON.stringify(baseWebpackConfig.resolve?.alias, null, 2)
 );
 
-// First, remove the HtmlWebpackPlugin from the base config to avoid conflicts
-const filteredPlugins = baseWebpackConfig.plugins.filter(
+// Create a new base config without the conflicting plugins
+const newBaseConfig = { ...baseWebpackConfig };
+// Remove HtmlWebpackPlugin
+newBaseConfig.plugins = baseWebpackConfig.plugins.filter(
   plugin => !(plugin instanceof HtmlWebpackPlugin)
 );
-baseWebpackConfig.plugins = filteredPlugins;
-
-// Also remove the webpack.DefinePlugin to avoid conflicts
-baseWebpackConfig.plugins = baseWebpackConfig.plugins.filter(
+// Remove DefinePlugin
+newBaseConfig.plugins = newBaseConfig.plugins.filter(
   plugin => !(plugin instanceof webpack.DefinePlugin)
 );
+// Make sure VueLoaderPlugin is included
+const hasVueLoaderPlugin = newBaseConfig.plugins.some(
+  plugin => plugin instanceof VueLoaderPlugin
+);
+if (!hasVueLoaderPlugin) {
+  newBaseConfig.plugins.push(new VueLoaderPlugin());
+}
 
 const { definitions } = new Dotenv({
   path: path.resolve(__dirname, '../.env'),
@@ -38,7 +45,7 @@ const { definitions } = new Dotenv({
   prefix: 'VUE_APP_'
 });
 
-const webpackConfig = merge(baseWebpackConfig, {
+const webpackConfig = merge(newBaseConfig, {
   mode: 'production',
   module: {
     rules: [
@@ -112,7 +119,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // Single HtmlWebpackPlugin for production
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './static/index.html',
+      template: path.resolve(__dirname, '../static/index.html'),
       inject: true,
       minify: {
         removeComments: true,
@@ -129,7 +136,7 @@ const webpackConfig = merge(baseWebpackConfig, {
           from: path.resolve(__dirname, '../static'),
           to: path.resolve(__dirname, '../dist'),
           globOptions: {
-            ignore: ['.*', 'index.html']
+            ignore: ['**/index.html', '.*']  // More explicit pattern to ignore index.html
           }
         }
       ]
