@@ -2,12 +2,12 @@
 .PHONY: debug prod
 
 debug:
-	ENV=debug $(MAKE) -C refrme-frontend dev
 	ENV=debug $(MAKE) -C refrme-backend debug
+	ENV=debug $(MAKE) -C refrme-frontend dev
 
 prod:
-	ENV=prod $(MAKE) -C refrme-frontend prod
 	ENV=prod $(MAKE) -C refrme-backend prod
+	ENV=prod $(MAKE) -C refrme-frontend prod
 
 down:
 	ENV=prod $(MAKE) -C refrme-frontend down
