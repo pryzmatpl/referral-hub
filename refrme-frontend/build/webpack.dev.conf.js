@@ -59,10 +59,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       ],
     }),
 
-    new VueLoaderPlugin(),
-    new BundleAnalyzerPlugin({
-      analyzerPort: 8089
-    }),
+    new VueLoaderPlugin()    
   ],
 });
 

@@ -6,15 +6,15 @@
 container_running = docker ps --format '{{.Names}}' | grep -q $(1)
 
 debug:
-	@if docker ps --format '{{.Names}}' | grep -q 'frontend'; then \
-		echo "Frontend container already running. Skipping frontend debug..."; \
-	else \
-		ENV=debug $(MAKE) -C refrme-frontend dev; \
-	fi
 	@if docker ps --format '{{.Names}}' | grep -q 'aimatch'; then \
 		echo "Aimatch container already running. Skipping backend debug..."; \
 	else \
 		ENV=debug $(MAKE) -C refrme-backend debug; \
+	fi
+	@if docker ps --format '{{.Names}}' | grep -q 'frontend'; then \
+		echo "Frontend container already running. Skipping frontend debug..."; \
+	else \
+		ENV=debug $(MAKE) -C refrme-frontend dev; \
 	fi
 
 prod:
