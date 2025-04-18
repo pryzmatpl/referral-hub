@@ -324,7 +324,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@use '@/assets/settings.scss' as settings;
+@use '../assets/settings.scss' as settings;
 
 .shadow {
   box-shadow: 0 4px 24px 0 rgba(37, 38, 94, 0.1);
@@ -336,7 +336,7 @@ export default {
 }
 
 .custom-btn {
-  background-color: $primaryColor;
+  background-color: #0DB3B4;
   backdrop-filter: blur(10px);
   width: 10rem;
 }

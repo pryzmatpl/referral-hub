@@ -88,8 +88,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@use '@/assets/settings.scss' as settings;
+<style lang="scss" scoped>
+@use './assets/settings.scss' as settings;
 @import url('https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css');
 
 body {

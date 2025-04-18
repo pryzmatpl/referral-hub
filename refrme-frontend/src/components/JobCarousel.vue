@@ -28,7 +28,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/settings.scss' as settings;
+@use '../assets/settings.scss' as settings;
 
 
 swiper-container {
@@ -80,7 +80,7 @@ swiper-slide img {
   top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: $primaryColor;
+  background-color: #0DB3B4;
   padding: 0 10px;
   font-weight: bold;
 }

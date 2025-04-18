@@ -282,14 +282,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@use '@/assets/settings.scss' as settings;
+@use '../assets/settings.scss' as settings;
 
 .h1 {
   margin-bottom: 100px;
 }
 
 h4 {
-  color: $primaryColor;
+  color: #0DB3B4;
 }
 
 tbody tr {

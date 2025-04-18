@@ -517,7 +517,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@use '@/assets/settings.scss' as settings;
+@use '../assets/settings.scss' as settings;
 
 .white {
   background: white;
@@ -539,11 +539,11 @@ export default {
 }
 
 .blue {
-  background-color: $primaryColor;
+  background-color: #0DB3B4;
 }
 
 .blue-font {
-  color: $primaryColor;
+  color: #0DB3B4;
 }
 
 .font-awesome-icon {

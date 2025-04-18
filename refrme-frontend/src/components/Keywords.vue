@@ -168,7 +168,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  @use '@/assets/settings.scss' as settings;
+  @use '../assets/settings.scss' as settings;
 
 .badge {
     font-size: 1.1em;
@@ -180,7 +180,7 @@ export default {
     border-radius: 3px;
   }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
   .vue-slider-mark-label {
     font-size: 0.7em !important;
 }

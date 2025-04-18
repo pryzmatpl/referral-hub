@@ -108,19 +108,19 @@ module.exports = {
           filename: utils.assetsPath("fonts/[name].[hash:7][ext]")
         }
       },
+      // webpack rules for scss (likely in `webpack.base.conf.js` or `webpack.module.rules`)
       {
         test: /\.s[ac]ss$/i,
         exclude: /\.vue$/,
+        resourceQuery: /lang=scss/, // <style lang="scss">
         use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
+          'vue-style-loader',
+          'css-loader',
+          'postcss-loader',
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
-              sassOptions: {
-                indentedSyntax: false,
-                includePaths: [path.resolve(__dirname, "../src/assets")]
-              }
+              additionalData: `@import "@/assets/_settings.scss";`
             }
           }
         ]

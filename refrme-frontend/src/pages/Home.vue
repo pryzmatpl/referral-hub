@@ -123,7 +123,7 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-@use '@/assets/settings.scss' as settings;
+@use '../assets/settings.scss' as settings;
 
 .container { 
   background-size: 100% 100%;
@@ -148,7 +148,7 @@ export default {
 }
 
 .custom-btn {
-  background-color: $primaryColor;
+  background-color: #0DB3B4;
   backdrop-filter: blur(10px);
   width: 10rem;
 }
