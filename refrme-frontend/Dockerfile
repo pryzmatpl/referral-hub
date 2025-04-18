@@ -1,6 +1,6 @@
 # Use an official Node.js runtime as the base image
 FROM node:20-alpine
-
+RUN apk update && apk upgrade && apk add nginx
 # Set the working directory
 WORKDIR /app
 
@@ -16,12 +16,10 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose the port (optional, depending on your setup)
-EXPOSE 8080
 COPY ./dist /usr/share/nginx/html/
 
 # Copy custom nginx configuration
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 8080
 EXPOSE 8080
