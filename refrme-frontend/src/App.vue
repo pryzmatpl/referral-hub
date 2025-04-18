@@ -42,47 +42,64 @@
 import store from '@/store/index.js'
 import cookieconsent from 'cookieconsent'
 import {ModalTarget} from "@kolirt/vue-modal";
+import { computed, onMounted, reactive, toRefs } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
-  components: {ModalTarget},
-  computed: {
-    isAuthenticated: vm => vm.$store.getters.isAuthenticated,
-    path: vm => vm.$route.path,
-    isPathHome: vm => vm.path == '/',
-    currentRole: vm => vm.$store.state.dehashedData.CURRENT_ROLE,
-    isUserAllowed: vm => vm.currentRole === 'admin' || vm.currentRole === 'recruiter',
-  },
-
-  mounted () {
-    window.addEventListener("load", function(){
-      window.cookieconsent.initialise({
-        "palette": {
-          "popup": {
-            "background": "#eaf7f7",
-            "text": "#5c7291"
-          },
-          "button": {
-            "background": "transparent",
-            "text": "#56cbdb",
-            "border": "#56cbdb"
-          }
-        },
-        "position": "bottom-left"
-      })});
-  },
-
-  data () {
-    return {
+  components: { ModalTarget },
+  setup() {
+    const router = useRouter()
+    const route = useRoute()
+    const store = useStore()
+    
+    const state = reactive({
       locations: [],
       referrals: [],
       refkeywords: []
+    })
+    
+    // Computed properties
+    const isAuthenticated = computed(() => store.getters.isAuthenticated)
+    const path = computed(() => route.path)
+    const isPathHome = computed(() => path.value == '/')
+    const currentRole = computed(() => store.state.dehashedData.CURRENT_ROLE)
+    const isUserAllowed = computed(() => currentRole.value === 'admin' || currentRole.value === 'recruiter')
+    
+    // Methods
+    const logout = () => {
+      store.dispatch('signout')
+        .then(ret => router.push('/'))
     }
-  },
-
-  methods: {
-    logout () {
-      this.$store.dispatch('signout')
-          .then(ret => this.$router.push('/'))
+    
+    // Lifecycle hooks
+    onMounted(() => {
+      window.addEventListener("load", function(){
+        window.cookieconsent.initialise({
+          "palette": {
+            "popup": {
+              "background": "#eaf7f7",
+              "text": "#5c7291"
+            },
+            "button": {
+              "background": "transparent",
+              "text": "#56cbdb",
+              "border": "#56cbdb"
+            }
+          },
+          "position": "bottom-left"
+        })
+      });
+    })
+    
+    return {
+      ...toRefs(state),
+      isAuthenticated,
+      path,
+      isPathHome,
+      currentRole,
+      isUserAllowed,
+      logout
     }
   }
 }

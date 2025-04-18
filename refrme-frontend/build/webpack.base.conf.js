@@ -9,6 +9,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const buildAssetsRoot = path.resolve(__dirname, "../dist");
 const dotenv = require('dotenv').config();
 
@@ -149,10 +150,19 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../static/index.html'),
       inject: true,
+      publicPath: '/'
     }),
     new MiniCssExtractPlugin({
       filename: utils.assetsPath("css/[name].[contenthash].css"),
       chunkFilename: utils.assetsPath("css/[id].[contenthash].css"),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../static/favicon.ico'),
+          to: path.resolve(buildAssetsRoot, 'favicon.ico')
+        }
+      ]
     }),
   ],
 };

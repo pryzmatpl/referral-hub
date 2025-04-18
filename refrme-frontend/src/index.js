@@ -43,11 +43,11 @@ import { register } from 'swiper/element/bundle';
 // register Swiper custom elements
 register();
 
-
 // import VueAnalytics from 'vue-analytics'
 import App from "./App";
 const isProd = process.env.NODE_ENV === "production";
 
+// Create Vue app
 const app = createApp(App);
 
 // Set production mode configuration
@@ -61,6 +61,10 @@ if (isProd) {
   app.config.productionTip = false;
 }
 
+// Ensure Vue has access to the provide/inject capabilities
+app.provide('store', store);
+
+// Register plugins
 app.use(BootstrapVue3);
 app.use(router);
 app.use(store);
@@ -88,4 +92,6 @@ app.use(createModal({
 }));
 
 app.component('font-awesome-icon', FontAwesomeIcon)
+
+// Mount the app to the DOM
 app.mount("#app");
