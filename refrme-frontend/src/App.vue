@@ -39,10 +39,11 @@
 </template>
 
 <script>
-import store from '@/store/index.js'
+// Remove direct import to avoid circular dependency
+// import store from '@/store/index.js'
 import cookieconsent from 'cookieconsent'
 import {ModalTarget} from "@kolirt/vue-modal";
-import { computed, onMounted, reactive, toRefs } from 'vue'
+import { computed, onMounted, reactive, toRefs, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -73,8 +74,22 @@ export default {
       console.log('[DEBUG:App] Initializing store with useStore()');
       store = useStore();
       console.log('[DEBUG:App] Store initialized successfully:', store ? 'store exists' : 'store is undefined');
+      
+      // Try to get store from inject as fallback
+      if (!store) {
+        console.log('[DEBUG:App] Store not found with useStore(), trying inject()');
+        store = inject('store');
+        console.log('[DEBUG:App] Store from inject:', store ? 'exists' : 'undefined');
+      }
     } catch (error) {
-      console.error('[DEBUG:App] Error initializing store:', error);
+      console.error('[DEBUG:App] Error initializing store with useStore():', error);
+      try {
+        console.log('[DEBUG:App] Trying to get store via inject()');
+        store = inject('store');
+        console.log('[DEBUG:App] Store from inject:', store ? 'exists' : 'undefined');
+      } catch (injectError) {
+        console.error('[DEBUG:App] Error getting store via inject():', injectError);
+      }
     }
     
     console.log('[DEBUG:App] Creating reactive state');
@@ -90,12 +105,12 @@ export default {
     const isAuthenticated = computed(() => {
       console.log('[DEBUG:App] Computing isAuthenticated, store:', store ? 'exists' : 'undefined');
       console.log('[DEBUG:App] Store getters:', store?.getters ? 'exist' : 'undefined');
-      return store?.getters?.isAuthenticated;
+      return store?.getters?.isAuthenticated || false;
     });
     
     const path = computed(() => {
       console.log('[DEBUG:App] Computing path, route:', route ? 'exists' : 'undefined');
-      return route?.path;
+      return route?.path || '/';
     });
     
     const isPathHome = computed(() => {
@@ -106,7 +121,7 @@ export default {
     const currentRole = computed(() => {
       console.log('[DEBUG:App] Computing currentRole, store state:', store?.state ? 'exists' : 'undefined');
       console.log('[DEBUG:App] dehashedData:', store?.state?.dehashedData ? 'exists' : 'undefined');
-      return store?.state?.dehashedData?.CURRENT_ROLE;
+      return store?.state?.dehashedData?.CURRENT_ROLE || '';
     });
     
     const isUserAllowed = computed(() => {
@@ -119,9 +134,14 @@ export default {
     const logout = () => {
       console.log('[DEBUG:App] Logging out');
       try {
-        store.dispatch('signout')
-          .then(ret => router.push('/'));
-        console.log('[DEBUG:App] Logout dispatch successful');
+        if (store && store.dispatch) {
+          store.dispatch('signout')
+            .then(ret => router.push('/'))
+            .catch(err => console.error('[DEBUG:App] Logout error:', err));
+          console.log('[DEBUG:App] Logout dispatch successful');
+        } else {
+          console.error('[DEBUG:App] Cannot logout: store or dispatch not available');
+        }
       } catch (error) {
         console.error('[DEBUG:App] Error during logout:', error);
       }
