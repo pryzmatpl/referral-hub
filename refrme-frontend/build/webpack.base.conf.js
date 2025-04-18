@@ -7,7 +7,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const buildAssetsRoot = path.resolve(__dirname, "../dist");
@@ -133,9 +132,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new BundleAnalyzerPlugin({
-      analyzerPort: 8089
-    }),
     new webpack.DefinePlugin({ ...definitions }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(dotenv.parsed), // or a filtered set
