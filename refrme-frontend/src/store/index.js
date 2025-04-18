@@ -1,11 +1,11 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
 
-console.log("Backend URL:", process.env["VUE_APP_HOST"]);
+console.log("Backend URL:", process.env["VUE_APP_BACKEND_URL"]);
 
 // Create axios instance
 const backend = axios.create({
-  baseURL: process.env["VUE_APP_HOST"] ?? "http://localhost",
+  baseURL: process.env["VUE_APP_BACKEND_URL"],
   timeout: 5000,
   crossDomain: true,
 });
