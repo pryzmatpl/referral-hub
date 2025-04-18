@@ -81,8 +81,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             beautify: false
           }
         },
-        extractComments: false,
-        sourceMap: true
+        extractComments: false
       })
     ],
   },
@@ -98,7 +97,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: utils.assetsPath('css/[name].[contenthash].css'),
     }),
     new HtmlWebpackPlugin({
-      filename: './static/index.html',
+      filename: 'index.html',
       template: './static/index.html',
       inject: true,
       minify: {
@@ -113,18 +112,14 @@ const webpackConfig = merge(baseWebpackConfig, {
       patterns: [
         {
           from: path.resolve(__dirname, '../static'),
-          to: "./dist",
+          to: path.resolve(__dirname, '../dist'),
           globOptions: {
             ignore: ['.*']
           }
         }
       ]
     }),
-    new VueLoaderPlugin(),
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map',
-      append: '\n//# sourceMappingURL=[url]'
-    })
+    new VueLoaderPlugin()
   ]
 })
 
