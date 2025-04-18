@@ -79,9 +79,10 @@ const handleLinkedInLogin = () => {
 
 const handleLinkedInCallback = async (code) => {
   try {
-    const accessToken = await getAccessToken(code)
+    console.log("CODE:" + code);
+    const accessToken = await getAccessToken(code);
 
-    const userData = await getUserInfo(accessToken['access_token'])
+    const userData = await getUserInfo(accessToken['access_token']);
 
     await authenticateUser({
       uniqueId: userData.sub,
