@@ -42,7 +42,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
     ]
   },
-  devtool: false,
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: utils.assetsPath('js/[name].[contenthash].js'),
@@ -59,13 +59,17 @@ const webpackConfig = merge(baseWebpackConfig, {
       }
     },
     minimizer: [
-      new CssMinimizerPlugin(),
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          sourceMap: true
+        }
+      }),
       new TerserPlugin({
         terserOptions: {
           compress: {
             drop_console: false,
-            drop_debugger: true,
-            pure_funcs: ['console.log']
+            drop_debugger: false,
+            pure_funcs: []
           },
           mangle: {
             keep_fnames: true,
@@ -77,7 +81,8 @@ const webpackConfig = merge(baseWebpackConfig, {
             beautify: false
           }
         },
-        extractComments: false
+        extractComments: false,
+        sourceMap: true
       })
     ],
   },
@@ -86,8 +91,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       __VUE_OPTIONS_API__: JSON.stringify(true),
-      __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
-      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false)
+      __VUE_PROD_DEVTOOLS__: JSON.stringify(true),
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(true)
     }),
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
@@ -115,7 +120,11 @@ const webpackConfig = merge(baseWebpackConfig, {
         }
       ]
     }),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[file].map',
+      append: '\n//# sourceMappingURL=[url]'
+    })
   ]
 })
 
