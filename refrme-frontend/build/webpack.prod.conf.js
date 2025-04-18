@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const TerserPlugin = require('terser-webpack-plugin')
 
 fs.writeFileSync(
     path.resolve(__dirname, '../alias-log.json'),
@@ -48,9 +49,34 @@ const webpackConfig = merge(baseWebpackConfig, {
     },
     minimizer: [
       new CssMinimizerPlugin(),
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: false,
+            drop_debugger: true,
+            pure_funcs: ['console.log']
+          },
+          mangle: {
+            keep_fnames: true,
+            keep_classnames: true,
+            safari10: true
+          },
+          output: {
+            comments: false,
+            beautify: false
+          }
+        },
+        extractComments: false
+      })
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      __VUE_OPTIONS_API__: JSON.stringify(true),
+      __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false)
+    }),
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
     }),

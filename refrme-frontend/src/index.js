@@ -11,8 +11,30 @@ import { createModal } from '@kolirt/vue-modal'
 
 import { library } from '@fortawesome/fontawesome-svg-core' 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faMoneyBillAlt } from "@fortawesome/fontawesome-free-solid";
-library.add(faMoneyBillAlt)
+import { 
+  faCheckCircle, 
+  faTimesCircle,
+  faTags,
+  faCog,
+  faEdit,
+  faTrash,
+  faEye,
+  faEyeSlash, 
+  faMoneyBillAlt
+} from '@fortawesome/free-solid-svg-icons'
+
+// Register only the specific icons we need - more efficient than importing all
+library.add(
+  faCheckCircle,
+  faTimesCircle,
+  faTags,
+  faCog,
+  faEdit,
+  faTrash,
+  faEye,
+  faEyeSlash,
+  faMoneyBillAlt
+)
 
 import BootstrapVue3 from 'bootstrap-vue-3'
 
@@ -27,6 +49,17 @@ import App from "./App";
 const isProd = process.env.NODE_ENV === "production";
 
 const app = createApp(App);
+
+// Set production mode configuration
+if (isProd) {
+  app.config.devtools = false;
+  app.config.performance = false;
+  app.config.productionTip = false;
+} else {
+  app.config.devtools = true;
+  app.config.performance = true;
+  app.config.productionTip = false;
+}
 
 app.use(BootstrapVue3);
 app.use(router);
@@ -53,8 +86,6 @@ app.use(createModal({
       'z-index': 200
     }
 }));
-app.config.devtools = true;
-app.config.performance = true;
-app.config.productionTip = false;
 
-app.component('font-awesome-icon', FontAwesomeIcon).mount("#app");
+app.component('font-awesome-icon', FontAwesomeIcon)
+app.mount("#app");
