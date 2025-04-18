@@ -179,6 +179,13 @@ class RefairController extends Controller {
                 'message' => 'An error occurred: ' . $e->getMessage()
             ]));
         }
+
+
+        $response->getBody()->write(json_encode([
+            'status'  => "failure",
+            'message' => "Profile not updated"
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
     }
 
 
