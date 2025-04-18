@@ -21,7 +21,6 @@ services:
             - mysql
             - redis
             - meilisearch
-            - selenium
 
     aimatch_queue:
         build:
@@ -84,14 +83,6 @@ services:
         ports:
             - '${FORWARD_MAILHOG_PORT:-1025}:1025'
             - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
-
-    selenium:
-        image: 'selenium/standalone-chrome'
-        volumes:
-            - '/dev/shm:/dev/shm'
-        ports:
-            - '4444:4444'
-            - '5900:5900'
 
     mockserver:
         image: 'node'
