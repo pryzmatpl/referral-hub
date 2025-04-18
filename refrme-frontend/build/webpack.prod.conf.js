@@ -15,9 +15,6 @@ fs.writeFileSync(
     JSON.stringify(baseWebpackConfig.resolve?.alias, null, 2)
 );
 
-
-const env = 'prod';
-
 const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
   module: {
