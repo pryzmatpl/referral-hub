@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+const dotenv = require('dotenv').config();
 import axios from 'axios';
 
 console.log("Backend URL:", process.env.VUE_APP_BACKEND_URL);
