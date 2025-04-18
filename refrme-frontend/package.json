@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --progress --config build/webpack.dev.conf.js --host 0.0.0.0 --port 8080",
+    "dev": "webpack-dev-server --progress --config build/webpack.dev.conf.js --host 0.0.0.0 --port 8088",
     "devno": "webpack-dev-server --mode development --open",
     "build": "webpack --config build/webpack.prod.conf.js --progress --mode production",
     "prod": "webpack --config build/webpack.prod.conf.js --progress --mode production",
