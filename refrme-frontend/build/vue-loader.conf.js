@@ -1,6 +1,6 @@
 'use strict'
 const utils = require('./utils');
-const isProduction = process.env.ENV === 'prod';
+const isProduction = process.env.NODE_ENV === 'prod';
 const sourceMapEnabled = true;
 
 module.exports = {
