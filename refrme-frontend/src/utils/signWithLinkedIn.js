@@ -10,8 +10,8 @@ const getCode = () => {
     const linkedInAuthUrl = new URL("https://www.linkedin.com/oauth/v2/authorization");
 
     /** @todo: remove the const in the end */
-    const linkedInClientId = process.env.VUE_APP_LINKEDIN_CLIENT_ID
-    const linkedInRedirect = process.env.VUE_APP_DOMAIN + "/auth/signin";
+    const linkedInClientId = process.env["VUE_APP_LINKEDIN_CLIENT_ID"]
+    const linkedInRedirect = process.env["VUE_APP_DOMAIN"] + "/auth/signin";
 
     linkedInAuthUrl.searchParams.append("response_type", "code");
     linkedInAuthUrl.searchParams.append("client_id", linkedInClientId);
