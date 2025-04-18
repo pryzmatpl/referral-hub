@@ -10,14 +10,23 @@
   - is strictly prohibited without the prior written consent of Pryzmat sp. z o.o.
   -->
 <script setup>
+console.log('[DEBUG:JobListItem] Component setup starting');
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ref , defineProps} from 'vue'
 import { faEdit, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { useStore } from "vuex";
 
 // Initialize store once at the component setup
-const store = useStore()
+console.log('[DEBUG:JobListItem] Initializing store with useStore()');
+let store;
+try {
+  store = useStore();
+  console.log('[DEBUG:JobListItem] Store initialized successfully');
+} catch (error) {
+  console.error('[DEBUG:JobListItem] Error initializing store:', error);
+}
 
+console.log('[DEBUG:JobListItem] Defining props');
 const props = defineProps({
   job: {
     type: Object,
@@ -26,6 +35,7 @@ const props = defineProps({
   applied: Boolean
 })
 
+console.log('[DEBUG:JobListItem] Setting up route and router');
 const route = useRoute()
 const router = useRouter()
 const modalShow = ref(false)
@@ -34,22 +44,30 @@ const editIcon = faEdit
 const deleteIcon = faTrash
 const infoIcon = faQuestionCircle
 
+console.log('[DEBUG:JobListItem] Setting up computed properties');
 const isJobListing = computed(() => route.path === '/jobs')
 // Use the store reference defined above
-const isUserAllowed = computed(() => store.state.dehashedData.CURRENT_ROLE === 'admin')
+console.log('[DEBUG:JobListItem] Creating isUserAllowed computed property');
+const isUserAllowed = computed(() => {
+  console.log('[DEBUG:JobListItem] Current role from store:', store?.state?.dehashedData?.CURRENT_ROLE);
+  return store?.state?.dehashedData?.CURRENT_ROLE === 'admin';
+})
 const formattedContractType = computed(() => 'TEST') // Placeholder, replace with actual logic
 
 // Methods
+console.log('[DEBUG:JobListItem] Setting up methods');
 const onRowClick = () => {
   router.push(`/job/${props.job.id}`)
 }
 
 const deleteJob = async (id) => {
+  console.log('[DEBUG:JobListItem] Deleting job:', id);
   try {
     // Use the store reference defined above
     await store.state.backend.get(`/job/delete/${id}`)
     emit('fetchJobs')
   } catch (error) {
+    console.error('[DEBUG:JobListItem] Error deleting job:', error);
     alert(error.message)
   }
 }
@@ -64,8 +82,10 @@ const switchJobHighlight = (event, hovering) => {
 
 const groupZeros = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
+console.log('[DEBUG:JobListItem] Defining emit events');
 const emit = defineEmits(['jobToEdit', 'fetchJobs'])
 
+console.log('[DEBUG:JobListItem] Creating keywords computed property');
 const keywords = computed(() => {
   if (Array.isArray(props.job.keywords)) {
     return props.job.keywords; 
@@ -74,6 +94,7 @@ const keywords = computed(() => {
   return (props.job != null) ? props.job?.keywords?.split(',') : "";
 });
 
+console.log('[DEBUG:JobListItem] Component setup complete');
 </script>
 
 <template>

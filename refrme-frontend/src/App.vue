@@ -49,10 +49,35 @@ import { useStore } from 'vuex'
 export default {
   components: { ModalTarget },
   setup() {
-    const router = useRouter()
-    const route = useRoute()
-    const store = useStore()
+    console.log('[DEBUG:App] Starting App component setup');
     
+    let router, route, store;
+    
+    try {
+      console.log('[DEBUG:App] Initializing router');
+      router = useRouter();
+      console.log('[DEBUG:App] Router initialized successfully');
+    } catch (error) {
+      console.error('[DEBUG:App] Error initializing router:', error);
+    }
+    
+    try {
+      console.log('[DEBUG:App] Initializing route');
+      route = useRoute();
+      console.log('[DEBUG:App] Route initialized successfully');
+    } catch (error) {
+      console.error('[DEBUG:App] Error initializing route:', error);
+    }
+    
+    try {
+      console.log('[DEBUG:App] Initializing store with useStore()');
+      store = useStore();
+      console.log('[DEBUG:App] Store initialized successfully:', store ? 'store exists' : 'store is undefined');
+    } catch (error) {
+      console.error('[DEBUG:App] Error initializing store:', error);
+    }
+    
+    console.log('[DEBUG:App] Creating reactive state');
     const state = reactive({
       locations: [],
       referrals: [],
@@ -60,21 +85,54 @@ export default {
     })
     
     // Computed properties
-    const isAuthenticated = computed(() => store.getters.isAuthenticated)
-    const path = computed(() => route.path)
-    const isPathHome = computed(() => path.value == '/')
-    const currentRole = computed(() => store.state.dehashedData.CURRENT_ROLE)
-    const isUserAllowed = computed(() => currentRole.value === 'admin' || currentRole.value === 'recruiter')
+    console.log('[DEBUG:App] Setting up computed properties');
+    
+    const isAuthenticated = computed(() => {
+      console.log('[DEBUG:App] Computing isAuthenticated, store:', store ? 'exists' : 'undefined');
+      console.log('[DEBUG:App] Store getters:', store?.getters ? 'exist' : 'undefined');
+      return store?.getters?.isAuthenticated;
+    });
+    
+    const path = computed(() => {
+      console.log('[DEBUG:App] Computing path, route:', route ? 'exists' : 'undefined');
+      return route?.path;
+    });
+    
+    const isPathHome = computed(() => {
+      console.log('[DEBUG:App] Computing isPathHome');
+      return path.value == '/';
+    });
+    
+    const currentRole = computed(() => {
+      console.log('[DEBUG:App] Computing currentRole, store state:', store?.state ? 'exists' : 'undefined');
+      console.log('[DEBUG:App] dehashedData:', store?.state?.dehashedData ? 'exists' : 'undefined');
+      return store?.state?.dehashedData?.CURRENT_ROLE;
+    });
+    
+    const isUserAllowed = computed(() => {
+      console.log('[DEBUG:App] Computing isUserAllowed, currentRole:', currentRole.value);
+      return currentRole.value === 'admin' || currentRole.value === 'recruiter';
+    });
     
     // Methods
+    console.log('[DEBUG:App] Setting up methods');
     const logout = () => {
-      store.dispatch('signout')
-        .then(ret => router.push('/'))
+      console.log('[DEBUG:App] Logging out');
+      try {
+        store.dispatch('signout')
+          .then(ret => router.push('/'));
+        console.log('[DEBUG:App] Logout dispatch successful');
+      } catch (error) {
+        console.error('[DEBUG:App] Error during logout:', error);
+      }
     }
     
     // Lifecycle hooks
+    console.log('[DEBUG:App] Setting up lifecycle hooks');
     onMounted(() => {
+      console.log('[DEBUG:App] Component mounted');
       window.addEventListener("load", function(){
+        console.log('[DEBUG:App] Window loaded, initializing cookieconsent');
         window.cookieconsent.initialise({
           "palette": {
             "popup": {
@@ -88,10 +146,12 @@ export default {
             }
           },
           "position": "bottom-left"
-        })
+        });
+        console.log('[DEBUG:App] Cookieconsent initialized');
       });
     })
     
+    console.log('[DEBUG:App] Setup complete, returning state');
     return {
       ...toRefs(state),
       isAuthenticated,
