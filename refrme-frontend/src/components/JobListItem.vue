@@ -13,8 +13,9 @@
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ref , defineProps} from 'vue'
 import { faEdit, faTrash, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-import {useStore} from "vuex";
+import { useStore } from "vuex";
 
+// Initialize store once at the component setup
 const store = useStore()
 
 const props = defineProps({
@@ -34,7 +35,8 @@ const deleteIcon = faTrash
 const infoIcon = faQuestionCircle
 
 const isJobListing = computed(() => route.path === '/jobs')
-const isUserAllowed = computed(() => useStore().state.dehashedData.CURRENT_ROLE === 'admin')
+// Use the store reference defined above
+const isUserAllowed = computed(() => store.state.dehashedData.CURRENT_ROLE === 'admin')
 const formattedContractType = computed(() => 'TEST') // Placeholder, replace with actual logic
 
 // Methods
@@ -44,7 +46,8 @@ const onRowClick = () => {
 
 const deleteJob = async (id) => {
   try {
-    await useStore().state.backend.get(`/job/delete/${id}`)
+    // Use the store reference defined above
+    await store.state.backend.get(`/job/delete/${id}`)
     emit('fetchJobs')
   } catch (error) {
     alert(error.message)
