@@ -24,7 +24,7 @@ const getCode = () => {
 
 const getUserInfo = async (access_token) => {
 
-    const response = await fetch(process.env.VUE_APP_BACKEND_URL + '/auth/signin/linkedinfo', {
+    const response = await fetch(process.env["VUE_APP_BACKEND_URL"] + '/auth/signin/linkedinfo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const getUserInfo = async (access_token) => {
 
 const getAccessToken = async (code) => {
 
-    const response = await fetch(process.env.VUE_APP_BACKEND_URL + '/auth/signin/linkedaccess', {
+    const response = await fetch(process.env["VUE_APP_BACKEND_URL"] + '/auth/signin/linkedaccess', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
