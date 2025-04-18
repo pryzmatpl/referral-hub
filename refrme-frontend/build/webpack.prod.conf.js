@@ -17,14 +17,25 @@ fs.writeFileSync(
     JSON.stringify(baseWebpackConfig.resolve?.alias, null, 2)
 );
 
+// First, remove the HtmlWebpackPlugin from the base config to avoid conflicts
+const filteredPlugins = baseWebpackConfig.plugins.filter(
+  plugin => !(plugin instanceof HtmlWebpackPlugin)
+);
+baseWebpackConfig.plugins = filteredPlugins;
+
+// Also remove the webpack.DefinePlugin to avoid conflicts
+baseWebpackConfig.plugins = baseWebpackConfig.plugins.filter(
+  plugin => !(plugin instanceof webpack.DefinePlugin)
+);
+
 const { definitions } = new Dotenv({
-  path: path.resolve(__dirname, '../.env'), // load this now instead of the ones in '.env'
-  safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
-  allowEmptyValues: false, // allow empty variables (e.g. `FOO=`) (treat it as empty string, rather than missing)
-  systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
-  silent: false, // hide any errors
-  defaults: false, // load '.env.defaults' as the default values if empty.
-  prefix: 'VUE_APP_', // Only include environment variables that start with VUE_APP_
+  path: path.resolve(__dirname, '../.env'),
+  safe: true,
+  allowEmptyValues: false,
+  systemvars: true,
+  silent: false,
+  defaults: false,
+  prefix: 'VUE_APP_'
 });
 
 const webpackConfig = merge(baseWebpackConfig, {
@@ -86,9 +97,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     ],
   },
   plugins: [
-    // We'll use only one DefinePlugin instance to avoid conflicts
+    // Single DefinePlugin with all definitions
     new webpack.DefinePlugin({
       ...definitions,
+      'process.env': JSON.stringify(process.env),
       'process.env.NODE_ENV': JSON.stringify('production'),
       '__VUE_OPTIONS_API__': JSON.stringify(true),
       '__VUE_PROD_DEVTOOLS__': JSON.stringify(true),
@@ -97,8 +109,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
     }),
+    // Single HtmlWebpackPlugin for production
     new HtmlWebpackPlugin({
-      filename: 'index.html', // Output to dist/index.html
+      filename: 'index.html',
       template: './static/index.html',
       inject: true,
       minify: {
@@ -109,18 +122,18 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'auto'
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
+    // Copy static files except index.html
     new CopyWebpackPlugin({
       patterns: [
         {
           from: path.resolve(__dirname, '../static'),
           to: path.resolve(__dirname, '../dist'),
           globOptions: {
-            ignore: ['.*', 'index.html'] // Ignore index.html to prevent conflicts
+            ignore: ['.*', 'index.html']
           }
         }
       ]
-    }),
-    new VueLoaderPlugin()
+    })
   ]
 })
 
