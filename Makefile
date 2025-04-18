@@ -34,7 +34,7 @@ prodmap:
 	@if docker ps --format '{{.Names}}' | grep -q 'frontend'; then \
 		echo "Frontend container already running. Skipping frontend prod..."; \
 	else \
-		NODE_ENV=prod $(MAKE) -C refrme-frontend build:sourcemap; \
+		NODE_ENV=prod $(MAKE) -C refrme-frontend prodmap; \
 	fi
 	@if docker ps --format '{{.Names}}' | grep -q 'aimatch'; then \
 		echo "Aimatch container already running. Skipping backend prod..."; \
