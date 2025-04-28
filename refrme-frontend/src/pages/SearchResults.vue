@@ -81,15 +81,15 @@
                   <label>Remote</label>
                   <b-button-group class="w-100">
                     <b-button
-                      v-for="remoteOption in ['Yes', 'Partially', 'No']"
-                      :key="remoteOption"
+                      v-for="remoteOption in  [{ name: 'Yes', value: 1 }, { name: 'Partially', value: 0.5 }, { name: 'No', value: 0 }]"
+                      :key="remoteOption.value"
                       type="button"
                       variant="outline-secondary"
-                      @click="$store.commit('filterChange', { arg: 'remote', value: remoteOption })"
-                      :class="{ active: $store.getters.filterSelections.remote === remoteOption }"
+                      @click="updateFilterRemote(remoteOption.value)"
+                      :class="{ active: $store.getters.filterSelections.remote === remoteOption.value }"
                       class="w-100"
                     >
-                      {{ remoteOption }}
+                      {{ remoteOption.name }}
                     </b-button>
                   </b-button-group>
                 </div>
@@ -117,7 +117,8 @@
                         type="radio"
                         name="inlineRadioOptions"
                         :value="option.value"
-                        v-model="relocation"
+                        :checked="filterSelections.relocation === option.value"
+                        @change="updateFilterRelocation(option.value)"
                       />
                       <label class="form-check-label">{{ option.name }}</label>
                     </div>
@@ -188,14 +189,6 @@ export default {
   computed: {
     ...mapState(['filterDefaults','filterSelections','currentPage']),
     ...mapGetters(['technologyList', 'languageList','jobListing','jobListingLength','resultPages']),
-    relocation: {
-      get () {
-        return this.$store.state.filterSelections.relocation
-      },
-      set (value) {
-        this.$store.dispatch('updateFilterRelocation', value)
-      }
-    },
     languagesSelected: vm => vm.filterSelections.languages.map(obj => obj.language).join(', ')
   },
 
@@ -205,6 +198,7 @@ export default {
     'filterSelections.employment' () {this.$store.dispatch('getJobs')},
     'filterSelections.salary' () {this.$store.dispatch('getJobs')},
     'filterSelections.relocation' () {this.$store.dispatch('getJobs')},
+    'filterSelections.remote' () {this.$store.dispatch('getJobs')},
     'currentPage' () {this.$store.dispatch('getJobs')}
   },
 
@@ -216,7 +210,9 @@ export default {
       'updateCurrentPage',
       'updateFilterSelection',
       'updateFilterLanguages',
-      'updateFilterCity'
+      'updateFilterCity',
+      'updateFilterRelocation',
+      'updateFilterRemote'
     ]),
 
     back () {

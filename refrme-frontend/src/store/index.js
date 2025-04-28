@@ -280,12 +280,13 @@ try {
             contractType: filterSelections.employment,
             salary_min: filterSelections.salary,
             relocation: filterSelections.relocation,
+            remote: filterSelections.remote,
             perks: filterSelections.perks && filterSelections.perks.length ? filterSelections.perks.join(',') : null
           };
 
           // Safely add parameters
           Object.entries(optionalParams).forEach(([key, value]) => {
-            if (value) queryParams.append(key, value.toString());
+            if (value !== null && value !== undefined && value !== '') queryParams.append(key, value.toString());
           });
 
           const response = await state.backend.get(`/getjobs?${queryParams.toString()}`);
