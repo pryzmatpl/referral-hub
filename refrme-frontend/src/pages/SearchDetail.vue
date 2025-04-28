@@ -100,16 +100,18 @@
             <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Remote</label>
               <b-button-group class="w-100">
-                <b-button
-                  v-for="remoteOption in ['Yes', 'Partially', 'No']"
-                  :key="remoteOption"
-                  type="button"
-                  variant="outline-secondary"
-                  @click="updateFilterRemote(remoteOption)"
-                  :class="{ active: filterSelections.remote === remoteOption }"
-                  class="w-100"
-                >{{ remoteOption }}</b-button>
-              </b-button-group>
+                    <b-button
+                      v-for="remoteOption in  [{ name: 'Yes', value: 1 }, { name: 'Partially', value: 0.5 }, { name: 'No', value: 0 }]"
+                      :key="remoteOption.value"
+                      type="button"
+                      variant="outline-secondary"
+                      @click="updateFilterRemote(remoteOption.value)"
+                      :class="{ active: $store.getters.filterSelections.remote === remoteOption.value }"
+                      class="w-100"
+                    >
+                      {{ remoteOption.name }}
+                    </b-button>
+                  </b-button-group>
             </div>
             <div class="form-group col-12 col-sm-6 col-md-4 p-2">
               <label>Relocation package</label>
@@ -158,26 +160,6 @@
                   class="w-100"
                 >{{ teamSizeOption }}</b-button>
               </b-button-group>
-            </div>
-            <div class="form-group col-12 col-sm-6 col-md-4 p-2">
-              <label>Travel involved</label>
-              <div class="ml-1">
-                <div
-                  v-for="option in [{ name: 'Yes', value: 1 }, { name: 'No', value: 0 }]"
-                  :key="option.value"
-                  class="form-check form-check-inline"
-                >
-                  <input
-                    id="inlineRadio1"
-                    class="form-check-input"
-                    type="radio"
-                    v-model="relocation"
-                    :value="option.value"
-                    name="inlineRadioOptions"
-                  />
-                  <label class="form-check-label" for="inlineRadio1">{{ option.name }}</label>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -284,7 +266,8 @@ export default {
       this.$store.dispatch('getJobs')
     },
     //'filterSelections.perks' () {this.$store.dispatch('getJobs')},
-    'filterSelections.relocation' () {this.$store.dispatch('getJobs')}
+    'filterSelections.relocation' () {this.$store.dispatch('getJobs')},
+    'filterSelections.remote' () {this.$store.dispatch('getJobs')}
   },
 
   methods: {
