@@ -47,6 +47,10 @@ class JobRepository {
         if (isset($params["remote"])) {
             $query->where("remote", $params["remote"]);
         }
+
+        if (isset($params["contractType"])) {
+            $query->whereRaw('JSON_CONTAINS(contractType, ?)', [json_encode($params['contractType'])]);
+        }
     
         return $query->get();
     }

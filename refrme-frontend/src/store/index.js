@@ -72,7 +72,7 @@ const FILTER_DEFAULTS = {
     { language: 'Business Analyst', technology: 'Data' },
   ],
   cities: ['Wroclaw', 'Koszalin', 'Krakow', 'Warszawa'],
-  employment: ['B2B', 'UoP', 'UZ'],
+  employment: ['B2B', 'UoP', 'Contract', 'Other'],
   workload: ['All', 'Full-time', 'Part-time', 'Side-gig', 'Contractor'],
   perks: [
     'Free beverages', 'Free snacks', 'Free lunch', 'Kitchen/canteen',
