@@ -269,7 +269,6 @@ try {
         console.log('[DEBUG:Store] Get jobs action called');
         try {
           const queryParams = new URLSearchParams({
-            logic: 'all',
             page: (state.currentPage || 0).toString()
           });
 

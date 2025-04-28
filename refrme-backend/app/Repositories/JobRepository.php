@@ -31,7 +31,16 @@ class JobRepository {
 
     public function search(array $params): Collection|array
     {
-        return Job::query()->get($params);
+        $query = Job::query();
+
+        if (isset($params['salary_min'])) {
+            $salaryMin = (int) $params['salary_min'];
+    
+            $query->whereRaw("CAST(SUBSTRING_INDEX(fund, ',', 1) AS UNSIGNED) <= ?", [$salaryMin])
+                  ->whereRaw("CAST(SUBSTRING_INDEX(fund, ',', -1) AS UNSIGNED) >= ?", [$salaryMin]);
+        }
+    
+        return $query->get();
     }
 
     public function findById(array|int $ids): ?Collection {
