@@ -19,7 +19,7 @@ This repository contains the backend infrastructure for the PRIZM project. It is
    APP_PORT=80
    DB_DATABASE=prism
    DB_USERNAME=root
-   DB_PASSWORD=1tJ3nBCxy
+   DB_PASSWORD=1tJ3nBCxy [use secure passswords, not this one lol]
    FORWARD_DB_PORT=3306
    FORWARD_REDIS_PORT=6379
    FORWARD_MEILISEARCH_PORT=7700
