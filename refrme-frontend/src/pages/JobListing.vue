@@ -81,6 +81,8 @@ const updateCurrentPage = (page) => {
     <div class="d-flex justify-content-end"><router-link to='/job/add'><button class="btn btn-primary">+ Create new job</button></router-link></div>
     <h2 class="mt-3 mb-4 text-center">My job listing</h2>
     <font-awesome-icon v-if="loading" :icon="loadingIcon" spin class="fa-3x center"></font-awesome-icon>
+    <div class="d-flex justify-content-center">
+      <div class="card w-50 p-3 pb-0 m-2">
     <JobListItem
         v-for="job in jobListing"
         :job="job"
@@ -96,6 +98,8 @@ const updateCurrentPage = (page) => {
         </li>
       </ul>
     </nav>
+      </div>
+    </div>
     <b-modal
         ref="modal"
         v-model="modalShow"
