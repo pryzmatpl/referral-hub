@@ -72,7 +72,7 @@ const FILTER_DEFAULTS = {
     { language: 'Business Analyst', technology: 'Data' },
   ],
   cities: ['Wroclaw', 'Koszalin', 'Krakow', 'Warszawa'],
-  employment: ['B2B', 'UoP', 'UZ'],
+  employment: ['B2B', 'UoP', 'Contract', 'Other'],
   workload: ['All', 'Full-time', 'Part-time', 'Side-gig', 'Contractor'],
   perks: [
     'Free beverages', 'Free snacks', 'Free lunch', 'Kitchen/canteen',
@@ -269,7 +269,6 @@ try {
         console.log('[DEBUG:Store] Get jobs action called');
         try {
           const queryParams = new URLSearchParams({
-            logic: 'all',
             page: (state.currentPage || 0).toString()
           });
 
@@ -281,12 +280,13 @@ try {
             contractType: filterSelections.employment,
             salary_min: filterSelections.salary,
             relocation: filterSelections.relocation,
+            remote: filterSelections.remote,
             perks: filterSelections.perks && filterSelections.perks.length ? filterSelections.perks.join(',') : null
           };
 
           // Safely add parameters
           Object.entries(optionalParams).forEach(([key, value]) => {
-            if (value) queryParams.append(key, value.toString());
+            if (value !== null && value !== undefined && value !== '') queryParams.append(key, value.toString());
           });
 
           const response = await state.backend.get(`/getjobs?${queryParams.toString()}`);
